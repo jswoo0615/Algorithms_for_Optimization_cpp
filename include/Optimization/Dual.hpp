@@ -171,8 +171,14 @@ namespace Optimization {
         }
         return res;
     }
+
     template <typename T, size_t N>
-    constexpr Dual<T, N> operator*(const T& lhs, const DualVec<T, N>& rhs) {
+    constexpr DualVec<T, N> operator*(const T& lhs, const DualVec<T, N>& rhs) {
+        return rhs * lhs;
+    }
+
+    template <typename T, size_t N>
+    constexpr DualVec<T, N> operator/(const T& lhs, const DualVec<T, N>& rhs) {
         DualVec<T, N> res(lhs / rhs.v);
         T factor = -lhs / (rhs.v * rhs.v);
         for (size_t i = 0; i < N; ++i) {
@@ -191,7 +197,7 @@ namespace Optimization {
         T res_v = funcName(u.v); \
         return {res_v, (derivativeExpr) * u.d}; \
     } \
-    template <typename T> \
+    template <typename T, size_t N> \
     inline DualVec<T, N> funcName(const DualVec<T, N>& u) { \
         using std::funcName; \
         T res_v = funcName(u.v); \
@@ -199,7 +205,7 @@ namespace Optimization {
         T factor = (derivativeExpr); \
         for (size_t i = 0; i < N; ++i) { \
             res.g[i] = factor * u.g[i]; \
-        }
+        } \
         return res; \
     }
 
@@ -221,7 +227,7 @@ namespace Optimization {
     }
 
     template <typename T, size_t N>
-    inline DualVecT, N> sqrt(const DualVec<T, N>& u) {
+    inline DualVec<T, N> sqrt(const DualVec<T, N>& u) {
         using std::sqrt;
         T res_v = sqrt(u.v);
         DualVedc<T, N> res(res_v);
@@ -318,7 +324,7 @@ namespace Optimization {
         return x;
     }
 
-    template <typanem T>
+    template <typename T>
     inline auto get_value(const Dual<T>& x) {
         return x.v;
     }
