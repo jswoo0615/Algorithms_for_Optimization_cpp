@@ -47,3 +47,7 @@ gtest_discover_tests(test_trust_region)
 add_executable(test_gradient_descent test/test_gradient_descent.cpp)
 target_link_libraries(test_gradient_descent PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_gradient_descent)
+
+add_executable(test_conjugate_gradient test/test_conjugate_gradient.cpp)
+target_link_libraries(test_conjugate_gradient PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_conjugate_gradient)
