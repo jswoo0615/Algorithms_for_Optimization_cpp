@@ -43,3 +43,7 @@ gtest_discover_tests(test_strong_backtracking)
 add_executable(test_trust_region test/test_trust_region.cpp)
 target_link_libraries(test_trust_region PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_trust_region)
+
+add_executable(test_gradient_descent test/test_gradient_descent.cpp)
+target_link_libraries(test_gradient_descent PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_gradient_descent)
