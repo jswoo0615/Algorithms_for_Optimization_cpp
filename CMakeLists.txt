@@ -35,3 +35,7 @@ gtest_discover_tests(test_linesearch)
 add_executable(test_backtracking test/test_backtracking.cpp)
 target_link_libraries(test_backtracking PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_backtracking)
+
+add_executable(test_strong_backtracking test/test_strong_backtracking.cpp)
+target_link_libraries(test_strong_backtracking PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_strong_backtracking)
