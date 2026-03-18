@@ -11,17 +11,22 @@ include_directories(include)
 include(FetchContent)
 FetchContent_Declare(googletest URL https://github.com/google/googletest/archive/refs/tags/v1.14.0.zip)
 FetchContent_MakeAvailable(googletest)
+include(GoogleTest)
 
 # [1번 브랜치 결과물]
 add_executable(test_dual test/test_dual.cpp)
 target_link_libraries(test_dual PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_dual)
 
 # [3번 브랜치 결과물] 나중에 합쳐지면 여기에 추가됨!
 add_executable(test_autodiff test/test_autodiff.cpp)
 target_link_libraries(test_autodiff PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_autodiff)
 
 add_executable(test_bracketing test/test_bracketing.cpp)
 target_link_libraries(test_bracketing PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_bracketing)
 
 add_executable(test_linesearch test/test_linesearch.cpp)
 target_link_libraries(test_linesearch PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_linesearch)
