@@ -1,0 +1,29 @@
+name: C++ CMake CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+    # 우분투 최신 버전 환경에서 실행
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: 코드를 체크아웃합니다
+      uses: actions/checkout@v4
+
+    - name: CMake 빌드 디렉토리 생성 및 설정
+      # -B build: build 폴더를 만들고 거기서 설정 진행
+      run: cmake -B build -DCMAKE_BUILD_TYPE=Release
+
+    - name: 프로젝트 빌드
+      # --build build: build 폴더에 있는 설정을 바탕으로 컴파일 진행
+      run: cmake --build build
+
+    - name: 테스트 실행 (CTest)
+      # 빌드 폴더로 이동해서 모든 테스트(test_autodiff, test_linesearch 등) 실행
+      working-directory: ${{ github.workspace }}/build
+      run: ctest --output-on-failure
