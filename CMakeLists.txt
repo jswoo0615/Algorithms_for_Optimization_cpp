@@ -21,3 +21,6 @@ target_link_libraries(test_autodiff PRIVATE GTest::gtest_main)
 
 add_executable(test_bracketing test/test_bracketing.cpp)
 target_link_libraries(test_bracketing PRIVATE GTest::gtest_main)
+
+add_executable(test_linesearch test/test_linesearch.cpp)
+target_link_libraries(test_linesearch PRIVATE GTest::gtest_main)
