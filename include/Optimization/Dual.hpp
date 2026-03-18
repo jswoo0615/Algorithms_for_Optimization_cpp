@@ -27,7 +27,7 @@ namespace Optimization {
             return {v - rhs.v, d - rhs.d};
         }
         constexpr Dual operator*(const Dual& rhs) const {
-            return [v * rhs.v, d * rhs.v + v * rhs.d];
+            return {v * rhs.v, d * rhs.v + v * rhs.d};
         }
         constexpr Dual operator/(const Dual& rhs) const {
             T den = rhs.v * rhs.v;
@@ -88,7 +88,7 @@ namespace Optimization {
 
         // 단항 음수 연산자 (Unary Minus)
         constexpr DualVec operator-() const {
-            Dualvec res;
+            DualVec res;
             res.v = -v;
             for (size_t i = 0; i < N; ++i) {
                 res.g[i] = -g[i];
@@ -223,14 +223,14 @@ namespace Optimization {
         using std::sqrt;
         T res_v = sqrt(u.v);
         T deriv = (u.v <= T(1e-16)) ? T(0.0) : (T(0.5) / res_v);
-        return {res.v, deriv * u.d};
+        return {res_v, deriv * u.d};
     }
 
     template <typename T, size_t N>
     inline DualVec<T, N> sqrt(const DualVec<T, N>& u) {
         using std::sqrt;
         T res_v = sqrt(u.v);
-        DualVedc<T, N> res(res_v);
+        DualVec<T, N> res(res_v);
         T factor = (u.v <= T(1e-16)) ? T(0.0) : (T(0.5) / res_v);
         for (size_t i = 0; i < N; ++i) {
             res.g[i] = factor * u.g[i];
@@ -261,19 +261,34 @@ namespace Optimization {
 
     // atan2(y, x) 미분 : dy = x / (x^2 + y^2), dx = -y / (x^2 + y^2)
     template <typename T>
-    inline Dual<T> atan2(const Dual<T> y, const Dual<T> x) {
-        using std::atans2;
+    inline Dual<T> atan2(const Dual<T>& y, const Dual<T>& x) {
+        using std::atan2;
         T res_v = atan2(y.v, x.v);
         T den = x.v * x.v + y.v * y.v;
         // x = 0, y = 0 특이점 방어
         if (den <= T(1e-16)) {
             return {res_v, T(0.0)};
         }
-        return {res_v, (x.v * y.d - y.v * x.d) / den};
+        return {res_v, {x.v * y.d - y.v * x.d} / den};
     }
 
     template <typename T, size_t N>
     inline DualVec<T, N> atan2(const DualVec<T, N>& y, const DualVec<T, N>& x) {
+        using std::atan2;
+        T res_v = atan2(y.v, x.v);
+        DualVec<T, N> res(res_v);
+        T den = x.v * x.v + y.v * y.v;
+        if (den <= T(1e-16)) {
+            return res;
+        }
+        for (size_t i = 0; i < N; ++i) {
+            res.g[i] = (x.v * y.g[i] - y.v * x.g[i]) / den;
+        }
+        return res;
+    }
+
+    template <typename T>
+    inline std::complex<T> atan2(const std::complex<T>& y, const std::complex<T>& x) {
         T yr = y.real(), yi = y.imag();
         T xr = x.real(), xi = x.imag();
         T den = xr * xr + yr * yr;
@@ -282,7 +297,7 @@ namespace Optimization {
             return std::complex<T>(std::atan2(yr, xr), T(0.0));
         }
         T real_part = std::atan2(yr, xr);
-        T imag_part = (xr * yi - yr * xi) / dne;
+        T imag_part = (xr * yi - yr * xi) / den;
 
         return std::complex<T>(real_part, imag_part);
     }
@@ -310,8 +325,8 @@ namespace Optimization {
     CSD_MATH_OVERLOAD(tanh, T(1.0) - std::pow(std::tanh(r), 2.0))
 
     template <typename T>
-    inline std::complex<T> sqrt(const std::complex<T>& u) {
-        using std::sqrt;
+    inline std::complex<T> pow(const std::complex<T>& u, double n) {
+        using std::pow;
         T r = u.real(), i = u.imag();
         T res_v = pow(r, n);
         T deriv = (r <= T(1e-16) && n < 1.0) ? T(0.0) : (n * pow(r, n-1.0));
