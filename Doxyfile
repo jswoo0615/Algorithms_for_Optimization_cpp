@@ -1,0 +1,7 @@
+PROJECT_NAME           = "Optimization Library"
+OUTPUT_DIRECTORY       = docs
+INPUT                  = include test
+RECURSIVE              = YES
+GENERATE_LATEX         = NO
+USE_MATHJAX            = YES
+HTML_EXTRA_STYLESHEET  =

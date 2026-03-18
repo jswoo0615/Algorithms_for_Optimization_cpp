@@ -1,0 +1,16 @@
+name: Format Code
+
+on:
+  push:
+    branches: [ "main"] # 작업 중인 브랜치도 포함 가능
+
+jobs:
+  format:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Run clang-format
+        uses: stefanzweifel/clang-format-action@v11
+        with:
+          branch_name: ${{ github.ref_name }}
+          style: file
