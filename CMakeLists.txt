@@ -39,3 +39,7 @@ gtest_discover_tests(test_backtracking)
 add_executable(test_strong_backtracking test/test_strong_backtracking.cpp)
 target_link_libraries(test_strong_backtracking PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_strong_backtracking)
+
+add_executable(test_trust_region test/test_trust_region.cpp)
+target_link_libraries(test_trust_region PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_trust_region)
