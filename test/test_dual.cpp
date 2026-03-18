@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
-#include "Optimization/Dual.hpp"
+
 #include <cmath>
+
+#include "Optimization/Dual.hpp"
 
 using namespace Optimization;
 
@@ -11,7 +13,7 @@ TEST(DualTest, ScalarArithmetic) {
     // f(x) = (x + 3) * (x^2)
     // f(2.0) = (2+3) * 4 = 20
     // f'(x) = 1*(x^2) + (x+3)*(2x) = 3x^2 + 6x -> f'(2.0) = 12 + 12 = 24
-    Dual<double> x(2.0, 1.0); // x = 2.0, dx/dx = 1.0
+    Dual<double> x(2.0, 1.0);  // x = 2.0, dx/dx = 1.0
     auto f = (x + 3.0) * (x * x);
 
     EXPECT_DOUBLE_EQ(f.v, 20.0);
@@ -39,17 +41,17 @@ TEST(DualVecTest, GradientCalculation) {
     const double val_x = 2.0;
     const double val_y = 3.0;
 
-    auto x = DualVec<double, 2>::make_variable(val_x, 0); // index 0
-    auto y = DualVec<double, 2>::make_variable(val_y, 1); // index 1
+    auto x = DualVec<double, 2>::make_variable(val_x, 0);  // index 0
+    auto y = DualVec<double, 2>::make_variable(val_y, 1);  // index 1
 
     auto f = (x * x * y) + sin(x);
 
     // 값 검증
     EXPECT_DOUBLE_EQ(f.v, (val_x * val_x * val_y) + std::sin(val_x));
-    
+
     // 편미분(Gradient) 검증
-    EXPECT_DOUBLE_EQ(f.g[0], (2.0 * val_x * val_y) + std::cos(val_x)); // df/dx
-    EXPECT_DOUBLE_EQ(f.g[1], (val_x * val_x));                       // df/dy
+    EXPECT_DOUBLE_EQ(f.g[0], (2.0 * val_x * val_y) + std::cos(val_x));  // df/dx
+    EXPECT_DOUBLE_EQ(f.g[1], (val_x * val_x));                          // df/dy
 }
 
 // ======================================================
@@ -62,7 +64,7 @@ TEST(StabilityTest, SqrtAtZero) {
     auto f = sqrt(x);
 
     EXPECT_DOUBLE_EQ(f.v, 0.0);
-    EXPECT_DOUBLE_EQ(f.d, 0.0); // 발산하지 않고 0으로 처리되는지 확인
+    EXPECT_DOUBLE_EQ(f.d, 0.0);  // 발산하지 않고 0으로 처리되는지 확인
 }
 
 TEST(StabilityTest, Atan2Origin) {
@@ -84,8 +86,8 @@ TEST(CSDTest, PrecisionComparison) {
     double x_val = 1.0;
     std::complex<double> z(x_val, h);
 
-    auto f_z = Optimization::exp(z); // 헤더의 CSD 오버로드 호출
-    
+    auto f_z = Optimization::exp(z);  // 헤더의 CSD 오버로드 호출
+
     // f'(x) = exp(x)
     EXPECT_NEAR(f_z.real(), std::exp(x_val), 1e-15);
     EXPECT_NEAR(f_z.imag() / h, std::exp(x_val), 1e-15);

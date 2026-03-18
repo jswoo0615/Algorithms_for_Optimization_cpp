@@ -1,17 +1,19 @@
 #include <gtest/gtest.h>
-#include <array>
+
 #include <algorithm>
+#include <array>
+
 #include "Optimization/LineSearch.hpp"
 
 using namespace Optimization;
 
 class LineSearchTest : public ::testing::Test {
-protected:
+   protected:
     // 테스트용 N차원 (2차원) 스칼라 함수
     // f(x1, x2) = x1^2 + x2^2 + 2*x1 + 4
     // 최솟값 위치: (-1, 0), 이때 f(-1, 0) = 3
     static constexpr auto test_func = [](const auto& v) {
-        return v[0]*v[0] + v[1]*v[1] + 2.0*v[0] + 4.0;
+        return v[0] * v[0] + v[1] * v[1] + 2.0 * v[0] + 4.0;
     };
 
     std::array<double, 2> x_start;
@@ -40,7 +42,8 @@ TEST_F(LineSearchTest, BracketMinimumTest) {
 // 2. Golden Section Search 테스트
 TEST_F(LineSearchTest, GoldenSectionSearchTest) {
     // 0.0 ~ 2.0 구간에서 탐색
-    double alpha_opt = LineSearch::golden_section_search<2>(test_func, x_start, direction, 0.0, 2.0);
+    double alpha_opt =
+        LineSearch::golden_section_search<2>(test_func, x_start, direction, 0.0, 2.0);
     EXPECT_NEAR(alpha_opt, 1.0, 1e-4);
 }
 
@@ -48,7 +51,8 @@ TEST_F(LineSearchTest, GoldenSectionSearchTest) {
 TEST_F(LineSearchTest, QuadraticFitSearchTest) {
     // 세 점 a, b, c (0.0, 0.5, 2.0)를 주고 2차 함수로 근사해서 찾기
     // 우리가 준 테스트 함수 자체가 완벽한 2차 함수이므로, 단숨에 1.0을 찾아야 함!
-    double alpha_opt = LineSearch::quadratic_fit_search<2>(test_func, x_start, direction, 0.0, 0.5, 2.0);
+    double alpha_opt =
+        LineSearch::quadratic_fit_search<2>(test_func, x_start, direction, 0.0, 0.5, 2.0);
     EXPECT_NEAR(alpha_opt, 1.0, 1e-5);
 }
 
@@ -56,8 +60,9 @@ TEST_F(LineSearchTest, QuadraticFitSearchTest) {
 TEST_F(LineSearchTest, ShubertPiyavskiiTest) {
     double L = 5.0;
     // 톨러런스를 파라미터로 명시적으로 전달 (y 허용 오차: 1e-4)
-    double alpha_opt = LineSearch::shubert_piyavskii<2>(test_func, x_start, direction, 0.0, 3.0, L, 1e-4);
-    
+    double alpha_opt =
+        LineSearch::shubert_piyavskii<2>(test_func, x_start, direction, 0.0, 3.0, L, 1e-4);
+
     // 포물선의 평평한 바닥 특성을 고려하여, alpha(x축)의 허용 오차를 1e-2(0.01)로 조정!
     EXPECT_NEAR(alpha_opt, 1.0, 1e-2);
 }
