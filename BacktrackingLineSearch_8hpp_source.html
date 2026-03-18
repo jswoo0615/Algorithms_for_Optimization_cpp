@@ -92,89 +92,89 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define OPTIMIZATION_BACKTRACKING_LINE_SEARCH_HPP_</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;array&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;Optimization/AutoDiff.hpp&quot;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span>Optimization {</div>
-<div class="foldopen" id="foldopen00014" data-start="{" data-end="};">
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="classOptimization_1_1BacktrackingLineSearch.html">   14</a></span>    <span class="keyword">class </span><a class="code hl_class" href="classOptimization_1_1BacktrackingLineSearch.html">BacktrackingLineSearch</a> {</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>            <span class="comment">// --- 내부 헬퍼 : 현재 위치 x에서 방향 d로 alpha만큼 이동한 좌표 변환 ---</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>            <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N&gt;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>            <span class="keyword">static</span> std::array&lt;double, N&gt; ray_point(<span class="keyword">const</span> std::array&lt;double, N&gt;&amp; x, </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>                                                   <span class="keyword">const</span> std::array&lt;double, N&gt;&amp; d, </div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>                                                   <span class="keywordtype">double</span> alpha) {</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>                std::array&lt;double, N&gt; pt;</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>                <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>                    pt[i] = x[i] + alpha * d[i];</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>                }</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>                <span class="keywordflow">return</span> pt;</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>            }</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N, <span class="keyword">typename</span> Func&gt;</div>
-<div class="foldopen" id="foldopen00038" data-start="{" data-end="}">
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno"><a class="line" href="classOptimization_1_1BacktrackingLineSearch.html#a3134a49d7c8502be05e29a1b14c21a22">   38</a></span>            <span class="keyword">static</span> <span class="keywordtype">double</span> <a class="code hl_function" href="classOptimization_1_1BacktrackingLineSearch.html#a3134a49d7c8502be05e29a1b14c21a22">search</a>(Func f, <span class="keyword">const</span> std::array&lt;double, N&gt;&amp; x, </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                                 <span class="keyword">const</span> std::array&lt;double, N&gt;&amp; d, </div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                                 <span class="keywordtype">double</span> alpha=1.0, <span class="keywordtype">double</span> p=0.5, </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>                                 <span class="keywordtype">double</span> c=1e-4, <span class="keywordtype">bool</span> verbose=<span class="keyword">false</span>) {</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                <span class="comment">// 1. 현재 위치의 함수값 (f_x)과 기울기 (grad_x) 획득</span></div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>                <span class="keywordtype">double</span> f_x;</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>                std::array&lt;double, N&gt; grad_x;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>                <a class="code hl_function" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">AutoDiff::value_and_gradient&lt;N&gt;</a>(f, x, f_x, grad_x);</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;Optimization/AutoDiff.hpp&quot;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">namespace </span>Optimization {</div>
+<div class="foldopen" id="foldopen00015" data-start="{" data-end="};">
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="classOptimization_1_1BacktrackingLineSearch.html">   15</a></span><span class="keyword">class </span><a class="code hl_class" href="classOptimization_1_1BacktrackingLineSearch.html">BacktrackingLineSearch</a> {</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>   <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="comment">// --- 내부 헬퍼 : 현재 위치 x에서 방향 d로 alpha만큼 이동한 좌표 변환 ---</span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N&gt;</div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">static</span> std::array&lt;double, N&gt; ray_point(<span class="keyword">const</span> std::array&lt;double, N&gt;&amp; x,</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>                                           <span class="keyword">const</span> std::array&lt;double, N&gt;&amp; d, <span class="keywordtype">double</span> alpha) {</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        std::array&lt;double, N&gt; pt;</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>            pt[i] = x[i] + alpha * d[i];</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        }</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        <span class="keywordflow">return</span> pt;</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    }</div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>   <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N, <span class="keyword">typename</span> Func&gt;</div>
+<div class="foldopen" id="foldopen00039" data-start="{" data-end="}">
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="classOptimization_1_1BacktrackingLineSearch.html#a3134a49d7c8502be05e29a1b14c21a22">   39</a></span>    <span class="keyword">static</span> <span class="keywordtype">double</span> <a class="code hl_function" href="classOptimization_1_1BacktrackingLineSearch.html#a3134a49d7c8502be05e29a1b14c21a22">search</a>(Func f, <span class="keyword">const</span> std::array&lt;double, N&gt;&amp; x, <span class="keyword">const</span> std::array&lt;double, N&gt;&amp; d,</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                         <span class="keywordtype">double</span> alpha = 1.0, <span class="keywordtype">double</span> p = 0.5, <span class="keywordtype">double</span> c = 1e-4,</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>                         <span class="keywordtype">bool</span> verbose = <span class="keyword">false</span>) {</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="comment">// 1. 현재 위치의 함수값 (f_x)과 기울기 (grad_x) 획득</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keywordtype">double</span> f_x;</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        std::array&lt;double, N&gt; grad_x;</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <a class="code hl_function" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">AutoDiff::value_and_gradient&lt;N&gt;</a>(f, x, f_x, grad_x);</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>                <span class="comment">// 2. 방향 도함수 (Directional Derivative) 계산 : ∇f(x)^T * d</span></div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                <span class="comment">// 이 방향으로 한 발자국 내디딜 때 예상되는 하강 기울기</span></div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>                <span class="keywordtype">double</span> dir_deriv = 0.0;</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>                <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>                    dir_deriv += grad_x[i] * d[i];</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>                }</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>                <span class="comment">// 하강 방향 (Descent Direction)이 아니면 경고 (내적이 양수면 오르막길)</span></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                <span class="keywordflow">if</span> (dir_deriv &gt;= 0.0 &amp;&amp; verbose) {</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>                    std::cout &lt;&lt; <span class="stringliteral">&quot;  [Warning] Not a descent direction! dir_deriv: &quot;</span> &lt;&lt; dir_deriv &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>                }</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>                <span class="keywordtype">size_t</span> iter = 0;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>                <span class="keywordflow">while</span> (<span class="keyword">true</span>) {</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>                    iter++;</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>                    <span class="comment">// 3. 임시 이동 위치 계산 : x_new = x + alpha * d</span></div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>                    <span class="keyword">auto</span> x_new = ray_point&lt;N&gt;(x, d, alpha);</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>                    <span class="keywordtype">double</span> f_new = <a class="code hl_function" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">AutoDiff::value&lt;N&gt;</a>(f, x_new);</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="comment">// 2. 방향 도함수 (Directional Derivative) 계산 : ∇f(x)^T * d</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        <span class="comment">// 이 방향으로 한 발자국 내디딜 때 예상되는 하강 기울기</span></div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        <span class="keywordtype">double</span> dir_deriv = 0.0;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            dir_deriv += grad_x[i] * d[i];</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        }</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        <span class="comment">// 하강 방향 (Descent Direction)이 아니면 경고 (내적이 양수면 오르막길)</span></div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        <span class="keywordflow">if</span> (dir_deriv &gt;= 0.0 &amp;&amp; verbose) {</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            std::cout &lt;&lt; <span class="stringliteral">&quot;  [Warning] Not a descent direction! dir_deriv: &quot;</span> &lt;&lt; dir_deriv &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        }</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <span class="keywordtype">size_t</span> iter = 0;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <span class="keywordflow">while</span> (<span class="keyword">true</span>) {</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            iter++;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>            <span class="comment">// 3. 임시 이동 위치 계산 : x_new = x + alpha * d</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>            <span class="keyword">auto</span> x_new = ray_point&lt;N&gt;(x, d, alpha);</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            <span class="keywordtype">double</span> f_new = <a class="code hl_function" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">AutoDiff::value&lt;N&gt;</a>(f, x_new);</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>                    <span class="comment">// 4. 목표 감소치 계산 (출발점 함수값 + 관대함 (c) * 보폭 * 기울기)</span></div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>                    <span class="keywordtype">double</span> target_val = f_x + c * alpha * dir_deriv;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            <span class="comment">// 4. 목표 감소치 계산 (출발점 함수값 + 관대함 (c) * 보폭 * 기울기)</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            <span class="keywordtype">double</span> target_val = f_x + c * alpha * dir_deriv;</div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span> </div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>                    <span class="keywordflow">if</span> (verbose) {</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>                        std::cout &lt;&lt; <span class="stringliteral">&quot;  ↳ [Backtrack Iter &quot;</span> &lt;&lt; std::setw(2) &lt;&lt; iter &lt;&lt; <span class="stringliteral">&quot;] alpha: &quot;</span> &lt;&lt; std::fixed &lt;&lt; std::setprecision(6) &lt;&lt; alpha </div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                                &lt;&lt; <span class="stringliteral">&quot; | f_new: &quot;</span> &lt;&lt; f_new &lt;&lt; <span class="stringliteral">&quot; | Target: &quot;</span> &lt;&lt; target_val &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>                    }</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>                    <span class="comment">// 5. Armijo 조건 검사 (충분히 감소했는가?)</span></div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>                    <span class="keywordflow">if</span> (f_new &lt;= target_val) {</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>                        <span class="keywordflow">if</span> (verbose) std::cout &lt;&lt; <span class="stringliteral">&quot;  ↳ [Accepted] Armijo condition satisfied!\n&quot;</span>;</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>                        <span class="keywordflow">return</span> alpha;</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>                    }</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>                    <span class="comment">// 6. 실패 시 보폭 축소 (Backtracking)</span></div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>                    alpha *= p;</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>                    <span class="comment">// 무한 루프 방지 Failsafe (컴퓨터 정밀도 한계)</span></div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>                    <span class="keywordflow">if</span> (alpha &lt; 1e-10) { </div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>                        <span class="keywordflow">if</span> (verbose) </div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>                            std::cout &lt;&lt; <span class="stringliteral">&quot;  ↳ [Failsafe] Alpha reached minimum limit.\n&quot;</span>;</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>                        <span class="keywordflow">return</span> alpha;</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>                    }</div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>                }</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            }</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            <span class="keywordflow">if</span> (verbose) {</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>                std::cout &lt;&lt; <span class="stringliteral">&quot;  ↳ [Backtrack Iter &quot;</span> &lt;&lt; std::setw(2) &lt;&lt; iter</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                          &lt;&lt; <span class="stringliteral">&quot;] alpha: &quot;</span> &lt;&lt; std::fixed &lt;&lt; std::setprecision(6) &lt;&lt; alpha</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>                          &lt;&lt; <span class="stringliteral">&quot; | f_new: &quot;</span> &lt;&lt; f_new &lt;&lt; <span class="stringliteral">&quot; | Target: &quot;</span> &lt;&lt; target_val &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            }</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            <span class="comment">// 5. Armijo 조건 검사 (충분히 감소했는가?)</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            <span class="keywordflow">if</span> (f_new &lt;= target_val) {</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>                <span class="keywordflow">if</span> (verbose) std::cout &lt;&lt; <span class="stringliteral">&quot;  ↳ [Accepted] Armijo condition satisfied!\n&quot;</span>;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>                <span class="keywordflow">return</span> alpha;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            }</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>            <span class="comment">// 6. 실패 시 보폭 축소 (Backtracking)</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            alpha *= p;</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            <span class="comment">// 무한 루프 방지 Failsafe (컴퓨터 정밀도 한계)</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>            <span class="keywordflow">if</span> (alpha &lt; 1e-10) {</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>                <span class="keywordflow">if</span> (verbose) std::cout &lt;&lt; <span class="stringliteral">&quot;  ↳ [Failsafe] Alpha reached minimum limit.\n&quot;</span>;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>                <span class="keywordflow">return</span> alpha;</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            }</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        }</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    }</div>
 </div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    };</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>};</div>
 </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>} <span class="comment">// namespace Optimization</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>}  <span class="comment">// namespace Optimization</span></div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="preprocessor">#endif </span><span class="comment">// OPTIMIZATION_BACKTRACKING_LINE_SEARCH_HPP_</span></div>
-<div class="ttc" id="aclassOptimization_1_1AutoDiff_html_a4eb4e4229f4cd4d4f99e3ce694805a1b"><div class="ttname"><a href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">Optimization::AutoDiff::gradient</a></div><div class="ttdeci">static std::array&lt; double, N &gt; gradient(Func f, const std::array&lt; double, N &gt; &amp;x_point)</div><div class="ttdoc">입력 벡터에 대한 스칼라 함수의 Gradient 계산</div><div class="ttdef"><b>Definition</b> AutoDiff.hpp:28</div></div>
-<div class="ttc" id="aclassOptimization_1_1BacktrackingLineSearch_html"><div class="ttname"><a href="classOptimization_1_1BacktrackingLineSearch.html">Optimization::BacktrackingLineSearch</a></div><div class="ttdoc">[Chapter 4] Algorithm 4.2 : Backtracking Line Search 아르미호 (Armijo) 충분 감소 조건을 만족할 때까지 보폭을 줄여나가는 실전용 근사...</div><div class="ttdef"><b>Definition</b> BacktrackingLineSearch.hpp:14</div></div>
-<div class="ttc" id="aclassOptimization_1_1BacktrackingLineSearch_html_a3134a49d7c8502be05e29a1b14c21a22"><div class="ttname"><a href="classOptimization_1_1BacktrackingLineSearch.html#a3134a49d7c8502be05e29a1b14c21a22">Optimization::BacktrackingLineSearch::search</a></div><div class="ttdeci">static double search(Func f, const std::array&lt; double, N &gt; &amp;x, const std::array&lt; double, N &gt; &amp;d, double alpha=1.0, double p=0.5, double c=1e-4, bool verbose=false)</div><div class="ttdef"><b>Definition</b> BacktrackingLineSearch.hpp:38</div></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_BACKTRACKING_LINE_SEARCH_HPP_</span></div>
+<div class="ttc" id="aclassOptimization_1_1AutoDiff_html_a4eb4e4229f4cd4d4f99e3ce694805a1b"><div class="ttname"><a href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">Optimization::AutoDiff::gradient</a></div><div class="ttdeci">static std::array&lt; double, N &gt; gradient(Func f, const std::array&lt; double, N &gt; &amp;x_point)</div><div class="ttdoc">입력 벡터에 대한 스칼라 함수의 Gradient 계산</div><div class="ttdef"><b>Definition</b> AutoDiff.hpp:29</div></div>
+<div class="ttc" id="aclassOptimization_1_1BacktrackingLineSearch_html"><div class="ttname"><a href="classOptimization_1_1BacktrackingLineSearch.html">Optimization::BacktrackingLineSearch</a></div><div class="ttdoc">[Chapter 4] Algorithm 4.2 : Backtracking Line Search 아르미호 (Armijo) 충분 감소 조건을 만족할 때까지 보폭을 줄여나가는 실전용 근사...</div><div class="ttdef"><b>Definition</b> BacktrackingLineSearch.hpp:15</div></div>
+<div class="ttc" id="aclassOptimization_1_1BacktrackingLineSearch_html_a3134a49d7c8502be05e29a1b14c21a22"><div class="ttname"><a href="classOptimization_1_1BacktrackingLineSearch.html#a3134a49d7c8502be05e29a1b14c21a22">Optimization::BacktrackingLineSearch::search</a></div><div class="ttdeci">static double search(Func f, const std::array&lt; double, N &gt; &amp;x, const std::array&lt; double, N &gt; &amp;d, double alpha=1.0, double p=0.5, double c=1e-4, bool verbose=false)</div><div class="ttdef"><b>Definition</b> BacktrackingLineSearch.hpp:39</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

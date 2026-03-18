@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['trustregion_0',['TrustRegion',['../classOptimization_1_1TrustRegion.html',1,'Optimization']]],
-  ['trustregiontest_1',['TrustRegionTest',['../classTrustRegionTest.html',1,'']]]
+  ['strongbacktrackinglinesearch_0',['StrongBacktrackingLineSearch',['../classOptimization_1_1StrongBacktrackingLineSearch.html',1,'Optimization']]],
+  ['strongwolfetest_1',['StrongWolfeTest',['../classStrongWolfeTest.html',1,'']]]
 ];

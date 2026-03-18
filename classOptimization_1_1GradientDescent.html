@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Optimization Library: BacktrackingTest Class Reference</title>
+<title>Optimization Library: Optimization::GradientDescent Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -74,36 +74,28 @@ $(function() {
 </div>
 </div>
 
+<div id="nav-path" class="navpath">
+  <ul>
+<li class="navelem"><b>Optimization</b></li><li class="navelem"><a class="el" href="classOptimization_1_1GradientDescent.html">GradientDescent</a></li>  </ul>
+</div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pro-static-attribs">Static Protected Attributes</a> &#124;
-<a href="classBacktrackingTest-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">BacktrackingTest Class Reference</div></div>
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="classOptimization_1_1GradientDescent-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">Optimization::GradientDescent Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="dynheader">
-Inheritance diagram for BacktrackingTest:</div>
-<div class="dyncontent">
-<div class="center"><img src="classBacktrackingTest__inherit__graph.png" border="0" usemap="#aBacktrackingTest_inherit__map" alt="Inheritance graph"/></div>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
-<div class="dynheader">
-Collaboration diagram for BacktrackingTest:</div>
-<div class="dyncontent">
-<div class="center"><img src="classBacktrackingTest__coll__graph.png" border="0" usemap="#aBacktrackingTest_coll__map" alt="Collaboration graph"/></div>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-attribs" name="pro-static-attribs"></a>
-Static Protected Attributes</h2></td></tr>
-<tr class="memitem:aca98e8d26b0cf5195bfdba6cf542418b" id="r_aca98e8d26b0cf5195bfdba6cf542418b"><td class="memItemLeft" align="right" valign="top"><a id="aca98e8d26b0cf5195bfdba6cf542418b" name="aca98e8d26b0cf5195bfdba6cf542418b"></a>
-static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>func_1d</b> = [](const auto&amp; x) { return x[0] * x[0]; }</td></tr>
-<tr class="separator:aca98e8d26b0cf5195bfdba6cf542418b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa0e2ab4bdc72a266cd31c02dcf35e550" id="r_aa0e2ab4bdc72a266cd31c02dcf35e550"><td class="memItemLeft" align="right" valign="top"><a id="aa0e2ab4bdc72a266cd31c02dcf35e550" name="aa0e2ab4bdc72a266cd31c02dcf35e550"></a>
-static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>func_2d</b> = [](const auto&amp; v) { return v[0] * v[0] + v[1] * v[1]; }</td></tr>
-<tr class="separator:aa0e2ab4bdc72a266cd31c02dcf35e550"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a5398817e8c6f63a2be666d6a232a9633" id="r_a5398817e8c6f63a2be666d6a232a9633"><td class="memTemplParams" colspan="2"><a id="a5398817e8c6f63a2be666d6a232a9633" name="a5398817e8c6f63a2be666d6a232a9633"></a>
+template&lt;size_t N, typename Func &gt; </td></tr>
+<tr class="memitem:a5398817e8c6f63a2be666d6a232a9633"><td class="memTemplItemLeft" align="right" valign="top">static std::array&lt; double, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>optimize</b> (Func f, std::array&lt; double, N &gt; x, double tol=1e-6, int max_iter=1000, bool verbose=false)</td></tr>
+<tr class="separator:a5398817e8c6f63a2be666d6a232a9633"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>test/<b>test_backtracking.cpp</b></li>
+<li>include/Optimization/<a class="el" href="GradientDescent_8hpp_source.html">GradientDescent.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
