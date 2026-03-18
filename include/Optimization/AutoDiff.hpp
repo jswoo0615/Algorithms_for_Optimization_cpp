@@ -45,7 +45,7 @@ namespace Optimization {
              * @brief 함수값과 Gradient를 한 번의 Forward Pass로 동시에 획득
              */
             template <size_t N, typename Func>
-            static void value_and_gradient(Func f, const std::array<double, N>& x_point, double v_out, std::array<double, N>& g_out) {
+            static void value_and_gradient(Func f, const std::array<double, N>& x_point, double& v_out, std::array<double, N>& g_out) {
                 std::array<DualVec<double, N>, N> x_dual;
                 for (size_t i = 0; i < N; ++i) {
                     x_dual[i] = DualVec<double, N>::make_variable(x_point[i], i);
