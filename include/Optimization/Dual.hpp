@@ -190,7 +190,7 @@ namespace Optimization {
     // ==================================================
     // 3. 범용 수학 함수 (Macro & Overloading)
     // ==================================================
-    #define DUAL_MATH_OVERLOAD(funcName, derivativeExpr) \ 
+    #define DUAL_MATH_OVERLOAD(funcName, derivativeExpr) \
     template <typename T> \
     inline Dual<T> funcName(const Dual<T>& u) { \
         using std::funcName; \
@@ -269,7 +269,7 @@ namespace Optimization {
         if (den <= T(1e-16)) {
             return {res_v, T(0.0)};
         }
-        return {res_v, {x.v * y.d - y.v * x.d} / den};
+        return {res_v, (x.v * y.d - y.v * x.d) / den};
     }
 
     template <typename T, size_t N>

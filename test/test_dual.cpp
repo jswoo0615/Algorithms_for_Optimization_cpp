@@ -84,7 +84,7 @@ TEST(CSDTest, PrecisionComparison) {
     double x_val = 1.0;
     std::complex<double> z(x_val, h);
 
-    auto f_z = exp(z); // 헤더의 CSD 오버로드 호출
+    auto f_z = Optimization::exp(z); // 헤더의 CSD 오버로드 호출
     
     // f'(x) = exp(x)
     EXPECT_NEAR(f_z.real(), std::exp(x_val), 1e-15);
