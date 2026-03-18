@@ -13,8 +13,11 @@ FetchContent_MakeAvailable(googletest)
 
 # [1번 브랜치 결과물]
 add_executable(test_dual test/test_dual.cpp)
-target_link_libraries(test_dual GTest::gtest_main)
+target_link_libraries(test_dual PRIVATE GTest::gtest_main)
 
 # [3번 브랜치 결과물] 나중에 합쳐지면 여기에 추가됨!
 add_executable(test_autodiff test/test_autodiff.cpp)
-target_link_libraries(test_autodiff GTest::gtest_main)
+target_link_libraries(test_autodiff PRIVATE GTest::gtest_main)
+
+add_executable(test_bracketing test/test_bracketing.cpp)
+target_link_libraries(test_bracketing PRIVATE GTest::gtest_main)
