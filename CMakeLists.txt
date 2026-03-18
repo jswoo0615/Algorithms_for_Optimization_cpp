@@ -30,3 +30,8 @@ gtest_discover_tests(test_bracketing)
 add_executable(test_linesearch test/test_linesearch.cpp)
 target_link_libraries(test_linesearch PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_linesearch)
+
+# [4번 브랜치 결과물]
+add_executable(test_backtracking test/test_backtracking.cpp)
+target_link_libraries(test_backtracking PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_backtracking)
