@@ -95,7 +95,8 @@ Collaboration diagram for ConjugateGradientTest:</div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-static-attribs" name="pro-static-attribs"></a>
 Static Protected Attributes</h2></td></tr>
-<tr class="memitem:adf2fc5a8b28108cfc672fb652387c1ed" id="r_adf2fc5a8b28108cfc672fb652387c1ed"><td class="memItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConjugateGradientTest.html#adf2fc5a8b28108cfc672fb652387c1ed">quadratic_bowl</a></td></tr>
+<tr class="memitem:adf2fc5a8b28108cfc672fb652387c1ed" id="r_adf2fc5a8b28108cfc672fb652387c1ed"><td class="memItemLeft" align="right" valign="top"><a id="adf2fc5a8b28108cfc672fb652387c1ed" name="adf2fc5a8b28108cfc672fb652387c1ed"></a>
+static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><b>quadratic_bowl</b> = [](const auto&amp; v) { return v[0] * v[0] + v[1] * v[1]; }</td></tr>
 <tr class="separator:adf2fc5a8b28108cfc672fb652387c1ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7224ba01e4b1aaf0b77f2bd617ab3c19" id="r_a7224ba01e4b1aaf0b77f2bd617ab3c19"><td class="memItemLeft" align="right" valign="top">static constexpr auto&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classConjugateGradientTest.html#a7224ba01e4b1aaf0b77f2bd617ab3c19">elliptical_bowl</a></td></tr>
 <tr class="separator:a7224ba01e4b1aaf0b77f2bd617ab3c19"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -123,32 +124,7 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">= [](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; v) {</div>
-<div class="line">        <span class="keywordflow">return</span> v[0]*v[0] + 4.0 * v[1]*v[1];</div>
-<div class="line">    }</div>
-</div><!-- fragment -->
-</div>
-</div>
-<a id="adf2fc5a8b28108cfc672fb652387c1ed" name="adf2fc5a8b28108cfc672fb652387c1ed"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#adf2fc5a8b28108cfc672fb652387c1ed">&#9670;&#160;</a></span>quadratic_bowl</h2>
-
-<div class="memitem">
-<div class="memproto">
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">constexpr auto ConjugateGradientTest::quadratic_bowl</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">static</span><span class="mlabel">constexpr</span><span class="mlabel">protected</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<b>Initial value:</b><div class="fragment"><div class="line">= [](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; v) {</div>
-<div class="line">        <span class="keywordflow">return</span> v[0]*v[0] + v[1]*v[1];</div>
+<div class="line">        <span class="keywordflow">return</span> v[0] * v[0] + 4.0 * v[1] * v[1];</div>
 <div class="line">    }</div>
 </div><!-- fragment -->
 </div>
@@ -174,8 +150,8 @@ Static Protected Attributes</h2></td></tr>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">= [](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; v) {</div>
 <div class="line">        <span class="keyword">auto</span> term1 = 1.0 - v[0];</div>
-<div class="line">        <span class="keyword">auto</span> term2 = v[1] - v[0]*v[0];</div>
-<div class="line">        <span class="keywordflow">return</span> term1*term1 + 100.0 * term2*term2;</div>
+<div class="line">        <span class="keyword">auto</span> term2 = v[1] - v[0] * v[0];</div>
+<div class="line">        <span class="keywordflow">return</span> term1 * term1 + 100.0 * term2 * term2;</div>
 <div class="line">    }</div>
 </div><!-- fragment -->
 </div>

@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['trustregion_0',['TrustRegion',['../classOptimization_1_1TrustRegion.html',1,'Optimization']]],
-  ['trustregiontest_1',['TrustRegionTest',['../classTrustRegionTest.html',1,'']]]
+  ['range_0',['Range',['../structOptimization_1_1Range.html',1,'Optimization']]],
+  ['rosenbrockfunc_1',['RosenbrockFunc',['../structOptimization_1_1Test_1_1RosenbrockFunc.html',1,'Optimization::Test']]]
 ];
