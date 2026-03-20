@@ -1,8 +1,10 @@
 #include <gtest/gtest.h>
+
 #include <array>
 #include <cmath>
-#include "Optimization/Momentum.hpp"
+
 #include "Optimization/AutoDiff.hpp"
+#include "Optimization/Momentum.hpp"
 
 namespace Optimization {
 namespace Test {
@@ -35,7 +37,7 @@ struct RosenbrockFunc {
 };
 
 class MomentumOptimizerTest : public ::testing::Test {
-protected:
+   protected:
     void SetUp() override {
         // 테스트 전역 설정이 필요한 경우 (현재는 불필요)
     }
@@ -52,9 +54,8 @@ TEST_F(MomentumOptimizerTest, ConvergesOnQuadraticFunction) {
     std::array<double, 2> initial_guess = {5.0, -4.0};
 
     // Momentum 적용 (Learning Rate: 0.05, 관성: 0.9)
-    auto result = Optimization::Momentum::optimize<2>(
-        func, initial_guess, 0.05, 0.9, 5000, 1e-6, false
-    );
+    auto result =
+        Optimization::Momentum::optimize<2>(func, initial_guess, 0.05, 0.9, 5000, 1e-6, false);
 
     // 허용 오차 1e-4 내에서 (0, 0)으로 수렴하는지 확인
     EXPECT_NEAR(result[0], 0.0, 1e-4) << "X coordinate failed to converge.";
@@ -69,14 +70,13 @@ TEST_F(MomentumOptimizerTest, ConvergesOnRosenbrockFunction) {
     std::array<double, 2> initial_guess = {-1.2, 1.0};
 
     // 로젠브록은 골짜기가 좁아 보폭(alpha)을 줄이고 반복 횟수(max_iter)를 늘려야 함
-    auto result = Optimization::Momentum::optimize<2>(
-        func, initial_guess, 0.001, 0.9, 20000, 1e-5, false
-    );
+    auto result =
+        Optimization::Momentum::optimize<2>(func, initial_guess, 0.001, 0.9, 20000, 1e-5, false);
 
     // 허용 오차 1e-2 내에서 (1, 1)로 수렴하는지 확인 (비선형성이 강하므로 tolerance 조정)
     EXPECT_NEAR(result[0], 1.0, 1e-2) << "X coordinate failed to converge on Rosenbrock.";
     EXPECT_NEAR(result[1], 1.0, 1e-2) << "Y coordinate failed to converge on Rosenbrock.";
 }
 
-} // namespace Test
-} // namespace Optimization
+}  // namespace Test
+}  // namespace Optimization
