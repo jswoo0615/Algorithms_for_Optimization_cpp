@@ -51,3 +51,7 @@ gtest_discover_tests(test_gradient_descent)
 add_executable(test_conjugate_gradient test/test_conjugate_gradient.cpp)
 target_link_libraries(test_conjugate_gradient PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_conjugate_gradient)
+
+add_executable(test_momentum test/test_momentum.cpp)
+target_link_libraries(test_momentum PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_momentum)
