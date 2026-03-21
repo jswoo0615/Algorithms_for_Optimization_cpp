@@ -67,3 +67,7 @@ gtest_discover_tests(test_adagrad)
 add_executable(test_rmsprop test/test_rmsprop.cpp)
 target_link_libraries(test_rmsprop PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_rmsprop)
+
+add_executable(test_adam test/test_adam.cpp)
+target_link_libraries(test_adam PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_adam)
