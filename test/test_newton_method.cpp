@@ -1,23 +1,24 @@
 #include <gtest/gtest.h>
+
 #include <array>
 
 #include "Optimization/NewtonMethod.hpp"
 
 namespace Optimization::Tests {
 
-    // 템플릿화된 Sphere Function (AutoDiff 호환)
-    struct SphereFunction {
-        template <typename T, size_t N>
-        constexpr T operator()(const std::array<T, N>& x) const noexcept {
-            T sum = T(0.0);
-            for (size_t i = 0; i < N; ++i) {
-                sum = sum + (x[i] * x[i]);
-            }
-            return sum;
+// 템플릿화된 Sphere Function (AutoDiff 호환)
+struct SphereFunction {
+    template <typename T, size_t N>
+    constexpr T operator()(const std::array<T, N>& x) const noexcept {
+        T sum = T(0.0);
+        for (size_t i = 0; i < N; ++i) {
+            sum = sum + (x[i] * x[i]);
         }
-    };
+        return sum;
+    }
+};
 
-} // namespace Optimization::Tests
+}  // namespace Optimization::Tests
 
 using namespace Optimization;
 using namespace Optimization::Tests;
@@ -33,7 +34,7 @@ TEST(NewtonMethodTest, Quadratic2DOptimization) {
     EXPECT_NEAR(result.x_opt[1], 0.0, 1e-5);
     EXPECT_NEAR(result.f_opt, 0.0, 1e-5);
 
-    EXPECT_GT(result.elapsed_ns, 0); // 연산 시간이 측정되었는지 검증
+    EXPECT_GT(result.elapsed_ns, 0);  // 연산 시간이 측정되었는지 검증
 }
 
 TEST(NewtonMethodTest, Quadratic3DOptimization) {
