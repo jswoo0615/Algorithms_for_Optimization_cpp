@@ -63,3 +63,7 @@ gtest_discover_tests(test_nestrovMomentum)
 add_executable(test_adagrad test/test_adagrad.cpp)
 target_link_libraries(test_adagrad PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_adagrad)
+
+add_executable(test_rmsprop test/test_rmsprop.cpp)
+target_link_libraries(test_rmsprop PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_rmsprop)
