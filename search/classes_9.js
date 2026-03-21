@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['pt_0',['Pt',['../structOptimization_1_1Pt.html',1,'Optimization']]]
+  ['optimizationresult_0',['OptimizationResult',['../structOptimization_1_1OptimizationResult.html',1,'Optimization']]]
 ];

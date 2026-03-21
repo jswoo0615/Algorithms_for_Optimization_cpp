@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Optimization Library: Optimization::Tests::SphereFunction Struct Reference</title>
+<title>Optimization Library: Optimization::NewtonMethod Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -76,31 +76,26 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>Optimization</b></li><li class="navelem"><b>Tests</b></li><li class="navelem"><a class="el" href="structOptimization_1_1Tests_1_1SphereFunction.html">SphereFunction</a></li>  </ul>
+<li class="navelem"><b>Optimization</b></li><li class="navelem"><a class="el" href="classOptimization_1_1NewtonMethod.html">NewtonMethod</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
-<a href="#pub-methods">Public Member Functions</a> &#124;
-<a href="structOptimization_1_1Tests_1_1SphereFunction-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">Optimization::Tests::SphereFunction Struct Reference</div></div>
+<a href="#pub-static-methods">Static Public Member Functions</a> &#124;
+<a href="classOptimization_1_1NewtonMethod-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">Optimization::NewtonMethod Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
-<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
-Public Member Functions</h2></td></tr>
-<tr class="memitem:a1c3ce1624c0264d3597d32ffddfedec6" id="r_a1c3ce1624c0264d3597d32ffddfedec6"><td class="memTemplParams" colspan="2"><a id="a1c3ce1624c0264d3597d32ffddfedec6" name="a1c3ce1624c0264d3597d32ffddfedec6"></a>
-template&lt;typename T , size_t N&gt; </td></tr>
-<tr class="memitem:a1c3ce1624c0264d3597d32ffddfedec6"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator()</b> (const std::array&lt; T, N &gt; &amp;x) const noexcept</td></tr>
-<tr class="separator:a1c3ce1624c0264d3597d32ffddfedec6"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1c3ce1624c0264d3597d32ffddfedec6" id="r_a1c3ce1624c0264d3597d32ffddfedec6"><td class="memTemplParams" colspan="2"><a id="a1c3ce1624c0264d3597d32ffddfedec6" name="a1c3ce1624c0264d3597d32ffddfedec6"></a>
-template&lt;typename T , size_t N&gt; </td></tr>
-<tr class="memitem:a1c3ce1624c0264d3597d32ffddfedec6"><td class="memTemplItemLeft" align="right" valign="top">constexpr T&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator()</b> (const std::array&lt; T, N &gt; &amp;x) const noexcept</td></tr>
-<tr class="separator:a1c3ce1624c0264d3597d32ffddfedec6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
+Static Public Member Functions</h2></td></tr>
+<tr class="memitem:a86e91981e24e45b04dd40aaba6901ee8" id="r_a86e91981e24e45b04dd40aaba6901ee8"><td class="memTemplParams" colspan="2"><a id="a86e91981e24e45b04dd40aaba6901ee8" name="a86e91981e24e45b04dd40aaba6901ee8"></a>
+template&lt;size_t N, typename Func &gt; </td></tr>
+<tr class="memitem:a86e91981e24e45b04dd40aaba6901ee8"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="structOptimization_1_1OptimizationResult.html">OptimizationResult</a>&lt; N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>optimize</b> (Func f, std::array&lt; double, N &gt; x_init, double tol=1e-6, size_t max_iter=50) noexcept</td></tr>
+<tr class="separator:a86e91981e24e45b04dd40aaba6901ee8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<hr/>The documentation for this struct was generated from the following files:<ul>
-<li>test/<b>test_hyper_gradient_descent.cpp</b></li>
-<li>test/<b>test_newton_method.cpp</b></li>
+<hr/>The documentation for this class was generated from the following file:<ul>
+<li>include/Optimization/<a class="el" href="NewtonMethod_8hpp_source.html">NewtonMethod.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->
