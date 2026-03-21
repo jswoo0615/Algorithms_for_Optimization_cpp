@@ -75,3 +75,7 @@ gtest_discover_tests(test_adam)
 add_executable(test_hyper_gradient_descent test/test_hyper_gradient_descent.cpp)
 target_link_libraries(test_hyper_gradient_descent PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_hyper_gradient_descent)
+
+add_executable(test_newton_method test/test_newton_method.cpp)
+target_link_libraries(test_newton_method PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_newton_method)
