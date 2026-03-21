@@ -5,5 +5,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
   node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
   rankdir="LR";
-  Node0 [id="Node000000",label="Optimization::ConjugateGradient",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classOptimization_1_1ConjugateGradient.html",tooltip=" "];
+  Node0 [id="Node000000",label="Optimization::Backtracking\lLineSearch",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classOptimization_1_1BacktrackingLineSearch.html",tooltip="[Chapter 4] Algorithm 4.2 : Backtracking Line Search 아르미호 (Armijo) 충분 감소 조건을 만족할 때까지 보폭을 줄여나가는 실전용 근사..."];
 }
