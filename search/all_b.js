@@ -1,5 +1,7 @@
 var searchData=
 [
   ['range_0',['Range',['../structOptimization_1_1Range.html',1,'Optimization']]],
-  ['rosenbrockfunc_1',['RosenbrockFunc',['../structOptimization_1_1Test_1_1RosenbrockFunc.html',1,'Optimization::Test']]]
+  ['rmsprop_1',['RMSProp',['../classOptimization_1_1RMSProp.html',1,'Optimization']]],
+  ['rmsproptest_2',['RMSPropTest',['../classOptimization_1_1Test_1_1RMSPropTest.html',1,'Optimization::Test']]],
+  ['rosenbrockfunc_3',['RosenbrockFunc',['../structOptimization_1_1Test_1_1RosenbrockFunc.html',1,'Optimization::Test']]]
 ];
