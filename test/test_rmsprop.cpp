@@ -1,8 +1,10 @@
 #include <gtest/gtest.h>
+
 #include <array>
 #include <cmath>
-#include "Optimization/RMSProp.hpp"
+
 #include "Optimization/AutoDiff.hpp"
+#include "Optimization/RMSProp.hpp"
 
 namespace Optimization {
 namespace Test {
@@ -35,7 +37,7 @@ struct RosenbrockFunc {
 };
 
 class RMSPropTest : public ::testing::Test {
-protected:
+   protected:
     void SetUp() override {}
     void TearDown() override {}
 };
@@ -49,9 +51,8 @@ TEST_F(RMSPropTest, ConvergesOn10DQuadraticFunction) {
     initial_guess.fill(5.0);
 
     // RMSProp 적용 (학습률 0.1, decay 0.9)
-    auto result = Optimization::RMSProp::optimize<10>(
-        func, initial_guess, 0.1, 0.9, 1e-8, 15000, 1e-4, false
-    );
+    auto result = Optimization::RMSProp::optimize<10>(func, initial_guess, 0.1, 0.9, 1e-8, 15000,
+                                                      1e-4, false);
 
     // 10개 차원 모두 0.0으로 수렴했는지 확인 (허용 오차 1e-3)
     for (size_t i = 0; i < 10; ++i) {
@@ -69,14 +70,13 @@ TEST_F(RMSPropTest, ConvergesOnRosenbrockFunction) {
     // [입법자의 튜닝]
     // alpha를 0.002로 대폭 줄여 절벽 사이의 진동을 막고,
     // decay를 0.99로 늘려 이동 관성을 안정적으로 유지합니다.
-    auto result = Optimization::RMSProp::optimize<2>(
-        func, initial_guess, 0.002, 0.99, 1e-8, 50000, 1e-4, false
-    );
+    auto result = Optimization::RMSProp::optimize<2>(func, initial_guess, 0.002, 0.99, 1e-8, 50000,
+                                                     1e-4, false);
 
     // 정답 (1.0, 1.0) 수렴 확인
     EXPECT_NEAR(result[0], 1.0, 1e-2) << "X coordinate failed to converge on Rosenbrock.";
     EXPECT_NEAR(result[1], 1.0, 1e-2) << "Y coordinate failed to converge on Rosenbrock.";
 }
 
-} // namespace Test
-} // namespace Optimization
+}  // namespace Test
+}  // namespace Optimization
