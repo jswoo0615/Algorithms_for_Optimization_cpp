@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
+
 #include <array>
 #include <cmath>
+
 #include "Optimization/AdaGrad.hpp"
 #include "Optimization/AutoDiff.hpp"
 
@@ -38,7 +40,7 @@ struct RosenbrockFunc {
 };
 
 class AdaGradTest : public ::testing::Test {
-protected:
+   protected:
     void SetUp() override {}
     void TearDown() override {}
 };
@@ -52,9 +54,8 @@ TEST_F(AdaGradTest, ConvergesOn10DQuadraticFunction) {
     initial_guess.fill(5.0);
 
     // AdaGrad는 분모가 계속 커지므로 초기 학습률(alpha)을 1.5처럼 아주 크게 잡아줘야 합니다.
-    auto result = Optimization::AdaGrad::optimize<10>(
-        func, initial_guess, 1.5, 1e-8, 30000, 1e-4, false
-    );
+    auto result =
+        Optimization::AdaGrad::optimize<10>(func, initial_guess, 1.5, 1e-8, 30000, 1e-4, false);
 
     for (size_t i = 0; i < 10; ++i) {
         EXPECT_NEAR(result[i], 0.0, 1e-3) << "Dimension " << i << " failed to converge.";
@@ -70,14 +71,14 @@ TEST_F(AdaGradTest, CrawlsOnRosenbrockFunction) {
 
     // 학습률이 죽어버리는 현상을 극복하기 위해 iteration을 무려 10만 번으로 늘리고,
     // 초기 alpha를 2.0으로 강제 주입합니다.
-    auto result = Optimization::AdaGrad::optimize<2>(
-        func, initial_guess, 2.0, 1e-8, 100000, 1e-4, false
-    );
+    auto result =
+        Optimization::AdaGrad::optimize<2>(func, initial_guess, 2.0, 1e-8, 100000, 1e-4, false);
 
-    // 그럼에도 불구하고 수렴이 굉장히 더디기 때문에 허용 오차(Tolerance)를 5e-2로 넉넉하게 잡습니다.
+    // 그럼에도 불구하고 수렴이 굉장히 더디기 때문에 허용 오차(Tolerance)를 5e-2로 넉넉하게
+    // 잡습니다.
     EXPECT_NEAR(result[0], 1.0, 5e-2) << "X coordinate failed to converge on Rosenbrock.";
     EXPECT_NEAR(result[1], 1.0, 5e-2) << "Y coordinate failed to converge on Rosenbrock.";
 }
 
-} // namespace Test
-} // namespace Optimization
+}  // namespace Test
+}  // namespace Optimization
