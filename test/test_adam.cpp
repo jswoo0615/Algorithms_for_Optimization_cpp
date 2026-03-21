@@ -1,6 +1,8 @@
 #include <gtest/gtest.h>
+
 #include <array>
 #include <cmath>
+
 #include "Optimization/Adam.hpp"
 #include "Optimization/AutoDiff.hpp"
 
@@ -38,7 +40,7 @@ struct RosenbrockFunc {
 };
 
 class AdamTest : public ::testing::Test {
-protected:
+   protected:
     void SetUp() override {}
     void TearDown() override {}
 };
@@ -52,9 +54,8 @@ TEST_F(AdamTest, ConvergesOn10DQuadraticFunction) {
     initial_guess.fill(5.0);
 
     // Adam 기본 논문 하이퍼파라미터 세팅 (alpha=0.1로 약간 상향)
-    auto result = Optimization::Adam::optimize<10>(
-        func, initial_guess, 0.1, 0.9, 0.999, 1e-8, 15000, 1e-4, false
-    );
+    auto result = Optimization::Adam::optimize<10>(func, initial_guess, 0.1, 0.9, 0.999, 1e-8,
+                                                   15000, 1e-4, false);
 
     // 10개 차원 모두 0.0으로 수렴했는지 확인 (허용 오차 1e-3)
     for (size_t i = 0; i < 10; ++i) {
@@ -71,14 +72,13 @@ TEST_F(AdamTest, ConvergesOnRosenbrockFunction) {
 
     // RMSProp에서 진동을 막기 위해 0.002까지 내렸던 alpha를
     // Adam에서는 관성(m) 덕분에 0.05까지 끌어올려도 안정적으로 수렴합니다.
-    auto result = Optimization::Adam::optimize<2>(
-        func, initial_guess, 0.05, 0.9, 0.999, 1e-8, 30000, 1e-4, false
-    );
+    auto result = Optimization::Adam::optimize<2>(func, initial_guess, 0.05, 0.9, 0.999, 1e-8,
+                                                  30000, 1e-4, false);
 
     // 정답 (1.0, 1.0) 수렴 확인
     EXPECT_NEAR(result[0], 1.0, 1e-2) << "X coordinate failed to converge on Rosenbrock.";
     EXPECT_NEAR(result[1], 1.0, 1e-2) << "Y coordinate failed to converge on Rosenbrock.";
 }
 
-} // namespace Test
-} // namespace Optimization
+}  // namespace Test
+}  // namespace Optimization
