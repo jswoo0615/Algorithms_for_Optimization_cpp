@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['linesearch_0',['LineSearch',['../classOptimization_1_1LineSearch.html',1,'Optimization']]],
-  ['linesearchtest_1',['LineSearchTest',['../classLineSearchTest.html',1,'']]]
+  ['jacobian_0',['jacobian',['../classOptimization_1_1AutoDiff.html#ab3f0f5e3396cb406f3ab7862f994674f',1,'Optimization::AutoDiff']]]
 ];
