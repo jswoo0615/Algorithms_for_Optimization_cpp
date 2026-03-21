@@ -127,7 +127,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>            <span class="comment">// 2. 미래 위치에서의 기울기 (g_lookahead) 획득</span></div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            <span class="keywordtype">double</span> f_lookahead;</div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>            std::array&lt;double, N&gt; g_lookahead;</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            <a class="code hl_function" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">AutoDiff::value_and_gradient&lt;N&gt;</a>(f, x_lookahead, f_lookahead, g_lookahead);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            AutoDiff::value_and_gradient&lt;N&gt;(f, x_lookahead, f_lookahead, g_lookahead);</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            <span class="comment">// 종료 조건 검사 (미래 위치의 기울기 기준)</span></div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>            <span class="keywordtype">double</span> g_norm = 0.0;</div>
@@ -161,7 +161,6 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>}  <span class="comment">// namespace Optimization</span></div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_NESTROV_MOMENTUM_HPP_</span></div>
-<div class="ttc" id="aclassOptimization_1_1AutoDiff_html_a4eb4e4229f4cd4d4f99e3ce694805a1b"><div class="ttname"><a href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">Optimization::AutoDiff::gradient</a></div><div class="ttdeci">static std::array&lt; double, N &gt; gradient(Func f, const std::array&lt; double, N &gt; &amp;x_point)</div><div class="ttdoc">입력 벡터에 대한 스칼라 함수의 Gradient 계산</div><div class="ttdef"><b>Definition</b> AutoDiff.hpp:29</div></div>
 <div class="ttc" id="aclassOptimization_1_1NestrovMomentum_html"><div class="ttname"><a href="classOptimization_1_1NestrovMomentum.html">Optimization::NestrovMomentum</a></div><div class="ttdef"><b>Definition</b> NestrovMomentum.hpp:12</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

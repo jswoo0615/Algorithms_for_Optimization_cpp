@@ -142,7 +142,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> iter = 1; iter &lt;= max_iter; ++iter) {</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            <span class="keywordtype">double</span> f_x;</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            std::array&lt;double, 2&gt; g;</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            <a class="code hl_function" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">AutoDiff::value_and_gradient&lt;2&gt;</a>(f, x, f_x, g);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            AutoDiff::value_and_gradient&lt;2&gt;(f, x, f_x, g);</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            <span class="keywordtype">double</span> g_norm = norm2(g);</div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            <span class="keywordflow">if</span> (g_norm &lt; 1e-5) {</div>
@@ -152,7 +152,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>            }</div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            <span class="comment">// 헤시안 H 추출 (2차 곡률 정보)</span></div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>            <span class="keyword">auto</span> H = <a class="code hl_function" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">AutoDiff::hessian&lt;2&gt;</a>(f, x);</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>            <span class="keyword">auto</span> H = AutoDiff::hessian&lt;2&gt;(f, x);</div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            <span class="comment">// ----------------------------------------------</span></div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            <span class="comment">// [Subproblem] Dogleg Method (개다리 기법)</span></div>
@@ -188,7 +188,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            <span class="comment">// [Evaluation] 예측 vs 실제</span></div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>            <span class="comment">// -----------------------------------</span></div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>            std::array&lt;double, 2&gt; x_new = {x[0] + p[0], x[1] + p[1]};</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            <span class="keywordtype">double</span> f_new = <a class="code hl_function" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">AutoDiff::value&lt;2&gt;</a>(f, x_new);</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            <span class="keywordtype">double</span> f_new = AutoDiff::value&lt;2&gt;(f, x_new);</div>
 <div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>            <span class="keywordtype">double</span> act_red = f_x - f_new;  <span class="comment">// 실제 감소량</span></div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>            <span class="comment">// 예측 모델 : m(p) = f + g^T p + 0.5 p^T H p</span></div>
@@ -234,7 +234,6 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>}  <span class="comment">// namespace Optimization</span></div>
 <div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> </div>
 <div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_TRUST_REGION_HPP_</span></div>
-<div class="ttc" id="aclassOptimization_1_1AutoDiff_html_a4eb4e4229f4cd4d4f99e3ce694805a1b"><div class="ttname"><a href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">Optimization::AutoDiff::gradient</a></div><div class="ttdeci">static std::array&lt; double, N &gt; gradient(Func f, const std::array&lt; double, N &gt; &amp;x_point)</div><div class="ttdoc">입력 벡터에 대한 스칼라 함수의 Gradient 계산</div><div class="ttdef"><b>Definition</b> AutoDiff.hpp:29</div></div>
 <div class="ttc" id="aclassOptimization_1_1TrustRegion_html"><div class="ttname"><a href="classOptimization_1_1TrustRegion.html">Optimization::TrustRegion</a></div><div class="ttdef"><b>Definition</b> TrustRegion.hpp:13</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

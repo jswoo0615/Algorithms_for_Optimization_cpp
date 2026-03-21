@@ -121,7 +121,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="comment">// 1. 현재 위치의 함수값 (f_x)과 기울기 (grad_x) 획득</span></div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keywordtype">double</span> f_x;</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        std::array&lt;double, N&gt; grad_x;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <a class="code hl_function" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">AutoDiff::value_and_gradient&lt;N&gt;</a>(f, x, f_x, grad_x);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        AutoDiff::value_and_gradient&lt;N&gt;(f, x, f_x, grad_x);</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        <span class="comment">// 2. 방향 도함수 (Directional Derivative) 계산 : ∇f(x)^T * d</span></div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        <span class="comment">// 이 방향으로 한 발자국 내디딜 때 예상되는 하강 기울기</span></div>
@@ -139,7 +139,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            iter++;</div>
 <div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>            <span class="comment">// 3. 임시 이동 위치 계산 : x_new = x + alpha * d</span></div>
 <div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>            <span class="keyword">auto</span> x_new = ray_point&lt;N&gt;(x, d, alpha);</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            <span class="keywordtype">double</span> f_new = <a class="code hl_function" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">AutoDiff::value&lt;N&gt;</a>(f, x_new);</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            <span class="keywordtype">double</span> f_new = AutoDiff::value&lt;N&gt;(f, x_new);</div>
 <div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span> </div>
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>            <span class="comment">// 4. 목표 감소치 계산 (출발점 함수값 + 관대함 (c) * 보폭 * 기울기)</span></div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            <span class="keywordtype">double</span> target_val = f_x + c * alpha * dir_deriv;</div>
@@ -172,7 +172,6 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>}  <span class="comment">// namespace Optimization</span></div>
 <div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span> </div>
 <div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_BACKTRACKING_LINE_SEARCH_HPP_</span></div>
-<div class="ttc" id="aclassOptimization_1_1AutoDiff_html_a4eb4e4229f4cd4d4f99e3ce694805a1b"><div class="ttname"><a href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">Optimization::AutoDiff::gradient</a></div><div class="ttdeci">static std::array&lt; double, N &gt; gradient(Func f, const std::array&lt; double, N &gt; &amp;x_point)</div><div class="ttdoc">입력 벡터에 대한 스칼라 함수의 Gradient 계산</div><div class="ttdef"><b>Definition</b> AutoDiff.hpp:29</div></div>
 <div class="ttc" id="aclassOptimization_1_1BacktrackingLineSearch_html"><div class="ttname"><a href="classOptimization_1_1BacktrackingLineSearch.html">Optimization::BacktrackingLineSearch</a></div><div class="ttdoc">[Chapter 4] Algorithm 4.2 : Backtracking Line Search 아르미호 (Armijo) 충분 감소 조건을 만족할 때까지 보폭을 줄여나가는 실전용 근사...</div><div class="ttdef"><b>Definition</b> BacktrackingLineSearch.hpp:15</div></div>
 <div class="ttc" id="aclassOptimization_1_1BacktrackingLineSearch_html_a3134a49d7c8502be05e29a1b14c21a22"><div class="ttname"><a href="classOptimization_1_1BacktrackingLineSearch.html#a3134a49d7c8502be05e29a1b14c21a22">Optimization::BacktrackingLineSearch::search</a></div><div class="ttdeci">static double search(Func f, const std::array&lt; double, N &gt; &amp;x, const std::array&lt; double, N &gt; &amp;d, double alpha=1.0, double p=0.5, double c=1e-4, bool verbose=false)</div><div class="ttdef"><b>Definition</b> BacktrackingLineSearch.hpp:39</div></div>
 </div><!-- fragment --></div><!-- contents -->

@@ -123,7 +123,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>            std::array&lt;double, N&gt; g;</div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>            <span class="comment">// 1. 현재 위치의 함수값 및 기울기 평가</span></div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>            <a class="code hl_function" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">AutoDiff::value_and_gradient&lt;N&gt;</a>(f, x, f_x, g);</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>            AutoDiff::value_and_gradient&lt;N&gt;(f, x, f_x, g);</div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>            <span class="comment">// 2. 기울기 노름 (Norm) 계산 및 종료 조건 확인</span></div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>            <span class="keywordtype">double</span> g_norm = 0.0;</div>
@@ -160,7 +160,6 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>}  <span class="comment">// namespace Optimization</span></div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_MOMENTUM_HPP_</span></div>
-<div class="ttc" id="aclassOptimization_1_1AutoDiff_html_a4eb4e4229f4cd4d4f99e3ce694805a1b"><div class="ttname"><a href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">Optimization::AutoDiff::gradient</a></div><div class="ttdeci">static std::array&lt; double, N &gt; gradient(Func f, const std::array&lt; double, N &gt; &amp;x_point)</div><div class="ttdoc">입력 벡터에 대한 스칼라 함수의 Gradient 계산</div><div class="ttdef"><b>Definition</b> AutoDiff.hpp:29</div></div>
 <div class="ttc" id="aclassOptimization_1_1Momentum_html"><div class="ttname"><a href="classOptimization_1_1Momentum.html">Optimization::Momentum</a></div><div class="ttdef"><b>Definition</b> Momentum.hpp:12</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

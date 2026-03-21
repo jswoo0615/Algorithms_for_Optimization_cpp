@@ -5,5 +5,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
   node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
   rankdir="LR";
-  Node0 [id="Node000000",label="Optimization::AutoDiff",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classOptimization_1_1AutoDiff.html",tooltip="AD 엔진을 캡슐화하여 사용자에게 미분 인터페이스를 제공하는 클래스"];
+  Node0 [id="Node000000",label="Optimization::AutoDiff",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classOptimization_1_1AutoDiff.html",tooltip="Automatic Differentiation 인터페이스 제공하는 정적 클래스"];
 }

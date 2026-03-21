@@ -87,88 +87,38 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>AD 엔진을 캡슐화하여 사용자에게 미분 인터페이스를 제공하는 클래스  
+<p>Automatic Differentiation 인터페이스 제공하는 정적 클래스  
  <a href="classOptimization_1_1AutoDiff.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="AutoDiff_8hpp_source.html">AutoDiff.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:acf974a767805b2a657e1a6f818b5613e" id="r_acf974a767805b2a657e1a6f818b5613e"><td class="memTemplParams" colspan="2"><a id="acf974a767805b2a657e1a6f818b5613e" name="acf974a767805b2a657e1a6f818b5613e"></a>
-template&lt;<a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">size_t</a> N, <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">typename</a> <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">Func</a> &gt; </td></tr>
-<tr class="memitem:acf974a767805b2a657e1a6f818b5613e"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">static</a> <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">double</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><b>value</b> (<a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">Func</a> <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">f</a>, <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">const</a> std::array&lt; <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">double</a>, <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">N</a> &gt; &amp;<a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">x_point</a>)</td></tr>
-<tr class="separator:acf974a767805b2a657e1a6f818b5613e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4eb4e4229f4cd4d4f99e3ce694805a1b" id="r_a4eb4e4229f4cd4d4f99e3ce694805a1b"><td class="memTemplParams" colspan="2"><a id="a4eb4e4229f4cd4d4f99e3ce694805a1b" name="a4eb4e4229f4cd4d4f99e3ce694805a1b"></a>
+<tr class="memitem:a726857d4cbc41ae4628bdee10d58b356" id="r_a726857d4cbc41ae4628bdee10d58b356"><td class="memTemplParams" colspan="2"><a id="a726857d4cbc41ae4628bdee10d58b356" name="a726857d4cbc41ae4628bdee10d58b356"></a>
 template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:a4eb4e4229f4cd4d4f99e3ce694805a1b"><td class="memTemplItemLeft" align="right" valign="top">static std::array&lt; double, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>gradient</b> (Func f, const std::array&lt; double, N &gt; &amp;x_point)</td></tr>
-<tr class="memdesc:a4eb4e4229f4cd4d4f99e3ce694805a1b"><td class="mdescLeft">&#160;</td><td class="mdescRight">입력 벡터에 대한 스칼라 함수의 Gradient 계산 <br /></td></tr>
-<tr class="separator:a4eb4e4229f4cd4d4f99e3ce694805a1b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:af58a4eaa7be56f542061f67d6640840b" id="r_af58a4eaa7be56f542061f67d6640840b"><td class="memTemplParams" colspan="2"><a id="af58a4eaa7be56f542061f67d6640840b" name="af58a4eaa7be56f542061f67d6640840b"></a>
-template&lt;<a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">size_t</a> N, <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">typename</a> <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">Func</a> &gt; </td></tr>
-<tr class="memitem:af58a4eaa7be56f542061f67d6640840b"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">static</a> <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">void</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><b>value_and_gradient</b> (<a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">Func</a> <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">f</a>, <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">const</a> std::array&lt; <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">double</a>, <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">N</a> &gt; &amp;<a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">x_point</a>, <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">double</a> &amp;<a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">v_out</a>, std::array&lt; <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">double</a>, <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">N</a> &gt; &amp;<a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">g_out</a>)</td></tr>
-<tr class="memdesc:af58a4eaa7be56f542061f67d6640840b"><td class="mdescLeft">&#160;</td><td class="mdescRight">함수값과 Gradient를 한 번의 Forward Pass로 동시에 획득 <br /></td></tr>
-<tr class="separator:af58a4eaa7be56f542061f67d6640840b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab3f0f5e3396cb406f3ab7862f994674f" id="r_ab3f0f5e3396cb406f3ab7862f994674f"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">size_t</a> M, <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">size_t</a> N, <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">typename</a> <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">Func</a> &gt; </td></tr>
-<tr class="memitem:ab3f0f5e3396cb406f3ab7862f994674f"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">static</a> std::array&lt; std::array&lt; <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">double</a>, <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">N</a> &gt;, <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">M</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1AutoDiff.html#ab3f0f5e3396cb406f3ab7862f994674f">jacobian</a> (<a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">Func</a> <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">f</a>, <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">const</a> std::array&lt; <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">double</a>, <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">N</a> &gt; &amp;<a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">x_point</a>)</td></tr>
-<tr class="memdesc:ab3f0f5e3396cb406f3ab7862f994674f"><td class="mdescLeft">&#160;</td><td class="mdescRight">벡터 함수의 자코비안 행렬 계산  <br /></td></tr>
-<tr class="separator:ab3f0f5e3396cb406f3ab7862f994674f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6a5a14568c118ab30e087c22ad499a40" id="r_a6a5a14568c118ab30e087c22ad499a40"><td class="memTemplParams" colspan="2"><a id="a6a5a14568c118ab30e087c22ad499a40" name="a6a5a14568c118ab30e087c22ad499a40"></a>
-template&lt;<a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">size_t</a> N, <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">typename</a> <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">Func</a> &gt; </td></tr>
-<tr class="memitem:a6a5a14568c118ab30e087c22ad499a40"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">static</a> std::array&lt; std::array&lt; <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">double</a>, <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">N</a> &gt;, <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">N</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>hessian</b> (<a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">Func</a> <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">f</a>, <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">const</a> std::array&lt; <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">double</a>, <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">N</a> &gt; &amp;x)</td></tr>
-<tr class="separator:a6a5a14568c118ab30e087c22ad499a40"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a726857d4cbc41ae4628bdee10d58b356"><td class="memTemplItemLeft" align="right" valign="top">static constexpr double&#160;</td><td class="memTemplItemRight" valign="bottom"><b>value</b> (Func f, const std::array&lt; double, N &gt; &amp;x_point) noexcept</td></tr>
+<tr class="separator:a726857d4cbc41ae4628bdee10d58b356"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfc27dd615dcf090a8c842642f954940" id="r_adfc27dd615dcf090a8c842642f954940"><td class="memTemplParams" colspan="2"><a id="adfc27dd615dcf090a8c842642f954940" name="adfc27dd615dcf090a8c842642f954940"></a>
+template&lt;size_t N, typename Func &gt; </td></tr>
+<tr class="memitem:adfc27dd615dcf090a8c842642f954940"><td class="memTemplItemLeft" align="right" valign="top">static constexpr std::array&lt; double, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>gradient</b> (Func f, const std::array&lt; double, N &gt; &amp;x_point) noexcept</td></tr>
+<tr class="separator:adfc27dd615dcf090a8c842642f954940"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58e547dc52863489ffbe76d02c52bc76" id="r_a58e547dc52863489ffbe76d02c52bc76"><td class="memTemplParams" colspan="2"><a id="a58e547dc52863489ffbe76d02c52bc76" name="a58e547dc52863489ffbe76d02c52bc76"></a>
+template&lt;size_t N, typename Func &gt; </td></tr>
+<tr class="memitem:a58e547dc52863489ffbe76d02c52bc76"><td class="memTemplItemLeft" align="right" valign="top">static constexpr void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>value_and_gradient</b> (Func f, const std::array&lt; double, N &gt; &amp;x_point, double &amp;v_out, std::array&lt; double, N &gt; &amp;g_out) noexcept</td></tr>
+<tr class="separator:a58e547dc52863489ffbe76d02c52bc76"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4341f46e73cf8a048528a4df5051e417" id="r_a4341f46e73cf8a048528a4df5051e417"><td class="memTemplParams" colspan="2"><a id="a4341f46e73cf8a048528a4df5051e417" name="a4341f46e73cf8a048528a4df5051e417"></a>
+template&lt;size_t M, size_t N, typename Func &gt; </td></tr>
+<tr class="memitem:a4341f46e73cf8a048528a4df5051e417"><td class="memTemplItemLeft" align="right" valign="top">static constexpr std::array&lt; std::array&lt; double, N &gt;, M &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>jacobian</b> (Func f, const std::array&lt; double, N &gt; &amp;x_point) noexcept</td></tr>
+<tr class="separator:a4341f46e73cf8a048528a4df5051e417"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac4063722a48131ab8dcbc518cdf1d5f3" id="r_ac4063722a48131ab8dcbc518cdf1d5f3"><td class="memTemplParams" colspan="2"><a id="ac4063722a48131ab8dcbc518cdf1d5f3" name="ac4063722a48131ab8dcbc518cdf1d5f3"></a>
+template&lt;size_t N, typename Func &gt; </td></tr>
+<tr class="memitem:ac4063722a48131ab8dcbc518cdf1d5f3"><td class="memTemplItemLeft" align="right" valign="top">static std::array&lt; std::array&lt; double, N &gt;, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>hessian</b> (Func f, const std::array&lt; double, N &gt; &amp;x) noexcept</td></tr>
+<tr class="separator:ac4063722a48131ab8dcbc518cdf1d5f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>AD 엔진을 캡슐화하여 사용자에게 미분 인터페이스를 제공하는 클래스 </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="ab3f0f5e3396cb406f3ab7862f994674f" name="ab3f0f5e3396cb406f3ab7862f994674f"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#ab3f0f5e3396cb406f3ab7862f994674f">&#9670;&#160;</a></span>jacobian()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;<a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">size_t</a> M, <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">size_t</a> N, <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">typename</a> <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">Func</a> &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">static</a> std::array&lt; std::array&lt; <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">double</a>, <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">N</a> &gt;, <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">M</a> &gt; Optimization::AutoDiff::jacobian </td>
-          <td>(</td>
-          <td class="paramtype"><a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">Func</a>&#160;</td>
-          <td class="paramname"><em>f</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype"><a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">const</a> std::array&lt; <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">double</a>, <a class="el" href="classOptimization_1_1AutoDiff.html#a4eb4e4229f4cd4d4f99e3ce694805a1b">N</a> &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x_point</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>벡터 함수의 자코비안 행렬 계산 </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">M</td><td>출력 차원 (함수의 갯수) </td></tr>
-    <tr><td class="paramname">N</td><td>입력 차원 (변수의 갯수) </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>std::array&lt;std::array&lt;double, N&gt;, M&gt; 행렬 구조 </dd></dl>
-
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<div class="textblock"><p>Automatic Differentiation 인터페이스 제공하는 정적 클래스 </p>
+<dl class="section note"><dt>Note</dt><dd>실시간 제어기 적용을 위해 동적 할당 차단 및 컴파일 타임 최적화 강제 </dd></dl>
+</div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/Optimization/<a class="el" href="AutoDiff_8hpp_source.html">AutoDiff.hpp</a></li>
 </ul>
 </div><!-- contents -->

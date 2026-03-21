@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['range_0',['Range',['../structOptimization_1_1Range.html',1,'Optimization']]],
-  ['rosenbrockfunc_1',['RosenbrockFunc',['../structOptimization_1_1Test_1_1RosenbrockFunc.html',1,'Optimization::Test']]]
+  ['search_0',['search',['../classOptimization_1_1BacktrackingLineSearch.html#a3134a49d7c8502be05e29a1b14c21a22',1,'Optimization::BacktrackingLineSearch']]],
+  ['strongbacktrackinglinesearch_1',['StrongBacktrackingLineSearch',['../classOptimization_1_1StrongBacktrackingLineSearch.html',1,'Optimization']]],
+  ['strongwolfetest_2',['StrongWolfeTest',['../classStrongWolfeTest.html',1,'']]]
 ];
