@@ -1,8 +1,10 @@
 #include <gtest/gtest.h>
+
 #include <array>
 #include <cmath>
-#include "Optimization/NestrovMomentum.hpp"
+
 #include "Optimization/AutoDiff.hpp"
+#include "Optimization/NestrovMomentum.hpp"
 
 namespace Optimization {
 namespace Test {
@@ -17,7 +19,7 @@ struct HighDimQuadraticFunc {
         T sum = T(0.0);
         for (size_t i = 0; i < 10; ++i) {
             // AD 엔진의 in-place 연산자 부재로 인한 임시 우회 코드
-            sum = sum + T(i + 1) * x[i] * x[i]; 
+            sum = sum + T(i + 1) * x[i] * x[i];
         }
         return sum;
     }
@@ -37,7 +39,7 @@ struct RosenbrockFunc {
 };
 
 class NestrovMomentumTest : public ::testing::Test {
-protected:
+   protected:
     void SetUp() override {}
     void TearDown() override {}
 };
@@ -48,14 +50,13 @@ protected:
 TEST_F(NestrovMomentumTest, ConvergesOn10DQuadraticFunction) {
     HighDimQuadraticFunc func;
     std::array<double, 10> initial_guess;
-    
+
     // 시작점을 모두 5.0으로 초기화
     initial_guess.fill(5.0);
 
     // Nesterov 적용 (Learning Rate: 0.01, 관성: 0.9)
-    auto result = Optimization::NestrovMomentum::optimize<10>(
-        func, initial_guess, 0.01, 0.9, 10000, 1e-5, false
-    );
+    auto result = Optimization::NestrovMomentum::optimize<10>(func, initial_guess, 0.01, 0.9, 10000,
+                                                              1e-5, false);
 
     // 10개 차원 모두 0.0으로 수렴했는지 확인 (허용 오차 1e-4)
     for (size_t i = 0; i < 10; ++i) {
@@ -72,14 +73,13 @@ TEST_F(NestrovMomentumTest, ConvergesOnRosenbrockFunction) {
 
     // 로젠브록 협곡의 느린 수렴(Crawling) 현상을 극복하기 위해
     // 학습률(alpha)을 0.001로 안정화하고, 반복 횟수(max_iter)를 50000으로 증가시킵니다.
-    auto result = Optimization::NestrovMomentum::optimize<2>(
-        func, initial_guess, 0.001, 0.9, 50000, 1e-5, false
-    );
+    auto result = Optimization::NestrovMomentum::optimize<2>(func, initial_guess, 0.001, 0.9, 50000,
+                                                             1e-5, false);
 
     // 정답 (1.0, 1.0) 수렴 확인
     EXPECT_NEAR(result[0], 1.0, 1e-2) << "X coordinate failed to converge on Rosenbrock.";
     EXPECT_NEAR(result[1], 1.0, 1e-2) << "Y coordinate failed to converge on Rosenbrock.";
 }
 
-} // namespace Test
-} // namespace Optimization
+}  // namespace Test
+}  // namespace Optimization
