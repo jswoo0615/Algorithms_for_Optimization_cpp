@@ -115,3 +115,7 @@ gtest_discover_tests(test_direct)
 add_executable(test_noisy_descent test/test_noisy_descent.cpp)
 target_link_libraries(test_noisy_descent PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_noisy_descent)
+
+add_executable(test_mads test/test_mads.cpp)
+target_link_libraries(test_mads PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_mads)
