@@ -99,3 +99,7 @@ gtest_discover_tests(test_powell)
 add_executable(test_hooke_jeeves test/test_hooke_jeeves.cpp)
 target_link_libraries(test_hooke_jeeves PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_hooke_jeeves)
+
+add_executable(test_generalized_pattern_search test/test_generalized_pattern_search.cpp)
+target_link_libraries(test_generalized_pattern_search PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_generalized_pattern_search)
