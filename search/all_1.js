@@ -4,5 +4,6 @@ var searchData=
   ['backtrackingtest_1',['BacktrackingTest',['../classBacktrackingTest.html',1,'']]],
   ['bfgs_2',['BFGS',['../classOptimization_1_1BFGS.html',1,'Optimization']]],
   ['bracket_5fminimum_3',['bracket_minimum',['../classOptimization_1_1LineSearch.html#a13cb5636c027cdb540a9f793755550d0',1,'Optimization::LineSearch']]],
-  ['bracketingtest_4',['BracketingTest',['../classBracketingTest.html',1,'']]]
+  ['bracketingtest_4',['BracketingTest',['../classBracketingTest.html',1,'']]],
+  ['braninfunction_5',['BraninFunction',['../structOptimization_1_1Tests_1_1BraninFunction.html',1,'Optimization::Tests']]]
 ];
