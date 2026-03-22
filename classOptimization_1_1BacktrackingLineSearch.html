@@ -87,101 +87,25 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>[Chapter 4] Algorithm 4.2 : Backtracking Line Search 아르미호 (Armijo) 충분 감소 조건을 만족할 때까지 보폭을 줄여나가는 실전용 근사 선 탐색 알고리즘  
+<p>Algorithm 4.2 : Backtracking Line Search 아르미호 (Armijo) 충분 감소 조건을 만족할 때까지 보폭을 줄여나가는 근사 선 탐색 알고리즘  
  <a href="classOptimization_1_1BacktrackingLineSearch.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="BacktrackingLineSearch_8hpp_source.html">BacktrackingLineSearch.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a3134a49d7c8502be05e29a1b14c21a22" id="r_a3134a49d7c8502be05e29a1b14c21a22"><td class="memTemplParams" colspan="2">template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:a3134a49d7c8502be05e29a1b14c21a22"><td class="memTemplItemLeft" align="right" valign="top">static double&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1BacktrackingLineSearch.html#a3134a49d7c8502be05e29a1b14c21a22">search</a> (Func f, const std::array&lt; double, N &gt; &amp;x, const std::array&lt; double, N &gt; &amp;d, double alpha=1.0, double p=0.5, double c=1e-4, bool verbose=false)</td></tr>
-<tr class="separator:a3134a49d7c8502be05e29a1b14c21a22"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af20668d50b8fcf15615a18581a1eef8b" id="r_af20668d50b8fcf15615a18581a1eef8b"><td class="memTemplParams" colspan="2"><a id="af20668d50b8fcf15615a18581a1eef8b" name="af20668d50b8fcf15615a18581a1eef8b"></a>
+template&lt;size_t N, typename Func &gt; </td></tr>
+<tr class="memitem:af20668d50b8fcf15615a18581a1eef8b"><td class="memTemplItemLeft" align="right" valign="top">static double&#160;</td><td class="memTemplItemRight" valign="bottom"><b>search</b> (Func f, const std::array&lt; double, N &gt; &amp;x, const std::array&lt; double, N &gt; &amp;d, double f_x, const std::array&lt; double, N &gt; &amp;grad_x, double alpha=1.0, double p=0.5, double c=1e-4, bool verbose=false) noexcept</td></tr>
+<tr class="separator:af20668d50b8fcf15615a18581a1eef8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a77cd6a489194be1c869e28a2885b640c" id="r_a77cd6a489194be1c869e28a2885b640c"><td class="memTemplParams" colspan="2"><a id="a77cd6a489194be1c869e28a2885b640c" name="a77cd6a489194be1c869e28a2885b640c"></a>
+template&lt;size_t N, typename Func &gt; </td></tr>
+<tr class="memitem:a77cd6a489194be1c869e28a2885b640c"><td class="memTemplItemLeft" align="right" valign="top">static double&#160;</td><td class="memTemplItemRight" valign="bottom"><b>search</b> (Func f, const std::array&lt; double, N &gt; &amp;x, const std::array&lt; double, N &gt; &amp;d, double alpha=1.0, double p=0.5, double c=1e-4, bool verbose=false) noexcept</td></tr>
+<tr class="separator:a77cd6a489194be1c869e28a2885b640c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>[Chapter 4] Algorithm 4.2 : Backtracking Line Search 아르미호 (Armijo) 충분 감소 조건을 만족할 때까지 보폭을 줄여나가는 실전용 근사 선 탐색 알고리즘 </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a3134a49d7c8502be05e29a1b14c21a22" name="a3134a49d7c8502be05e29a1b14c21a22"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a3134a49d7c8502be05e29a1b14c21a22">&#9670;&#160;</a></span>search()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;size_t N, typename Func &gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static double Optimization::BacktrackingLineSearch::search </td>
-          <td>(</td>
-          <td class="paramtype">Func&#160;</td>
-          <td class="paramname"><em>f</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::array&lt; double, N &gt; &amp;&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">const std::array&lt; double, N &gt; &amp;&#160;</td>
-          <td class="paramname"><em>d</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>alpha</em> = <code>1.0</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>p</em> = <code>0.5</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>c</em> = <code>1e-4</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>verbose</em> = <code>false</code>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-<dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">f</td><td>목적 함수 </td></tr>
-    <tr><td class="paramname">x</td><td>현재 위치 </td></tr>
-    <tr><td class="paramname">d</td><td>탐색 방향 (반드시 하강 방향이어야 함) </td></tr>
-    <tr><td class="paramname">alpha</td><td>초기 보폭 (기본값 1.0, 뉴턴법에서는 무조건 1.0으로 시작해야 함) </td></tr>
-    <tr><td class="paramname">p</td><td>보폭 축소 비율 (기본값 0.5, 절반씩 깎음. 책에서는 rho로 표기) </td></tr>
-    <tr><td class="paramname">c</td><td>충분 감소 조건 (Armijo) 관대도 (기본값 1e-4, 보통 0.0001 같은 아주 작은 값 사용) </td></tr>
-    <tr><td class="paramname">verbose</td><td>로깅 여부 </td></tr>
-  </table>
-  </dd>
-</dl>
-
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+<div class="textblock"><p>Algorithm 4.2 : Backtracking Line Search 아르미호 (Armijo) 충분 감소 조건을 만족할 때까지 보폭을 줄여나가는 근사 선 탐색 알고리즘 </p>
+</div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/Optimization/<a class="el" href="BacktrackingLineSearch_8hpp_source.html">BacktrackingLineSearch.hpp</a></li>
 </ul>
 </div><!-- contents -->
