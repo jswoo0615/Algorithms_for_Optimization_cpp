@@ -95,3 +95,7 @@ gtest_discover_tests(test_cyclic_coordinate)
 add_executable(test_powell test/test_powell.cpp)
 target_link_libraries(test_powell PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_powell)
+
+add_executable(test_hooke_jeeves test/test_hooke_jeeves.cpp)
+target_link_libraries(test_hooke_jeeves PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_hooke_jeeves)
