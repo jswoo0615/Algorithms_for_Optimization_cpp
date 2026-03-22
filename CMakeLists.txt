@@ -87,3 +87,7 @@ gtest_discover_tests(test_secant_method)
 add_executable(test_bfgs test/test_bfgs.cpp)
 target_link_libraries(test_bfgs PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_bfgs)
+
+add_executable(test_cyclic_coordinate test/test_cyclic_coordinate.cpp)
+target_link_libraries(test_cyclic_coordinate PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_cyclic_coordinate)
