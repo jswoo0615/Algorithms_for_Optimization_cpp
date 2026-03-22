@@ -111,3 +111,7 @@ gtest_discover_tests(test_nelder_mead)
 add_executable(test_direct test/test_direct.cpp)
 target_link_libraries(test_direct PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_direct)
+
+add_executable(test_noisy_descent test/test_noisy_descent.cpp)
+target_link_libraries(test_noisy_descent PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_noisy_descent)
