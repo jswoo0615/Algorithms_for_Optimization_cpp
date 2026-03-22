@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['powellmethod_0',['PowellMethod',['../classOptimization_1_1PowellMethod.html',1,'Optimization']]],
-  ['pt_1',['Pt',['../structOptimization_1_1Pt.html',1,'Optimization']]]
+  ['optimizationresult_0',['OptimizationResult',['../structOptimization_1_1OptimizationResult.html',1,'Optimization']]],
+  ['optimizationresult1d_1',['OptimizationResult1D',['../structOptimization_1_1OptimizationResult1D.html',1,'Optimization']]],
+  ['optimizationresultnd_2',['OptimizationResultND',['../structOptimization_1_1OptimizationResultND.html',1,'Optimization']]]
 ];

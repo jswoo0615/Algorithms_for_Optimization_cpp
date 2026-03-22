@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['goldensectionstrategy_0',['GoldenSectionStrategy',['../structOptimization_1_1GoldenSectionStrategy.html',1,'Optimization']]],
-  ['gradientdescent_1',['GradientDescent',['../classOptimization_1_1GradientDescent.html',1,'Optimization']]]
+  ['ellipticquadratic2d_0',['EllipticQuadratic2D',['../structOptimization_1_1Tests_1_1EllipticQuadratic2D.html',1,'Optimization::Tests']]]
 ];
