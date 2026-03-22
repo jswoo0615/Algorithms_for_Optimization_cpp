@@ -103,3 +103,7 @@ gtest_discover_tests(test_hooke_jeeves)
 add_executable(test_generalized_pattern_search test/test_generalized_pattern_search.cpp)
 target_link_libraries(test_generalized_pattern_search PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_generalized_pattern_search)
+
+add_executable(test_nelder_mead test/test_nelder_mead.cpp)
+target_link_libraries(test_nelder_mead PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_nelder_mead)
