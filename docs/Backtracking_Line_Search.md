@@ -2,14 +2,14 @@
 ## 1. 수학적 원리 (Mathemiatical Formulation)
 근사 선탐색 (Approximate Line Search)은 적절한 보폭 $\alpha$를 찾기 위해 **충분 감소 조건 (Sufficient Decrease Condition)**을 사용합니다. 이 조건은 '아르미호 (Armijo) 조건' 또는 '제 1 Wolfe 조건'으로도 불리며, 다음과 같이 정의됩니다
 
-$$f(x + \alpha d) \leq f(x) + \beta \alpha \Delta_{d} f(x)$$
+$$f(x + \alpha d) \leq f(x) + \beta \alpha \nabla_{d} f(x)$$
 
-* $\Delta_{d} f(x)$ : 방향 도함수 (Directional Derivative). 경사도와 탐색 방향의 내적 $(g^{T} d)$과 같습니다.
+* $\nabla_{d} f(x)$ : 방향 도함수 (Directional Derivative). 경사도와 탐색 방향의 내적 $(g^{T} d)$과 같습니다.
 * $\beta \in$ : 요구되는 최소한의 감소 비율. 일반적으로 매우 작은 값인 $10^{-4}$를 사용합니다. (코드에서는 변수 `c`에 해당)
 * 해석 : 단순히 $f(x)$가 줄어드는 것을 넘어, 1차 미분 (기울기)이 예측하는 감소량의 최소 $\beta$ 비율만큼은 실제로 감소해야만 그 보폭을 인정하겠다는 뜻입니다.
 
 ### 알고리즘 흐름 (Algorithm Flow)
-1. 방향 도함수 $\Delta_d f(x)$를 계산하여 내리막 방향인지 검증합니다.
+1. 방향 도함수 $\nabla_d f(x)$를 계산하여 내리막 방향인지 검증합니다.
 2. 초기 보폭 $\alpha$ (보통 1.0)부터 시작하여 새로운 지점 $x_{new} = x + \alpha d$의 함수값을 평가합니다.
 3. 새로운 함수값이 목표 감소치 (Target value)보다 작거나 같으면 (즉, 아르미호 조건을 만족하면) 현재의 $\alpha$를 즉시 반환합니다
 4. 만족하지 못하면 보폭 $\alpha$를 감소 비율 $p$ (보통 0.5)만큼 줄여서 다시 검사합니다.
