@@ -44,7 +44,84 @@ namespace Optimization {
                 return {-(inv00 * g[0] + inv01 * g[1]), -(inv10 * g[0] + inv11 * g[1])};
             }
         public:
-            // @TODO 작성 필요
+            template <typename Func>
+            static std::array<double, 2> optimize(Func f, std::array<double, 2> x, double max_delta = 2.0, size_t max_iter = 1000, bool verbose = false) {
+                double delta = 0.5 * max_delta; // 초기 반경
+                const double eta = 0.15;        // Accept 기준 비율
+
+                if (verbose) 
+                    std::cout << " 🛡️ Trust Region Method (Dogleg) Started\n";
+
+                for (size_t iter = 1; iter <= max_iter; ++iter) {
+                    double f_x;
+                    std::array<double, 2> g;
+                    AutoDiff::value_and_gradient<2>(f, x, f_x, g);
+
+                    double g_norm = norm2(g);
+                    if (g_norm < 1e-5) {
+                        break;                  // 1차 필요 조건 만족 (Converge)
+                    } 
+                    auto H = AutoDiff::hessian<2>(f, x);
+                    std::array<double, 2> p = {0.0, 0.0};
+                    std::array<double, 2> p_newton = solve_newton(H, g);
+
+                    // 곡률 정보 계산 : g^T * H * g
+                    double gHg = g[0] * (H[0][0] * g[0] + H[0][1] * g[1]) + g[1] * (H[1][0] * g[0] + H[1][1] * g[1]);
+                    std::array<double, 2> p_cauchy;
+
+                    if (gHg <= 0) { // 곡률이 음수면 뒤집힘 -> 무조건 최대치로 이동
+                        p_cauchy = {-delta * g[0] / g_norm, -delta * g[1] / g_norm};
+                    } else {
+                        double tau = (g_norm * g_norm) / gHg;
+                        p_cauchy = {-tau * g[0], -tau * g[1]};
+                    }
+
+                    if (norm2(p_newton) <= delta) {
+                        // 뉴턴 스텝이 신뢰 반경 안에 들어온다면 -> 그대로 진행
+                        p = p_newton;
+                    } else if (norm2(p_cauchy) >= delta) {
+                        // 코시 포인트가 반경 밖이라면 -> 반경 가장자리까지 이동 (Gradient Descent)
+                        p = {-delta * g[0] / g_norm, -delta * g[1] / g_norm};
+                    } else {
+                        // [Dogleg] Cauchy Point와 Newton Step 사이를 선형 보간하여 반경 가장자리 계산
+                        p = p_cauchy;
+                    }
+
+                    // [Evaluation] 예측 vs 실제
+                    std::array<double, 2> x_new = {x[0] + p[0], x[1] + p[1]};
+                    double f_new = AutoDiff::value<2>(f, x_new);
+                    double act_red = f_x - f_new;           // 실제 감소량
+
+                    // 예측 모델 : m(p) = f + g^T p + 0.5 p^T H p
+                    double pred_red = -(g[0] * p[0] + g[1] * p[1]) - 0.5 * (p[0] * (H[0][0] * p[0] + H[0][1] * p[1]) + p[1] * (H[1][0] * p[0] + H[1][1] * p[1]));
+                    double rho = (pred_red == 0) ? 0 : act_red / pred_red;
+
+                    if (verbose) {
+                        std::cout << "[Iter " << std::setw(3) << iter << "] f(x): " << std::fixed
+                                << std::setprecision(5) << f_x << " | rho: " << std::setw(6) << rho
+                                << " | Delta: " << delta;
+                    }
+
+                    // [Update] 신뢰 영역 반경 조절
+                    if (rho < 0.25) {
+                        delta *= 0.25;      // 예측 대실패 : 지형이 너무 험하다 1/4로 줄임
+                        if (verbose) 
+                            std::cout << " -> 📉 Shrink\n";
+                    } else if (rho > 0.75 && norm2(p) >= 0.99 * delta) {
+                        delta = std::min(2.0 * delta, max_delta);   // 예측 대성공: 2배 확장
+                        if (verbose) 
+                            std::cout << " -> 📈 Expand\n";
+                    } else {
+                        if (verbose) 
+                            std::cout << " -> ➖ Keep\n";
+                    }
+
+                    // 스텝 승인 (Accept) 여부
+                    if (rho > eta) {
+                        x = x_new;      // 이동 확정
+                    }
+                }
+            }
     };
 } // namespace Optimization
 ```
