@@ -119,3 +119,7 @@ gtest_discover_tests(test_noisy_descent)
 add_executable(test_mads test/test_mads.cpp)
 target_link_libraries(test_mads PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_mads)
+
+add_executable(test_adadelta test/test_adadelta.cpp)
+target_link_libraries(test_adadelta PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_adadelta)
