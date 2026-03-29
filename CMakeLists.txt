@@ -127,3 +127,7 @@ gtest_discover_tests(test_adadelta)
 add_executable(test_cross_entropy test/test_cross_entropy.cpp)
 target_link_libraries(test_cross_entropy PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_cross_entropy)
+
+add_executable(test_nes test/test_nes.cpp)
+target_link_libraries(test_nes PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_nes)
