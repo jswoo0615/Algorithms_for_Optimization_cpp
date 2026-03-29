@@ -1,9 +1,10 @@
 var searchData=
 [
-  ['neldermead_0',['NelderMead',['../classOptimization_1_1NelderMead.html',1,'Optimization']]],
-  ['nestrovmomentum_1',['NestrovMomentum',['../classOptimization_1_1NestrovMomentum.html',1,'Optimization']]],
-  ['nestrovmomentumtest_2',['NestrovMomentumTest',['../classOptimization_1_1Test_1_1NestrovMomentumTest.html',1,'Optimization::Test']]],
-  ['newtonmethod_3',['NewtonMethod',['../classOptimization_1_1NewtonMethod.html',1,'Optimization']]],
-  ['noisydescent_4',['NoisyDescent',['../classOptimization_1_1NoisyDescent.html',1,'Optimization']]],
-  ['nondifferentiable2d_5',['NonDifferentiable2D',['../structOptimization_1_1Tests_1_1NonDifferentiable2D.html',1,'Optimization::Tests']]]
+  ['naturalevolutionstrategies_0',['NaturalEvolutionStrategies',['../classOptimization_1_1NaturalEvolutionStrategies.html',1,'Optimization']]],
+  ['neldermead_1',['NelderMead',['../classOptimization_1_1NelderMead.html',1,'Optimization']]],
+  ['nestrovmomentum_2',['NestrovMomentum',['../classOptimization_1_1NestrovMomentum.html',1,'Optimization']]],
+  ['nestrovmomentumtest_3',['NestrovMomentumTest',['../classOptimization_1_1Test_1_1NestrovMomentumTest.html',1,'Optimization::Test']]],
+  ['newtonmethod_4',['NewtonMethod',['../classOptimization_1_1NewtonMethod.html',1,'Optimization']]],
+  ['noisydescent_5',['NoisyDescent',['../classOptimization_1_1NoisyDescent.html',1,'Optimization']]],
+  ['nondifferentiable2d_6',['NonDifferentiable2D',['../structOptimization_1_1Tests_1_1NonDifferentiable2D.html',1,'Optimization::Tests']]]
 ];
