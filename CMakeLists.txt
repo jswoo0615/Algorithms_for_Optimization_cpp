@@ -131,3 +131,7 @@ gtest_discover_tests(test_cross_entropy)
 add_executable(test_nes test/test_nes.cpp)
 target_link_libraries(test_nes PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_nes)
+
+add_executable(test_cma_es test/test_cma_es.cpp)
+target_link_libraries(test_cma_es PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_cma_es)
