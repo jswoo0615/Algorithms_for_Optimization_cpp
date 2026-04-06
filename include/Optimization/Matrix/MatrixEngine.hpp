@@ -305,7 +305,7 @@ class StaticMatrix {
                 T D_jj = (*this)(static_cast<int>(j), static_cast<int>(j)) - sum_D;
 
                 // [FIX #5 + #6] `std::abss` → MathTraits::near_zero
-                if (MathTraits<T>::near_zero(D_jj)) {
+                if (D_jj <= std::numeric_limits<T>::epsilon()) {
                     return false;
                 }
                 (*this)(static_cast<int>(j), static_cast<int>(j)) = D_jj;
