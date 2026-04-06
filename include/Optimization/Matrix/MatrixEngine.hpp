@@ -292,18 +292,22 @@ class StaticMatrix {
 
             T D_jj = (*this)(static_cast<int>(j), static_cast<int>(j)) - sum_D;
 
-            // [FIX #5 + #6] `std::abss` → MathTraits::near_zero
-            if (MathTraits<T>::near_zero(D_jj)) {
-                return false;
-            }
-            (*this)(static_cast<int>(j), static_cast<int>(j)) = D_jj;
+                // [FIX #5 + #6] `std::abss` → MathTraits::near_zero
+                if (D_jj <= std::numeric_limits<T>::epsilon()) {
+                    return false;
+                }
+                (*this)(static_cast<int>(j), static_cast<int>(j)) = D_jj;
 
-            for (size_t i = j + 1; i < Rows; ++i) {
-                T sum_L = static_cast<T>(0);
-                for (size_t k = 0; k < j; ++k) {
-                    sum_L += (*this)(static_cast<int>(i), static_cast<int>(k)) *
-                             (*this)(static_cast<int>(j), static_cast<int>(k)) *
-                             (*this)(static_cast<int>(k), static_cast<int>(k));
+                for (size_t i = j + 1; i < Rows; ++i) {
+                    T sum_L = static_cast<T>(0);
+                    for (size_t k = 0; k < j; ++k) {
+                        sum_L += (*this)(static_cast<int>(i), static_cast<int>(k))
+                               * (*this)(static_cast<int>(j), static_cast<int>(k))
+                               * (*this)(static_cast<int>(k), static_cast<int>(k));
+                    }
+                    (*this)(static_cast<int>(i), static_cast<int>(j)) =
+                        ((*this)(static_cast<int>(i), static_cast<int>(j)) - sum_L)
+                        / (*this)(static_cast<int>(j), static_cast<int>(j));
                 }
                 (*this)(static_cast<int>(i), static_cast<int>(j)) =
                     ((*this)(static_cast<int>(i), static_cast<int>(j)) - sum_L) /
