@@ -292,246 +292,248 @@ class StaticMatrix {
 
             T D_jj = (*this)(static_cast<int>(j), static_cast<int>(j)) - sum_D;
 
-                // [FIX #5 + #6] `std::abss` → MathTraits::near_zero
-                if (D_jj <= std::numeric_limits<T>::epsilon()) {
-                    return false;
-                }
-                (*this)(static_cast<int>(j), static_cast<int>(j)) = D_jj;
+            // [FIX #5 + #6] `std::abss` → MathTraits::near_zero
+            if (D_jj <= std::numeric_limits<T>::epsilon()) {
+                return false;
+            }
+            (*this)(static_cast<int>(j), static_cast<int>(j)) = D_jj;
 
-                for (size_t i = j + 1; i < Rows; ++i) {
-                    T sum_L = static_cast<T>(0);
-                    for (size_t k = 0; k < j; ++k) {
-                        sum_L += (*this)(static_cast<int>(i), static_cast<int>(k))
-                               * (*this)(static_cast<int>(j), static_cast<int>(k))
-                               * (*this)(static_cast<int>(k), static_cast<int>(k));
-                    }
-                    (*this)(static_cast<int>(i), static_cast<int>(j)) =
-                        ((*this)(static_cast<int>(i), static_cast<int>(j)) - sum_L)
-                        / (*this)(static_cast<int>(j), static_cast<int>(j));
+            for (size_t i = j + 1; i < Rows; ++i) {
+                T sum_L = static_cast<T>(0);
+                for (size_t k = 0; k < j; ++k) {
+                    sum_L += (*this)(static_cast<int>(i), static_cast<int>(k)) *
+                             (*this)(static_cast<int>(j), static_cast<int>(k)) *
+                             (*this)(static_cast<int>(k), static_cast<int>(k));
                 }
                 (*this)(static_cast<int>(i), static_cast<int>(j)) =
                     ((*this)(static_cast<int>(i), static_cast<int>(j)) - sum_L) /
                     (*this)(static_cast<int>(j), static_cast<int>(j));
             }
+            (*this)(static_cast<int>(i), static_cast<int>(j)) =
+                ((*this)(static_cast<int>(i), static_cast<int>(j)) - sum_L) /
+                (*this)(static_cast<int>(j), static_cast<int>(j));
         }
-        return true;
+    }
+    return true;
+}
+
+StaticVector<T, Rows>
+LDLT_solve(const StaticVector<T, Rows>& b) const {
+    static_assert(Rows == Cols, "Solve requires a square matrix");
+    StaticVector<T, Rows> z, y, x;
+
+    // Forward substitution: Lz = b
+    for (size_t i = 0; i < Rows; ++i) {
+        T sum = static_cast<T>(0);
+        for (size_t k = 0; k < i; ++k) {
+            sum += (*this)(static_cast<int>(i), static_cast<int>(k)) * z(k);
+        }
+        z(i) = b(i) - sum;
     }
 
-    StaticVector<T, Rows> LDLT_solve(const StaticVector<T, Rows>& b) const {
-        static_assert(Rows == Cols, "Solve requires a square matrix");
-        StaticVector<T, Rows> z, y, x;
-
-        // Forward substitution: Lz = b
-        for (size_t i = 0; i < Rows; ++i) {
-            T sum = static_cast<T>(0);
-            for (size_t k = 0; k < i; ++k) {
-                sum += (*this)(static_cast<int>(i), static_cast<int>(k)) * z(k);
-            }
-            z(i) = b(i) - sum;
-        }
-
-        // 대각 스케일링: Dy = z
-        for (size_t i = 0; i < Rows; ++i) {
-            y(i) = z(i) / (*this)(static_cast<int>(i), static_cast<int>(i));
-        }
-
-        // Back substitution: L^T x = y
-        for (int i = static_cast<int>(Rows) - 1; i >= 0; --i) {
-            T sum = static_cast<T>(0);
-            for (size_t k = static_cast<size_t>(i) + 1; k < Rows; ++k) {
-                sum += (*this)(static_cast<int>(k), i) * x(k);
-            }
-            x(static_cast<size_t>(i)) = y(static_cast<size_t>(i)) - sum;
-        }
-        return x;
+    // 대각 스케일링: Dy = z
+    for (size_t i = 0; i < Rows; ++i) {
+        y(i) = z(i) / (*this)(static_cast<int>(i), static_cast<int>(i));
     }
 
-    /**
-     * @brief MGS-QR 분해 (Modified Gram-Schmidt)
-     */
-    // ============================================================
-    // [FIX #6] QR_decompose_MGS
-    //   원본 버그: `norm_sq = ...` (누적 아님, += 누락)
-    // ============================================================
-    bool QR_decompose_MGS(StaticMatrix<T, Cols, Cols>& R) {
-        static_assert(Rows >= Cols, "QR requires Rows >= Cols");
-        for (size_t i = 0; i < Cols; ++i) {
-            T norm_sq = static_cast<T>(0);
-            for (size_t k = 0; k < Rows; ++k) {
-                // [FIX] `=` → `+=` (누산 연산 복구)
-                norm_sq += (*this)(static_cast<int>(k), static_cast<int>(i)) *
-                           (*this)(static_cast<int>(k), static_cast<int>(i));
-            }
-            R(static_cast<int>(i), static_cast<int>(i)) = MathTraits<T>::sqrt(norm_sq);
-
-            if (MathTraits<T>::near_zero(R(static_cast<int>(i), static_cast<int>(i)))) {
-                return false;
-            }
-
-            for (size_t k = 0; k < Rows; ++k) {
-                (*this)(static_cast<int>(k), static_cast<int>(i)) /=
-                    R(static_cast<int>(i), static_cast<int>(i));
-            }
-
-            for (size_t j = i + 1; j < Cols; ++j) {
-                T dot = static_cast<T>(0);
-                for (size_t k = 0; k < Rows; ++k) {
-                    dot += (*this)(static_cast<int>(k), static_cast<int>(i)) *
-                           (*this)(static_cast<int>(k), static_cast<int>(j));
-                }
-                R(static_cast<int>(i), static_cast<int>(j)) = dot;
-
-                for (size_t k = 0; k < Rows; ++k) {
-                    (*this)(static_cast<int>(k), static_cast<int>(j)) -=
-                        dot * (*this)(static_cast<int>(k), static_cast<int>(i));
-                }
-            }
+    // Back substitution: L^T x = y
+    for (int i = static_cast<int>(Rows) - 1; i >= 0; --i) {
+        T sum = static_cast<T>(0);
+        for (size_t k = static_cast<size_t>(i) + 1; k < Rows; ++k) {
+            sum += (*this)(static_cast<int>(k), i) * x(k);
         }
-        return true;
+        x(static_cast<size_t>(i)) = y(static_cast<size_t>(i)) - sum;
     }
+    return x;
+}
 
-    // ============================================================
-    // [FIX #6] QR_solve (MGS)
-    //   원본 버그:
-    //     1) `StaticMatrix<T, cols, Cols>` → `cols` 대소문자 오타
-    //     2) `j < Cools` → `Cools` 오타 (`Cols` 여야 함)
-    // ============================================================
-    StaticVector<T, Cols> QR_solve(const StaticMatrix<T, Cols, Cols>& R,
-                                   const StaticVector<T, Rows>& b) const {
-        StaticVector<T, Cols> y, x;
+/**
+ * @brief MGS-QR 분해 (Modified Gram-Schmidt)
+ */
+// ============================================================
+// [FIX #6] QR_decompose_MGS
+//   원본 버그: `norm_sq = ...` (누적 아님, += 누락)
+// ============================================================
+bool QR_decompose_MGS(StaticMatrix<T, Cols, Cols>& R) {
+    static_assert(Rows >= Cols, "QR requires Rows >= Cols");
+    for (size_t i = 0; i < Cols; ++i) {
+        T norm_sq = static_cast<T>(0);
+        for (size_t k = 0; k < Rows; ++k) {
+            // [FIX] `=` → `+=` (누산 연산 복구)
+            norm_sq += (*this)(static_cast<int>(k), static_cast<int>(i)) *
+                       (*this)(static_cast<int>(k), static_cast<int>(i));
+        }
+        R(static_cast<int>(i), static_cast<int>(i)) = MathTraits<T>::sqrt(norm_sq);
 
-        // Q^T b 계산
-        for (size_t i = 0; i < Cols; ++i) {
+        if (MathTraits<T>::near_zero(R(static_cast<int>(i), static_cast<int>(i)))) {
+            return false;
+        }
+
+        for (size_t k = 0; k < Rows; ++k) {
+            (*this)(static_cast<int>(k), static_cast<int>(i)) /=
+                R(static_cast<int>(i), static_cast<int>(i));
+        }
+
+        for (size_t j = i + 1; j < Cols; ++j) {
             T dot = static_cast<T>(0);
             for (size_t k = 0; k < Rows; ++k) {
-                dot += (*this)(static_cast<int>(k), static_cast<int>(i)) * b(k);
+                dot += (*this)(static_cast<int>(k), static_cast<int>(i)) *
+                       (*this)(static_cast<int>(k), static_cast<int>(j));
             }
-            y(i) = dot;
-        }
+            R(static_cast<int>(i), static_cast<int>(j)) = dot;
 
-        // Back substitution: Rx = y
-        for (int i = static_cast<int>(Cols) - 1; i >= 0; --i) {
-            T sum = static_cast<T>(0);
-            // [FIX] `Cools` → `Cols`
-            for (size_t j = static_cast<size_t>(i) + 1; j < Cols; ++j) {
-                sum += R(i, static_cast<int>(j)) * x(j);
+            for (size_t k = 0; k < Rows; ++k) {
+                (*this)(static_cast<int>(k), static_cast<int>(j)) -=
+                    dot * (*this)(static_cast<int>(k), static_cast<int>(i));
             }
-            x(static_cast<size_t>(i)) = (y(static_cast<size_t>(i)) - sum) / R(i, i);
         }
-        return x;
+    }
+    return true;
+}
+
+// ============================================================
+// [FIX #6] QR_solve (MGS)
+//   원본 버그:
+//     1) `StaticMatrix<T, cols, Cols>` → `cols` 대소문자 오타
+//     2) `j < Cools` → `Cools` 오타 (`Cols` 여야 함)
+// ============================================================
+StaticVector<T, Cols> QR_solve(const StaticMatrix<T, Cols, Cols>& R,
+                               const StaticVector<T, Rows>& b) const {
+    StaticVector<T, Cols> y, x;
+
+    // Q^T b 계산
+    for (size_t i = 0; i < Cols; ++i) {
+        T dot = static_cast<T>(0);
+        for (size_t k = 0; k < Rows; ++k) {
+            dot += (*this)(static_cast<int>(k), static_cast<int>(i)) * b(k);
+        }
+        y(i) = dot;
     }
 
-    /**
-     * @brief Householder QR 분해
-     */
-    // ============================================================
-    // [FIX #6] QR_decompose_Householder
-    //   원본 버그: `norm_x = std::sqrt(norm_x)` 가 누산 루프 안에 중첩됨
-    //             → 누산 완료 후 루프 밖에서 sqrt 적용해야 함
-    // ============================================================
-    bool QR_decompose_Householder(StaticVector<T, Cols>& tau) {
-        static_assert(Rows >= Cols, "QR requires Rows >= Cols");
-        for (size_t i = 0; i < Cols; ++i) {
-            // [FIX] norm 누산 루프와 sqrt를 분리
-            T norm_sq = static_cast<T>(0);
-            for (size_t k = i; k < Rows; ++k) {
-                norm_sq += (*this)(static_cast<int>(k), static_cast<int>(i)) *
-                           (*this)(static_cast<int>(k), static_cast<int>(i));
-            }
-            T norm_x = MathTraits<T>::sqrt(norm_sq);  // 루프 밖에서 sqrt
-
-            if (MathTraits<T>::near_zero(norm_x)) {
-                tau(i) = static_cast<T>(0);
-                continue;
-            }
-
-            T sign = ((*this)(static_cast<int>(i), static_cast<int>(i)) >= static_cast<T>(0))
-                         ? static_cast<T>(1.0)
-                         : static_cast<T>(-1.0);
-            T v0 = (*this)(static_cast<int>(i), static_cast<int>(i)) + sign * norm_x;
-
-            for (size_t k = i + 1; k < Rows; ++k) {
-                (*this)(static_cast<int>(k), static_cast<int>(i)) /= v0;
-            }
-
-            T v_sq_norm = static_cast<T>(1.0);
-            for (size_t k = i + 1; k < Rows; ++k) {
-                v_sq_norm += (*this)(static_cast<int>(k), static_cast<int>(i)) *
-                             (*this)(static_cast<int>(k), static_cast<int>(i));
-            }
-            tau(i) = static_cast<T>(2.0) / v_sq_norm;
-
-            (*this)(static_cast<int>(i), static_cast<int>(i)) = -sign * norm_x;
-
-            for (size_t j = i + 1; j < Cols; ++j) {
-                T dot = (*this)(static_cast<int>(i), static_cast<int>(j));
-                for (size_t k = i + 1; k < Rows; ++k) {
-                    dot += (*this)(static_cast<int>(k), static_cast<int>(i)) *
-                           (*this)(static_cast<int>(k), static_cast<int>(j));
-                }
-                T tau_dot = tau(i) * dot;
-                (*this)(static_cast<int>(i), static_cast<int>(j)) -= tau_dot;
-                for (size_t k = i + 1; k < Rows; ++k) {
-                    (*this)(static_cast<int>(k), static_cast<int>(j)) -=
-                        tau_dot * (*this)(static_cast<int>(k), static_cast<int>(i));
-                }
-            }
+    // Back substitution: Rx = y
+    for (int i = static_cast<int>(Cols) - 1; i >= 0; --i) {
+        T sum = static_cast<T>(0);
+        // [FIX] `Cools` → `Cols`
+        for (size_t j = static_cast<size_t>(i) + 1; j < Cols; ++j) {
+            sum += R(i, static_cast<int>(j)) * x(j);
         }
-        return true;
+        x(static_cast<size_t>(i)) = (y(static_cast<size_t>(i)) - sum) / R(i, i);
     }
+    return x;
+}
 
-    // ============================================================
-    // [FIX #6] QR_solve_Householder
-    //   원본 버그: `StaicVector` → `StaticVector` 오타
-    // ============================================================
-    StaticVector<T, Cols> QR_solve_Householder(
-        const StaticVector<T, Cols>& tau,
-        const StaticVector<T, Rows>& b) const  // [FIX] `StaicVector` → `StaticVector`
-    {
-        StaticVector<T, Rows> y = b;
+/**
+ * @brief Householder QR 분해
+ */
+// ============================================================
+// [FIX #6] QR_decompose_Householder
+//   원본 버그: `norm_x = std::sqrt(norm_x)` 가 누산 루프 안에 중첩됨
+//             → 누산 완료 후 루프 밖에서 sqrt 적용해야 함
+// ============================================================
+bool QR_decompose_Householder(StaticVector<T, Cols>& tau) {
+    static_assert(Rows >= Cols, "QR requires Rows >= Cols");
+    for (size_t i = 0; i < Cols; ++i) {
+        // [FIX] norm 누산 루프와 sqrt를 분리
+        T norm_sq = static_cast<T>(0);
+        for (size_t k = i; k < Rows; ++k) {
+            norm_sq += (*this)(static_cast<int>(k), static_cast<int>(i)) *
+                       (*this)(static_cast<int>(k), static_cast<int>(i));
+        }
+        T norm_x = MathTraits<T>::sqrt(norm_sq);  // 루프 밖에서 sqrt
 
-        // Q^T b 적용 (Householder reflections)
-        for (size_t i = 0; i < Cols; ++i) {
-            if (MathTraits<T>::near_zero(tau(i))) {
-                continue;
-            }
-            T dot = y(i);
+        if (MathTraits<T>::near_zero(norm_x)) {
+            tau(i) = static_cast<T>(0);
+            continue;
+        }
+
+        T sign = ((*this)(static_cast<int>(i), static_cast<int>(i)) >= static_cast<T>(0))
+                     ? static_cast<T>(1.0)
+                     : static_cast<T>(-1.0);
+        T v0 = (*this)(static_cast<int>(i), static_cast<int>(i)) + sign * norm_x;
+
+        for (size_t k = i + 1; k < Rows; ++k) {
+            (*this)(static_cast<int>(k), static_cast<int>(i)) /= v0;
+        }
+
+        T v_sq_norm = static_cast<T>(1.0);
+        for (size_t k = i + 1; k < Rows; ++k) {
+            v_sq_norm += (*this)(static_cast<int>(k), static_cast<int>(i)) *
+                         (*this)(static_cast<int>(k), static_cast<int>(i));
+        }
+        tau(i) = static_cast<T>(2.0) / v_sq_norm;
+
+        (*this)(static_cast<int>(i), static_cast<int>(i)) = -sign * norm_x;
+
+        for (size_t j = i + 1; j < Cols; ++j) {
+            T dot = (*this)(static_cast<int>(i), static_cast<int>(j));
             for (size_t k = i + 1; k < Rows; ++k) {
-                dot += (*this)(static_cast<int>(k), static_cast<int>(i)) * y(k);
+                dot += (*this)(static_cast<int>(k), static_cast<int>(i)) *
+                       (*this)(static_cast<int>(k), static_cast<int>(j));
             }
             T tau_dot = tau(i) * dot;
-            y(i) -= tau_dot;
+            (*this)(static_cast<int>(i), static_cast<int>(j)) -= tau_dot;
             for (size_t k = i + 1; k < Rows; ++k) {
-                y(k) -= tau_dot * (*this)(static_cast<int>(k), static_cast<int>(i));
+                (*this)(static_cast<int>(k), static_cast<int>(j)) -=
+                    tau_dot * (*this)(static_cast<int>(k), static_cast<int>(i));
             }
         }
+    }
+    return true;
+}
 
-        // Back substitution: Rx = Q^T b
-        StaticVector<T, Cols> x;
-        for (int i = static_cast<int>(Cols) - 1; i >= 0; --i) {
-            T sum = static_cast<T>(0);
-            for (size_t j = static_cast<size_t>(i) + 1; j < Cols; ++j) {
-                sum += (*this)(i, static_cast<int>(j)) * x(j);
-            }
-            x(static_cast<size_t>(i)) = (y(static_cast<size_t>(i)) - sum) / (*this)(i, i);
+// ============================================================
+// [FIX #6] QR_solve_Householder
+//   원본 버그: `StaicVector` → `StaticVector` 오타
+// ============================================================
+StaticVector<T, Cols> QR_solve_Householder(
+    const StaticVector<T, Cols>& tau,
+    const StaticVector<T, Rows>& b) const  // [FIX] `StaicVector` → `StaticVector`
+{
+    StaticVector<T, Rows> y = b;
+
+    // Q^T b 적용 (Householder reflections)
+    for (size_t i = 0; i < Cols; ++i) {
+        if (MathTraits<T>::near_zero(tau(i))) {
+            continue;
         }
-        return x;
+        T dot = y(i);
+        for (size_t k = i + 1; k < Rows; ++k) {
+            dot += (*this)(static_cast<int>(k), static_cast<int>(i)) * y(k);
+        }
+        T tau_dot = tau(i) * dot;
+        y(i) -= tau_dot;
+        for (size_t k = i + 1; k < Rows; ++k) {
+            y(k) -= tau_dot * (*this)(static_cast<int>(k), static_cast<int>(i));
+        }
     }
 
-    /**
-     * @brief 디버깅 유틸리티
-     */
-    void print(const char* name) const {
-        std::cout << "Matrix [" << name << "] (Col-major, " << Rows << "x" << Cols << "):\n";
-        for (size_t i = 0; i < Rows; ++i) {
-            for (size_t j = 0; j < Cols; ++j) {
-                std::cout << std::fixed << std::setw(10) << std::setprecision(4)
-                          << (*this)(static_cast<int>(i), static_cast<int>(j)) << "\t";
-            }
-            std::cout << "\n";
+    // Back substitution: Rx = Q^T b
+    StaticVector<T, Cols> x;
+    for (int i = static_cast<int>(Cols) - 1; i >= 0; --i) {
+        T sum = static_cast<T>(0);
+        for (size_t j = static_cast<size_t>(i) + 1; j < Cols; ++j) {
+            sum += (*this)(i, static_cast<int>(j)) * x(j);
         }
-        std::cout << std::endl;
+        x(static_cast<size_t>(i)) = (y(static_cast<size_t>(i)) - sum) / (*this)(i, i);
     }
-};
+    return x;
+}
+
+/**
+ * @brief 디버깅 유틸리티
+ */
+void print(const char* name) const {
+    std::cout << "Matrix [" << name << "] (Col-major, " << Rows << "x" << Cols << "):\n";
+    for (size_t i = 0; i < Rows; ++i) {
+        for (size_t j = 0; j < Cols; ++j) {
+            std::cout << std::fixed << std::setw(10) << std::setprecision(4)
+                      << (*this)(static_cast<int>(i), static_cast<int>(j)) << "\t";
+        }
+        std::cout << "\n";
+    }
+    std::cout << std::endl;
+}
+}
+;
 
 #endif  // STATIC_MATRIX_HPP_
