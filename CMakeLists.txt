@@ -135,3 +135,7 @@ gtest_discover_tests(test_nes)
 add_executable(test_cma_es test/test_cma_es.cpp)
 target_link_libraries(test_cma_es PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_cma_es)
+
+add_executable(test_matrixengine test/test_matrixengine.cpp)
+target_link_libraries(test_matrixengine PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_matrixengine)
