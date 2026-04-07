@@ -316,7 +316,7 @@ void test_Cholesky() {
 }
 
 // ================================================================
-// [5] LDLT 분해 / 해법 (음정치 거부 패치 핵심 검증)
+// [5] LDLT 분해 / 해법 (KKT 시스템 호환성 검증으로 업데이트)
 // ================================================================
 void test_LDLT() {
     section("[5] LDLT 분해 / 해법");
@@ -348,14 +348,15 @@ void test_LDLT() {
     x_ref(1u) = 1.0;
     check(vec_near(x, x_ref, 1e-9), "LDLT_solve 해 정확도");
 
-    // ── 핵심 패치 검증: 음정치 행렬 거부 ──
-    // A = [[1,2],[2,1]]: D_jj = 1 (pass), D_jj = 1 - 4*1 = -3 (음수 → 거부)
+    // ── 핵심 패치 검증: KKT 호환성을 위한 부정치(Indefinite) 허용 ──
+    // A = [[1,2],[2,1]]: D_jj = 1, D_jj = 1 - 4*1 = -3 (음수 허용)
     StaticMatrix<double, 2, 2> Neg;
     Neg(0, 0) = 1;
     Neg(0, 1) = 2;
     Neg(1, 0) = 2;
     Neg(1, 1) = 1;
-    check(!Neg.LDLT_decompose(), "음정치 행렬 → LDLT false 반환 [패치 검증]");
+    check(Neg.LDLT_decompose(), "부정치(Indefinite) 행렬 → LDLT true 반환 [KKT 호환성 검증]");
+    check(std::abs(Neg(1, 1) - (-3.0)) < TOL, "음수 대각 원소 D[1][1] = -3.0 도출 확인");
 
     // 특이행렬 거부: D_jj = 0
     StaticMatrix<double, 2, 2> Sing;
