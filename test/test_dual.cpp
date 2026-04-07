@@ -5,6 +5,7 @@
 #include "Optimization/Dual.hpp"
 
 using namespace Optimization;
+using namespace Optimization::ad;
 
 // ======================================================
 // 1. Scalar Dual (1D AD) 테스트

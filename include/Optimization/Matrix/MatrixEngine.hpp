@@ -9,6 +9,8 @@
 #include <limits>       // std::numeric_limits
 #include <stdexcept>    // std::invalid_argument
 #include <type_traits>  // std::is_floating_point (AD Traits 확장 대비)
+#include <algorithm>    // std::copy, std::fill (Block Operations 최적화)
+#include "Optimization/Dual.hpp"
 
 /**
  * @brief 전방 선언 (Forward Declaration)
@@ -38,6 +40,17 @@ struct MathTraits {
      *   - Dual:   특수화에서 실수부(real part)만 비교하도록 오버라이드
      */
     static bool near_zero(const T& x) { return std::abs(x) <= std::numeric_limits<T>::epsilon(); }
+};
+
+template <typename T>
+struct MathTraits<Optimization::Dual<T>> {
+    static Optimization::Dual<T> abs(const Optimization::Dual<T>& x)  { return Optimization::ad::abs(x);  }
+    static Optimization::Dual<T> sqrt(const Optimization::Dual<T>& x) { return Optimization::ad::sqrt(x); }
+
+    // 특이성 검사는 오직 Value(실수부)만을 기준으로 판단합니다.
+    static bool near_zero(const Optimization::Dual<T>& x) {
+        return std::abs(x.v) <= std::numeric_limits<T>::epsilon();
+    }
 };
 
 /**

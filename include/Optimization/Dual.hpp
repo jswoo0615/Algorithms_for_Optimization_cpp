@@ -245,7 +245,7 @@ struct DualVec {
     constexpr DualVec& operator/=(const T& rhs) noexcept {
         v /= rhs;
         for (size_t i = 0; i < N; ++i) {
-            g[i] / rhs;
+            g[i] /= rhs; // 기존 코드 오타 수정: g[i] / rhs -> g[i] /= rhs
         }
         return *this;
     }
@@ -279,8 +279,10 @@ template <typename T, size_t N>
 }
 
 // =====================================================================
-// 3. 범용 수학 함수 (Macro & Overloading)
+// 3. 범용 수학 함수 (Macro & Overloading) - 네임스페이스 ad로 격리
 // =====================================================================
+namespace ad {
+
 #define DUAL_MATH_OVERLOAD(funcName, derivativeExpr)        \
     template <typename T>                                   \
     inline Dual<T> funcName(const Dual<T>& u) {             \
@@ -299,6 +301,7 @@ template <typename T, size_t N>
         }                                                   \
         return res;                                         \
     }
+
 DUAL_MATH_OVERLOAD(sin, std::cos(u.v))
 DUAL_MATH_OVERLOAD(cos, -std::sin(u.v))
 DUAL_MATH_OVERLOAD(exp, std::exp(u.v))
@@ -375,23 +378,14 @@ inline DualVec<T, N> atan2(const DualVec<T, N>& y, const DualVec<T, N>& x) {
     return res;
 }
 
-template <typename T>
-inline std::complex<T> atan2(const std::complex<T>& y, const std::complex<T>& x) {
-    T yr = y.real(), yi = y.imag();
-    T xr = x.real(), xi = x.imag();
-    T den = xr * xr + yr * yr;
+// 스칼라 타입에 대한 오버로딩 (모호성 방지 및 일관된 인터페이스 제공)
+template <typename T> inline T abs(const T& x) { return std::abs(x); }
+template <typename T> inline T sqrt(const T& x) { return std::sqrt(x); }
 
-    if (den <= T(1e-16)) {
-        return std::complex<T>(std::atan2(yr, xr), T(0.0));
-    }
-    T real_part = std::atan2(yr, xr);
-    T imag_part = std::atan2(xr * yi - yr * xi) / den;
-
-    return std::complex<T>(real_part, imag_part);
-}
+} // namespace ad
 
 // =====================================================================
-// 4. std::complex 초월함수 해석적 확장
+// 4. std::complex 초월함수 해석적 확장 (AD 외부)
 // =====================================================================
 #define CSD_MATH_OVERLOAD(funcName, derivativeExpr)                \
     template <typename T>                                          \
@@ -418,6 +412,21 @@ inline std::complex<T> pow(const std::complex<T>& u, double n) {
     return std::complex<T>(res_v, i * deriv);
 }
 
+template <typename T>
+inline std::complex<T> atan2(const std::complex<T>& y, const std::complex<T>& x) {
+    T yr = y.real(), yi = y.imag();
+    T xr = x.real(), xi = x.imag();
+    T den = xr * xr + yr * yr;
+
+    if (den <= T(1e-16)) {
+        return std::complex<T>(std::atan2(yr, xr), T(0.0));
+    }
+    T real_part = std::atan2(yr, xr);
+    T imag_part = std::atan2(xr * yi - yr * xi) / den;
+
+    return std::complex<T>(real_part, imag_part);
+}
+
 // --- Helper Function : Value extraction ---
 template <typename T>
 inline auto get_value(const T& x) {
@@ -433,6 +442,7 @@ template <typename T, size_t N>
 inline auto get_value(const DualVec<T, N>& x) {
     return x.v;
 }
+
 }  // namespace Optimization
 
 #endif  // OPTIMIZATION_DUAL_HPP_
