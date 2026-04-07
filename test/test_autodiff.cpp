@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+
 #include <cmath>
 #include <type_traits>
 
@@ -8,7 +9,7 @@
 using namespace Optimization;
 
 class AutoDiffTest : public ::testing::Test {
-protected:
+   protected:
     // 테스트에 사용할 스칼라 함수 f(x, y) = x^2 + 3xy + y^3
     // x = 2, y = 3 일 때:
     // Value = 4 + 18 + 27 = 49

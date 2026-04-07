@@ -2,6 +2,7 @@
 #define STATIC_MATRIX_HPP_
 
 #include <algorithm>  // std::copy, std::fill (Block Operations 최적화)
+#include <algorithm>  // std::copy, std::fill (Block Operations 최적화)
 #include <cassert>
 #include <cmath>  // std::abs, std::sqrt
 #include <iomanip>
@@ -9,7 +10,7 @@
 #include <limits>       // std::numeric_limits
 #include <stdexcept>    // std::invalid_argument
 #include <type_traits>  // std::is_floating_point (AD Traits 확장 대비)
-#include <algorithm>    // std::copy, std::fill (Block Operations 최적화)
+
 #include "Optimization/Dual.hpp"
 
 /**
@@ -44,8 +45,12 @@ struct MathTraits {
 
 template <typename T>
 struct MathTraits<Optimization::Dual<T>> {
-    static Optimization::Dual<T> abs(const Optimization::Dual<T>& x)  { return Optimization::ad::abs(x);  }
-    static Optimization::Dual<T> sqrt(const Optimization::Dual<T>& x) { return Optimization::ad::sqrt(x); }
+    static Optimization::Dual<T> abs(const Optimization::Dual<T>& x) {
+        return Optimization::ad::abs(x);
+    }
+    static Optimization::Dual<T> sqrt(const Optimization::Dual<T>& x) {
+        return Optimization::ad::sqrt(x);
+    }
 
     // 특이성 검사는 오직 Value(실수부)만을 기준으로 판단합니다.
     static bool near_zero(const Optimization::Dual<T>& x) {

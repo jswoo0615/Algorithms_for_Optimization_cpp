@@ -245,7 +245,7 @@ struct DualVec {
     constexpr DualVec& operator/=(const T& rhs) noexcept {
         v /= rhs;
         for (size_t i = 0; i < N; ++i) {
-            g[i] /= rhs; // 기존 코드 오타 수정: g[i] / rhs -> g[i] /= rhs
+            g[i] /= rhs;  // 기존 코드 오타 수정: g[i] / rhs -> g[i] /= rhs
         }
         return *this;
     }
@@ -379,10 +379,16 @@ inline DualVec<T, N> atan2(const DualVec<T, N>& y, const DualVec<T, N>& x) {
 }
 
 // 스칼라 타입에 대한 오버로딩 (모호성 방지 및 일관된 인터페이스 제공)
-template <typename T> inline T abs(const T& x) { return std::abs(x); }
-template <typename T> inline T sqrt(const T& x) { return std::sqrt(x); }
+template <typename T>
+inline T abs(const T& x) {
+    return std::abs(x);
+}
+template <typename T>
+inline T sqrt(const T& x) {
+    return std::sqrt(x);
+}
 
-} // namespace ad
+}  // namespace ad
 
 // =====================================================================
 // 4. std::complex 초월함수 해석적 확장 (AD 외부)
