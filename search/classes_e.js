@@ -1,9 +1,9 @@
 var searchData=
 [
-  ['secantmethod_0',['SecantMethod',['../classOptimization_1_1SecantMethod.html',1,'Optimization']]],
-  ['simulatedannealing_1',['SimulatedAnnealing',['../classOptimization_1_1SimulatedAnnealing.html',1,'Optimization']]],
-  ['spherefunction_2',['SphereFunction',['../structOptimization_1_1Tests_1_1SphereFunction.html',1,'Optimization::Tests']]],
-  ['staticmatrix_3',['StaticMatrix',['../classStaticMatrix.html',1,'']]],
-  ['strongbacktrackinglinesearch_4',['StrongBacktrackingLineSearch',['../classOptimization_1_1StrongBacktrackingLineSearch.html',1,'Optimization']]],
-  ['strongwolfetest_5',['StrongWolfeTest',['../classStrongWolfeTest.html',1,'']]]
+  ['range_0',['Range',['../structOptimization_1_1Range.html',1,'Optimization']]],
+  ['rmsprop_1',['RMSProp',['../classOptimization_1_1RMSProp.html',1,'Optimization']]],
+  ['rmsproptest_2',['RMSPropTest',['../classOptimization_1_1Test_1_1RMSPropTest.html',1,'Optimization::Test']]],
+  ['rosenbrock2d_3',['Rosenbrock2D',['../structOptimization_1_1Tests_1_1Rosenbrock2D.html',1,'Optimization::Tests']]],
+  ['rosenbrockfunc_4',['RosenbrockFunc',['../structOptimization_1_1Test_1_1RosenbrockFunc.html',1,'Optimization::Test']]],
+  ['rosenbrockfunction_5',['RosenbrockFunction',['../structOptimization_1_1Tests_1_1RosenbrockFunction.html',1,'Optimization::Tests']]]
 ];

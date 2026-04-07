@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['ldlt_5fdecompose_0',['LDLT_decompose',['../classStaticMatrix.html#a41fe1aba4edb465f1543784b8a135225',1,'StaticMatrix']]],
-  ['lu_5fdecompose_1',['LU_decompose',['../classStaticMatrix.html#a91cd13826279e32a6a73ac0408fdabd5',1,'StaticMatrix']]]
+  ['evaluate_5feqp_0',['evaluate_EQP',['../classKKTMonitor.html#ac4d0b74bf08bcd30a3d744d531122d81',1,'KKTMonitor']]],
+  ['extract_5fblock_1',['extract_block',['../classStaticMatrix.html#a7f6df05797ecc86684b69928e320bde5',1,'StaticMatrix']]]
 ];

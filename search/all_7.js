@@ -1,7 +1,5 @@
 var searchData=
 [
-  ['ldlt_5fdecompose_0',['LDLT_decompose',['../classStaticMatrix.html#a41fe1aba4edb465f1543784b8a135225',1,'StaticMatrix']]],
-  ['linesearch_1',['LineSearch',['../classOptimization_1_1LineSearch.html',1,'Optimization']]],
-  ['linesearchtest_2',['LineSearchTest',['../classLineSearchTest.html',1,'']]],
-  ['lu_5fdecompose_3',['LU_decompose',['../classStaticMatrix.html#a91cd13826279e32a6a73ac0408fdabd5',1,'StaticMatrix']]]
+  ['insert_5fblock_0',['insert_block',['../classStaticMatrix.html#a7b00b0d5d9d322cfebdeef89bda1ddf6',1,'StaticMatrix']]],
+  ['insert_5ftransposed_5fblock_1',['insert_transposed_block',['../classStaticMatrix.html#a1a8e7a70a9910ddcf2dbd09fc295d247',1,'StaticMatrix']]]
 ];
