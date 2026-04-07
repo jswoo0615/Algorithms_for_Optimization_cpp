@@ -87,37 +87,35 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Automatic Differentiation 인터페이스 제공하는 정적 클래스  
+<p>정적 메모리 엔진(Layer 1)과 완벽히 호환되는 Auto Differentiation 인터페이스  
  <a href="classOptimization_1_1AutoDiff.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="AutoDiff_8hpp_source.html">AutoDiff.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a726857d4cbc41ae4628bdee10d58b356" id="r_a726857d4cbc41ae4628bdee10d58b356"><td class="memTemplParams" colspan="2"><a id="a726857d4cbc41ae4628bdee10d58b356" name="a726857d4cbc41ae4628bdee10d58b356"></a>
+<tr class="memitem:afc2d3807943994aad03a4a1e1113e4b5" id="r_afc2d3807943994aad03a4a1e1113e4b5"><td class="memTemplParams" colspan="2"><a id="afc2d3807943994aad03a4a1e1113e4b5" name="afc2d3807943994aad03a4a1e1113e4b5"></a>
 template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:a726857d4cbc41ae4628bdee10d58b356"><td class="memTemplItemLeft" align="right" valign="top">static constexpr double&#160;</td><td class="memTemplItemRight" valign="bottom"><b>value</b> (Func f, const std::array&lt; double, N &gt; &amp;x_point) noexcept</td></tr>
-<tr class="separator:a726857d4cbc41ae4628bdee10d58b356"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:adfc27dd615dcf090a8c842642f954940" id="r_adfc27dd615dcf090a8c842642f954940"><td class="memTemplParams" colspan="2"><a id="adfc27dd615dcf090a8c842642f954940" name="adfc27dd615dcf090a8c842642f954940"></a>
+<tr class="memitem:afc2d3807943994aad03a4a1e1113e4b5"><td class="memTemplItemLeft" align="right" valign="top">static double&#160;</td><td class="memTemplItemRight" valign="bottom"><b>value</b> (Func f, const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x)</td></tr>
+<tr class="separator:afc2d3807943994aad03a4a1e1113e4b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a58e4c087ad635622012694e6851455b1" id="r_a58e4c087ad635622012694e6851455b1"><td class="memTemplParams" colspan="2"><a id="a58e4c087ad635622012694e6851455b1" name="a58e4c087ad635622012694e6851455b1"></a>
 template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:adfc27dd615dcf090a8c842642f954940"><td class="memTemplItemLeft" align="right" valign="top">static constexpr std::array&lt; double, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>gradient</b> (Func f, const std::array&lt; double, N &gt; &amp;x_point) noexcept</td></tr>
-<tr class="separator:adfc27dd615dcf090a8c842642f954940"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a58e547dc52863489ffbe76d02c52bc76" id="r_a58e547dc52863489ffbe76d02c52bc76"><td class="memTemplParams" colspan="2"><a id="a58e547dc52863489ffbe76d02c52bc76" name="a58e547dc52863489ffbe76d02c52bc76"></a>
+<tr class="memitem:a58e4c087ad635622012694e6851455b1"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>gradient</b> (Func f, const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x)</td></tr>
+<tr class="separator:a58e4c087ad635622012694e6851455b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1aa249fc72dc4dbf5932cc451daad711" id="r_a1aa249fc72dc4dbf5932cc451daad711"><td class="memTemplParams" colspan="2"><a id="a1aa249fc72dc4dbf5932cc451daad711" name="a1aa249fc72dc4dbf5932cc451daad711"></a>
 template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:a58e547dc52863489ffbe76d02c52bc76"><td class="memTemplItemLeft" align="right" valign="top">static constexpr void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>value_and_gradient</b> (Func f, const std::array&lt; double, N &gt; &amp;x_point, double &amp;v_out, std::array&lt; double, N &gt; &amp;g_out) noexcept</td></tr>
-<tr class="separator:a58e547dc52863489ffbe76d02c52bc76"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4341f46e73cf8a048528a4df5051e417" id="r_a4341f46e73cf8a048528a4df5051e417"><td class="memTemplParams" colspan="2"><a id="a4341f46e73cf8a048528a4df5051e417" name="a4341f46e73cf8a048528a4df5051e417"></a>
+<tr class="memitem:a1aa249fc72dc4dbf5932cc451daad711"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>value_and_gradient</b> (Func f, const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x, double &amp;v_out, <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;g_out)</td></tr>
+<tr class="separator:a1aa249fc72dc4dbf5932cc451daad711"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a091af479e8d81d8440ee3b1f7d742283" id="r_a091af479e8d81d8440ee3b1f7d742283"><td class="memTemplParams" colspan="2"><a id="a091af479e8d81d8440ee3b1f7d742283" name="a091af479e8d81d8440ee3b1f7d742283"></a>
 template&lt;size_t M, size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:a4341f46e73cf8a048528a4df5051e417"><td class="memTemplItemLeft" align="right" valign="top">static constexpr std::array&lt; std::array&lt; double, N &gt;, M &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>jacobian</b> (Func f, const std::array&lt; double, N &gt; &amp;x_point) noexcept</td></tr>
-<tr class="separator:a4341f46e73cf8a048528a4df5051e417"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac4063722a48131ab8dcbc518cdf1d5f3" id="r_ac4063722a48131ab8dcbc518cdf1d5f3"><td class="memTemplParams" colspan="2"><a id="ac4063722a48131ab8dcbc518cdf1d5f3" name="ac4063722a48131ab8dcbc518cdf1d5f3"></a>
-template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:ac4063722a48131ab8dcbc518cdf1d5f3"><td class="memTemplItemLeft" align="right" valign="top">static std::array&lt; std::array&lt; double, N &gt;, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>hessian</b> (Func f, const std::array&lt; double, N &gt; &amp;x) noexcept</td></tr>
-<tr class="separator:ac4063722a48131ab8dcbc518cdf1d5f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a091af479e8d81d8440ee3b1f7d742283"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="classStaticMatrix.html">StaticMatrix</a>&lt; double, M, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>jacobian</b> (Func f, const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x)</td></tr>
+<tr class="separator:a091af479e8d81d8440ee3b1f7d742283"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Automatic Differentiation 인터페이스 제공하는 정적 클래스 </p>
-<dl class="section note"><dt>Note</dt><dd>실시간 제어기 적용을 위해 동적 할당 차단 및 컴파일 타임 최적화 강제 </dd></dl>
+<div class="textblock"><p>정적 메모리 엔진(Layer 1)과 완벽히 호환되는 Auto Differentiation 인터페이스 </p>
+<dl class="section note"><dt>Note</dt><dd>std::array를 전면 배제하고 StaticVector / StaticMatrix를 사용. </dd>
+<dd>
+SQP의 <a class="el" href="classOptimization_1_1BFGS.html">BFGS</a> 업데이트를 위해 수치적 오차가 큰 Finite Difference Hessian은 삭제함. </dd></dl>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/Optimization/<a class="el" href="AutoDiff_8hpp_source.html">AutoDiff.hpp</a></li>
 </ul>

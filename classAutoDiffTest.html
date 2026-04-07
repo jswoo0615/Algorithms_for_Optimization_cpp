@@ -121,7 +121,9 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">= [](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; x) {</div>
-<div class="line">        <span class="keywordflow">return</span> x[0] * x[0] + 3.0 * x[0] * x[1] + x[1] * x[1] * x[1];</div>
+<div class="line">        </div>
+<div class="line">        <span class="keyword">using </span>T = std::decay_t&lt;<span class="keyword">decltype</span>(x(0))&gt;;</div>
+<div class="line">        <span class="keywordflow">return</span> x(0) * x(0) + T(3.0) * x(0) * x(1) + x(1) * x(1) * x(1);</div>
 <div class="line">    }</div>
 </div><!-- fragment -->
 </div>
@@ -146,13 +148,13 @@ Static Protected Attributes</h2></td></tr>
 </table>
 </div><div class="memdoc">
 <b>Initial value:</b><div class="fragment"><div class="line">= [](<span class="keyword">const</span> <span class="keyword">auto</span>&amp; x) {</div>
-<div class="line">        </div>
-<div class="line">        <span class="keyword">using </span>T = <span class="keyword">typename</span> std::decay_t&lt;<span class="keyword">decltype</span>(x)&gt;::value_type;</div>
-<div class="line">        std::array&lt;T, 2&gt; res;</div>
-<div class="line">        res[0] = x[0] * x[0] + x[1];</div>
-<div class="line">        res[1] = T(5.0) * x[0] - x[1] * x[1];</div>
+<div class="line">        <span class="keyword">using </span>T = std::decay_t&lt;<span class="keyword">decltype</span>(x(0))&gt;;</div>
+<div class="line">        <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;T, 2&gt;</a> res;</div>
+<div class="line">        res(0) = x(0) * x(0) + x(1);</div>
+<div class="line">        res(1) = T(5.0) * x(0) - x(1) * x(1);</div>
 <div class="line">        <span class="keywordflow">return</span> res;</div>
 <div class="line">    }</div>
+<div class="ttc" id="aclassStaticMatrix_html"><div class="ttname"><a href="classStaticMatrix.html">StaticMatrix</a></div><div class="ttdoc">전방 선언 (Forward Declaration)</div><div class="ttdef"><b>Definition</b> MatrixEngine.hpp:64</div></div>
 </div><!-- fragment -->
 </div>
 </div>

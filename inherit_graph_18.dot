@@ -5,5 +5,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
   node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
   rankdir="LR";
-  Node0 [id="Node000000",label="Optimization::GoldenSection\lStrategy",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$structOptimization_1_1GoldenSectionStrategy.html",tooltip="LineSearch 모듈을 순환 좌표 탐색에 연결"];
+  Node0 [id="Node000000",label="Optimization::DualVec\l\< T, N \>",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$structOptimization_1_1DualVec.html",tooltip=" "];
 }
