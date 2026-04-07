@@ -1,5 +1,6 @@
-#include <iostream>
 #include <cmath>
+#include <iostream>
+
 #include "Optimization/EQPSolver.hpp"
 #include "Optimization/KKTMonitor.hpp"
 
@@ -14,15 +15,18 @@ void run_eqp_test() {
     EQPSolver<2, 1> solver;
 
     // 2. 목적 함수 P 행렬 세팅 (대칭 양정치)
-    solver.P(0, 0) = 2.0; solver.P(0, 1) = 0.0;
-    solver.P(1, 0) = 0.0; solver.P(1, 1) = 2.0;
+    solver.P(0, 0) = 2.0;
+    solver.P(0, 1) = 0.0;
+    solver.P(1, 0) = 0.0;
+    solver.P(1, 1) = 2.0;
 
     // 3. 목적 함수 q 벡터 세팅
     solver.q(0) = -2.0;
     solver.q(1) = -5.0;
 
     // 4. 등식 제약 조건 A 행렬 및 b 벡터 세팅
-    solver.A(0, 0) = 1.0; solver.A(0, 1) = -1.0;
+    solver.A(0, 0) = 1.0;
+    solver.A(0, 1) = -1.0;
     solver.b(0) = -2.0;
 
     // 5. 엔진 구동
@@ -39,9 +43,8 @@ void run_eqp_test() {
     // ==========================================================
     // [Architect's Check] KKT Monitor 가동
     // ==========================================================
-    auto kkt_metrics = KKTMonitor<2, 1>::evaluate_EQP(
-        solver.P, solver.q, solver.A, solver.b, solver.u_opt, solver.lambda_opt
-    );
+    auto kkt_metrics = KKTMonitor<2, 1>::evaluate_EQP(solver.P, solver.q, solver.A, solver.b,
+                                                      solver.u_opt, solver.lambda_opt);
 
     KKTMonitor<2, 1>::print_metrics(kkt_metrics);
 
