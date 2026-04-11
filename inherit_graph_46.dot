@@ -5,5 +5,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
   node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
   rankdir="LR";
-  Node0 [id="Node000000",label="Optimization::PowellMethod",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classOptimization_1_1PowellMethod.html",tooltip="Powell's Method 최적화 알고리즘 (교재 Algorithm 7.4)"];
+  Node0 [id="Node000000",label="Optimization::PathPlanner\l\< Np, Nx \>",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classOptimization_1_1PathPlanner.html",tooltip=" "];
 }

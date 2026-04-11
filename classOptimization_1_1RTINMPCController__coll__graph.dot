@@ -10,7 +10,7 @@ digraph "Optimization::RTINMPCController&lt; Np &gt;"
   Node2 [id="Node000002",label="Optimization::DynamicBicycle\lModel",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$classOptimization_1_1DynamicBicycleModel.html",tooltip=" "];
   Node3 -> Node2 [id="edge2_Node000002_Node000003",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" param",fontcolor="grey" ];
   Node3 [id="Node000003",label="Optimization::VehicleParam",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$structOptimization_1_1VehicleParam.html",tooltip=" "];
-  Node4 -> Node1 [id="edge3_Node000001_Node000004",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" Q\nQf\nx_ref",fontcolor="grey" ];
+  Node4 -> Node1 [id="edge3_Node000001_Node000004",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" Q\nQf",fontcolor="grey" ];
   Node4 [id="Node000004",label="StaticMatrix\< double,\l Nx \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$classStaticMatrix.html",tooltip=" "];
   Node5 -> Node1 [id="edge4_Node000001_Node000005",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" R\nR_rate\nu_last",fontcolor="grey" ];
   Node5 [id="Node000005",label="StaticMatrix\< double,\l Nu \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$classStaticMatrix.html",tooltip=" "];

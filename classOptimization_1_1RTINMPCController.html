@@ -99,8 +99,6 @@ Collaboration diagram for Optimization::RTINMPCController&lt; Np &gt;:</div>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOptimization_1_1RTINMPCController_1_1BoundIneq.html">BoundIneq</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOptimization_1_1RTINMPCController_1_1DummyEq.html">DummyEq</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOptimization_1_1RTINMPCController_1_1ResidualFunc.html">ResidualFunc</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOptimization_1_1RTINMPCController_1_1RTIObstacle.html">RTIObstacle</a></td></tr>
@@ -108,9 +106,9 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ab262eb1575338f18f03974e638b01ecd" id="r_ab262eb1575338f18f03974e638b01ecd"><td class="memItemLeft" align="right" valign="top"><a id="ab262eb1575338f18f03974e638b01ecd" name="ab262eb1575338f18f03974e638b01ecd"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>compute_control</b> (const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;current_x, <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N_vars &gt; &amp;U_guess)</td></tr>
-<tr class="separator:ab262eb1575338f18f03974e638b01ecd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a7cea3bc8da240e92e833d487e3c91dbf" id="r_a7cea3bc8da240e92e833d487e3c91dbf"><td class="memItemLeft" align="right" valign="top"><a id="a7cea3bc8da240e92e833d487e3c91dbf" name="a7cea3bc8da240e92e833d487e3c91dbf"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>compute_control</b> (const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;current_x, const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; ref_horizon[Np], <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N_vars &gt; &amp;U_guess)</td></tr>
+<tr class="separator:a7cea3bc8da240e92e833d487e3c91dbf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -135,9 +133,6 @@ double&#160;</td><td class="memItemRight" valign="bottom"><b>dt</b> = 0.2</td></
 <tr class="memitem:ae35075abfe3e8473424ff34180aa8254" id="r_ae35075abfe3e8473424ff34180aa8254"><td class="memItemLeft" align="right" valign="top"><a id="ae35075abfe3e8473424ff34180aa8254" name="ae35075abfe3e8473424ff34180aa8254"></a>
 <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, Nu &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>R_rate</b></td></tr>
 <tr class="separator:ae35075abfe3e8473424ff34180aa8254"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a28c438eba428dd8305074194e4fcfce3" id="r_a28c438eba428dd8305074194e4fcfce3"><td class="memItemLeft" align="right" valign="top"><a id="a28c438eba428dd8305074194e4fcfce3" name="a28c438eba428dd8305074194e4fcfce3"></a>
-<a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, Nx &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>x_ref</b></td></tr>
-<tr class="separator:a28c438eba428dd8305074194e4fcfce3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad6c8a368ba808591b5e7c66174cd55df" id="r_ad6c8a368ba808591b5e7c66174cd55df"><td class="memItemLeft" align="right" valign="top"><a id="ad6c8a368ba808591b5e7c66174cd55df" name="ad6c8a368ba808591b5e7c66174cd55df"></a>
 <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, Nu &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>u_last</b></td></tr>
 <tr class="separator:ad6c8a368ba808591b5e7c66174cd55df"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -160,7 +155,7 @@ static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><b>N_
 static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><b>N_eq</b> = 0</td></tr>
 <tr class="separator:acb544fd674a3bc824995b53481399b7b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aacb5203f4aa56956460d62c564e80592" id="r_aacb5203f4aa56956460d62c564e80592"><td class="memItemLeft" align="right" valign="top"><a id="aacb5203f4aa56956460d62c564e80592" name="aacb5203f4aa56956460d62c564e80592"></a>
-static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><b>N_ineq</b> = Np * 4</td></tr>
+static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><b>N_ineq</b> = Np * 8</td></tr>
 <tr class="separator:aacb5203f4aa56956460d62c564e80592"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa6c3d42b121f2d7b42d4795d93170775" id="r_aa6c3d42b121f2d7b42d4795d93170775"><td class="memItemLeft" align="right" valign="top"><a id="aa6c3d42b121f2d7b42d4795d93170775" name="aa6c3d42b121f2d7b42d4795d93170775"></a>
 static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><b>N_res</b> = Np * Nx + Np * Nu + Np * Nu + Np * 10 + Nx</td></tr>
