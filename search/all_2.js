@@ -6,7 +6,7 @@ var searchData=
   ['conjugategradient_3',['ConjugateGradient',['../classOptimization_1_1ConjugateGradient.html',1,'Optimization']]],
   ['conjugategradienttest_4',['ConjugateGradientTest',['../classConjugateGradientTest.html',1,'']]],
   ['convexquadratic2d_5',['ConvexQuadratic2D',['../structOptimization_1_1Tests_1_1ConvexQuadratic2D.html',1,'Optimization::Tests']]],
-  ['costfunc_6',['CostFunc',['../structCostFunc.html',1,'']]],
+  ['costfunc_6',['costfunc',['../structCostFunc.html',1,'CostFunc'],['../structOptimization_1_1NMPCController_1_1CostFunc.html',1,'Optimization::NMPCController&lt; Np &gt;::CostFunc']]],
   ['crossentropy_7',['CrossEntropy',['../classOptimization_1_1CrossEntropy.html',1,'Optimization']]],
   ['cycliccoordinatesearch_8',['CyclicCoordinateSearch',['../classOptimization_1_1CyclicCoordinateSearch.html',1,'Optimization']]]
 ];

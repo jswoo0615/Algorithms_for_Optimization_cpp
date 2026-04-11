@@ -123,9 +123,9 @@ Public Attributes</h2></td></tr>
 <tr class="memitem:a3aeb158e94915adb7c3faad273fdaedd" id="r_a3aeb158e94915adb7c3faad273fdaedd"><td class="memItemLeft" align="right" valign="top"><a id="a3aeb158e94915adb7c3faad273fdaedd" name="a3aeb158e94915adb7c3faad273fdaedd"></a>
 <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N_ineq &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>b_ineq</b></td></tr>
 <tr class="separator:a3aeb158e94915adb7c3faad273fdaedd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a853a1537d117f9e1db26943b4764f50d" id="r_a853a1537d117f9e1db26943b4764f50d"><td class="memItemLeft" align="right" valign="top"><a id="a853a1537d117f9e1db26943b4764f50d" name="a853a1537d117f9e1db26943b4764f50d"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>working_set</b> [N_ineq] = {false}</td></tr>
-<tr class="separator:a853a1537d117f9e1db26943b4764f50d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa020fbb2c733983b1985c9c084cd92eb" id="r_aa020fbb2c733983b1985c9c084cd92eb"><td class="memItemLeft" align="right" valign="top"><a id="aa020fbb2c733983b1985c9c084cd92eb" name="aa020fbb2c733983b1985c9c084cd92eb"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>working_set</b> [N_ineq &gt; 0 ? N_ineq :1] = {false}</td></tr>
+<tr class="separator:aa020fbb2c733983b1985c9c084cd92eb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;size_t N_vars, size_t N_eq, size_t N_ineq&gt;<br />
