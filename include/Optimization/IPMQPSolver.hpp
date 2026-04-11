@@ -30,13 +30,14 @@ class IPMQPSolver {
     }
 
     bool solve(StaticVector<double, N_vars>& x, int max_iter = 50, double tol = 1e-3) {
-        StaticVector<double, (N_eq > 0 ? N_eq : 1)> y; y.set_zero();
-        StaticVector<double, (N_ineq > 0 ? N_ineq : 1)> z; 
-        StaticVector<double, (N_ineq > 0 ? N_ineq : 1)> s; 
-        
-        for(size_t i = 0; i < N_ineq; ++i) {
-            z(static_cast<int>(i)) = 1.0; 
-            s(static_cast<int>(i)) = std::max(1.0, b_ineq(static_cast<int>(i))); 
+        StaticVector<double, (N_eq > 0 ? N_eq : 1)> y;
+        y.set_zero();
+        StaticVector<double, (N_ineq > 0 ? N_ineq : 1)> z;
+        StaticVector<double, (N_ineq > 0 ? N_ineq : 1)> s;
+
+        for (size_t i = 0; i < N_ineq; ++i) {
+            z(static_cast<int>(i)) = 1.0;
+            s(static_cast<int>(i)) = std::max(1.0, b_ineq(static_cast<int>(i)));
         }
 
         constexpr size_t KKT_size = N_vars + N_eq + N_ineq;
@@ -82,11 +83,13 @@ class IPMQPSolver {
             K.set_zero();
             rhs.set_zero();
 
-            for(size_t i=0; i<N_vars; ++i) {
-                for(size_t j=0; j<N_vars; ++j) K(static_cast<int>(i), static_cast<int>(j)) = P(static_cast<int>(i), static_cast<int>(j));
+            for (size_t i = 0; i < N_vars; ++i) {
+                for (size_t j = 0; j < N_vars; ++j)
+                    K(static_cast<int>(i), static_cast<int>(j)) =
+                        P(static_cast<int>(i), static_cast<int>(j));
                 // [Architect's Armor 1] 티호노프 정규화 (Tikhonov Regularization)
                 // 역행렬 분해 시 0으로 나누어지는 특이점(Singularity) 폭발을 영구히 차단
-                K(static_cast<int>(i), static_cast<int>(i)) += 1e-6; 
+                K(static_cast<int>(i), static_cast<int>(i)) += 1e-6;
             }
 
             if constexpr (N_eq > 0) {
@@ -110,7 +113,8 @@ class IPMQPSolver {
                     }
                     // Z가 0이 되어 폭발하는 것 방지
                     double z_safe = std::max(z(static_cast<int>(i)), 1e-12);
-                    K(static_cast<int>(i + N_vars + N_eq), static_cast<int>(i + N_vars + N_eq)) = -s(static_cast<int>(i)) / z_safe;
+                    K(static_cast<int>(i + N_vars + N_eq), static_cast<int>(i + N_vars + N_eq)) =
+                        -s(static_cast<int>(i)) / z_safe;
                 }
             }
 
@@ -123,7 +127,8 @@ class IPMQPSolver {
                 for (size_t i = 0; i < N_ineq; ++i) {
                     double r_c = s(static_cast<int>(i)) * z(static_cast<int>(i)) - mu_target;
                     double z_safe = std::max(z(static_cast<int>(i)), 1e-12);
-                    rhs(static_cast<int>(i + N_vars + N_eq)) = -r_ineq(static_cast<int>(i)) + r_c / z_safe;
+                    rhs(static_cast<int>(i + N_vars + N_eq)) =
+                        -r_ineq(static_cast<int>(i)) + r_c / z_safe;
                 }
             }
 
@@ -144,7 +149,7 @@ class IPMQPSolver {
 
                 if (max_val < 1e-12) {
                     // 특이점 도달 시 정규화 덕분에 진행 가능하지만, 너무 작으면 해당 스텝을 넘김
-                    continue; 
+                    continue;
                 }
 
                 if (pivot != i) {
@@ -182,14 +187,16 @@ class IPMQPSolver {
             StaticVector<double, (N_ineq > 0 ? N_ineq : 1)> dz;
             StaticVector<double, (N_ineq > 0 ? N_ineq : 1)> ds;
 
-            for(size_t i=0; i<N_vars; ++i) {
+            for (size_t i = 0; i < N_vars; ++i) {
                 // IPM 내부 클램핑 (1차 방어)
                 double val = delta(static_cast<int>(i));
                 if (val > 10.0) val = 10.0;
                 if (val < -10.0) val = -10.0;
                 dx(static_cast<int>(i)) = val;
             }
-            if constexpr (N_eq > 0) for(size_t i=0; i<N_eq; ++i) dy(static_cast<int>(i)) = delta(static_cast<int>(i + N_vars));
+            if constexpr (N_eq > 0)
+                for (size_t i = 0; i < N_eq; ++i)
+                    dy(static_cast<int>(i)) = delta(static_cast<int>(i + N_vars));
             if constexpr (N_ineq > 0) {
                 for (size_t i = 0; i < N_ineq; ++i) {
                     dz(static_cast<int>(i)) = delta(static_cast<int>(i + N_vars + N_eq));
@@ -223,9 +230,10 @@ class IPMQPSolver {
                 s = s + (ds * alpha_prim);
             }
         }
-        
-        // [Architect's Safe Return] 타임아웃이 걸리더라도, 중간에 계산된 최선의 해(x)를 버리지 않고 반환하여 SQP를 살림
-        return true; 
+
+        // [Architect's Safe Return] 타임아웃이 걸리더라도, 중간에 계산된 최선의 해(x)를 버리지 않고
+        // 반환하여 SQP를 살림
+        return true;
     }
 };
 

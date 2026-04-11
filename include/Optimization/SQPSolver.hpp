@@ -3,10 +3,7 @@
 
 #include "Optimization/AutoDiff.hpp"
 #include "Optimization/Matrix/MatrixEngine.hpp"
-#include "Optimization/AutoDiff.hpp"
 // [Architect's Upgrade] Active-Set 폐기, IPM 솔버 장착
-#include "Optimization/IPMQPSolver.hpp" 
-#include <cmath>
 #include <algorithm>
 #include <cmath>
 
@@ -16,7 +13,7 @@ namespace Optimization {
 
 template <size_t N_vars, size_t N_eq, size_t N_ineq>
 class SQPSolver {
-public:
+   public:
     // 하부 구조: 정적 메모리 기반 Primal-Dual IPM 엔진
     IPMQPSolver<N_vars, N_eq, N_ineq> qp_solver;
     StaticMatrix<double, N_vars, N_vars> H;
@@ -69,18 +66,19 @@ public:
 
             // IPM 솔버 가동 (톨러런스를 1e-4로 설정하여 실시간성 확보)
             if (!qp_solver.solve(p, 50, 1e-4)) {
-                p = grad_f * -0.05; 
+                p = grad_f * -0.05;
             }
 
             double p_norm = 0.0;
-            for(size_t i=0; i<N_vars; ++i) {
+            for (size_t i = 0; i < N_vars; ++i) {
                 if (std::isnan(p(static_cast<int>(i))) || std::isinf(p(static_cast<int>(i)))) {
                     p(static_cast<int>(i)) = 0.0;
                 }
-                // 한 제어 주기당 변화할 수 있는 물리적 최대 한계치 부여 (가속도 +-3.0, 조향 +-3.0 등)
+                // 한 제어 주기당 변화할 수 있는 물리적 최대 한계치 부여 (가속도 +-3.0, 조향 +-3.0
+                // 등)
                 if (p(static_cast<int>(i)) > 3.0) p(static_cast<int>(i)) = 3.0;
                 if (p(static_cast<int>(i)) < -3.0) p(static_cast<int>(i)) = -3.0;
-                
+
                 p_norm = std::max(p_norm, std::abs(p(static_cast<int>(i))));
             }
 
@@ -109,7 +107,7 @@ public:
 
                 double next_cost = cost_f(u_next);
                 double next_merit = next_cost;
-                
+
                 if constexpr (N_eq > 0) {
                     StaticVector<double, N_eq> v = eq_f(u_next);
                     for (size_t i = 0; i < N_eq; ++i)
@@ -124,7 +122,7 @@ public:
                 if (next_merit < current_merit) break;
                 alpha *= 0.5;
             }
-            
+
             // Damped BFGS Update
             StaticVector<double, N_vars> next_grad = AutoDiff::gradient<N_vars>(cost_f, u_next);
             StaticVector<double, N_vars> s;
