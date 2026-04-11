@@ -4,7 +4,7 @@ digraph "Optimization::IPMQPSolver&lt; N_vars, N_eq, N_ineq &gt;"
   bgcolor="transparent";
   edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
   node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
-  Node1 [id="Node000001",label="Optimization::IPMQPSolver\l\< N_vars, N_eq, N_ineq \>",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="Layer 4 - Primal-Dual Interior-Point Method (IPM) QP Solver."];
+  Node1 [id="Node000001",label="Optimization::IPMQPSolver\l\< N_vars, N_eq, N_ineq \>",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
   Node2 -> Node1 [id="edge1_Node000001_Node000002",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" P",fontcolor="grey" ];
   Node2 [id="Node000002",label="StaticMatrix\< double,\l N_vars, N_vars \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$classStaticMatrix.html",tooltip=" "];
   Node3 -> Node1 [id="edge2_Node000001_Node000003",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" q",fontcolor="grey" ];

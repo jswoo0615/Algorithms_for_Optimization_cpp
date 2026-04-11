@@ -87,11 +87,6 @@ $(function() {
   <div class="headertitle"><div class="title">Optimization::IPMQPSolver&lt; N_vars, N_eq, N_ineq &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Layer 4 - Primal-Dual Interior-Point Method (IPM) QP Solver.  
- <a href="classOptimization_1_1IPMQPSolver.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="IPMQPSolver_8hpp_source.html">IPMQPSolver.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for Optimization::IPMQPSolver&lt; N_vars, N_eq, N_ineq &gt;:</div>
 <div class="dyncontent">
@@ -100,9 +95,9 @@ Collaboration diagram for Optimization::IPMQPSolver&lt; N_vars, N_eq, N_ineq &gt
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad6d7b53010ceebcf400539b51d879f6f" id="r_ad6d7b53010ceebcf400539b51d879f6f"><td class="memItemLeft" align="right" valign="top"><a id="ad6d7b53010ceebcf400539b51d879f6f" name="ad6d7b53010ceebcf400539b51d879f6f"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>solve</b> (<a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N_vars &gt; &amp;x, int max_iter=50, double tol=1e-6)</td></tr>
-<tr class="separator:ad6d7b53010ceebcf400539b51d879f6f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aec806b4fb8b6398066f0040be1d95bfa" id="r_aec806b4fb8b6398066f0040be1d95bfa"><td class="memItemLeft" align="right" valign="top"><a id="aec806b4fb8b6398066f0040be1d95bfa" name="aec806b4fb8b6398066f0040be1d95bfa"></a>
+bool&#160;</td><td class="memItemRight" valign="bottom"><b>solve</b> (<a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N_vars &gt; &amp;x, int max_iter=50, double tol=1e-4)</td></tr>
+<tr class="separator:aec806b4fb8b6398066f0040be1d95bfa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -125,11 +120,7 @@ Public Attributes</h2></td></tr>
 <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double,(N_ineq &gt; 0 ? N_ineq :1)&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>b_ineq</b></td></tr>
 <tr class="separator:a17813c21b4b97d3c394187b84433fb55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;size_t N_vars, size_t N_eq, size_t N_ineq&gt;<br />
-class Optimization::IPMQPSolver&lt; N_vars, N_eq, N_ineq &gt;</div><p>Layer 4 - Primal-Dual Interior-Point Method (IPM) QP Solver. </p>
-<p>Minimize 0.5 * x^T P x + q^T x s.t. A_eq x = b_eq A_ineq x &lt;= b_ineq (변환: A_ineq x + s = b_ineq, s &gt;= 0) </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/Optimization/<a class="el" href="IPMQPSolver_8hpp_source.html">IPMQPSolver.hpp</a></li>
 </ul>
 </div><!-- contents -->
