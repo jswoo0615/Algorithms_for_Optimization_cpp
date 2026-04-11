@@ -3,7 +3,6 @@
 
 #include "Optimization/Matrix/MatrixEngine.hpp"
 #include "Optimization/AutoDiff.hpp"
-// [Architect's Upgrade] Active-Set 폐기, IPM 솔버 장착
 #include "Optimization/IPMQPSolver.hpp" 
 #include <cmath>
 #include <algorithm>
@@ -13,7 +12,6 @@ namespace Optimization {
 template <size_t N_vars, size_t N_eq, size_t N_ineq>
 class SQPSolver {
 public:
-    // 하부 구조: 정적 메모리 기반 Primal-Dual IPM 엔진
     IPMQPSolver<N_vars, N_eq, N_ineq> qp_solver;
     StaticMatrix<double, N_vars, N_vars> H;
 
@@ -31,7 +29,6 @@ public:
             StaticVector<double, N_vars> grad_f;
             AutoDiff::value_and_gradient<N_vars>(cost_f, u, cost_val, grad_f);
 
-            // [Architect's Fix] 템플릿 차원 불일치 원천 차단을 위한 스칼라 맵핑
             if constexpr (N_eq > 0) {
                 StaticVector<double, N_eq> eq_val = eq_f(u);
                 StaticMatrix<double, N_eq, N_vars> J_eq = AutoDiff::jacobian<N_eq, N_vars>(eq_f, u);
@@ -60,18 +57,25 @@ public:
             StaticVector<double, N_vars> p;
             p.set_zero();
 
-            // IPM 솔버 가동 (톨러런스를 1e-4로 설정하여 실시간성 확보)
-            if (!qp_solver.solve(p, 50, 1e-4)) {
-                p = grad_f * -0.05; 
-            }
+            // IPM 솔버 무조건 실행 및 수용
+            qp_solver.solve(p, 50, 1e-3);
 
+            // [Architect's Armor 2] 트러스트 리전 클램핑 (Trust-Region Clamping)
+            // 솔버가 도출한 p(Delta U)가 가속도/조향각의 물리적 변화 한계를 찢고 우주로 날아가는 것을 강제 절단
             double p_norm = 0.0;
-            for (size_t i = 0; i < N_vars; ++i) {
+            for(size_t i=0; i<N_vars; ++i) {
+                if (std::isnan(p(static_cast<int>(i))) || std::isinf(p(static_cast<int>(i)))) {
+                    p(static_cast<int>(i)) = 0.0;
+                }
+                // 한 제어 주기당 변화할 수 있는 물리적 최대 한계치 부여 (가속도 +-3.0, 조향 +-3.0 등)
+                if (p(static_cast<int>(i)) > 3.0) p(static_cast<int>(i)) = 3.0;
+                if (p(static_cast<int>(i)) < -3.0) p(static_cast<int>(i)) = -3.0;
+                
                 p_norm = std::max(p_norm, std::abs(p(static_cast<int>(i))));
             }
+
             if (p_norm < 1e-6) return true;
 
-            // L1 Merit Function 기반 Line Search
             double alpha = 1.0;
             const double rho = 10.0; 
             
@@ -92,6 +96,11 @@ public:
                 double next_cost = cost_f(u_next);
                 double next_merit = next_cost;
                 
+                if (std::isnan(next_merit) || std::isinf(next_merit)) {
+                    alpha *= 0.5;
+                    continue;
+                }
+
                 if constexpr (N_eq > 0) {
                     StaticVector<double, N_eq> v = eq_f(u_next);
                     for(size_t i=0; i<N_eq; ++i) next_merit += rho * std::abs(v(static_cast<int>(i)));
@@ -105,7 +114,6 @@ public:
                 alpha *= 0.5;
             }
             
-            // Damped BFGS Update
             StaticVector<double, N_vars> next_grad = AutoDiff::gradient<N_vars>(cost_f, u_next);
             StaticVector<double, N_vars> s;
             StaticVector<double, N_vars> y;
