@@ -9,7 +9,7 @@ namespace Optimization {
 // [Architect's True Sparse] 동적 할당이 완벽히 배제된 정적 CSR 행렬 구조
 template <typename T, size_t Rows, size_t Cols, size_t MaxNNZ>
 class StaticSparseMatrix {
-public:
+   public:
     StaticVector<T, MaxNNZ> values;       // 0이 아닌 실제 값들
     StaticVector<int, MaxNNZ> col_index;  // 해당 값의 열(Column) 인덱스
     StaticVector<int, Rows + 1> row_ptr;  // 각 행(Row)이 시작되는 인덱스 포인터
@@ -23,7 +23,7 @@ public:
 
     // 0이 아닌 값만 밀어 넣음 (메모리 폭발 방지)
     void add_value(int row, int col, T val) {
-        if (nnz_count >= MaxNNZ) return; // 오버플로우 방탄조끼
+        if (nnz_count >= MaxNNZ) return;  // 오버플로우 방탄조끼
         values(nnz_count) = val;
         col_index(nnz_count) = col;
         row_ptr(row + 1)++;
@@ -49,5 +49,5 @@ public:
     }
 };
 
-} // namespace Optimization
+}  // namespace Optimization
 #endif

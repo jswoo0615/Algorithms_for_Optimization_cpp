@@ -1,6 +1,7 @@
-#include <iostream>
 #include <iomanip>
+#include <iostream>
 #include <string>
+
 #include "Optimization/Matrix/SparseMatrixEngine.hpp"
 
 using namespace Optimization;
@@ -14,8 +15,8 @@ int main() {
     // [ 10.0    0.0    0.0 ]
     // [  0.0   20.0   30.0 ]
     // [  0.0    0.0   40.0 ]
-    // 총 9개의 원소 중 Non-zero는 4개. 
-    
+    // 총 9개의 원소 중 Non-zero는 4개.
+
     constexpr size_t Rows = 3;
     constexpr size_t Cols = 3;
     constexpr size_t MaxNNZ = 4;
@@ -23,33 +24,38 @@ int main() {
     StaticSparseMatrix<double, Rows, Cols, MaxNNZ> A;
 
     // 1. 값 주입 (반드시 Row 순서대로 주입해야 함)
-    A.add_value(0, 0, 10.0); // 0행 0열
-    A.add_value(1, 1, 20.0); // 1행 1열
-    A.add_value(1, 2, 30.0); // 1행 2열
-    A.add_value(2, 2, 40.0); // 2행 2열
+    A.add_value(0, 0, 10.0);  // 0행 0열
+    A.add_value(1, 1, 20.0);  // 1행 1열
+    A.add_value(1, 2, 30.0);  // 1행 2열
+    A.add_value(2, 2, 40.0);  // 2행 2열
 
     // 2. CSR 구조 압축 완료 (row_ptr 계산)
     A.finalize();
 
     // 3. 압축된 내부 구조 확인
     std::cout << "  [*] CSR Memory Layout Verification\n";
-    
+
     std::cout << "      Values    : [ ";
-    for(size_t i = 0; i < A.nnz_count; ++i) std::cout << std::setw(4) << A.values(static_cast<int>(i)) << " ";
+    for (size_t i = 0; i < A.nnz_count; ++i)
+        std::cout << std::setw(4) << A.values(static_cast<int>(i)) << " ";
     std::cout << "]\n";
 
     std::cout << "      Col_Index : [ ";
-    for(size_t i = 0; i < A.nnz_count; ++i) std::cout << std::setw(4) << A.col_index(static_cast<int>(i)) << " ";
+    for (size_t i = 0; i < A.nnz_count; ++i)
+        std::cout << std::setw(4) << A.col_index(static_cast<int>(i)) << " ";
     std::cout << "]\n";
 
     std::cout << "      Row_Ptr   : [ ";
-    for(size_t i = 0; i <= Rows; ++i) std::cout << std::setw(4) << A.row_ptr(static_cast<int>(i)) << " ";
+    for (size_t i = 0; i <= Rows; ++i)
+        std::cout << std::setw(4) << A.row_ptr(static_cast<int>(i)) << " ";
     std::cout << "]\n\n";
 
     // 4. 초고속 행렬-벡터 곱셈 (SpMV) 테스트
     // x = [1.0, 2.0, 3.0]^T
     StaticVector<double, Cols> x;
-    x(0) = 1.0; x(1) = 2.0; x(2) = 3.0;
+    x(0) = 1.0;
+    x(1) = 2.0;
+    x(2) = 3.0;
 
     StaticVector<double, Rows> y;
     A.multiply(x, y);
