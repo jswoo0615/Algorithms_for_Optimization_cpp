@@ -1,28 +1,32 @@
 #ifndef OPTIMIZATION_IPM_QP_SOLVER_HPP_
 #define OPTIMIZATION_IPM_QP_SOLVER_HPP_
 
-#include "Optimization/Matrix/MatrixEngine.hpp"
-#include <cmath>
 #include <algorithm>
+#include <cmath>
+
+#include "Optimization/Matrix/MatrixEngine.hpp"
 
 namespace Optimization {
 
 template <size_t N_vars, size_t N_eq, size_t N_ineq>
 class IPMQPSolver {
-public:
+   public:
     StaticMatrix<double, N_vars, N_vars> P;
     StaticVector<double, N_vars> q;
-    
+
     StaticMatrix<double, (N_eq > 0 ? N_eq : 1), N_vars> A_eq;
     StaticVector<double, (N_eq > 0 ? N_eq : 1)> b_eq;
-    
+
     StaticMatrix<double, (N_ineq > 0 ? N_ineq : 1), N_vars> A_ineq;
     StaticVector<double, (N_ineq > 0 ? N_ineq : 1)> b_ineq;
 
     IPMQPSolver() {
-        P.set_zero(); q.set_zero();
-        A_eq.set_zero(); b_eq.set_zero();
-        A_ineq.set_zero(); b_ineq.set_zero();
+        P.set_zero();
+        q.set_zero();
+        A_eq.set_zero();
+        b_eq.set_zero();
+        A_ineq.set_zero();
+        b_ineq.set_zero();
     }
 
     bool solve(StaticVector<double, N_vars>& x, int max_iter = 50, double tol = 1e-3) {
@@ -53,20 +57,26 @@ public:
 
             double gap = 0.0;
             if constexpr (N_ineq > 0) {
-                for(size_t i=0; i<N_ineq; ++i) gap += s(static_cast<int>(i)) * z(static_cast<int>(i));
+                for (size_t i = 0; i < N_ineq; ++i)
+                    gap += s(static_cast<int>(i)) * z(static_cast<int>(i));
                 gap /= static_cast<double>(N_ineq);
             }
 
             double res_norm = 0.0;
-            for(size_t i=0; i<N_vars; ++i) res_norm = std::max(res_norm, std::abs(r_L(static_cast<int>(i))));
-            if constexpr (N_eq > 0) for(size_t i=0; i<N_eq; ++i) res_norm = std::max(res_norm, std::abs(r_eq(static_cast<int>(i))));
-            if constexpr (N_ineq > 0) for(size_t i=0; i<N_ineq; ++i) res_norm = std::max(res_norm, std::abs(r_ineq(static_cast<int>(i))));
+            for (size_t i = 0; i < N_vars; ++i)
+                res_norm = std::max(res_norm, std::abs(r_L(static_cast<int>(i))));
+            if constexpr (N_eq > 0)
+                for (size_t i = 0; i < N_eq; ++i)
+                    res_norm = std::max(res_norm, std::abs(r_eq(static_cast<int>(i))));
+            if constexpr (N_ineq > 0)
+                for (size_t i = 0; i < N_ineq; ++i)
+                    res_norm = std::max(res_norm, std::abs(r_ineq(static_cast<int>(i))));
 
             if (res_norm < tol && gap < tol) {
-                return true; 
+                return true;
             }
 
-            double sigma = 0.1; 
+            double sigma = 0.1;
             double mu_target = sigma * gap;
 
             K.set_zero();
@@ -78,21 +88,25 @@ public:
                 // 역행렬 분해 시 0으로 나누어지는 특이점(Singularity) 폭발을 영구히 차단
                 K(static_cast<int>(i), static_cast<int>(i)) += 1e-6; 
             }
-            
+
             if constexpr (N_eq > 0) {
-                for(size_t i=0; i<N_eq; ++i) {
-                    for(size_t j=0; j<N_vars; ++j) {
-                        K(static_cast<int>(i + N_vars), static_cast<int>(j)) = A_eq(static_cast<int>(i), static_cast<int>(j));
-                        K(static_cast<int>(j), static_cast<int>(i + N_vars)) = A_eq(static_cast<int>(i), static_cast<int>(j));
+                for (size_t i = 0; i < N_eq; ++i) {
+                    for (size_t j = 0; j < N_vars; ++j) {
+                        K(static_cast<int>(i + N_vars), static_cast<int>(j)) =
+                            A_eq(static_cast<int>(i), static_cast<int>(j));
+                        K(static_cast<int>(j), static_cast<int>(i + N_vars)) =
+                            A_eq(static_cast<int>(i), static_cast<int>(j));
                     }
                 }
             }
 
             if constexpr (N_ineq > 0) {
-                for(size_t i=0; i<N_ineq; ++i) {
-                    for(size_t j=0; j<N_vars; ++j) {
-                        K(static_cast<int>(i + N_vars + N_eq), static_cast<int>(j)) = A_ineq(static_cast<int>(i), static_cast<int>(j));
-                        K(static_cast<int>(j), static_cast<int>(i + N_vars + N_eq)) = A_ineq(static_cast<int>(i), static_cast<int>(j));
+                for (size_t i = 0; i < N_ineq; ++i) {
+                    for (size_t j = 0; j < N_vars; ++j) {
+                        K(static_cast<int>(i + N_vars + N_eq), static_cast<int>(j)) =
+                            A_ineq(static_cast<int>(i), static_cast<int>(j));
+                        K(static_cast<int>(j), static_cast<int>(i + N_vars + N_eq)) =
+                            A_ineq(static_cast<int>(i), static_cast<int>(j));
                     }
                     // Z가 0이 되어 폭발하는 것 방지
                     double z_safe = std::max(z(static_cast<int>(i)), 1e-12);
@@ -100,17 +114,21 @@ public:
                 }
             }
 
-            for(size_t i=0; i<N_vars; ++i) rhs(static_cast<int>(i)) = -r_L(static_cast<int>(i));
-            if constexpr (N_eq > 0) for(size_t i=0; i<N_eq; ++i) rhs(static_cast<int>(i + N_vars)) = -r_eq(static_cast<int>(i));
+            for (size_t i = 0; i < N_vars; ++i)
+                rhs(static_cast<int>(i)) = -r_L(static_cast<int>(i));
+            if constexpr (N_eq > 0)
+                for (size_t i = 0; i < N_eq; ++i)
+                    rhs(static_cast<int>(i + N_vars)) = -r_eq(static_cast<int>(i));
             if constexpr (N_ineq > 0) {
-                for(size_t i=0; i<N_ineq; ++i) {
+                for (size_t i = 0; i < N_ineq; ++i) {
                     double r_c = s(static_cast<int>(i)) * z(static_cast<int>(i)) - mu_target;
                     double z_safe = std::max(z(static_cast<int>(i)), 1e-12);
                     rhs(static_cast<int>(i + N_vars + N_eq)) = -r_ineq(static_cast<int>(i)) + r_c / z_safe;
                 }
             }
 
-            StaticMatrix<double, (KKT_size > 0 ? KKT_size : 1), (KKT_size > 0 ? KKT_size : 1)> K_aug = K;
+            StaticMatrix<double, (KKT_size > 0 ? KKT_size : 1), (KKT_size > 0 ? KKT_size : 1)>
+                K_aug = K;
             delta = rhs;
             constexpr size_t N_kkt = (KKT_size > 0 ? KKT_size : 1);
 
@@ -123,27 +141,30 @@ public:
                         pivot = j;
                     }
                 }
-                
+
                 if (max_val < 1e-12) {
                     // 특이점 도달 시 정규화 덕분에 진행 가능하지만, 너무 작으면 해당 스텝을 넘김
                     continue; 
                 }
-                
+
                 if (pivot != i) {
                     for (size_t j = i; j < N_kkt; ++j) {
                         double tmp = K_aug(static_cast<int>(i), static_cast<int>(j));
-                        K_aug(static_cast<int>(i), static_cast<int>(j)) = K_aug(static_cast<int>(pivot), static_cast<int>(j));
+                        K_aug(static_cast<int>(i), static_cast<int>(j)) =
+                            K_aug(static_cast<int>(pivot), static_cast<int>(j));
                         K_aug(static_cast<int>(pivot), static_cast<int>(j)) = tmp;
                     }
                     double tmp_d = delta(static_cast<int>(i));
                     delta(static_cast<int>(i)) = delta(static_cast<int>(pivot));
                     delta(static_cast<int>(pivot)) = tmp_d;
                 }
-                
+
                 for (size_t j = i + 1; j < N_kkt; ++j) {
-                    double factor = K_aug(static_cast<int>(j), static_cast<int>(i)) / K_aug(static_cast<int>(i), static_cast<int>(i));
+                    double factor = K_aug(static_cast<int>(j), static_cast<int>(i)) /
+                                    K_aug(static_cast<int>(i), static_cast<int>(i));
                     for (size_t k = i; k < N_kkt; ++k) {
-                        K_aug(static_cast<int>(j), static_cast<int>(k)) -= factor * K_aug(static_cast<int>(i), static_cast<int>(k));
+                        K_aug(static_cast<int>(j), static_cast<int>(k)) -=
+                            factor * K_aug(static_cast<int>(i), static_cast<int>(k));
                     }
                     delta(static_cast<int>(j)) -= factor * delta(static_cast<int>(i));
                 }
@@ -170,22 +191,28 @@ public:
             }
             if constexpr (N_eq > 0) for(size_t i=0; i<N_eq; ++i) dy(static_cast<int>(i)) = delta(static_cast<int>(i + N_vars));
             if constexpr (N_ineq > 0) {
-                for(size_t i=0; i<N_ineq; ++i) {
+                for (size_t i = 0; i < N_ineq; ++i) {
                     dz(static_cast<int>(i)) = delta(static_cast<int>(i + N_vars + N_eq));
                     double Adx = 0.0;
-                    for(size_t j=0; j<N_vars; ++j) Adx += A_ineq(static_cast<int>(i), static_cast<int>(j)) * dx(static_cast<int>(j));
+                    for (size_t j = 0; j < N_vars; ++j)
+                        Adx += A_ineq(static_cast<int>(i), static_cast<int>(j)) *
+                               dx(static_cast<int>(j));
                     ds(static_cast<int>(i)) = -r_ineq(static_cast<int>(i)) - Adx;
                 }
             }
 
             double alpha_prim = 1.0;
             double alpha_dual = 1.0;
-            constexpr double tau = 0.995; 
+            constexpr double tau = 0.995;
 
             if constexpr (N_ineq > 0) {
-                for(size_t i=0; i<N_ineq; ++i) {
-                    if (ds(static_cast<int>(i)) < 0.0) alpha_prim = std::min(alpha_prim, -tau * s(static_cast<int>(i)) / ds(static_cast<int>(i)));
-                    if (dz(static_cast<int>(i)) < 0.0) alpha_dual = std::min(alpha_dual, -tau * z(static_cast<int>(i)) / dz(static_cast<int>(i)));
+                for (size_t i = 0; i < N_ineq; ++i) {
+                    if (ds(static_cast<int>(i)) < 0.0)
+                        alpha_prim = std::min(
+                            alpha_prim, -tau * s(static_cast<int>(i)) / ds(static_cast<int>(i)));
+                    if (dz(static_cast<int>(i)) < 0.0)
+                        alpha_dual = std::min(
+                            alpha_dual, -tau * z(static_cast<int>(i)) / dz(static_cast<int>(i)));
                 }
             }
 
@@ -202,6 +229,6 @@ public:
     }
 };
 
-} // namespace Optimization
+}  // namespace Optimization
 
-#endif // OPTIMIZATION_IPM_QP_SOLVER_HPP_
+#endif  // OPTIMIZATION_IPM_QP_SOLVER_HPP_
