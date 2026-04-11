@@ -10,7 +10,7 @@ namespace Optimization {
 
 template <size_t N_vars, size_t N_eq, size_t N_ineq, size_t N_res>
 class RTISolver {
-public:
+   public:
     IPMQPSolver<N_vars, N_eq, N_ineq> qp_solver;
 
     template <typename ResidualFunc, typename EqFunc, typename IneqFunc>

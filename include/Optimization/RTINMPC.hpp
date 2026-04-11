@@ -4,8 +4,6 @@
 #include "Optimization/RTISolver.hpp"
 #include "Optimization/Physics/VehicleModel.hpp"
 #include "Optimization/Simulation/Integrator.hpp"
-#include <array>
-#include <cmath>
 
 namespace Optimization {
 
@@ -21,7 +19,7 @@ public:
 
     RTISolver<N_vars, N_eq, N_ineq, N_res> rti;
     DynamicBicycleModel model;
-    double dt = 0.2; 
+    double dt = 0.2;
 
     StaticVector<double, Nx> Q, Qf;
     StaticVector<double, Nu> R, R_rate; 
