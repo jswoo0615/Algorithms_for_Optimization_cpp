@@ -99,9 +99,9 @@ Collaboration diagram for Optimization::RTINMPCController&lt; Np &gt;:</div>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOptimization_1_1RTINMPCController_1_1BoundIneq.html">BoundIneq</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOptimization_1_1RTINMPCController_1_1CostFunc.html">CostFunc</a></td></tr>
-<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOptimization_1_1RTINMPCController_1_1DummyEq.html">DummyEq</a></td></tr>
+<tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOptimization_1_1RTINMPCController_1_1ResidualFunc.html">ResidualFunc</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOptimization_1_1RTINMPCController_1_1RTIObstacle.html">RTIObstacle</a></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -114,9 +114,9 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>compute_control</b> (
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:aec167e3050bee7a6ee91732ac12bc37f" id="r_aec167e3050bee7a6ee91732ac12bc37f"><td class="memItemLeft" align="right" valign="top"><a id="aec167e3050bee7a6ee91732ac12bc37f" name="aec167e3050bee7a6ee91732ac12bc37f"></a>
-<a class="el" href="classOptimization_1_1RTISolver.html">RTISolver</a>&lt; N_vars, N_eq, N_ineq &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rti</b></td></tr>
-<tr class="separator:aec167e3050bee7a6ee91732ac12bc37f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a41d443653751777134943b513fe86f71" id="r_a41d443653751777134943b513fe86f71"><td class="memItemLeft" align="right" valign="top"><a id="a41d443653751777134943b513fe86f71" name="a41d443653751777134943b513fe86f71"></a>
+<a class="el" href="classOptimization_1_1RTISolver.html">RTISolver</a>&lt; N_vars, N_eq, N_ineq, N_res &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>rti</b></td></tr>
+<tr class="separator:a41d443653751777134943b513fe86f71"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a98dd59cd2ea5f5d837a327f257905498" id="r_a98dd59cd2ea5f5d837a327f257905498"><td class="memItemLeft" align="right" valign="top"><a id="a98dd59cd2ea5f5d837a327f257905498" name="a98dd59cd2ea5f5d837a327f257905498"></a>
 <a class="el" href="classOptimization_1_1DynamicBicycleModel.html">DynamicBicycleModel</a>&#160;</td><td class="memItemRight" valign="bottom"><b>model</b></td></tr>
 <tr class="separator:a98dd59cd2ea5f5d837a327f257905498"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -162,6 +162,9 @@ static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><b>N_
 <tr class="memitem:aacb5203f4aa56956460d62c564e80592" id="r_aacb5203f4aa56956460d62c564e80592"><td class="memItemLeft" align="right" valign="top"><a id="aacb5203f4aa56956460d62c564e80592" name="aacb5203f4aa56956460d62c564e80592"></a>
 static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><b>N_ineq</b> = Np * 4</td></tr>
 <tr class="separator:aacb5203f4aa56956460d62c564e80592"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aa6c3d42b121f2d7b42d4795d93170775" id="r_aa6c3d42b121f2d7b42d4795d93170775"><td class="memItemLeft" align="right" valign="top"><a id="aa6c3d42b121f2d7b42d4795d93170775" name="aa6c3d42b121f2d7b42d4795d93170775"></a>
+static constexpr size_t&#160;</td><td class="memItemRight" valign="bottom"><b>N_res</b> = Np * Nx + Np * Nu + Np * Nu + Np * 10 + Nx</td></tr>
+<tr class="separator:aa6c3d42b121f2d7b42d4795d93170775"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/Optimization/<a class="el" href="RTINMPC_8hpp_source.html">RTINMPC.hpp</a></li>

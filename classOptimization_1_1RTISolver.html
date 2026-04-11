@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Optimization Library: Optimization::RTISolver&lt; N_vars, N_eq, N_ineq &gt; Class Template Reference</title>
+<title>Optimization Library: Optimization::RTISolver&lt; N_vars, N_eq, N_ineq, N_res &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -84,22 +84,22 @@ $(function() {
 <a href="#pub-methods">Public Member Functions</a> &#124;
 <a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="classOptimization_1_1RTISolver-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">Optimization::RTISolver&lt; N_vars, N_eq, N_ineq &gt; Class Template Reference</div></div>
+  <div class="headertitle"><div class="title">Optimization::RTISolver&lt; N_vars, N_eq, N_ineq, N_res &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:ad1d0eba51aa082c51b5867a9a9720cc4" id="r_ad1d0eba51aa082c51b5867a9a9720cc4"><td class="memTemplParams" colspan="2"><a id="ad1d0eba51aa082c51b5867a9a9720cc4" name="ad1d0eba51aa082c51b5867a9a9720cc4"></a>
-template&lt;typename <a class="el" href="structCostFunc.html">CostFunc</a> , typename EqFunc , typename <a class="el" href="structIneqFunc.html">IneqFunc</a> &gt; </td></tr>
-<tr class="memitem:ad1d0eba51aa082c51b5867a9a9720cc4"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>solve</b> (<a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N_vars &gt; &amp;u, <a class="el" href="structCostFunc.html">CostFunc</a> cost_f, EqFunc eq_f, <a class="el" href="structIneqFunc.html">IneqFunc</a> ineq_f)</td></tr>
-<tr class="separator:ad1d0eba51aa082c51b5867a9a9720cc4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab5069c65065016760d59bd64595642c7" id="r_ab5069c65065016760d59bd64595642c7"><td class="memTemplParams" colspan="2"><a id="ab5069c65065016760d59bd64595642c7" name="ab5069c65065016760d59bd64595642c7"></a>
+template&lt;typename ResidualFunc , typename EqFunc , typename <a class="el" href="structIneqFunc.html">IneqFunc</a> &gt; </td></tr>
+<tr class="memitem:ab5069c65065016760d59bd64595642c7"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>solve</b> (<a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N_vars &gt; &amp;u, ResidualFunc res_f, EqFunc eq_f, <a class="el" href="structIneqFunc.html">IneqFunc</a> ineq_f)</td></tr>
+<tr class="separator:ab5069c65065016760d59bd64595642c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a19ffd46bf112fe4d884ee922daefd6dd" id="r_a19ffd46bf112fe4d884ee922daefd6dd"><td class="memItemLeft" align="right" valign="top"><a id="a19ffd46bf112fe4d884ee922daefd6dd" name="a19ffd46bf112fe4d884ee922daefd6dd"></a>
+<tr class="memitem:a11cc410bbcfdca916fbaf23636bb7064" id="r_a11cc410bbcfdca916fbaf23636bb7064"><td class="memItemLeft" align="right" valign="top"><a id="a11cc410bbcfdca916fbaf23636bb7064" name="a11cc410bbcfdca916fbaf23636bb7064"></a>
 <a class="el" href="classOptimization_1_1IPMQPSolver.html">IPMQPSolver</a>&lt; N_vars, N_eq, N_ineq &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>qp_solver</b></td></tr>
-<tr class="separator:a19ffd46bf112fe4d884ee922daefd6dd"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="separator:a11cc410bbcfdca916fbaf23636bb7064"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/Optimization/<a class="el" href="RTISolver_8hpp_source.html">RTISolver.hpp</a></li>
