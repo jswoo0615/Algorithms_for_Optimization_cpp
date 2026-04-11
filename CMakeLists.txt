@@ -147,3 +147,7 @@ gtest_discover_tests(test_EQP)
 add_executable(test_ActiveSet test/test_ActiveSet.cpp)
 target_link_libraries(test_ActiveSet PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_ActiveSet)
+
+add_executable(test_SQP test/test_SQP.cpp)
+target_link_libraries(test_SQP PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_SQP)
