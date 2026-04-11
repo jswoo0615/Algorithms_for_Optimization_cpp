@@ -1,6 +1,7 @@
-#include <iostream>
 #include <cmath>
+#include <iostream>
 #include <string>
+
 #include "Optimization/SQPSolver.hpp"
 
 using namespace Optimization;
@@ -20,9 +21,7 @@ void check(bool cond, const std::string& name) {
     }
 }
 
-void section(const std::string& title) {
-    std::cout << "\n── " << title << " ──\n";
-}
+void section(const std::string& title) { std::cout << "\n── " << title << " ──\n"; }
 
 // =========================================================================
 // 테스트 문제 정의 (비선형 최적화 Functors)
@@ -43,9 +42,9 @@ struct CostFunc {
 struct DummyEq {
     template <typename VecType>
     auto operator()(const VecType& u) const {
-        (void)u; // 미사용 변수 경고 방지
+        (void)u;  // 미사용 변수 경고 방지
         using T = std::decay_t<decltype(u(0))>;
-        return StaticVector<T, 0>(); 
+        return StaticVector<T, 0>();
     }
 };
 
@@ -68,7 +67,7 @@ void test_SQP_nonlinear_circle() {
 
     // 변수 2개, 등식 0개, 부등식 1개
     SQPSolver<2, 0, 1> solver;
-    
+
     // 초기 추정치 (원점에서 탐색 시작)
     StaticVector<double, 2> u;
     u(0) = 0.0;
@@ -87,9 +86,9 @@ void test_SQP_nonlinear_circle() {
 
     double u1_err = std::abs(u(0) - 1.0);
     double u2_err = std::abs(u(1) - 1.0);
-    
+
     // 비선형 근사(Taylor Expansion) 과정의 오차를 감안하여 1e-4 허용치 적용
-    constexpr double TOL = 1e-4; 
+    constexpr double TOL = 1e-4;
 
     check(u1_err < TOL && u2_err < TOL, "비선형 부등식 제약 최적해(1.0, 1.0) 도출 정확도 검증");
 }

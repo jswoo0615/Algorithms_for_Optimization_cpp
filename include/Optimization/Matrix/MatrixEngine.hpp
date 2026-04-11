@@ -2,7 +2,6 @@
 #define STATIC_MATRIX_HPP_
 
 #include <algorithm>  // std::copy, std::fill (Block Operations 최적화)
-#include <algorithm>  // std::copy, std::fill (Block Operations 최적화)
 #include <cassert>
 #include <cmath>  // std::abs, std::sqrt
 #include <iomanip>

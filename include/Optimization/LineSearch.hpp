@@ -53,7 +53,7 @@ class LineSearch {
         double b = s;
         double yb = AutoDiff::value<N>(f, ray_point<N>(x, d, b));
 
-        if (yb > ya) {  
+        if (yb > ya) {
             std::swap(a, b);
             std::swap(ya, yb);
             s = -s;
@@ -90,7 +90,7 @@ class LineSearch {
     static double golden_section_search(Func f, const StaticVector<double, N>& x,
                                         const StaticVector<double, N>& d, double a, double b,
                                         double tol = 1e-5, bool verbose = false) {
-        const double phi = (3.0 - std::sqrt(5.0)) / 2.0;  
+        const double phi = (3.0 - std::sqrt(5.0)) / 2.0;
         double d_step = b - a;
         double c = a + phi * d_step;
         double d_val = b - phi * d_step;
@@ -132,8 +132,8 @@ class LineSearch {
     // ======================================
     template <size_t N, typename Func>
     static double quadratic_fit_search(Func f, const StaticVector<double, N>& x,
-                                       const StaticVector<double, N>& d, double a, double b, double c,
-                                       size_t max_iter = 50, double tol = 1e-5,
+                                       const StaticVector<double, N>& d, double a, double b,
+                                       double c, size_t max_iter = 50, double tol = 1e-5,
                                        bool verbose = false) {
         auto eval = [&](double alpha) { return AutoDiff::value<N>(f, ray_point<N>(x, d, alpha)); };
 
@@ -290,8 +290,9 @@ class LineSearch {
     // 6. Bisection Method (Algorithm 3.7)
     // ======================================
     template <size_t N, typename Func>
-    static double bisection(Func f, const StaticVector<double, N>& x, const StaticVector<double, N>& d,
-                            double a, double b, double tol = 1e-5, bool verbose = false) {
+    static double bisection(Func f, const StaticVector<double, N>& x,
+                            const StaticVector<double, N>& d, double a, double b, double tol = 1e-5,
+                            bool verbose = false) {
         if (a > b) std::swap(a, b);
         auto eval_deriv = [&](double alpha) { return directional_derivative<N>(f, x, d, alpha); };
         double ya = eval_deriv(a);
