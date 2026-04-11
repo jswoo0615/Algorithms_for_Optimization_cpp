@@ -167,7 +167,7 @@ public:
                 // 시도 위치에서의 Merit 함수 값 평가
                 double next_cost = cost_f(u_next);
                 double next_merit = next_cost;
-                
+
                 if constexpr (N_eq > 0) {
                     StaticVector<double, N_eq> v = eq_f(u_next);
                     for (size_t i = 0; i < N_eq; ++i)
