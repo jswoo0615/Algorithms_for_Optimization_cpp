@@ -87,11 +87,6 @@ $(function() {
   <div class="headertitle"><div class="title">Optimization::SQPSolver&lt; N_vars, N_eq, N_ineq &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>Sequential Quadratic Programming (SQP) Solver.  
- <a href="classOptimization_1_1SQPSolver.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="SQPSolver_8hpp_source.html">SQPSolver.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for Optimization::SQPSolver&lt; N_vars, N_eq, N_ineq &gt;:</div>
 <div class="dyncontent">
@@ -103,23 +98,18 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:a9039a9df5fcf29713eaaea809057d20f" id="r_a9039a9df5fcf29713eaaea809057d20f"><td class="memTemplParams" colspan="2"><a id="a9039a9df5fcf29713eaaea809057d20f" name="a9039a9df5fcf29713eaaea809057d20f"></a>
 template&lt;typename <a class="el" href="structCostFunc.html">CostFunc</a> , typename EqFunc , typename <a class="el" href="structIneqFunc.html">IneqFunc</a> &gt; </td></tr>
 <tr class="memitem:a9039a9df5fcf29713eaaea809057d20f"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>solve</b> (<a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N_vars &gt; &amp;u, <a class="el" href="structCostFunc.html">CostFunc</a> cost_f, EqFunc eq_f, <a class="el" href="structIneqFunc.html">IneqFunc</a> ineq_f, int max_iter=50)</td></tr>
-<tr class="memdesc:a9039a9df5fcf29713eaaea809057d20f"><td class="mdescLeft">&#160;</td><td class="mdescRight">비선형 최적화 메인 루프 <br /></td></tr>
 <tr class="separator:a9039a9df5fcf29713eaaea809057d20f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a9e74633f0a37e80930a8d370c3222a67" id="r_a9e74633f0a37e80930a8d370c3222a67"><td class="memItemLeft" align="right" valign="top"><a id="a9e74633f0a37e80930a8d370c3222a67" name="a9e74633f0a37e80930a8d370c3222a67"></a>
-<a class="el" href="classActiveSetSolver.html">ActiveSetSolver</a>&lt; N_vars, N_eq, N_ineq &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>qp_solver</b></td></tr>
-<tr class="separator:a9e74633f0a37e80930a8d370c3222a67"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa9127c3be514c4d1cd15677687e577f" id="r_afa9127c3be514c4d1cd15677687e577f"><td class="memItemLeft" align="right" valign="top"><a id="afa9127c3be514c4d1cd15677687e577f" name="afa9127c3be514c4d1cd15677687e577f"></a>
+<a class="el" href="classOptimization_1_1IPMQPSolver.html">IPMQPSolver</a>&lt; N_vars, N_eq, N_ineq &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>qp_solver</b></td></tr>
+<tr class="separator:afa9127c3be514c4d1cd15677687e577f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeda6d1947c6b4937dac7f16077123690" id="r_aeda6d1947c6b4937dac7f16077123690"><td class="memItemLeft" align="right" valign="top"><a id="aeda6d1947c6b4937dac7f16077123690" name="aeda6d1947c6b4937dac7f16077123690"></a>
 <a class="el" href="classStaticMatrix.html">StaticMatrix</a>&lt; double, N_vars, N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>H</b></td></tr>
 <tr class="separator:aeda6d1947c6b4937dac7f16077123690"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;size_t N_vars, size_t N_eq, size_t N_ineq&gt;<br />
-class Optimization::SQPSolver&lt; N_vars, N_eq, N_ineq &gt;</div><p>Sequential Quadratic Programming (SQP) Solver. </p>
-<p>비선형 최적화 솔버 </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/Optimization/<a class="el" href="SQPSolver_8hpp_source.html">SQPSolver.hpp</a></li>
 </ul>
 </div><!-- contents -->

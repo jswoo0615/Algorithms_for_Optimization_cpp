@@ -3,7 +3,7 @@ var searchData=
   ['secantmethod_0',['SecantMethod',['../classOptimization_1_1SecantMethod.html',1,'Optimization']]],
   ['set_5fzero_1',['set_zero',['../classStaticMatrix.html#a9d9c516df2280ffe76094dbea19371fd',1,'StaticMatrix']]],
   ['simulatedannealing_2',['SimulatedAnnealing',['../classOptimization_1_1SimulatedAnnealing.html',1,'Optimization']]],
-  ['solve_3',['solve',['../classOptimization_1_1SQPSolver.html#a9039a9df5fcf29713eaaea809057d20f',1,'Optimization::SQPSolver::solve()'],['../classEQPSolver.html#a1f58abbd1cceae64471ca7a9c22da4cb',1,'EQPSolver::solve()'],['../classActiveSetSolver.html#a5dc682fe44d18715ca28087939e42c0b',1,'ActiveSetSolver::solve()']]],
+  ['solve_3',['solve',['../classEQPSolver.html#a1f58abbd1cceae64471ca7a9c22da4cb',1,'EQPSolver::solve()'],['../classActiveSetSolver.html#a5dc682fe44d18715ca28087939e42c0b',1,'ActiveSetSolver::solve()']]],
   ['spherefunction_4',['SphereFunction',['../structOptimization_1_1Tests_1_1SphereFunction.html',1,'Optimization::Tests']]],
   ['sqpsolver_5',['SQPSolver',['../classOptimization_1_1SQPSolver.html',1,'Optimization']]],
   ['staticmatrix_6',['StaticMatrix',['../classStaticMatrix.html',1,'']]],
