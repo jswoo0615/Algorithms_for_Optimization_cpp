@@ -1,9 +1,10 @@
-#include <iostream>
 #include <iomanip>
+#include <iostream>
 #include <string>
+
+#include "Optimization/AutoDiff.hpp"
 #include "Optimization/Physics/VehicleModel.hpp"
 #include "Optimization/Simulation/Integrator.hpp"
-#include "Optimization/AutoDiff.hpp"
 
 using namespace Optimization;
 
@@ -13,7 +14,8 @@ void print_matrix(const std::string& name, const MatType& mat, size_t rows, size
     for (size_t i = 0; i < rows; ++i) {
         std::cout << "  [ ";
         for (size_t j = 0; j < cols; ++j) {
-            std::cout << std::setw(10) << std::fixed << std::setprecision(4) << mat(static_cast<int>(i), static_cast<int>(j)) << " ";
+            std::cout << std::setw(10) << std::fixed << std::setprecision(4)
+                      << mat(static_cast<int>(i), static_cast<int>(j)) << " ";
         }
         std::cout << "]\n";
     }
@@ -26,12 +28,12 @@ int main() {
     std::cout << std::string(50, '=') << "\n";
 
     DynamicBicycleModel model;
-    double dt = 0.05; // 50ms 제어 주기
+    double dt = 0.05;  // 50ms 제어 주기
 
     // Nominal State x: [X, Y, theta, vx, vy, omega]
     StaticVector<double, 6> x_nom;
     x_nom.set_zero();
-    x_nom(3) = 10.0; // 10 m/s 직진 상태 (특이점 회피)
+    x_nom(3) = 10.0;  // 10 m/s 직진 상태 (특이점 회피)
 
     // Nominal Input u: [a, delta]
     StaticVector<double, 2> u_nom;
@@ -51,7 +53,7 @@ int main() {
     auto func_B = [&](const auto& u_dual) {
         using T = std::decay_t<decltype(u_dual(0))>;
         StaticVector<T, 6> x_t;
-        for(size_t i=0; i<6; ++i) x_t(static_cast<int>(i)) = T(x_nom(static_cast<int>(i)));
+        for (size_t i = 0; i < 6; ++i) x_t(static_cast<int>(i)) = T(x_nom(static_cast<int>(i)));
         return Integrator::rk4<6, 2, DynamicBicycleModel, T>(model, x_t, u_dual, dt);
     };
 
