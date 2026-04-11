@@ -151,3 +151,11 @@ gtest_discover_tests(test_ActiveSet)
 add_executable(test_SQP test/test_SQP.cpp)
 target_link_libraries(test_SQP PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_SQP)
+
+add_executable(test_VehicleModel test/test_VehicleModel.cpp)
+target_link_libraries(test_VehicleModel PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_VehicleModel)
+
+add_executable(test_NMPC test/test_NMPC.cpp)
+target_link_libraries(test_NMPC PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_NMPC)

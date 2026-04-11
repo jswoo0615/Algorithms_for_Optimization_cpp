@@ -28,7 +28,7 @@ class ActiveSetSolver {
     // 2. 상태 변수 (Working Set)
     // ==================================================================
     // true이면 해당 부등식 제약이 활성화되어 등식처럼 취급
-    bool working_set[N_ineq] = {false};
+    bool working_set[N_ineq > 0 ? N_ineq : 1] = {false};
 
    private:
     // 최대 KKT 시스템 크기 : 변수 + 등식 + 부등식 (전체 활성화 가정 시 최대치)
