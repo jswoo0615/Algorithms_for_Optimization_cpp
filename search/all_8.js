@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['kkt_5fmetrics_0',['KKT_Metrics',['../structKKTMonitor_1_1KKT__Metrics.html',1,'KKTMonitor']]],
-  ['kktmonitor_1',['KKTMonitor',['../classKKTMonitor.html',1,'']]]
+  ['jacobian_0',['jacobian',['../classOptimization_1_1AutoDiff.html#a091af479e8d81d8440ee3b1f7d742283',1,'Optimization::AutoDiff']]]
 ];

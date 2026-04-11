@@ -91,103 +91,129 @@ $(document).ready(function() { init_codefold(0); });
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef OPTIMIZATION_AUTODIFF_HPP_</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define OPTIMIZATION_AUTODIFF_HPP_</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;Optimization/Dual.hpp&quot;</span>  <span class="comment">// 스칼라 Dual 구조체 포함</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;Optimization/Dual.hpp&quot;</span>  <span class="comment">// 스칼라 Dual(이원수) 구조체 포함</span></div>
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;Optimization/Matrix/MatrixEngine.hpp&quot;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">namespace </span>Optimization {</div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="foldopen" id="foldopen00014" data-start="{" data-end="};">
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="classOptimization_1_1AutoDiff.html">   14</a></span><span class="keyword">class </span><a class="code hl_class" href="classOptimization_1_1AutoDiff.html">AutoDiff</a> {</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>   <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="comment">// ============================================================</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="comment">// 1. Value (함수값만 추출, T = double)</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="comment">// ============================================================</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N, <span class="keyword">typename</span> Func&gt;</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    [[nodiscard]] <span class="keyword">static</span> <span class="keywordtype">double</span> value(Func f, <span class="keyword">const</span> <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N&gt;</a>&amp; x) {</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        <span class="keywordflow">return</span> f(x);</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    }</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="foldopen" id="foldopen00020" data-start="{" data-end="};">
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="classOptimization_1_1AutoDiff.html">   20</a></span><span class="keyword">class </span><a class="code hl_class" href="classOptimization_1_1AutoDiff.html">AutoDiff</a> {</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>   <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="comment">// ============================================================</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="comment">// 1. Value (함수값만 추출, T = double)</span></div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="comment">// ============================================================</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="comment">// 2. Gradient (f: R^N -&gt; R 의 미분)</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="comment">// ============================================================</span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="comment">// Forward-mode AD를 사용하여 각 변수에 대해 편미분 수행 (N번 순회)</span></div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N, <span class="keyword">typename</span> Func&gt;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    [[nodiscard]] <span class="keyword">static</span> <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N&gt;</a> gradient(Func f,</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>                                                          <span class="keyword">const</span> <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N&gt;</a>&amp; x) {</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N&gt;</a> g;</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        g.<a class="code hl_function" href="classStaticMatrix.html#a9d9c516df2280ffe76094dbea19371fd">set_zero</a>();</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;Dual&lt;double&gt;</a>, N&gt; x_dual;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> j = 0; j &lt; N; ++j) {</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>                <span class="comment">// i번째 변수에 대해서만 미분값(d) 1.0 부여 (Seed 주입)</span></div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>                x_dual(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(j)) =</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                    <a class="code hl_struct" href="structOptimization_1_1Dual.html">Dual&lt;double&gt;</a>(x(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(j)), (i == j) ? 1.0 : 0.0);</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>            }</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            <a class="code hl_struct" href="structOptimization_1_1Dual.html">Dual&lt;double&gt;</a> res = f(x_dual);</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>            g(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(i)) = res.d;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        }</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="keywordflow">return</span> g;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    }</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="comment">// ============================================================</span></div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="comment">// 3. Value and Gradient 동시 추출</span></div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="comment">// ============================================================</span></div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N, <span class="keyword">typename</span> Func&gt;</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keyword">static</span> <span class="keywordtype">void</span> value_and_gradient(Func f, <span class="keyword">const</span> <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N&gt;</a>&amp; x, <span class="keywordtype">double</span>&amp; v_out,</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>                                   <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N&gt;</a>&amp; g_out) {</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        g_out.<a class="code hl_function" href="classStaticMatrix.html#a9d9c516df2280ffe76094dbea19371fd">set_zero</a>();</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;Dual&lt;double&gt;</a>, N&gt; x_dual;</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> j = 0; j &lt; N; ++j) {</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>                x_dual(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(j)) =</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>                    <a class="code hl_struct" href="structOptimization_1_1Dual.html">Dual&lt;double&gt;</a>(x(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(j)), (i == j) ? 1.0 : 0.0);</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            }</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>            <a class="code hl_struct" href="structOptimization_1_1Dual.html">Dual&lt;double&gt;</a> res = f(x_dual);</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            <span class="comment">// 첫 번째 순회에서 함수 값(Value) 추출</span></div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>            <span class="keywordflow">if</span> (i == 0) {</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>                v_out = res.v;</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            }</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            g_out(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(i)) = res.d;</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        }</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    }</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="comment">// ============================================================</span></div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="comment">// 4. Jacobian (f: R^N -&gt; R^M 의 미분)</span></div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    <span class="comment">// ============================================================</span></div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    <span class="comment">// 결과: M x N 행렬 (행: 출력차원, 열: 입력차원)</span></div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> M, <span class="keywordtype">size_t</span> N, <span class="keyword">typename</span> Func&gt;</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    [[nodiscard]] <span class="keyword">static</span> <a class="code hl_class" href="classStaticMatrix.html">StaticMatrix&lt;double, M, N&gt;</a> jacobian(Func f,</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>                                                             <span class="keyword">const</span> <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N&gt;</a>&amp; x) {</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <a class="code hl_class" href="classStaticMatrix.html">StaticMatrix&lt;double, M, N&gt;</a> J;</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        J.<a class="code hl_function" href="classStaticMatrix.html#a9d9c516df2280ffe76094dbea19371fd">set_zero</a>();</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;Dual&lt;double&gt;</a>, N&gt; x_dual;</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> j = 0; j &lt; N; ++j) {</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>                x_dual(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(j)) =</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>                    <a class="code hl_struct" href="structOptimization_1_1Dual.html">Dual&lt;double&gt;</a>(x(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(j)), (i == j) ? 1.0 : 0.0);</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>            }</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            <span class="comment">// f는 StaticVector&lt;Dual&lt;double&gt;, M&gt; 을 반환해야 함</span></div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;Dual&lt;double&gt;</a>, M&gt; res_vec = f(x_dual);</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            <span class="comment">// 각 출력 차원 k에 대하여, i번째 입력 변수에 대한 편미분 값을 J(k, i)에 저장</span></div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> k = 0; k &lt; M; ++k) {</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>                J(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(k), <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(i)) = res_vec(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(k)).d;</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>            }</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        }</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        <span class="keywordflow">return</span> J;</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    }</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>};</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N, <span class="keyword">typename</span> Func&gt;</div>
+<div class="foldopen" id="foldopen00035" data-start="{" data-end="}">
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="classOptimization_1_1AutoDiff.html#afc2d3807943994aad03a4a1e1113e4b5">   35</a></span>    [[nodiscard]] <span class="keyword">static</span> <span class="keywordtype">double</span> <a class="code hl_function" href="classOptimization_1_1AutoDiff.html#afc2d3807943994aad03a4a1e1113e4b5">value</a>(Func f, <span class="keyword">const</span> <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N&gt;</a>&amp; x) {</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <span class="keywordflow">return</span> f(x);</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    }</div>
 </div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>}  <span class="comment">// namespace Optimization</span></div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_AUTODIFF_HPP_</span></div>
-<div class="ttc" id="aclassOptimization_1_1AutoDiff_html"><div class="ttname"><a href="classOptimization_1_1AutoDiff.html">Optimization::AutoDiff</a></div><div class="ttdoc">정적 메모리 엔진(Layer 1)과 완벽히 호환되는 Auto Differentiation 인터페이스</div><div class="ttdef"><b>Definition</b> AutoDiff.hpp:14</div></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="comment">// ============================================================</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="comment">// 2. Gradient (f: R^N -&gt; R 의 미분)</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="comment">// ============================================================</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N, <span class="keyword">typename</span> Func&gt;</div>
+<div class="foldopen" id="foldopen00056" data-start="{" data-end="}">
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="classOptimization_1_1AutoDiff.html#a58e4c087ad635622012694e6851455b1">   56</a></span>    [[nodiscard]] <span class="keyword">static</span> <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N&gt;</a> <a class="code hl_function" href="classOptimization_1_1AutoDiff.html#a58e4c087ad635622012694e6851455b1">gradient</a>(Func f,</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>                                                          <span class="keyword">const</span> <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N&gt;</a>&amp; x) {</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N&gt;</a> g;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        g.<a class="code hl_function" href="classStaticMatrix.html#a9d9c516df2280ffe76094dbea19371fd">set_zero</a>();</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span> </div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        <span class="comment">// N개의 입력 변수 각각에 대해 편미분 수행</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;Dual&lt;double&gt;</a>, N&gt; x_dual;</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> j = 0; j &lt; N; ++j) {</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>                <span class="comment">// i번째 변수에 대해서만 미분값(d, Dual Number의 쌍대 부분)을 1.0으로 부여하여 &quot;Seed&quot;를 주입합니다.</span></div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>                <span class="comment">// 이는 수식 상 편미분 ∂f / ∂x_i 를 구하기 위한 설정입니다.</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>                <span class="comment">// j != i 인 다른 변수들의 미분값은 0.0으로 두어 상수로 취급합니다.</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>                x_dual(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(j)) =</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>                    <a class="code hl_struct" href="structOptimization_1_1Dual.html">Dual&lt;double&gt;</a>(x(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(j)), (i == j) ? 1.0 : 0.0);</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            }</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            <span class="comment">// 이원수를 인자로 함수를 평가하면 반환되는 결과 역시 이원수(Dual Number)가 됩니다.</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            <span class="comment">// 반환된 이원수의 &#39;d&#39; 부분이 바로 우리가 찾고자 하는 i번째 변수에 대한 편미분 값입니다.</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            <a class="code hl_struct" href="structOptimization_1_1Dual.html">Dual&lt;double&gt;</a> res = f(x_dual);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            g(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(i)) = res.d;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        }</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="keywordflow">return</span> g;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    }</div>
+</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <span class="comment">// ============================================================</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    <span class="comment">// 3. Value and Gradient 동시 추출</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <span class="comment">// ============================================================</span></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N, <span class="keyword">typename</span> Func&gt;</div>
+<div class="foldopen" id="foldopen00097" data-start="{" data-end="}">
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno"><a class="line" href="classOptimization_1_1AutoDiff.html#a1aa249fc72dc4dbf5932cc451daad711">   97</a></span>    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classOptimization_1_1AutoDiff.html#a1aa249fc72dc4dbf5932cc451daad711">value_and_gradient</a>(Func f, <span class="keyword">const</span> <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N&gt;</a>&amp; x, <span class="keywordtype">double</span>&amp; v_out,</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>                                   <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N&gt;</a>&amp; g_out) {</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        g_out.<a class="code hl_function" href="classStaticMatrix.html#a9d9c516df2280ffe76094dbea19371fd">set_zero</a>();</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span> </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;Dual&lt;double&gt;</a>, N&gt; x_dual;</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> j = 0; j &lt; N; ++j) {</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>                <span class="comment">// i번째 변수에만 편미분 Seed(1.0)를 주입</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>                x_dual(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(j)) =</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>                    <a class="code hl_struct" href="structOptimization_1_1Dual.html">Dual&lt;double&gt;</a>(x(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(j)), (i == j) ? 1.0 : 0.0);</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            }</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            <a class="code hl_struct" href="structOptimization_1_1Dual.html">Dual&lt;double&gt;</a> res = f(x_dual);</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            <span class="comment">// 첫 번째 변수에 대한 순회(i == 0)에서 함수의 스칼라 결과값(실수부 v)을 추출합니다.</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            <span class="comment">// 모든 반복에서 res.v는 동일한 f(x) 값을 가지므로 한 번만 저장하면 됩니다.</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>            <span class="keywordflow">if</span> (i == 0) {</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>                v_out = res.v;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>            }</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>            <span class="comment">// 쌍대부(d)는 i번째 방향으로의 방향 도함수(편미분 값)입니다.</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            g_out(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(i)) = res.d;</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        }</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    }</div>
+</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="comment">// ============================================================</span></div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    <span class="comment">// 4. Jacobian (f: R^N -&gt; R^M 의 미분)</span></div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    <span class="comment">// ============================================================</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> M, <span class="keywordtype">size_t</span> N, <span class="keyword">typename</span> Func&gt;</div>
+<div class="foldopen" id="foldopen00138" data-start="{" data-end="}">
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno"><a class="line" href="classOptimization_1_1AutoDiff.html#a091af479e8d81d8440ee3b1f7d742283">  138</a></span>    [[nodiscard]] <span class="keyword">static</span> <a class="code hl_class" href="classStaticMatrix.html">StaticMatrix&lt;double, M, N&gt;</a> <a class="code hl_function" href="classOptimization_1_1AutoDiff.html#a091af479e8d81d8440ee3b1f7d742283">jacobian</a>(Func f,</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>                                                             <span class="keyword">const</span> <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N&gt;</a>&amp; x) {</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>        <a class="code hl_class" href="classStaticMatrix.html">StaticMatrix&lt;double, M, N&gt;</a> J;</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>        J.<a class="code hl_function" href="classStaticMatrix.html#a9d9c516df2280ffe76094dbea19371fd">set_zero</a>();</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span> </div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        <span class="comment">// 입력 차원 N번의 평가를 통해 전체 야코비안 행렬을 구축합니다. (Forward-Mode AD의 특징)</span></div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>        <span class="comment">// 입력 변수 개수가 출력 함수 개수보다 현저히 많을 경우(M &lt;&lt; N), </span></div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>        <span class="comment">// Reverse-Mode AD보다 계산 비용이 더 클 수 있으나, 소규모 최적화 문제에서는 구현이 단순하고 매우 효율적입니다.</span></div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;Dual&lt;double&gt;</a>, N&gt; x_dual;</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> j = 0; j &lt; N; ++j) {</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>                <span class="comment">// i번째 입력 변수에 대해 Seed(1.0)를 주입</span></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>                x_dual(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(j)) =</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>                    <a class="code hl_struct" href="structOptimization_1_1Dual.html">Dual&lt;double&gt;</a>(x(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(j)), (i == j) ? 1.0 : 0.0);</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>            }</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>            <span class="comment">// 함수 f는 입력으로 전달된 이원수 벡터를 이용해 연산을 수행하고,</span></div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>            <span class="comment">// 출력 차원 M개 만큼의 이원수 벡터를 반환해야 합니다.</span></div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;Dual&lt;double&gt;</a>, M&gt; res_vec = f(x_dual);</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span> </div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>            <span class="comment">// 반환된 각각의 이원수에서 &#39;d&#39;(쌍대부)를 추출하면,</span></div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>            <span class="comment">// 이는 각 출력 함수 f_k 가 i번째 입력 변수 x_i 의 미세한 변화에 어떻게 반응하는지를 의미합니다.</span></div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>            <span class="comment">// 따라서 각 출력 차원 k에 대하여, i번째 열에 편미분 값을 채워 넣습니다.</span></div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> k = 0; k &lt; M; ++k) {</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>                J(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(k), <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(i)) = res_vec(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(k)).d;</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>            }</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        }</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        <span class="keywordflow">return</span> J;</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    }</div>
+</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>};</div>
+</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>}  <span class="comment">// namespace Optimization</span></div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> </div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_AUTODIFF_HPP_</span></div>
+<div class="ttc" id="aclassOptimization_1_1AutoDiff_html"><div class="ttname"><a href="classOptimization_1_1AutoDiff.html">Optimization::AutoDiff</a></div><div class="ttdoc">정적 메모리 엔진(Layer 1)과 완벽히 호환되는 Forward-Mode Automatic Differentiation (자동 미분) 클래스</div><div class="ttdef"><b>Definition</b> AutoDiff.hpp:20</div></div>
+<div class="ttc" id="aclassOptimization_1_1AutoDiff_html_a091af479e8d81d8440ee3b1f7d742283"><div class="ttname"><a href="classOptimization_1_1AutoDiff.html#a091af479e8d81d8440ee3b1f7d742283">Optimization::AutoDiff::jacobian</a></div><div class="ttdeci">static StaticMatrix&lt; double, M, N &gt; jacobian(Func f, const StaticVector&lt; double, N &gt; &amp;x)</div><div class="ttdoc">다변수 벡터 함수 f: R^N -&gt; R^M 에 대한 야코비안(Jacobian) 행렬을 계산합니다.</div><div class="ttdef"><b>Definition</b> AutoDiff.hpp:138</div></div>
+<div class="ttc" id="aclassOptimization_1_1AutoDiff_html_a1aa249fc72dc4dbf5932cc451daad711"><div class="ttname"><a href="classOptimization_1_1AutoDiff.html#a1aa249fc72dc4dbf5932cc451daad711">Optimization::AutoDiff::value_and_gradient</a></div><div class="ttdeci">static void value_and_gradient(Func f, const StaticVector&lt; double, N &gt; &amp;x, double &amp;v_out, StaticVector&lt; double, N &gt; &amp;g_out)</div><div class="ttdoc">스칼라 함수 평가값(Value)과 기울기(Gradient) 벡터를 한 번에 계산합니다.</div><div class="ttdef"><b>Definition</b> AutoDiff.hpp:97</div></div>
+<div class="ttc" id="aclassOptimization_1_1AutoDiff_html_a58e4c087ad635622012694e6851455b1"><div class="ttname"><a href="classOptimization_1_1AutoDiff.html#a58e4c087ad635622012694e6851455b1">Optimization::AutoDiff::gradient</a></div><div class="ttdeci">static StaticVector&lt; double, N &gt; gradient(Func f, const StaticVector&lt; double, N &gt; &amp;x)</div><div class="ttdoc">목적 함수 f: R^N -&gt; R 에 대한 기울기(Gradient) 벡터를 계산합니다.</div><div class="ttdef"><b>Definition</b> AutoDiff.hpp:56</div></div>
+<div class="ttc" id="aclassOptimization_1_1AutoDiff_html_afc2d3807943994aad03a4a1e1113e4b5"><div class="ttname"><a href="classOptimization_1_1AutoDiff.html#afc2d3807943994aad03a4a1e1113e4b5">Optimization::AutoDiff::value</a></div><div class="ttdeci">static double value(Func f, const StaticVector&lt; double, N &gt; &amp;x)</div><div class="ttdoc">목적 함수 또는 제약 조건 함수의 단순 스칼라 평가값(Value)을 반환합니다.</div><div class="ttdef"><b>Definition</b> AutoDiff.hpp:35</div></div>
 <div class="ttc" id="aclassStaticMatrix_html"><div class="ttname"><a href="classStaticMatrix.html">StaticMatrix</a></div><div class="ttdoc">전방 선언 (Forward Declaration)</div><div class="ttdef"><b>Definition</b> MatrixEngine.hpp:68</div></div>
 <div class="ttc" id="aclassStaticMatrix_html_a9d9c516df2280ffe76094dbea19371fd"><div class="ttname"><a href="classStaticMatrix.html#a9d9c516df2280ffe76094dbea19371fd">StaticMatrix::set_zero</a></div><div class="ttdeci">void set_zero()</div><div class="ttdoc">고속 영행렬 초기화 KKT 행렬 재조립 시 이전 루프의 찌꺼기를 지우는 데 사용. std::fill은 컴파일러에 의해 memset으로 최적화된다.</div><div class="ttdef"><b>Definition</b> MatrixEngine.hpp:107</div></div>
 <div class="ttc" id="astructOptimization_1_1Dual_html"><div class="ttname"><a href="structOptimization_1_1Dual.html">Optimization::Dual</a></div><div class="ttdef"><b>Definition</b> Dual.hpp:14</div></div>

@@ -126,7 +126,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> iter = 1; iter &lt;= max_iter; ++iter) {</div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            <span class="keywordtype">double</span> f_x = 0.0;</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>            std::array&lt;double, N&gt; g = {0.0};</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>            AutoDiff::value_and_gradient(f, x, f_x, g);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>            <a class="code hl_function" href="classOptimization_1_1AutoDiff.html#a1aa249fc72dc4dbf5932cc451daad711">AutoDiff::value_and_gradient</a>(f, x, f_x, g);</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>            <span class="keywordtype">double</span> g_norm_sq = 0.0;</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
@@ -183,6 +183,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_ADAM_HPP_</span></div>
 <div class="ttc" id="aclassOptimization_1_1Adam_html"><div class="ttname"><a href="classOptimization_1_1Adam.html">Optimization::Adam</a></div><div class="ttdoc">Adam (Adaptive Moment Estimation) 최적화 알고리즘을 구현한 클래스</div><div class="ttdef"><b>Definition</b> Adam.hpp:17</div></div>
+<div class="ttc" id="aclassOptimization_1_1AutoDiff_html_a1aa249fc72dc4dbf5932cc451daad711"><div class="ttname"><a href="classOptimization_1_1AutoDiff.html#a1aa249fc72dc4dbf5932cc451daad711">Optimization::AutoDiff::value_and_gradient</a></div><div class="ttdeci">static void value_and_gradient(Func f, const StaticVector&lt; double, N &gt; &amp;x, double &amp;v_out, StaticVector&lt; double, N &gt; &amp;g_out)</div><div class="ttdoc">스칼라 함수 평가값(Value)과 기울기(Gradient) 벡터를 한 번에 계산합니다.</div><div class="ttdef"><b>Definition</b> AutoDiff.hpp:97</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

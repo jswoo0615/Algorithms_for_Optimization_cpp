@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['vehicleparam_0',['VehicleParam',['../structOptimization_1_1VehicleParam.html',1,'Optimization']]]
+  ['trustregion_0',['TrustRegion',['../classOptimization_1_1TrustRegion.html',1,'Optimization']]],
+  ['trustregiontest_1',['TrustRegionTest',['../classTrustRegionTest.html',1,'']]]
 ];

@@ -17,6 +17,10 @@ var searchData=
   ['staticmatrix_3c_20double_2c_20n_5fvars_2c_20n_5fvars_20_3e_14',['StaticMatrix&lt; double, N_vars, N_vars &gt;',['../classStaticMatrix.html',1,'']]],
   ['staticmatrix_3c_20double_2c_20nu_20_3e_15',['StaticMatrix&lt; double, Nu &gt;',['../classStaticMatrix.html',1,'']]],
   ['staticmatrix_3c_20double_2c_20nx_20_3e_16',['StaticMatrix&lt; double, Nx &gt;',['../classStaticMatrix.html',1,'']]],
-  ['strongbacktrackinglinesearch_17',['StrongBacktrackingLineSearch',['../classOptimization_1_1StrongBacktrackingLineSearch.html',1,'Optimization']]],
-  ['strongwolfetest_18',['StrongWolfeTest',['../classStrongWolfeTest.html',1,'']]]
+  ['staticmatrix_3c_20int_2c_20maxnnz_20_3e_17',['StaticMatrix&lt; int, MaxNNZ &gt;',['../classStaticMatrix.html',1,'']]],
+  ['staticmatrix_3c_20int_2c_20rows_2b1_20_3e_18',['StaticMatrix&lt; int, Rows+1 &gt;',['../classStaticMatrix.html',1,'']]],
+  ['staticmatrix_3c_20t_2c_20maxnnz_20_3e_19',['StaticMatrix&lt; T, MaxNNZ &gt;',['../classStaticMatrix.html',1,'']]],
+  ['staticsparsematrix_20',['StaticSparseMatrix',['../classOptimization_1_1StaticSparseMatrix.html',1,'Optimization']]],
+  ['strongbacktrackinglinesearch_21',['StrongBacktrackingLineSearch',['../classOptimization_1_1StrongBacktrackingLineSearch.html',1,'Optimization']]],
+  ['strongwolfetest_22',['StrongWolfeTest',['../classStrongWolfeTest.html',1,'']]]
 ];

@@ -128,7 +128,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            std::array&lt;double, N&gt; g = {0.0};</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>            <span class="comment">// 1. Auto Differentiation (O(1) 할당)</span></div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>            AutoDiff::value_and_gradient(f, x, f_x, g);</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>            <a class="code hl_function" href="classOptimization_1_1AutoDiff.html#a1aa249fc72dc4dbf5932cc451daad711">AutoDiff::value_and_gradient</a>(f, x, f_x, g);</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>            <span class="comment">// [Fail-safe] 목적 함수값이 NaN 또는 Inf로 발산한 경우, 직전의 유효한 x 반환</span></div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>            <span class="keywordflow">if</span> (std::isnan(f_x) || std::isinf(f_x)) {</div>
@@ -182,6 +182,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>}  <span class="comment">// namespace Optimization</span></div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_HYPER_GRADIENT_DESCENT_HPP_</span></div>
+<div class="ttc" id="aclassOptimization_1_1AutoDiff_html_a1aa249fc72dc4dbf5932cc451daad711"><div class="ttname"><a href="classOptimization_1_1AutoDiff.html#a1aa249fc72dc4dbf5932cc451daad711">Optimization::AutoDiff::value_and_gradient</a></div><div class="ttdeci">static void value_and_gradient(Func f, const StaticVector&lt; double, N &gt; &amp;x, double &amp;v_out, StaticVector&lt; double, N &gt; &amp;g_out)</div><div class="ttdoc">스칼라 함수 평가값(Value)과 기울기(Gradient) 벡터를 한 번에 계산합니다.</div><div class="ttdef"><b>Definition</b> AutoDiff.hpp:97</div></div>
 <div class="ttc" id="aclassOptimization_1_1HyperGradientDescent_html"><div class="ttname"><a href="classOptimization_1_1HyperGradientDescent.html">Optimization::HyperGradientDescent</a></div><div class="ttdoc">Hyper Gradient Descent Optimizer (Based on Algorithms for Optimization, Sec 5.9)</div><div class="ttdef"><b>Definition</b> HyperGradientDescent.hpp:18</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->

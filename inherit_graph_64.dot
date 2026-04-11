@@ -5,5 +5,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
   node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
   rankdir="LR";
-  Node0 [id="Node000000",label="Optimization::Tests\l::Quadratic1D",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$structOptimization_1_1Tests_1_1Quadratic1D.html",tooltip="1차원 2차 함수 (Quadratic Function) f(x) = (x - 3.0)^2 전역 최적점: x* = 3.0, f(x*) = 0.0"];
+  Node0 [id="Node000000",label="Optimization::Tests\l::NonDifferentiable2D",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$structOptimization_1_1Tests_1_1NonDifferentiable2D.html",tooltip="미분 불가능한 2차원 목적 함수 (Non-differentiable Function) f(x) = |x_1| + 2 * |x_2 - 1.0| 전역 최적점: x* = [0...."];
 }

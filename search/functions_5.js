@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['near_5fzero_0',['near_zero',['../structMathTraits.html#ae4bdc59135c8d5d2cb6093d6e7208758',1,'MathTraits']]]
+  ['jacobian_0',['jacobian',['../classOptimization_1_1AutoDiff.html#a091af479e8d81d8440ee3b1f7d742283',1,'Optimization::AutoDiff']]]
 ];
