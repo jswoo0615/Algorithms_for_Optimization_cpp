@@ -167,3 +167,7 @@ gtest_discover_tests(test_IPM)
 add_executable(test_SparseMatrix test/test_SparseMatrix.cpp)
 target_link_libraries(test_SparseMatrix PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_SparseMatrix)
+
+add_executable(test_RTINMPC test/test_RTINMPC.cpp)
+target_link_libraries(test_RTINMPC PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_RTINMPC)
