@@ -159,3 +159,7 @@ gtest_discover_tests(test_VehicleModel)
 add_executable(test_NMPC test/test_NMPC.cpp)
 target_link_libraries(test_NMPC PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_NMPC)
+
+add_executable(test_IPM test/test_IPM.cpp)
+target_link_libraries(test_IPM PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_IPM)
