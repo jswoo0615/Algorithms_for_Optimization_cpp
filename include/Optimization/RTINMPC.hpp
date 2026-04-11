@@ -2,12 +2,11 @@
 #define OPTIMIZATION_RTI_NMPC_HPP_
 
 #include <array>
+#include <cmath>
 
 #include "Optimization/Physics/VehicleModel.hpp"
 #include "Optimization/RTISolver.hpp"
 #include "Optimization/Simulation/Integrator.hpp"
-#include <array>
-#include <cmath>
 
 namespace Optimization {
 
@@ -18,17 +17,17 @@ class RTINMPCController {
     static constexpr size_t Nu = 2;
     static constexpr size_t N_vars = Np * Nu;
     static constexpr size_t N_eq = 0;
-    static constexpr size_t N_ineq = Np * 4; 
-    
+    static constexpr size_t N_ineq = Np * 4;
+
     // [Architect's Dimension Formulation]
     // State(15*6) + Ctrl(15*2) + Rate(15*2) + Obs(15*10) + Terminal(6) = 306
     static constexpr size_t N_res = Np * Nx + Np * Nu + Np * Nu + Np * 10 + Nx;
 
     // 강력한 306차원 잔차 기반의 RTI 솔버
     RTISolver<N_vars, N_eq, N_ineq, N_res> rti;
-    
+
     DynamicBicycleModel model;
-    double dt = 0.2; 
+    double dt = 0.2;
 
     StaticVector<double, Nx> Q;
     StaticVector<double, Nx> Qf;
@@ -100,10 +99,11 @@ class RTINMPCController {
                 u(1) = U(static_cast<int>(k * Nu + 1));
 
                 // 1. 상태 잔차: J^T J 과정에서 제곱되므로 sqrt(Q)를 곱함
-                for(size_t i = 0; i < Nx; ++i) {
-                    r(idx++) = T(std::sqrt(Q(static_cast<int>(i)))) * (x(static_cast<int>(i)) - T(x_ref(static_cast<int>(i))));
+                for (size_t i = 0; i < Nx; ++i) {
+                    r(idx++) = T(std::sqrt(Q(static_cast<int>(i)))) *
+                               (x(static_cast<int>(i)) - T(x_ref(static_cast<int>(i))));
                 }
-                
+
                 // 2. 제어 잔차
                 r(idx++) = T(std::sqrt(R(0))) * u(0);
                 r(idx++) = T(std::sqrt(R(1))) * u(1);
@@ -111,7 +111,7 @@ class RTINMPCController {
                 // 3. 변화율 잔차
                 r(idx++) = T(std::sqrt(R_rate(0))) * (u(0) - u_prev(0));
                 r(idx++) = T(std::sqrt(R_rate(1))) * (u(1) - u_prev(1));
-                u_prev = u; 
+                u_prev = u;
 
                 // 4. 장애물 회피 잔차
                 for (size_t obs_i = 0; obs_i < 10; ++obs_i) {
@@ -120,9 +120,9 @@ class RTINMPCController {
                     T dist_sq = dx * dx + dy * dy;
                     T r_safe = T(obs[obs_i].r + 0.8);
                     T violation = r_safe * r_safe - dist_sq;
-                    
+
                     if (Optimization::get_value(violation) > 0.0) {
-                        r(idx++) = T(std::sqrt(8000.0)) * violation; 
+                        r(idx++) = T(std::sqrt(8000.0)) * violation;
                     } else {
                         r(idx++) = T(0.0);
                     }
@@ -132,8 +132,9 @@ class RTINMPCController {
             }
 
             // 5. 종단 잔차
-            for(size_t i = 0; i < Nx; ++i) {
-                r(idx++) = T(std::sqrt(Qf(static_cast<int>(i)))) * (x(static_cast<int>(i)) - T(x_ref(static_cast<int>(i))));
+            for (size_t i = 0; i < Nx; ++i) {
+                r(idx++) = T(std::sqrt(Qf(static_cast<int>(i)))) *
+                           (x(static_cast<int>(i)) - T(x_ref(static_cast<int>(i))));
             }
 
             return r;
@@ -165,13 +166,14 @@ class RTINMPCController {
         }
     };
 
-    bool compute_control(const StaticVector<double, Nx>& current_x, StaticVector<double, N_vars>& U_guess) {
+    bool compute_control(const StaticVector<double, Nx>& current_x,
+                         StaticVector<double, N_vars>& U_guess) {
         ResidualFunc res_f{current_x, x_ref, Q, Qf, R, R_rate, u_last, model, dt, obstacles};
         DummyEq eq_f;
         BoundIneq ineq_f;
 
-        bool success = rti.solve(U_guess, res_f, eq_f, ineq_f); 
-        
+        bool success = rti.solve(U_guess, res_f, eq_f, ineq_f);
+
         u_last(0) = U_guess(0);
         u_last(1) = U_guess(1);
 
