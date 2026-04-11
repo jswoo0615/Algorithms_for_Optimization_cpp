@@ -1,7 +1,6 @@
 #ifndef OPTIMIZATION_RTI_SOLVER_HPP_
 #define OPTIMIZATION_RTI_SOLVER_HPP_
 
-#include "Optimization/Matrix/MatrixEngine.hpp"
 #include "Optimization/AutoDiff.hpp"
 #include "Optimization/IPMQPSolver.hpp" 
 #include <cmath>
@@ -121,4 +120,4 @@ public:
 
 } // namespace Optimization
 
-#endif // OPTIMIZATION_RTI_SOLVER_HPP_
+#endif  // OPTIMIZATION_RTI_SOLVER_HPP_
