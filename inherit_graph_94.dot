@@ -5,5 +5,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
   node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
   rankdir="LR";
-  Node0 [id="Node000000",label="StaticMatrix\< T, Rows,\l Cols \>",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classStaticMatrix.html",tooltip="전방 선언 (Forward Declaration)"];
+  Node0 [id="Node000000",label="StaticMatrix\< T, Rows,\l Cols \>",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classStaticMatrix.html",tooltip="전방 선언 (Forward Declaration) 클래스 내에서 자기 자신 또는 연관된 타입(StaticVector)을 참조하기 위해 선언."];
 }
