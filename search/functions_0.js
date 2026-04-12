@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['build_5fmasked_5fkkt_0',['build_masked_KKT',['../classActiveSetSolver.html#afcfcb45e2fb87f732e2b89079dc5ca8c',1,'ActiveSetSolver']]]
+  ['apply_5fh_5fsys_0',['apply_H_sys',['../classOptimization_1_1SparseIPMQPSolver.html#a6f748cfcc084079d5868a832591daf3b',1,'Optimization::SparseIPMQPSolver']]]
 ];

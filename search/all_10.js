@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['q_0',['q',['../classActiveSetSolver.html#aa18b25308442a24be70e5db4574d5e9b',1,'ActiveSetSolver']]],
+  ['q_0',['q',['../classActiveSetSolver.html#aa18b25308442a24be70e5db4574d5e9b',1,'ActiveSetSolver::q'],['../classOptimization_1_1SparseIPMQPSolver.html#a1605d25930225a86f7765d4cff11f8ce',1,'Optimization::SparseIPMQPSolver::q']]],
   ['qr_5fdecompose_5fhouseholder_1',['QR_decompose_Householder',['../classStaticMatrix.html#a530a7e2d1c3d1dcc77405a11e8ee3f12',1,'StaticMatrix']]],
   ['qr_5fdecompose_5fmgs_2',['QR_decompose_MGS',['../classStaticMatrix.html#a445718eb583abde69a88b451bb7b2bf7',1,'StaticMatrix']]],
   ['qr_5fsolve_3',['QR_solve',['../classStaticMatrix.html#adac1e1d96ae3d16b515df10090d6ec60',1,'StaticMatrix']]],

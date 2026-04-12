@@ -1,7 +1,7 @@
 var searchData=
 [
-  ['search_0',['search',['../classOptimization_1_1BacktrackingLineSearch.html#af20668d50b8fcf15615a18581a1eef8b',1,'Optimization::BacktrackingLineSearch::search(Func f, const std::array&lt; double, N &gt; &amp;x, const std::array&lt; double, N &gt; &amp;d, double f_x, const std::array&lt; double, N &gt; &amp;grad_x, double alpha=1.0, double p=0.5, double c=1e-4, bool verbose=false) noexcept'],['../classOptimization_1_1BacktrackingLineSearch.html#a77cd6a489194be1c869e28a2885b640c',1,'Optimization::BacktrackingLineSearch::search(Func f, const std::array&lt; double, N &gt; &amp;x, const std::array&lt; double, N &gt; &amp;d, double alpha=1.0, double p=0.5, double c=1e-4, bool verbose=false) noexcept']]],
-  ['set_5fzero_1',['set_zero',['../classStaticMatrix.html#a9d9c516df2280ffe76094dbea19371fd',1,'StaticMatrix']]],
-  ['solve_2',['solve',['../classActiveSetSolver.html#a5dc682fe44d18715ca28087939e42c0b',1,'ActiveSetSolver::solve()'],['../classEQPSolver.html#a1f58abbd1cceae64471ca7a9c22da4cb',1,'EQPSolver::solve()'],['../classOptimization_1_1SQPSolver.html#a9039a9df5fcf29713eaaea809057d20f',1,'Optimization::SQPSolver::solve(StaticVector&lt; double, N_vars &gt; &amp;u, CostFunc cost_f, EqFunc eq_f, IneqFunc ineq_f, int max_iter=50)']]],
-  ['sqpsolver_3',['SQPSolver',['../classOptimization_1_1SQPSolver.html#a2d5f83cc3bb4e5725d328b45b3ebd650',1,'Optimization::SQPSolver']]]
+  ['qr_5fdecompose_5fhouseholder_0',['QR_decompose_Householder',['../classStaticMatrix.html#a530a7e2d1c3d1dcc77405a11e8ee3f12',1,'StaticMatrix']]],
+  ['qr_5fdecompose_5fmgs_1',['QR_decompose_MGS',['../classStaticMatrix.html#a445718eb583abde69a88b451bb7b2bf7',1,'StaticMatrix']]],
+  ['qr_5fsolve_2',['QR_solve',['../classStaticMatrix.html#adac1e1d96ae3d16b515df10090d6ec60',1,'StaticMatrix']]],
+  ['qr_5fsolve_5fhouseholder_3',['QR_solve_Householder',['../classStaticMatrix.html#a9829ffe5f0256a94000578740984f33b',1,'StaticMatrix']]]
 ];
