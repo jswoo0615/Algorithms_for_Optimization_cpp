@@ -2,15 +2,15 @@
 #define STATIC_MATRIX_HPP_
 
 #include <algorithm>  // std::copy, std::fill (연속 메모리 블록 단위의 고속 복사 및 초기화)
-#include <cassert>    // 런타임 인덱스 경계 검사 (디버깅 용도, 릴리즈 시 NDEBUG로 비활성화 가능)
-#include <cmath>      // std::abs, std::sqrt (기본 스칼라 수학 연산)
-#include <iomanip>    // 출력 포맷팅
-#include <iostream>   // 디버깅 콘솔 출력
-#include <limits>     // std::numeric_limits (타입에 따른 머신 입실론 활용을 위해 필요)
+#include <cassert>  // 런타임 인덱스 경계 검사 (디버깅 용도, 릴리즈 시 NDEBUG로 비활성화 가능)
+#include <cmath>     // std::abs, std::sqrt (기본 스칼라 수학 연산)
+#include <iomanip>   // 출력 포맷팅
+#include <iostream>  // 디버깅 콘솔 출력
+#include <limits>  // std::numeric_limits (타입에 따른 머신 입실론 활용을 위해 필요)
 #include <stdexcept>  // std::invalid_argument (0으로 나누기 등 치명적 수학 오류 예외 처리)
-#include <type_traits> // std::is_floating_point (AD Traits 템플릿 메타 프로그래밍 확장 대비)
+#include <type_traits>  // std::is_floating_point (AD Traits 템플릿 메타 프로그래밍 확장 대비)
 
-#include "Optimization/Dual.hpp" // Auto Differentiation(자동 미분)을 위한 Dual Number 구조체
+#include "Optimization/Dual.hpp"  // Auto Differentiation(자동 미분)을 위한 Dual Number 구조체
 
 /**
  * @brief 전방 선언 (Forward Declaration)
@@ -29,7 +29,7 @@ using StaticVector = StaticMatrix<T, N, 1>;
 
 // ============================================================
 // AD(Auto Differentiation) 호환 Traits 구조체
-//   최적화 솔버(Layer 4)가 Jacobian/Hessian을 추출할 때, 자료형 T는 
+//   최적화 솔버(Layer 4)가 Jacobian/Hessian을 추출할 때, 자료형 T는
 //   단순 실수(double)일 수도 있고 미분값을 포함하는 Dual 타입일 수도 있음.
 //   제네릭 프로그래밍 환경에서 두 타입의 수학 연산을 통일하기 위한 인터페이스.
 // ============================================================
@@ -50,15 +50,15 @@ struct MathTraits {
 template <typename T>
 struct MathTraits<Optimization::Dual<T>> {
     static Optimization::Dual<T> abs(const Optimization::Dual<T>& x) {
-        return Optimization::ad::abs(x); // Dual 내부의 오버로딩된 abs 호출
+        return Optimization::ad::abs(x);  // Dual 내부의 오버로딩된 abs 호출
     }
     static Optimization::Dual<T> sqrt(const Optimization::Dual<T>& x) {
-        return Optimization::ad::sqrt(x); // Dual 내부의 오버로딩된 sqrt 호출
+        return Optimization::ad::sqrt(x);  // Dual 내부의 오버로딩된 sqrt 호출
     }
 
     /**
      * @brief Epsilon 특이성 검사 (Dual 타입용)
-     * 특이성(Singularity)은 미분값(gradient/hessian)이 아닌 순수 함수값(Value)에 
+     * 특이성(Singularity)은 미분값(gradient/hessian)이 아닌 순수 함수값(Value)에
      * 의해서만 결정되므로, 구조체 내부의 실수부(v)만 추출하여 입실론과 비교함.
      */
     static bool near_zero(const Optimization::Dual<T>& x) {
@@ -90,7 +90,7 @@ class StaticMatrix {
    public:
     // ============================================================
     // 메모리 접근자 (Col-major: data[col * Rows + row])
-    //   BLAS/LAPACK 표준과 동일한 Column-major 방식을 사용하여, 
+    //   BLAS/LAPACK 표준과 동일한 Column-major 방식을 사용하여,
     //   열(Column) 방향 접근 시 공간 지역성(Spatial Locality)을 극대화.
     // ============================================================
     T& operator()(int r, int c) {
@@ -118,8 +118,8 @@ class StaticMatrix {
 
     /**
      * @brief 고속 영행렬 초기화
-     * 매 제어 주기(Control Loop)마다 KKT 행렬을 재조립할 때 이전 주기의 
-     * 데이터(찌꺼기)를 초기화해야 함. 루프를 돌며 0을 넣는 것보다 
+     * 매 제어 주기(Control Loop)마다 KKT 행렬을 재조립할 때 이전 주기의
+     * 데이터(찌꺼기)를 초기화해야 함. 루프를 돌며 0을 넣는 것보다
      * std::fill을 사용하면 최적화 컴파일러가 이를 고속 memset 명령어로 치환함.
      */
     void set_zero() { std::fill(data, data + (Rows * Cols), static_cast<T>(0)); }
@@ -174,7 +174,7 @@ class StaticMatrix {
     /**
      * @brief 행렬 곱셈 (J-K-I 루프 캐시 최적화)
      *
-     * 표준적인 I-J-K 루프는 행렬 B의 열은 연속적으로 읽지만, 행렬 A의 행은 
+     * 표준적인 I-J-K 루프는 행렬 B의 열은 연속적으로 읽지만, 행렬 A의 행은
      * 건너뛰며 읽게 되어(Col-major 특성상) 심각한 캐시 미스(Cache Miss)를 유발함.
      * 이를 방지하기 위해 J-K-I 순서로 루프를 재배치함.
      * 이 구조에서는 가장 안쪽 루프(i)가 Result와 A 행렬의 메모리를
@@ -193,8 +193,9 @@ class StaticMatrix {
             // K루프: A 행렬의 열 이동, Other 행렬의 행 이동
             for (size_t k = 0; k < Cols; ++k) {
                 const T* a_col = a_base + (k * Rows);  // A의 k번째 열 시작 주소 캐싱
-                const T b_kj = Other(static_cast<int>(k), static_cast<int>(j)); // 스칼라 값 고정
-                // I루프: Result와 A의 열 단위 연속 메모리 접근 (SIMD 벡터화가 발생하기 가장 좋은 형태)
+                const T b_kj = Other(static_cast<int>(k), static_cast<int>(j));  // 스칼라 값 고정
+                // I루프: Result와 A의 열 단위 연속 메모리 접근 (SIMD 벡터화가 발생하기 가장 좋은
+                // 형태)
                 for (size_t i = 0; i < Rows; ++i) {
                     res_col[i] += a_col[i] * b_kj;
                 }
@@ -221,7 +222,7 @@ class StaticMatrix {
     // ============================================================
     // 분해 솔버 (Decompositions & Solvers)
     //   제어 아키텍처에서 시스템 방정식(Ax=b)을 풀기 위한 핵심 엔진.
-    //   역행렬(Inverse)을 직접 구하는 것은 수치적으로 불안정하고 연산량이 많으므로 
+    //   역행렬(Inverse)을 직접 구하는 것은 수치적으로 불안정하고 연산량이 많으므로
     //   반드시 분해(Decomposition) 후 전진/후진 대입(Substitution)을 수행함.
     // ============================================================
 
@@ -251,7 +252,7 @@ class StaticMatrix {
 
             // Pivot 안전성 검사. Pivot이 0이면 이후 나눗셈에서 무한대가 발생함.
             if (MathTraits<T>::near_zero((*this)(static_cast<int>(i), static_cast<int>(i)))) {
-                return false;  
+                return false;
             }
 
             // 2. L 행렬 갱신 (i번째 열의 j번째 행 원소들 계산)
@@ -263,7 +264,7 @@ class StaticMatrix {
                 }
                 (*this)(static_cast<int>(j), static_cast<int>(i)) =
                     ((*this)(static_cast<int>(j), static_cast<int>(i)) - sum) /
-                    (*this)(static_cast<int>(i), static_cast<int>(i)); // Pivot으로 나눔
+                    (*this)(static_cast<int>(i), static_cast<int>(i));  // Pivot으로 나눔
             }
         }
         return true;
@@ -285,7 +286,7 @@ class StaticMatrix {
             for (size_t j = 0; j < i; ++j) {
                 sum += (*this)(static_cast<int>(i), static_cast<int>(j)) * y(j);
             }
-            y(i) = b(i) - sum; // L의 대각 성분은 1이므로 나눌 필요 없음
+            y(i) = b(i) - sum;  // L의 대각 성분은 1이므로 나눌 필요 없음
         }
 
         // 2단계: Back substitution (Ux = y)
@@ -401,19 +402,20 @@ class StaticMatrix {
             if (MathTraits<T>::near_zero(D_jj)) {
                 return false;
             }
-            (*this)(static_cast<int>(j), static_cast<int>(j)) = D_jj; // 대각 원소 갱신 (D 저장)
+            (*this)(static_cast<int>(j), static_cast<int>(j)) = D_jj;  // 대각 원소 갱신 (D 저장)
 
             // L 행렬 갱신
             for (size_t i = j + 1; i < Rows; ++i) {
                 T sum_L = static_cast<T>(0);
                 for (size_t k = 0; k < j; ++k) {
-                    sum_L += (*this)(static_cast<int>(i), static_cast<int>(k)) *
-                             (*this)(static_cast<int>(j), static_cast<int>(k)) *
-                             (*this)(static_cast<int>(k), static_cast<int>(k)); // L_ik * L_jk * D_kk
+                    sum_L +=
+                        (*this)(static_cast<int>(i), static_cast<int>(k)) *
+                        (*this)(static_cast<int>(j), static_cast<int>(k)) *
+                        (*this)(static_cast<int>(k), static_cast<int>(k));  // L_ik * L_jk * D_kk
                 }
                 (*this)(static_cast<int>(i), static_cast<int>(j)) =
                     ((*this)(static_cast<int>(i), static_cast<int>(j)) - sum_L) /
-                    (*this)(static_cast<int>(j), static_cast<int>(j)); // D_jj로 나눔
+                    (*this)(static_cast<int>(j), static_cast<int>(j));  // D_jj로 나눔
             }
         }
         return true;
@@ -455,10 +457,10 @@ class StaticMatrix {
     /**
      * @brief MGS-QR 분해 (Modified Gram-Schmidt 알고리즘)
      *
-     * A = QR 로 분해. 직교 행렬 Q는 원본 위치(*this)에 저장되고, 
+     * A = QR 로 분해. 직교 행렬 Q는 원본 위치(*this)에 저장되고,
      * 상삼각행렬 R은 인자로 받아 채워넣음.
      * 일반 CGS(Classical Gram-Schmidt)보다 수치적으로 훨씬 안정적임.
-     * Gauss-Newton(J^T J) 구성 시 조건수(Condition number) 폭발을 막기 위해 
+     * Gauss-Newton(J^T J) 구성 시 조건수(Condition number) 폭발을 막기 위해
      * Jacobian을 직접 QR 분해하는 아키텍처에서 활용 가능.
      *
      * @return true  - 분해 성공
@@ -537,9 +539,9 @@ class StaticMatrix {
      * @brief Householder QR 분해 (메모리 절약형 Compact 표현)
      *
      * MGS보다 직교성이 훨씬 보장되는 강력한 분해 기법.
-     * 명시적인 Q 행렬을 만들지 않고, Householder 반사 벡터 v를 
+     * 명시적인 Q 행렬을 만들지 않고, Householder 반사 벡터 v를
      * 하삼각 공간에 쑤셔넣어 저장(Compact Storage)하는 고도의 최적화 기법.
-     * NMPC 등 제약조건(Constraints)이 심하게 걸린 Jacobian의 Null-space 
+     * NMPC 등 제약조건(Constraints)이 심하게 걸린 Jacobian의 Null-space
      * 계산이 필요할 때 가장 완벽한 솔버 역할을 수행함.
      *
      * @param tau  Householder 반사 스케일링 팩터를 저장할 벡터
@@ -555,7 +557,7 @@ class StaticMatrix {
                 norm_sq += (*this)(static_cast<int>(k), static_cast<int>(i)) *
                            (*this)(static_cast<int>(k), static_cast<int>(i));
             }
-            T norm_x = MathTraits<T>::sqrt(norm_sq); // 누산 후 단 1회 루트 연산
+            T norm_x = MathTraits<T>::sqrt(norm_sq);  // 누산 후 단 1회 루트 연산
 
             // 벡터가 완전히 0인 경우 반사를 스킵함
             if (MathTraits<T>::near_zero(norm_x)) {
@@ -575,7 +577,7 @@ class StaticMatrix {
             }
 
             // Tau(스케일 팩터) 계산
-            T v_sq_norm = static_cast<T>(1.0); // v0는 정규화되어 1로 취급
+            T v_sq_norm = static_cast<T>(1.0);  // v0는 정규화되어 1로 취급
             for (size_t k = i + 1; k < Rows; ++k) {
                 v_sq_norm += (*this)(static_cast<int>(k), static_cast<int>(i)) *
                              (*this)(static_cast<int>(k), static_cast<int>(i));
@@ -588,13 +590,13 @@ class StaticMatrix {
             // Rank-1 Update 적용 (A <- (I - tau*v*v^T) A)
             // 현재 열 이후의 모든 열(j > i)에 대해 직교 반사를 투영함
             for (size_t j = i + 1; j < Cols; ++j) {
-                T dot = (*this)(static_cast<int>(i), static_cast<int>(j)); // v_0 = 1 성분
+                T dot = (*this)(static_cast<int>(i), static_cast<int>(j));  // v_0 = 1 성분
                 for (size_t k = i + 1; k < Rows; ++k) {
                     dot += (*this)(static_cast<int>(k), static_cast<int>(i)) *
                            (*this)(static_cast<int>(k), static_cast<int>(j));
                 }
                 T tau_dot = tau(i) * dot;
-                
+
                 // 원본 행렬 업데이트
                 (*this)(static_cast<int>(i), static_cast<int>(j)) -= tau_dot;
                 for (size_t k = i + 1; k < Rows; ++k) {
@@ -613,7 +615,7 @@ class StaticMatrix {
                                                const StaticVector<T, Rows>& b) const {
         StaticVector<T, Rows> y = b;
 
-        // 1. Q^T b 적용: 저장된 Householder 벡터와 tau를 이용하여 
+        // 1. Q^T b 적용: 저장된 Householder 벡터와 tau를 이용하여
         //    b 벡터를 연속적으로 직교 반사(Reflection)시킴.
         for (size_t i = 0; i < Cols; ++i) {
             if (MathTraits<T>::near_zero(tau(i))) {
@@ -645,7 +647,7 @@ class StaticMatrix {
 
     // ============================================================
     // 블록 연산 (Block Operations)
-    //   SQP 등에서 Hessian 블록, 제약조건(A) 블록 등을 모아 거대한 
+    //   SQP 등에서 Hessian 블록, 제약조건(A) 블록 등을 모아 거대한
     //   KKT 시스템 행렬을 조립할 때 필수적인 유틸리티.
     //   Col-major의 특성인 '열 단위 연속성'을 극한으로 활용함.
     // ============================================================
@@ -663,7 +665,7 @@ class StaticMatrix {
         // 타겟 행렬의 범위를 넘지 않는지 컴파일 타임 검사
         static_assert(SubRows <= Rows, "SubMatrix rows exceed target");
         static_assert(SubCols <= Cols, "SubMatrix cols exceed target");
-        
+
         // 삽입 위치가 올바른지 런타임 검사
         assert(start_row + SubRows <= Rows && "Row index out of bounds");
         assert(start_col + SubCols <= Cols && "Col index out of bounds");
@@ -706,7 +708,7 @@ class StaticMatrix {
     /**
      * @brief 부분 행렬 추출 (std::copy를 통한 열 단위 블록 카피)
      *
-     * 계산이 완료된 거대 KKT 벡터(상태 + 슬랙 + 듀얼)에서 
+     * 계산이 완료된 거대 KKT 벡터(상태 + 슬랙 + 듀얼)에서
      * 필요한 부분의 해(예: 차량 제어 입력 u)만 분리해 낼 때 사용.
      * insert_block과 역순으로 동일한 메모리 최적화 기법이 적용됨.
      */
