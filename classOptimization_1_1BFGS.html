@@ -86,14 +86,94 @@ $(function() {
   <div class="headertitle"><div class="title">Optimization::BFGS Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p><a class="el" href="classOptimization_1_1BFGS.html" title="BFGS (Broyden–Fletcher–Goldfarb–Shanno) 최적화 알고리즘">BFGS</a> (Broyden–Fletcher–Goldfarb–Shanno) 최적화 알고리즘  
+ <a href="classOptimization_1_1BFGS.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="BFGS_8hpp_source.html">BFGS.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a9ec3a611b1847cd285e6b8ef2fed1b31" id="r_a9ec3a611b1847cd285e6b8ef2fed1b31"><td class="memTemplParams" colspan="2"><a id="a9ec3a611b1847cd285e6b8ef2fed1b31" name="a9ec3a611b1847cd285e6b8ef2fed1b31"></a>
-template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:a9ec3a611b1847cd285e6b8ef2fed1b31"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="structOptimization_1_1OptimizationResultND.html">OptimizationResultND</a>&lt; N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>optimize</b> (Func f, std::array&lt; double, N &gt; x_init, double tol=1e-6, size_t max_iter=200) noexcept</td></tr>
+<tr class="memitem:a9ec3a611b1847cd285e6b8ef2fed1b31" id="r_a9ec3a611b1847cd285e6b8ef2fed1b31"><td class="memTemplParams" colspan="2">template&lt;size_t N, typename Func &gt; </td></tr>
+<tr class="memitem:a9ec3a611b1847cd285e6b8ef2fed1b31"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="structOptimization_1_1OptimizationResultND.html">OptimizationResultND</a>&lt; N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1BFGS.html#a9ec3a611b1847cd285e6b8ef2fed1b31">optimize</a> (Func f, std::array&lt; double, N &gt; x_init, double tol=1e-6, size_t max_iter=200) noexcept</td></tr>
+<tr class="memdesc:a9ec3a611b1847cd285e6b8ef2fed1b31"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classOptimization_1_1BFGS.html" title="BFGS (Broyden–Fletcher–Goldfarb–Shanno) 최적화 알고리즘">BFGS</a> 알고리즘 메인 최적화 함수  <br /></td></tr>
 <tr class="separator:a9ec3a611b1847cd285e6b8ef2fed1b31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p><a class="el" href="classOptimization_1_1BFGS.html" title="BFGS (Broyden–Fletcher–Goldfarb–Shanno) 최적화 알고리즘">BFGS</a> (Broyden–Fletcher–Goldfarb–Shanno) 최적화 알고리즘 </p>
+<p>준-뉴턴(Quasi-Newton) 기법 중 가장 널리 쓰이고 강력한 방법입니다. 순수 뉴턴법(Newton's Method)은 매 반복마다 값비싼 헤시안(2차 미분 행렬)의 계산과 그 역행렬을 직접 구해야 하는 단점이 있습니다.</p>
+<p>반면 <a class="el" href="classOptimization_1_1BFGS.html" title="BFGS (Broyden–Fletcher–Goldfarb–Shanno) 최적화 알고리즘">BFGS</a> 알고리즘은 1차 미분(Gradient) 정보만을 누적하여 **역헤시안(Inverse Hessian) 행렬을 근사**해 나갑니다. 이로 인해 역행렬을 구하는 과정 없이(O(N^2) 연산만으로) 뉴턴법에 가까운 2차 수렴 속도(Quadratic Convergence)를 달성합니다.</p>
+<dl class="section note"><dt>Note</dt><dd>동적 메모리(힙) 할당을 전면 배제하고, std::array 기반의 정적 메모리와 SIMD 가속을 사용하여 실시간(RT) 환경 및 임베디드 제어 시스템에 적합하도록 구현되었습니다. </dd></dl>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a9ec3a611b1847cd285e6b8ef2fed1b31" name="a9ec3a611b1847cd285e6b8ef2fed1b31"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9ec3a611b1847cd285e6b8ef2fed1b31">&#9670;&#160;</a></span>optimize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N, typename Func &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="structOptimization_1_1OptimizationResultND.html">OptimizationResultND</a>&lt; N &gt; Optimization::BFGS::optimize </td>
+          <td>(</td>
+          <td class="paramtype">Func&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::array&lt; double, N &gt;&#160;</td>
+          <td class="paramname"><em>x_init</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>tol</em> = <code>1e-6</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>max_iter</em> = <code>200</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><a class="el" href="classOptimization_1_1BFGS.html" title="BFGS (Broyden–Fletcher–Goldfarb–Shanno) 최적화 알고리즘">BFGS</a> 알고리즘 메인 최적화 함수 </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">N</td><td>최적화 변수의 차원 </td></tr>
+    <tr><td class="paramname">Func</td><td>목적 함수 타입 (람다, 펑터 등) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>최소화할 목적 함수 </td></tr>
+    <tr><td class="paramname">x_init</td><td>최적화 시작 지점 (초기 추정값) </td></tr>
+    <tr><td class="paramname">tol</td><td>수렴 판정을 위한 허용 오차 (Gradient의 Norm이 이 값보다 작아지면 수렴으로 판단) </td></tr>
+    <tr><td class="paramname">max_iter</td><td>무한 루프를 방지하기 위한 최대 허용 반복 횟수 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>OptimizationResultND&lt;N&gt; 최적해, 함수값, 반복 횟수, 소요 시간 정보 </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/Optimization/<a class="el" href="BFGS_8hpp_source.html">BFGS.hpp</a></li>
 </ul>

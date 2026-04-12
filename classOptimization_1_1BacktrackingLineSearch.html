@@ -87,25 +87,227 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Algorithm 4.2 : Backtracking Line Search 아르미호 (Armijo) 충분 감소 조건을 만족할 때까지 보폭을 줄여나가는 근사 선 탐색 알고리즘  
+<p>Algorithm 4.2 : Backtracking Line Search (백트래킹 선 탐색) 알고리즘  
  <a href="classOptimization_1_1BacktrackingLineSearch.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="BacktrackingLineSearch_8hpp_source.html">BacktrackingLineSearch.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:af20668d50b8fcf15615a18581a1eef8b" id="r_af20668d50b8fcf15615a18581a1eef8b"><td class="memTemplParams" colspan="2"><a id="af20668d50b8fcf15615a18581a1eef8b" name="af20668d50b8fcf15615a18581a1eef8b"></a>
-template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:af20668d50b8fcf15615a18581a1eef8b"><td class="memTemplItemLeft" align="right" valign="top">static double&#160;</td><td class="memTemplItemRight" valign="bottom"><b>search</b> (Func f, const std::array&lt; double, N &gt; &amp;x, const std::array&lt; double, N &gt; &amp;d, double f_x, const std::array&lt; double, N &gt; &amp;grad_x, double alpha=1.0, double p=0.5, double c=1e-4, bool verbose=false) noexcept</td></tr>
+<tr class="memitem:af20668d50b8fcf15615a18581a1eef8b" id="r_af20668d50b8fcf15615a18581a1eef8b"><td class="memTemplParams" colspan="2">template&lt;size_t N, typename Func &gt; </td></tr>
+<tr class="memitem:af20668d50b8fcf15615a18581a1eef8b"><td class="memTemplItemLeft" align="right" valign="top">static double&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1BacktrackingLineSearch.html#af20668d50b8fcf15615a18581a1eef8b">search</a> (Func f, const std::array&lt; double, N &gt; &amp;x, const std::array&lt; double, N &gt; &amp;d, double f_x, const std::array&lt; double, N &gt; &amp;grad_x, double alpha=1.0, double p=0.5, double c=1e-4, bool verbose=false) noexcept</td></tr>
+<tr class="memdesc:af20668d50b8fcf15615a18581a1eef8b"><td class="mdescLeft">&#160;</td><td class="mdescRight">함수값과 기울기(Gradient)가 이미 계산된 상태에서 백트래킹 선 탐색을 수행합니다.  <br /></td></tr>
 <tr class="separator:af20668d50b8fcf15615a18581a1eef8b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a77cd6a489194be1c869e28a2885b640c" id="r_a77cd6a489194be1c869e28a2885b640c"><td class="memTemplParams" colspan="2"><a id="a77cd6a489194be1c869e28a2885b640c" name="a77cd6a489194be1c869e28a2885b640c"></a>
-template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:a77cd6a489194be1c869e28a2885b640c"><td class="memTemplItemLeft" align="right" valign="top">static double&#160;</td><td class="memTemplItemRight" valign="bottom"><b>search</b> (Func f, const std::array&lt; double, N &gt; &amp;x, const std::array&lt; double, N &gt; &amp;d, double alpha=1.0, double p=0.5, double c=1e-4, bool verbose=false) noexcept</td></tr>
+<tr class="memitem:a77cd6a489194be1c869e28a2885b640c" id="r_a77cd6a489194be1c869e28a2885b640c"><td class="memTemplParams" colspan="2">template&lt;size_t N, typename Func &gt; </td></tr>
+<tr class="memitem:a77cd6a489194be1c869e28a2885b640c"><td class="memTemplItemLeft" align="right" valign="top">static double&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1BacktrackingLineSearch.html#a77cd6a489194be1c869e28a2885b640c">search</a> (Func f, const std::array&lt; double, N &gt; &amp;x, const std::array&lt; double, N &gt; &amp;d, double alpha=1.0, double p=0.5, double c=1e-4, bool verbose=false) noexcept</td></tr>
+<tr class="memdesc:a77cd6a489194be1c869e28a2885b640c"><td class="mdescLeft">&#160;</td><td class="mdescRight">함수값과 기울기를 함수 내부에서 자동으로 계산한 후 선 탐색을 수행하는 편의성(Overload) 함수입니다.  <br /></td></tr>
 <tr class="separator:a77cd6a489194be1c869e28a2885b640c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Algorithm 4.2 : Backtracking Line Search 아르미호 (Armijo) 충분 감소 조건을 만족할 때까지 보폭을 줄여나가는 근사 선 탐색 알고리즘 </p>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<div class="textblock"><p>Algorithm 4.2 : Backtracking Line Search (백트래킹 선 탐색) 알고리즘 </p>
+<p>최적화 과정에서 주어진 탐색 방향(d)으로 얼마나 멀리 이동할지(스텝 사이즈, alpha)를 결정하는 근사 선 탐색(Inexact Line Search) 기법입니다. 함수 값이 충분히 감소했는지를 판단하는 **아르미호(Armijo) 충분 감소 조건**을 만족할 때까지 스텝 사이즈를 일정 비율(p)로 줄여나갑니다(Backtracking).</p>
+<p>특징:</p><ol type="1">
+<li>정확한 최소점을 찾는 Exact Line Search 보다 계산 비용이 훨씬 저렴하며, 실전에서 널리 쓰입니다.</li>
+<li>초기 스텝 사이즈(alpha=1.0)부터 시작하여 조건을 만족하지 못하면 뒤로 물러나므로 "Backtracking"이라 부릅니다.</li>
+<li>뉴턴 계열(Newton, BFGS) 최적화에서는 1.0 스텝이 자연 스텝이므로 초기 alpha로 1.0을 권장합니다.</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd>성능 최적화: SIMD 병렬 처리(#pragma omp simd) 및 FMA(Fused Multiply-Add) 명령어를 활용하여 동적 메모리 할당 없이 O(1) 정적 배열 기반으로 초고속 연산을 수행합니다. </dd></dl>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a77cd6a489194be1c869e28a2885b640c" name="a77cd6a489194be1c869e28a2885b640c"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a77cd6a489194be1c869e28a2885b640c">&#9670;&#160;</a></span>search() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N, typename Func &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static double Optimization::BacktrackingLineSearch::search </td>
+          <td>(</td>
+          <td class="paramtype">Func&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::array&lt; double, N &gt; &amp;&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::array&lt; double, N &gt; &amp;&#160;</td>
+          <td class="paramname"><em>d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>alpha</em> = <code>1.0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>p</em> = <code>0.5</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>c</em> = <code>1e-4</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>verbose</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>함수값과 기울기를 함수 내부에서 자동으로 계산한 후 선 탐색을 수행하는 편의성(Overload) 함수입니다. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">N</td><td>차원 수 </td></tr>
+    <tr><td class="paramname">Func</td><td>목적 함수 타입 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>목적 함수 </td></tr>
+    <tr><td class="paramname">x</td><td>현재 위치 벡터 </td></tr>
+    <tr><td class="paramname">d</td><td>탐색 방향 벡터 </td></tr>
+    <tr><td class="paramname">alpha</td><td>초기 스텝 사이즈 (기본값: 1.0) </td></tr>
+    <tr><td class="paramname">p</td><td>스텝 사이즈 감소 비율 (기본값: 0.5) </td></tr>
+    <tr><td class="paramname">c</td><td>Armijo 조건의 엄격함을 결정하는 상수 (기본값: 1e-4) </td></tr>
+    <tr><td class="paramname">verbose</td><td>진행 상태 로그 출력 여부 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>double 조건을 만족하는 최종 스텝 사이즈 (alpha) </dd></dl>
+
+</div>
+</div>
+<a id="af20668d50b8fcf15615a18581a1eef8b" name="af20668d50b8fcf15615a18581a1eef8b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#af20668d50b8fcf15615a18581a1eef8b">&#9670;&#160;</a></span>search() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N, typename Func &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static double Optimization::BacktrackingLineSearch::search </td>
+          <td>(</td>
+          <td class="paramtype">Func&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::array&lt; double, N &gt; &amp;&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::array&lt; double, N &gt; &amp;&#160;</td>
+          <td class="paramname"><em>d</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>f_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::array&lt; double, N &gt; &amp;&#160;</td>
+          <td class="paramname"><em>grad_x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>alpha</em> = <code>1.0</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>p</em> = <code>0.5</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>c</em> = <code>1e-4</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>verbose</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>함수값과 기울기(Gradient)가 이미 계산된 상태에서 백트래킹 선 탐색을 수행합니다. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">N</td><td>차원 수 </td></tr>
+    <tr><td class="paramname">Func</td><td>목적 함수 타입 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>목적 함수 </td></tr>
+    <tr><td class="paramname">x</td><td>현재 위치 벡터 </td></tr>
+    <tr><td class="paramname">d</td><td>탐색 방향 벡터 </td></tr>
+    <tr><td class="paramname">f_x</td><td>현재 위치에서의 목적 함수 값 (f(x)) </td></tr>
+    <tr><td class="paramname">grad_x</td><td>현재 위치에서의 목적 함수 기울기 벡터 (∇f(x)) </td></tr>
+    <tr><td class="paramname">alpha</td><td>초기 스텝 사이즈 (기본값: 1.0) </td></tr>
+    <tr><td class="paramname">p</td><td>스텝 사이즈 감소 비율 (Decay rate, 보통 0.1 ~ 0.8 사용. 기본값: 0.5) </td></tr>
+    <tr><td class="paramname">c</td><td>Armijo 조건의 엄격함을 결정하는 상수 (보통 1e-4 처럼 매우 작은 양수 사용. 작을수록 쉽게 승인됨) </td></tr>
+    <tr><td class="paramname">verbose</td><td>진행 상태 로그 출력 여부 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>double 조건을 만족하는 최종 스텝 사이즈 (alpha) </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/Optimization/<a class="el" href="BacktrackingLineSearch_8hpp_source.html">BacktrackingLineSearch.hpp</a></li>
 </ul>
 </div><!-- contents -->

@@ -97,119 +97,149 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;iomanip&gt;</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment">// 결과 반환 구조체 일관성 유지</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment">// 최적화 결과 반환용 구조체 일관성 유지 (중복 정의 방지)</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#ifndef OPTIMIZATION_RESULT_ND_DEFINED</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#define OPTIMIZATION_RESULT_ND_DEFINED</span></div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">namespace </span>Optimization {</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N&gt;</div>
-<div class="foldopen" id="foldopen00015" data-start="{" data-end="};">
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="structOptimization_1_1OptimizationResultND.html">   15</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structOptimization_1_1OptimizationResultND.html">OptimizationResultND</a> {</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    std::array&lt;double, N&gt; x_opt;</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keywordtype">double</span> f_opt;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <span class="keywordtype">size_t</span> iterations;</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keywordtype">long</span> <span class="keywordtype">long</span> elapsed_ns;</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>};</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N&gt;</div>
+<div class="foldopen" id="foldopen00019" data-start="{" data-end="};">
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno"><a class="line" href="structOptimization_1_1OptimizationResultND.html">   19</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structOptimization_1_1OptimizationResultND.html">OptimizationResultND</a> {</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno"><a class="line" href="structOptimization_1_1OptimizationResultND.html#a0106e12c1664683185cba14cba9ddebc">   20</a></span>    std::array&lt;double, N&gt; <a class="code hl_variable" href="structOptimization_1_1OptimizationResultND.html#a0106e12c1664683185cba14cba9ddebc">x_opt</a>; </div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="structOptimization_1_1OptimizationResultND.html#aeebc928723f3605b914941109afff683">   21</a></span>    <span class="keywordtype">double</span> <a class="code hl_variable" href="structOptimization_1_1OptimizationResultND.html#aeebc928723f3605b914941109afff683">f_opt</a>;                </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="structOptimization_1_1OptimizationResultND.html#a97219625aa18497e876783546a56c985">   22</a></span>    <span class="keywordtype">size_t</span> <a class="code hl_variable" href="structOptimization_1_1OptimizationResultND.html#a97219625aa18497e876783546a56c985">iterations</a>;           </div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno"><a class="line" href="structOptimization_1_1OptimizationResultND.html#a19bc0e48b795d90ccd7bab9489fa652d">   23</a></span>    <span class="keywordtype">long</span> <span class="keywordtype">long</span> <a class="code hl_variable" href="structOptimization_1_1OptimizationResultND.html#a19bc0e48b795d90ccd7bab9489fa652d">elapsed_ns</a>;        </div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>};</div>
 </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>}  <span class="comment">// namespace Optimization</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="preprocessor">#endif</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="preprocessor">#include &quot;Optimization/AutoDiff.hpp&quot;</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">namespace </span>Optimization {</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>}  <span class="comment">// namespace Optimization</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="foldopen" id="foldopen00033" data-start="{" data-end="};">
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="classOptimization_1_1AdaDelta.html">   33</a></span><span class="keyword">class </span><a class="code hl_class" href="classOptimization_1_1AdaDelta.html">AdaDelta</a> {</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>   <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <a class="code hl_class" href="classOptimization_1_1AdaDelta.html">AdaDelta</a>() = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N, <span class="keyword">typename</span> Func&gt;</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    [[nodiscard]] <span class="keyword">static</span> <a class="code hl_struct" href="structOptimization_1_1OptimizationResultND.html">OptimizationResultND&lt;N&gt;</a> optimize(Func f, std::array&lt;double, N&gt; x_init,</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                                                          <span class="keywordtype">double</span> gamma = 0.9, <span class="keywordtype">double</span> epsilon = 1e-8,</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                                                          <span class="keywordtype">size_t</span> max_iter = 15000,</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>                                                          <span class="keywordtype">double</span> tol = 1e-4,</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>                                                          <span class="keywordtype">bool</span> verbose = <span class="keyword">false</span>) <span class="keyword">noexcept</span> {</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="keyword">static_assert</span>(N &gt; 0, <span class="stringliteral">&quot;Dimension N must be greater than 0&quot;</span>);</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="keyword">auto</span> start_clock = std::chrono::high_resolution_clock::now();</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <span class="keyword">alignas</span>(64) std::array&lt;double, N&gt; x = x_init;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        <span class="comment">// 과거 기울기 제곱의 지수 이동 평균 (E[g^2])</span></div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        <span class="keyword">alignas</span>(64) std::array&lt;double, N&gt; s = {0.0};</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <span class="comment">// 과거 위치 변화량 제곱의 지수 이동 평균 (E[Δx^2])</span></div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="keyword">alignas</span>(64) std::array&lt;double, N&gt; u = {0.0};</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> tol_sq = tol * tol;</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        <span class="keywordtype">double</span> f_x = 0.0;</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        <span class="keywordtype">size_t</span> iter = 0;</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        <span class="keywordflow">if</span> (verbose) {</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            std::cout &lt;&lt; <span class="stringliteral">&quot;========================================================\n&quot;</span>;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; 📐 AdaDelta Optimizer Started (gamma=&quot;</span> &lt;&lt; gamma &lt;&lt; <span class="stringliteral">&quot;)\n&quot;</span>;</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            std::cout &lt;&lt; <span class="stringliteral">&quot;========================================================\n&quot;</span>;</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        }</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <span class="keywordflow">for</span> (iter = 1; iter &lt;= max_iter; ++iter) {</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>            <span class="keyword">alignas</span>(64) std::array&lt;double, N&gt; g = {0.0};</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            <span class="comment">// 1. Auto Diff 호출 (O(1) 정적 할당)</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            AutoDiff::value_and_gradient&lt;N&gt;(f, x, f_x, g);</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            <span class="keywordtype">double</span> g_norm_sq = 0.0;</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span><span class="preprocessor">#pragma omp simd</span></div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>                g_norm_sq = std::fma(g[i], g[i], g_norm_sq);</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            }</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            <span class="comment">// 2. 수렴 판정</span></div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            <span class="keywordflow">if</span> (g_norm_sq &lt; tol_sq) {</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>                <span class="keywordflow">if</span> (verbose) std::cout &lt;&lt; <span class="stringliteral">&quot;  ↳ ✅ Converged at Iteration: &quot;</span> &lt;&lt; iter &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>                <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            }</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="comment">// 3. AdaDelta 파라미터 업데이트</span></div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span><span class="preprocessor">#pragma omp simd</span></div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>                <span class="comment">// E[g^2]_t = gamma * E[g^2]_{t-1} + (1 - gamma) * g^2</span></div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>                s[i] = std::fma(gamma, s[i], (1.0 - gamma) * g[i] * g[i]);</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>                <span class="comment">// Δx_t = - (RMS[Δx]_{t-1} / RMS[g]_t) * g_t</span></div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>                <span class="keywordtype">double</span> rms_u = std::sqrt(u[i] + epsilon);</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>                <span class="keywordtype">double</span> rms_s = std::sqrt(s[i] + epsilon);</div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>                <span class="keywordtype">double</span> delta_x = -(rms_u / rms_s) * g[i];</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>                <span class="comment">// E[Δx^2]_t = gamma * E[Δx^2]_{t-1} + (1 - gamma) * Δx^2</span></div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>                u[i] = std::fma(gamma, u[i], (1.0 - gamma) * delta_x * delta_x);</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>                x[i] += delta_x;</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            }</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="preprocessor">#include &quot;Optimization/AutoDiff.hpp&quot;</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">namespace </span>Optimization {</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="foldopen" id="foldopen00045" data-start="{" data-end="};">
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="classOptimization_1_1AdaDelta.html">   45</a></span><span class="keyword">class </span><a class="code hl_class" href="classOptimization_1_1AdaDelta.html">AdaDelta</a> {</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>   <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="comment">// 정적 유틸리티 클래스로 활용하기 위해 생성자 삭제</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <a class="code hl_class" href="classOptimization_1_1AdaDelta.html">AdaDelta</a>() = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N, <span class="keyword">typename</span> Func&gt;</div>
+<div class="foldopen" id="foldopen00065" data-start="{" data-end="}">
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno"><a class="line" href="classOptimization_1_1AdaDelta.html#af4a124f7ed2061bfc9633dc9b9553c6c">   65</a></span>    [[nodiscard]] <span class="keyword">static</span> <a class="code hl_struct" href="structOptimization_1_1OptimizationResultND.html">OptimizationResultND&lt;N&gt;</a> <a class="code hl_function" href="classOptimization_1_1AdaDelta.html#af4a124f7ed2061bfc9633dc9b9553c6c">optimize</a>(Func f, std::array&lt;double, N&gt; x_init,</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>                                                          <span class="keywordtype">double</span> gamma = 0.9, <span class="keywordtype">double</span> epsilon = 1e-8,</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>                                                          <span class="keywordtype">size_t</span> max_iter = 15000,</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>                                                          <span class="keywordtype">double</span> tol = 1e-4,</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>                                                          <span class="keywordtype">bool</span> verbose = <span class="keyword">false</span>) noexcept {</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="comment">// N은 최소 1차원 이상이어야 합니다.</span></div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="keyword">static_assert</span>(N &gt; 0, <span class="stringliteral">&quot;Dimension N must be greater than 0&quot;</span>);</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        <span class="keyword">auto</span> start_clock = std::chrono::high_resolution_clock::now();</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span> </div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <span class="comment">// 캐시 라인 정렬(64바이트)을 통해 SIMD 벡터 연산 성능 극대화</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        <span class="keyword">alignas</span>(64) std::array&lt;double, N&gt; x = x_init;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="comment">// s: 과거 기울기 제곱의 지수 이동 평균 배열 (E[g^2])</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="keyword">alignas</span>(64) std::array&lt;double, N&gt; s = {0.0};</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <span class="comment">// u: 과거 변수 위치 변화량(Δx) 제곱의 지수 이동 평균 배열 (E[Δx^2])</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <span class="comment">// 이 배열 덕분에 글로벌 학습률(Learning Rate)이 필요하지 않게 됩니다.</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        <span class="keyword">alignas</span>(64) std::array&lt;double, N&gt; u = {0.0};</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        <span class="keyword">const</span> <span class="keywordtype">double</span> tol_sq = tol * tol; <span class="comment">// 수렴 판정을 위해 허용 오차를 제곱해 둠 (루트 연산 방지)</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        <span class="keywordtype">double</span> f_x = 0.0;</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <span class="keywordtype">size_t</span> iter = 0;</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        <span class="keywordflow">if</span> (verbose) {</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            std::cout &lt;&lt; <span class="stringliteral">&quot;========================================================\n&quot;</span>;</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; 📐 AdaDelta Optimizer Started (gamma=&quot;</span> &lt;&lt; gamma &lt;&lt; <span class="stringliteral">&quot;)\n&quot;</span>;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            std::cout &lt;&lt; <span class="stringliteral">&quot;========================================================\n&quot;</span>;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        }</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        <span class="comment">// 최적화 루프 시작</span></div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>        <span class="keywordflow">for</span> (iter = 1; iter &lt;= max_iter; ++iter) {</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            <span class="keyword">alignas</span>(64) std::array&lt;double, N&gt; g = {0.0};</div>
 <div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span> </div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>            <span class="keywordflow">if</span> (verbose &amp;&amp; (iter % 1000 == 0 || iter == 1)) {</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>                std::cout &lt;&lt; <span class="stringliteral">&quot;[Iter &quot;</span> &lt;&lt; std::setw(5) &lt;&lt; iter &lt;&lt; <span class="stringliteral">&quot;] f(x): &quot;</span> &lt;&lt; std::fixed</div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>                          &lt;&lt; std::setprecision(6) &lt;&lt; f_x &lt;&lt; <span class="stringliteral">&quot; | ||g||: &quot;</span> &lt;&lt; std::sqrt(g_norm_sq)</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>                          &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>            }</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        }</div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span> </div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        <span class="keyword">auto</span> end_clock = std::chrono::high_resolution_clock::now();</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        <span class="keyword">auto</span> duration =</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(end_clock - start_clock);</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>        <span class="keywordflow">if</span> (verbose) {</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            std::cout &lt;&lt; <span class="stringliteral">&quot;========================================================\n&quot;</span>;</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; 🏁 Final Optimal Point: [&quot;</span> &lt;&lt; x[0];</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (N &gt; 1) std::cout &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; x[1];</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (N &gt; 2) std::cout &lt;&lt; <span class="stringliteral">&quot;, ...&quot;</span>;</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>            std::cout &lt;&lt; <span class="stringliteral">&quot;]\n========================================================\n&quot;</span>;</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        }</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        <span class="keywordflow">return</span> {x, f_x, iter, duration.count()};</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    }</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>};</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>            <span class="comment">// 1. Auto Diff 호출을 통해 현재 위치 x에서의 함수 값(f_x)과 기울기 벡터(g) 계산</span></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>            <span class="comment">// (동적 메모리 할당 없는 O(1) 정적 미분기 사용)</span></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            AutoDiff::value_and_gradient&lt;N&gt;(f, x, f_x, g);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>            <span class="comment">// 현재 기울기 벡터의 제곱합(Norm^2)을 계산 (수렴 판정용)</span></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>            <span class="keywordtype">double</span> g_norm_sq = 0.0;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="preprocessor">#pragma omp simd </span><span class="comment">// 컴파일러에게 SIMD 병렬 처리를 지시</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>                <span class="comment">// std::fma(a, b, c) = a * b + c 연산을 하드웨어 단에서 한 번에 처리하여 부동소수점 오차 축소 및 속도 향상</span></div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>                g_norm_sq = std::fma(g[i], g[i], g_norm_sq);</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            }</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            <span class="comment">// 2. 수렴 판정 (Convergence Check)</span></div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            <span class="comment">// 기울기의 크기가 지정된 허용 오차 이하로 떨어지면 최적점에 도달했다고 판단</span></div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>            <span class="keywordflow">if</span> (g_norm_sq &lt; tol_sq) {</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>                <span class="keywordflow">if</span> (verbose) std::cout &lt;&lt; <span class="stringliteral">&quot;  ↳ ✅ Converged at Iteration: &quot;</span> &lt;&lt; iter &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>                <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>            }</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>            <span class="comment">// 3. AdaDelta 파라미터 업데이트 과정</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="preprocessor">#pragma omp simd</span></div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>                <span class="comment">// [Step 3-1] 기울기 제곱의 지수 이동 평균 (E[g^2]_t) 업데이트</span></div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>                <span class="comment">// E[g^2]_t = gamma * E[g^2]_{t-1} + (1 - gamma) * g_t^2</span></div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>                <span class="comment">// 이전 반복까지의 누적값(s[i])에 감쇠율(gamma)을 곱하고, 현재 기울기 제곱에 (1 - gamma)를 곱해 더함.</span></div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>                s[i] = std::fma(gamma, s[i], (1.0 - gamma) * g[i] * g[i]);</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>                <span class="comment">// [Step 3-2] 변위량 산출 전 제곱근 계수(RMS, Root Mean Square) 준비</span></div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>                <span class="comment">// rms_u: 업데이트량(Δx) 제곱의 루트 평균 (단위가 파라미터 x와 동일함)</span></div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>                <span class="comment">// rms_s: 기울기(g) 제곱의 루트 평균 (단위가 기울기 g와 동일함)</span></div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>                <span class="keywordtype">double</span> rms_u = std::sqrt(u[i] + epsilon);</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>                <span class="keywordtype">double</span> rms_s = std::sqrt(s[i] + epsilon);</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>                </div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>                <span class="comment">// [Step 3-3] 이번 스텝의 변위(Δx) 계산</span></div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>                <span class="comment">// Δx_t = - (RMS[Δx]_{t-1} / RMS[g]_t) * g_t</span></div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>                <span class="comment">// 학습률 대신 (rms_u / rms_s) 비율을 사용하여 각 파라미터별로 맞춤형 스텝 폭을 결정합니다.</span></div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>                <span class="keywordtype">double</span> delta_x = -(rms_u / rms_s) * g[i];</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>                <span class="comment">// [Step 3-4] 변위(Δx) 제곱의 지수 이동 평균 (E[Δx^2]_t) 업데이트 (다음 반복을 위함)</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>                <span class="comment">// E[Δx^2]_t = gamma * E[Δx^2]_{t-1} + (1 - gamma) * Δx_t^2</span></div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>                u[i] = std::fma(gamma, u[i], (1.0 - gamma) * delta_x * delta_x);</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>                <span class="comment">// [Step 3-5] 변수 업데이트</span></div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>                x[i] += delta_x;</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>            }</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> </div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>            <span class="comment">// 진행 상태 로깅</span></div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>            <span class="keywordflow">if</span> (verbose &amp;&amp; (iter % 1000 == 0 || iter == 1)) {</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>                std::cout &lt;&lt; <span class="stringliteral">&quot;[Iter &quot;</span> &lt;&lt; std::setw(5) &lt;&lt; iter &lt;&lt; <span class="stringliteral">&quot;] f(x): &quot;</span> &lt;&lt; std::fixed</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>                          &lt;&lt; std::setprecision(6) &lt;&lt; f_x &lt;&lt; <span class="stringliteral">&quot; | ||g||: &quot;</span> &lt;&lt; std::sqrt(g_norm_sq)</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>                          &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>            }</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        }</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        <span class="keyword">auto</span> end_clock = std::chrono::high_resolution_clock::now();</div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>        <span class="keyword">auto</span> duration =</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>            std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(end_clock - start_clock);</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        <span class="keywordflow">if</span> (verbose) {</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>            std::cout &lt;&lt; <span class="stringliteral">&quot;========================================================\n&quot;</span>;</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; 🏁 Final Optimal Point: [&quot;</span> &lt;&lt; x[0];</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (N &gt; 1) std::cout &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; x[1];</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (N &gt; 2) std::cout &lt;&lt; <span class="stringliteral">&quot;, ...&quot;</span>;</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>            std::cout &lt;&lt; <span class="stringliteral">&quot;]\n========================================================\n&quot;</span>;</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        }</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        </div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        <span class="comment">// 최종 결과 반환</span></div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>        <span class="keywordflow">return</span> {x, f_x, iter, duration.count()};</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>    }</div>
 </div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>}  <span class="comment">// namespace Optimization</span></div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_AdaDelta_HPP_</span></div>
-<div class="ttc" id="aclassOptimization_1_1AdaDelta_html"><div class="ttname"><a href="classOptimization_1_1AdaDelta.html">Optimization::AdaDelta</a></div><div class="ttdoc">AdaDelta 최적화 알고리즘</div><div class="ttdef"><b>Definition</b> AdaDelta.hpp:33</div></div>
-<div class="ttc" id="astructOptimization_1_1OptimizationResultND_html"><div class="ttname"><a href="structOptimization_1_1OptimizationResultND.html">Optimization::OptimizationResultND</a></div><div class="ttdef"><b>Definition</b> AdaDelta.hpp:15</div></div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>};</div>
+</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>}  <span class="comment">// namespace Optimization</span></div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_AdaDelta_HPP_</span></div>
+<div class="ttc" id="aclassOptimization_1_1AdaDelta_html"><div class="ttname"><a href="classOptimization_1_1AdaDelta.html">Optimization::AdaDelta</a></div><div class="ttdoc">AdaDelta 최적화 알고리즘</div><div class="ttdef"><b>Definition</b> AdaDelta.hpp:45</div></div>
+<div class="ttc" id="aclassOptimization_1_1AdaDelta_html_af4a124f7ed2061bfc9633dc9b9553c6c"><div class="ttname"><a href="classOptimization_1_1AdaDelta.html#af4a124f7ed2061bfc9633dc9b9553c6c">Optimization::AdaDelta::optimize</a></div><div class="ttdeci">static OptimizationResultND&lt; N &gt; optimize(Func f, std::array&lt; double, N &gt; x_init, double gamma=0.9, double epsilon=1e-8, size_t max_iter=15000, double tol=1e-4, bool verbose=false) noexcept</div><div class="ttdoc">AdaDelta 메인 최적화 함수</div><div class="ttdef"><b>Definition</b> AdaDelta.hpp:65</div></div>
+<div class="ttc" id="astructOptimization_1_1OptimizationResultND_html"><div class="ttname"><a href="structOptimization_1_1OptimizationResultND.html">Optimization::OptimizationResultND</a></div><div class="ttdoc">N차원 최적화 결과를 담는 구조체</div><div class="ttdef"><b>Definition</b> AdaDelta.hpp:19</div></div>
+<div class="ttc" id="astructOptimization_1_1OptimizationResultND_html_a0106e12c1664683185cba14cba9ddebc"><div class="ttname"><a href="structOptimization_1_1OptimizationResultND.html#a0106e12c1664683185cba14cba9ddebc">Optimization::OptimizationResultND::x_opt</a></div><div class="ttdeci">std::array&lt; double, N &gt; x_opt</div><div class="ttdoc">최적해 (Optimal Point)</div><div class="ttdef"><b>Definition</b> AdaDelta.hpp:20</div></div>
+<div class="ttc" id="astructOptimization_1_1OptimizationResultND_html_a19bc0e48b795d90ccd7bab9489fa652d"><div class="ttname"><a href="structOptimization_1_1OptimizationResultND.html#a19bc0e48b795d90ccd7bab9489fa652d">Optimization::OptimizationResultND::elapsed_ns</a></div><div class="ttdeci">long long elapsed_ns</div><div class="ttdoc">최적화에 소요된 시간 (나노초 단위)</div><div class="ttdef"><b>Definition</b> AdaDelta.hpp:23</div></div>
+<div class="ttc" id="astructOptimization_1_1OptimizationResultND_html_a97219625aa18497e876783546a56c985"><div class="ttname"><a href="structOptimization_1_1OptimizationResultND.html#a97219625aa18497e876783546a56c985">Optimization::OptimizationResultND::iterations</a></div><div class="ttdeci">size_t iterations</div><div class="ttdoc">최적해를 찾는 데 소요된 반복 횟수</div><div class="ttdef"><b>Definition</b> AdaDelta.hpp:22</div></div>
+<div class="ttc" id="astructOptimization_1_1OptimizationResultND_html_aeebc928723f3605b914941109afff683"><div class="ttname"><a href="structOptimization_1_1OptimizationResultND.html#aeebc928723f3605b914941109afff683">Optimization::OptimizationResultND::f_opt</a></div><div class="ttdeci">double f_opt</div><div class="ttdoc">최적해에서의 목적 함수 값</div><div class="ttdef"><b>Definition</b> AdaDelta.hpp:21</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

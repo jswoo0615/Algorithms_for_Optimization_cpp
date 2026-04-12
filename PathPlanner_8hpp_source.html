@@ -91,73 +91,77 @@ $(document).ready(function() { init_codefold(0); });
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef OPTIMIZATION_PATH_PLANNER_HPP_</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define OPTIMIZATION_PATH_PLANNER_HPP_</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;Optimization/Matrix/MatrixEngine.hpp&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;array&gt;</span></div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;array&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;cmath&gt;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;vector&gt;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;cmath&gt;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span>Optimization {</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> Np, <span class="keywordtype">size_t</span> Nx&gt;</div>
-<div class="foldopen" id="foldopen00012" data-start="{" data-end="};">
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno"><a class="line" href="classOptimization_1_1PathPlanner.html">   12</a></span><span class="keyword">class </span><a class="code hl_class" href="classOptimization_1_1PathPlanner.html">PathPlanner</a> {</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="structOptimization_1_1PathPlanner_1_1ObstacleInfo.html">   14</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structOptimization_1_1PathPlanner_1_1ObstacleInfo.html">ObstacleInfo</a> { <span class="keywordtype">double</span> x, y, r; };</div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <span class="comment">// [Architect&#39;s Extreme Slalom] 장애물 사이의 &#39;게이트&#39;를 통과하도록 경로 강제 생성</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <span class="keyword">static</span> <span class="keywordtype">void</span> generate_slalom_reference(</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>        <span class="keyword">const</span> <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, Nx&gt;</a>&amp; x_curr,</div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>        <span class="keyword">const</span> <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, Nx&gt;</a>&amp; x_final,</div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        <span class="keyword">const</span> std::array&lt;ObstacleInfo, 10&gt;&amp; obstacles,</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>        <span class="keywordtype">double</span> dt,</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, Nx&gt;</a> ref_horizon[Np]) </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    {</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <span class="keywordtype">double</span> v_ref = 2.0;</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <span class="comment">// 1. 게이트(Waypoints) 설정: 장애물 사이사이를 통과하도록 좌표 지정</span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keyword">struct </span>Point { <span class="keywordtype">double</span> x, y; };</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        std::vector&lt;Point&gt; gates;</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <span class="comment">// 장애물을 페어로 묶어 그 사이를 통과점으로 설정</span></div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <span class="keywordflow">for</span>(<span class="keywordtype">int</span> i = 0; i &lt; 9; i += 2) {</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>            gates.push_back({(obstacles[i].x + obstacles[i+1].x) / 2.0, </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>                             (obstacles[i].y + obstacles[i+1].y) / 2.0});</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        }</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        gates.push_back({x_final(0), x_final(1)});</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="comment">// 2. 현재 위치에서 가장 적합한 게이트를 추적하며 Horizon 생성</span></div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> k = 0; k &lt; Np; ++k) {</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>            <span class="keywordtype">double</span> lookahead_dist = v_ref * dt * (k + 1);</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>            <span class="keywordtype">double</span> target_x = x_final(0), target_y = x_final(1);</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>            <span class="keywordflow">for</span>(<span class="keyword">auto</span>&amp; gate : gates) {</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>                <span class="keywordflow">if</span>(gate.x &gt; x_curr(0) + lookahead_dist * 0.5) {</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>                    target_x = gate.x;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>                    target_y = gate.y;</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                    <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>                }</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            }</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            <span class="keywordtype">double</span> dx = target_x - x_curr(0);</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>            <span class="keywordtype">double</span> dy = target_y - x_curr(1);</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            <span class="keywordtype">double</span> angle = std::atan2(dy, dx);</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            ref_horizon[k](0) = x_curr(0) + std::cos(angle) * lookahead_dist;</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            ref_horizon[k](1) = x_curr(1) + std::sin(angle) * lookahead_dist;</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            ref_horizon[k](2) = angle;</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            ref_horizon[k](3) = v_ref;</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            ref_horizon[k](4) = 0.0;</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>            ref_horizon[k](5) = 0.0;</div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        }</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    }</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>};</div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;Optimization/Matrix/MatrixEngine.hpp&quot;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">namespace </span>Optimization {</div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> Np, <span class="keywordtype">size_t</span> Nx&gt;</div>
+<div class="foldopen" id="foldopen00013" data-start="{" data-end="};">
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="classOptimization_1_1PathPlanner.html">   13</a></span><span class="keyword">class </span><a class="code hl_class" href="classOptimization_1_1PathPlanner.html">PathPlanner</a> {</div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>   <span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00015" data-start="{" data-end="};">
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno"><a class="line" href="structOptimization_1_1PathPlanner_1_1ObstacleInfo.html">   15</a></span>    <span class="keyword">struct </span><a class="code hl_struct" href="structOptimization_1_1PathPlanner_1_1ObstacleInfo.html">ObstacleInfo</a> {</div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <span class="keywordtype">double</span> x, y, r;</div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    };</div>
 </div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>} <span class="comment">// namespace Optimization</span></div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span><span class="preprocessor">#endif</span></div>
-<div class="ttc" id="aclassOptimization_1_1PathPlanner_html"><div class="ttname"><a href="classOptimization_1_1PathPlanner.html">Optimization::PathPlanner</a></div><div class="ttdef"><b>Definition</b> PathPlanner.hpp:12</div></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="comment">// [Architect&#39;s Extreme Slalom] 장애물 사이의 &#39;게이트&#39;를 통과하도록 경로 강제 생성</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="keyword">static</span> <span class="keywordtype">void</span> generate_slalom_reference(<span class="keyword">const</span> <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, Nx&gt;</a>&amp; x_curr,</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>                                          <span class="keyword">const</span> <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, Nx&gt;</a>&amp; x_final,</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>                                          <span class="keyword">const</span> std::array&lt;ObstacleInfo, 10&gt;&amp; obstacles, <span class="keywordtype">double</span> dt,</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>                                          <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, Nx&gt;</a> ref_horizon[Np]) {</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <span class="keywordtype">double</span> v_ref = 2.0;</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <span class="comment">// 1. 게이트(Waypoints) 설정: 장애물 사이사이를 통과하도록 좌표 지정</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keyword">struct </span>Point {</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>            <span class="keywordtype">double</span> x, y;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        };</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        std::vector&lt;Point&gt; gates;</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        <span class="comment">// 장애물을 페어로 묶어 그 사이를 통과점으로 설정</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = 0; i &lt; 9; i += 2) {</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>            gates.push_back({(obstacles[i].x + obstacles[i + 1].x) / 2.0,</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>                             (obstacles[i].y + obstacles[i + 1].y) / 2.0});</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        }</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        gates.push_back({x_final(0), x_final(1)});</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <span class="comment">// 2. 현재 위치에서 가장 적합한 게이트를 추적하며 Horizon 생성</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> k = 0; k &lt; Np; ++k) {</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>            <span class="keywordtype">double</span> lookahead_dist = v_ref * dt * (k + 1);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>            <span class="keywordtype">double</span> target_x = x_final(0), target_y = x_final(1);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span> </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>            <span class="keywordflow">for</span> (<span class="keyword">auto</span>&amp; gate : gates) {</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>                <span class="keywordflow">if</span> (gate.x &gt; x_curr(0) + lookahead_dist * 0.5) {</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>                    target_x = gate.x;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>                    target_y = gate.y;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                    <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>                }</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            }</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            <span class="keywordtype">double</span> dx = target_x - x_curr(0);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            <span class="keywordtype">double</span> dy = target_y - x_curr(1);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            <span class="keywordtype">double</span> angle = std::atan2(dy, dx);</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>            ref_horizon[k](0) = x_curr(0) + std::cos(angle) * lookahead_dist;</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            ref_horizon[k](1) = x_curr(1) + std::sin(angle) * lookahead_dist;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            ref_horizon[k](2) = angle;</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>            ref_horizon[k](3) = v_ref;</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            ref_horizon[k](4) = 0.0;</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>            ref_horizon[k](5) = 0.0;</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        }</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    }</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>};</div>
+</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>}  <span class="comment">// namespace Optimization</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span><span class="preprocessor">#endif</span></div>
+<div class="ttc" id="aclassOptimization_1_1PathPlanner_html"><div class="ttname"><a href="classOptimization_1_1PathPlanner.html">Optimization::PathPlanner</a></div><div class="ttdef"><b>Definition</b> PathPlanner.hpp:13</div></div>
 <div class="ttc" id="aclassStaticMatrix_html"><div class="ttname"><a href="classStaticMatrix.html">StaticMatrix</a></div><div class="ttdoc">전방 선언 (Forward Declaration)</div><div class="ttdef"><b>Definition</b> MatrixEngine.hpp:68</div></div>
-<div class="ttc" id="astructOptimization_1_1PathPlanner_1_1ObstacleInfo_html"><div class="ttname"><a href="structOptimization_1_1PathPlanner_1_1ObstacleInfo.html">Optimization::PathPlanner::ObstacleInfo</a></div><div class="ttdef"><b>Definition</b> PathPlanner.hpp:14</div></div>
+<div class="ttc" id="astructOptimization_1_1PathPlanner_1_1ObstacleInfo_html"><div class="ttname"><a href="structOptimization_1_1PathPlanner_1_1ObstacleInfo.html">Optimization::PathPlanner::ObstacleInfo</a></div><div class="ttdef"><b>Definition</b> PathPlanner.hpp:15</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -1,12 +1,8 @@
 var searchData=
 [
-  ['naturalevolutionstrategies_0',['NaturalEvolutionStrategies',['../classOptimization_1_1NaturalEvolutionStrategies.html',1,'Optimization']]],
-  ['near_5fzero_1',['near_zero',['../structMathTraits.html#ae4bdc59135c8d5d2cb6093d6e7208758',1,'MathTraits']]],
-  ['neldermead_2',['NelderMead',['../classOptimization_1_1NelderMead.html',1,'Optimization']]],
-  ['nestrovmomentum_3',['NestrovMomentum',['../classOptimization_1_1NestrovMomentum.html',1,'Optimization']]],
-  ['nestrovmomentumtest_4',['NestrovMomentumTest',['../classOptimization_1_1Test_1_1NestrovMomentumTest.html',1,'Optimization::Test']]],
-  ['newtonmethod_5',['NewtonMethod',['../classOptimization_1_1NewtonMethod.html',1,'Optimization']]],
-  ['nmpccontroller_6',['NMPCController',['../classOptimization_1_1NMPCController.html',1,'Optimization']]],
-  ['noisydescent_7',['NoisyDescent',['../classOptimization_1_1NoisyDescent.html',1,'Optimization']]],
-  ['nondifferentiable2d_8',['NonDifferentiable2D',['../structOptimization_1_1Tests_1_1NonDifferentiable2D.html',1,'Optimization::Tests']]]
+  ['mathtraits_0',['MathTraits',['../structMathTraits.html',1,'']]],
+  ['mathtraits_3c_20optimization_3a_3adual_3c_20t_20_3e_20_3e_1',['MathTraits&lt; Optimization::Dual&lt; T &gt; &gt;',['../structMathTraits_3_01Optimization_1_1Dual_3_01T_01_4_01_4.html',1,'']]],
+  ['meshadaptivedirectsearch_2',['MeshAdaptiveDirectSearch',['../classOptimization_1_1MeshAdaptiveDirectSearch.html',1,'Optimization']]],
+  ['momentum_3',['Momentum',['../classOptimization_1_1Momentum.html',1,'Optimization']]],
+  ['momentumoptimizertest_4',['MomentumOptimizerTest',['../classOptimization_1_1Test_1_1MomentumOptimizerTest.html',1,'Optimization::Test']]]
 ];

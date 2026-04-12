@@ -87,22 +87,133 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="classOptimization_1_1Adam.html" title="Adam (Adaptive Moment Estimation) 최적화 알고리즘을 구현한 클래스">Adam</a> (Adaptive Moment Estimation) 최적화 알고리즘을 구현한 클래스  
+<p><a class="el" href="classOptimization_1_1Adam.html" title="Adam (Adaptive Moment Estimation) 최적화 알고리즘을 구현한 정적 클래스">Adam</a> (Adaptive Moment Estimation) 최적화 알고리즘을 구현한 정적 클래스  
  <a href="classOptimization_1_1Adam.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="Adam_8hpp_source.html">Adam.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ab5645f885d9e49bd9388ee5c4c474125" id="r_ab5645f885d9e49bd9388ee5c4c474125"><td class="memTemplParams" colspan="2"><a id="ab5645f885d9e49bd9388ee5c4c474125" name="ab5645f885d9e49bd9388ee5c4c474125"></a>
-template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:ab5645f885d9e49bd9388ee5c4c474125"><td class="memTemplItemLeft" align="right" valign="top">static std::array&lt; double, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>optimize</b> (Func f, std::array&lt; double, N &gt; x, double alpha=0.1, double beta1=0.9, double beta2=0.999, double epsilon=1e-8, size_t max_iter=15000, double tol=1e-4, bool verbose=false)</td></tr>
+<tr class="memitem:ab5645f885d9e49bd9388ee5c4c474125" id="r_ab5645f885d9e49bd9388ee5c4c474125"><td class="memTemplParams" colspan="2">template&lt;size_t N, typename Func &gt; </td></tr>
+<tr class="memitem:ab5645f885d9e49bd9388ee5c4c474125"><td class="memTemplItemLeft" align="right" valign="top">static std::array&lt; double, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1Adam.html#ab5645f885d9e49bd9388ee5c4c474125">optimize</a> (Func f, std::array&lt; double, N &gt; x, double alpha=0.1, double beta1=0.9, double beta2=0.999, double epsilon=1e-8, size_t max_iter=15000, double tol=1e-4, bool verbose=false)</td></tr>
+<tr class="memdesc:ab5645f885d9e49bd9388ee5c4c474125"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classOptimization_1_1Adam.html" title="Adam (Adaptive Moment Estimation) 최적화 알고리즘을 구현한 정적 클래스">Adam</a> 메인 최적화 함수  <br /></td></tr>
 <tr class="separator:ab5645f885d9e49bd9388ee5c4c474125"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="classOptimization_1_1Adam.html" title="Adam (Adaptive Moment Estimation) 최적화 알고리즘을 구현한 클래스">Adam</a> (Adaptive Moment Estimation) 최적화 알고리즘을 구현한 클래스 </p>
-<dl class="section note"><dt>Note</dt><dd>1차 모멘트와 2차 모멘트를 사용하여 학습률을 동적으로 조정 실시간 (RT) 환경을 위해 std::pow 호출을 제거하고 누적 곱 (Running product) 적용 </dd></dl>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<div class="textblock"><p><a class="el" href="classOptimization_1_1Adam.html" title="Adam (Adaptive Moment Estimation) 최적화 알고리즘을 구현한 정적 클래스">Adam</a> (Adaptive Moment Estimation) 최적화 알고리즘을 구현한 정적 클래스 </p>
+<p>Adam은 모멘텀(Momentum) 최적화 방식과 <a class="el" href="classOptimization_1_1RMSProp.html" title="RMSProp (Root Mean Square Propagation) 최적화 알고리즘을 구현한 클래스">RMSProp</a> 알고리즘의 장점을 결합하여 만든 가장 대중적이고 강력한 최적화 기법 중 하나입니다. 각 파라미터(변수)마다 1차 모멘트(Gradient의 지수 이동 평균)와 2차 모멘트(Gradient 제곱의 지수 이동 평균)를 모두 계산하여, 학습 방향과 스텝 크기(학습률)를 동시에 동적으로 조절합니다.</p>
+<p>핵심 아이디어:</p><ol type="1">
+<li><b>1차 모멘트 (m)</b>: 과거 기울기의 방향(관성)을 유지하여, 진동을 줄이고 빠르게 수렴하도록 돕습니다. (Momentum의 역할)</li>
+<li><b>2차 모멘트 (v)</b>: 과거 기울기 크기의 제곱을 추적하여, 자주 변하는 파라미터는 세밀하게(작은 스텝), 거의 변하지 않는 파라미터는 큼직하게(큰 스텝) 이동시킵니다. (RMSProp의 역할)</li>
+<li><b>편향 보정 (Bias Correction)</b>: 초기 반복 시 m과 v가 0으로 편향(Bias)되는 것을 수학적으로 보정하여 초기부터 올바른 방향을 잡도록 돕습니다.</li>
+</ol>
+<dl class="section note"><dt>Note</dt><dd>실시간(RT) 환경과 최적화 성능을 위해 값비싼 <code>std::pow()</code> 함수 호출을 배제하고, 반복 시마다 <code>beta</code>를 곱해나가는 누적 곱(Running Product) 기법을 사용했습니다. </dd></dl>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ab5645f885d9e49bd9388ee5c4c474125" name="ab5645f885d9e49bd9388ee5c4c474125"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab5645f885d9e49bd9388ee5c4c474125">&#9670;&#160;</a></span>optimize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N, typename Func &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::array&lt; double, N &gt; Optimization::Adam::optimize </td>
+          <td>(</td>
+          <td class="paramtype">Func&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::array&lt; double, N &gt;&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>alpha</em> = <code>0.1</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>beta1</em> = <code>0.9</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>beta2</em> = <code>0.999</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>epsilon</em> = <code>1e-8</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>max_iter</em> = <code>15000</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>tol</em> = <code>1e-4</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>verbose</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><a class="el" href="classOptimization_1_1Adam.html" title="Adam (Adaptive Moment Estimation) 최적화 알고리즘을 구현한 정적 클래스">Adam</a> 메인 최적화 함수 </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">N</td><td>최적화 변수의 차원 </td></tr>
+    <tr><td class="paramname">Func</td><td>목적 함수 타입 (람다식, 펑터 등) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>최소화할 목적 함수 </td></tr>
+    <tr><td class="paramname">x</td><td>최적화 시작 지점 (초기 추정값) </td></tr>
+    <tr><td class="paramname">alpha</td><td>학습률 (Learning Rate, 기본값: 0.1) </td></tr>
+    <tr><td class="paramname">beta1</td><td>1차 모멘트(기울기)에 대한 지수 감쇠율 (Exponential Decay Rate, 기본값: 0.9) </td></tr>
+    <tr><td class="paramname">beta2</td><td>2차 모멘트(기울기 제곱)에 대한 지수 감쇠율 (보통 1차 모멘트보다 0.999 등으로 1에 더 가깝게 설정합니다) </td></tr>
+    <tr><td class="paramname">epsilon</td><td>0으로 나누어지는 것을 방지하기 위한 수치적 안정성 상수 (기본값: 1e-8) </td></tr>
+    <tr><td class="paramname">max_iter</td><td>무한 루프를 방지하기 위한 최대 허용 반복 횟수 </td></tr>
+    <tr><td class="paramname">tol</td><td>수렴 판정을 위한 허용 오차 (Gradient의 Norm 제곱이 이 값보다 작아지면 수렴으로 판정) </td></tr>
+    <tr><td class="paramname">verbose</td><td>콘솔에 최적화 진행 상황을 출력할지 여부 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::array&lt;double, N&gt; 최적화가 완료된 해(Optimal Point) </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/Optimization/<a class="el" href="Adam_8hpp_source.html">Adam.hpp</a></li>
 </ul>
 </div><!-- contents -->

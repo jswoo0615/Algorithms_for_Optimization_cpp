@@ -1,9 +1,12 @@
 var searchData=
 [
-  ['obstacle_0',['Obstacle',['../structOptimization_1_1Obstacle.html',1,'Optimization']]],
-  ['obstacleinfo_1',['ObstacleInfo',['../structOptimization_1_1PathPlanner_1_1ObstacleInfo.html',1,'Optimization::PathPlanner']]],
-  ['operator_2a_2',['operator*',['../classStaticMatrix.html#a53794cb9755606a6e37d24119c5b3bbb',1,'StaticMatrix']]],
-  ['optimizationresult_3',['OptimizationResult',['../structOptimization_1_1OptimizationResult.html',1,'Optimization']]],
-  ['optimizationresult1d_4',['OptimizationResult1D',['../structOptimization_1_1OptimizationResult1D.html',1,'Optimization']]],
-  ['optimizationresultnd_5',['OptimizationResultND',['../structOptimization_1_1OptimizationResultND.html',1,'Optimization']]]
+  ['naturalevolutionstrategies_0',['NaturalEvolutionStrategies',['../classOptimization_1_1NaturalEvolutionStrategies.html',1,'Optimization']]],
+  ['near_5fzero_1',['near_zero',['../structMathTraits.html#ae4bdc59135c8d5d2cb6093d6e7208758',1,'MathTraits']]],
+  ['neldermead_2',['NelderMead',['../classOptimization_1_1NelderMead.html',1,'Optimization']]],
+  ['nestrovmomentum_3',['NestrovMomentum',['../classOptimization_1_1NestrovMomentum.html',1,'Optimization']]],
+  ['nestrovmomentumtest_4',['NestrovMomentumTest',['../classOptimization_1_1Test_1_1NestrovMomentumTest.html',1,'Optimization::Test']]],
+  ['newtonmethod_5',['NewtonMethod',['../classOptimization_1_1NewtonMethod.html',1,'Optimization']]],
+  ['nmpccontroller_6',['NMPCController',['../classOptimization_1_1NMPCController.html',1,'Optimization']]],
+  ['noisydescent_7',['NoisyDescent',['../classOptimization_1_1NoisyDescent.html',1,'Optimization']]],
+  ['nondifferentiable2d_8',['NonDifferentiable2D',['../structOptimization_1_1Tests_1_1NonDifferentiable2D.html',1,'Optimization::Tests']]]
 ];
