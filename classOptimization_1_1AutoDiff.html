@@ -116,7 +116,7 @@ Static Public Member Functions</h2></td></tr>
 <p>복잡한 수학적 함수의 도함수(기울기, 야코비안 등)를 해석적으로 구하지 않고, 이원수(Dual Numbers) 대수학을 활용하여 기계적으로 정확하게 계산(컴퓨터의 소수점 표현 한계인 절단 오차 없이 계산)하는 기법입니다. 유한 차분법(Finite Difference)에서 발생하는 수치적 근사 오차(Truncation Error)가 발생하지 않아 최적화 알고리즘(예: SQP, Newton's Method)에서 매우 안정적인 미분값을 제공합니다.</p>
 <dl class="section note"><dt>Note</dt><dd>std::array를 전면 배제하고, 수학적 행렬 연산에 최적화된 내부 모듈인 StaticVector / StaticMatrix를 사용합니다. </dd>
 <dd>
-SQP의 <a class="el" href="classOptimization_1_1BFGS.html" title="BFGS (Broyden–Fletcher–Goldfarb–Shanno) 최적화 알고리즘">BFGS</a> 업데이트를 위해 수치적 오차가 큰 유한 차분법(Finite Difference) 기반의 Hessian은 삭제하였습니다. </dd></dl>
+SQP의 <a class="el" href="classOptimization_1_1BFGS.html" title="BFGS (Broyden–Fletcher–Goldfarb–Shanno) 알고리즘을 이용한 무제약 최적화(Unconstrained Optimization) 클래스">BFGS</a> 업데이트를 위해 수치적 오차가 큰 유한 차분법(Finite Difference) 기반의 Hessian은 삭제하였습니다. </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a58e4c087ad635622012694e6851455b1" name="a58e4c087ad635622012694e6851455b1"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a58e4c087ad635622012694e6851455b1">&#9670;&#160;</a></span>gradient()</h2>

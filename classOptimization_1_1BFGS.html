@@ -87,7 +87,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="classOptimization_1_1BFGS.html" title="BFGS (Broyden–Fletcher–Goldfarb–Shanno) 최적화 알고리즘">BFGS</a> (Broyden–Fletcher–Goldfarb–Shanno) 최적화 알고리즘  
+<p><a class="el" href="classOptimization_1_1BFGS.html" title="BFGS (Broyden–Fletcher–Goldfarb–Shanno) 알고리즘을 이용한 무제약 최적화(Unconstrained Optimization) 클래스">BFGS</a> (Broyden–Fletcher–Goldfarb–Shanno) 알고리즘을 이용한 무제약 최적화(Unconstrained Optimization) 클래스  
  <a href="classOptimization_1_1BFGS.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="BFGS_8hpp_source.html">BFGS.hpp</a>&gt;</code></p>
@@ -96,14 +96,16 @@ $(function() {
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a9ec3a611b1847cd285e6b8ef2fed1b31" id="r_a9ec3a611b1847cd285e6b8ef2fed1b31"><td class="memTemplParams" colspan="2">template&lt;size_t N, typename Func &gt; </td></tr>
 <tr class="memitem:a9ec3a611b1847cd285e6b8ef2fed1b31"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="structOptimization_1_1OptimizationResultND.html">OptimizationResultND</a>&lt; N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1BFGS.html#a9ec3a611b1847cd285e6b8ef2fed1b31">optimize</a> (Func f, std::array&lt; double, N &gt; x_init, double tol=1e-6, size_t max_iter=200) noexcept</td></tr>
-<tr class="memdesc:a9ec3a611b1847cd285e6b8ef2fed1b31"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classOptimization_1_1BFGS.html" title="BFGS (Broyden–Fletcher–Goldfarb–Shanno) 최적화 알고리즘">BFGS</a> 알고리즘 메인 최적화 함수  <br /></td></tr>
+<tr class="memdesc:a9ec3a611b1847cd285e6b8ef2fed1b31"><td class="mdescLeft">&#160;</td><td class="mdescRight">주어진 목적 함수를 최소화하는 해를 찾는 <a class="el" href="classOptimization_1_1BFGS.html" title="BFGS (Broyden–Fletcher–Goldfarb–Shanno) 알고리즘을 이용한 무제약 최적화(Unconstrained Optimization) 클래스">BFGS</a> 알고리즘의 메인 함수  <br /></td></tr>
 <tr class="separator:a9ec3a611b1847cd285e6b8ef2fed1b31"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="classOptimization_1_1BFGS.html" title="BFGS (Broyden–Fletcher–Goldfarb–Shanno) 최적화 알고리즘">BFGS</a> (Broyden–Fletcher–Goldfarb–Shanno) 최적화 알고리즘 </p>
-<p>준-뉴턴(Quasi-Newton) 기법 중 가장 널리 쓰이고 강력한 방법입니다. 순수 뉴턴법(Newton's Method)은 매 반복마다 값비싼 헤시안(2차 미분 행렬)의 계산과 그 역행렬을 직접 구해야 하는 단점이 있습니다.</p>
-<p>반면 <a class="el" href="classOptimization_1_1BFGS.html" title="BFGS (Broyden–Fletcher–Goldfarb–Shanno) 최적화 알고리즘">BFGS</a> 알고리즘은 1차 미분(Gradient) 정보만을 누적하여 **역헤시안(Inverse Hessian) 행렬을 근사**해 나갑니다. 이로 인해 역행렬을 구하는 과정 없이(O(N^2) 연산만으로) 뉴턴법에 가까운 2차 수렴 속도(Quadratic Convergence)를 달성합니다.</p>
-<dl class="section note"><dt>Note</dt><dd>동적 메모리(힙) 할당을 전면 배제하고, std::array 기반의 정적 메모리와 SIMD 가속을 사용하여 실시간(RT) 환경 및 임베디드 제어 시스템에 적합하도록 구현되었습니다. </dd></dl>
+<div class="textblock"><p><a class="el" href="classOptimization_1_1BFGS.html" title="BFGS (Broyden–Fletcher–Goldfarb–Shanno) 알고리즘을 이용한 무제약 최적화(Unconstrained Optimization) 클래스">BFGS</a> (Broyden–Fletcher–Goldfarb–Shanno) 알고리즘을 이용한 무제약 최적화(Unconstrained Optimization) 클래스 </p>
+<p><a class="el" href="classOptimization_1_1BFGS.html" title="BFGS (Broyden–Fletcher–Goldfarb–Shanno) 알고리즘을 이용한 무제약 최적화(Unconstrained Optimization) 클래스">BFGS</a> 알고리즘은 준-뉴턴(Quasi-Newton) 계열의 최적화 기법 중 가장 널리 쓰이며 강력하고 안정적인 성능을 자랑합니다.</p>
+<p>[수학적 배경 및 원리] 순수 뉴턴법(Newton's Method)은 최적화 시 2차 미분인 헤시안(Hessian) 행렬 H와 그 역행렬 H^{-1}을 매번 정확하게 계산해야 합니다. 이는 변수의 차원 N이 커질수록 O(N^3)의 막대한 연산량과 메모리를 요구하는 큰 단점이 있습니다.</p>
+<p>이를 극복하기 위해 준-뉴턴 기법은 실제 역헤시안 행렬을 구하는 대신, 반복 과정에서 얻어지는 1차 미분(Gradient) 정보의 변화량을 누적하여 **역헤시안의 근사 행렬(Inverse Hessian Approximation Matrix, V)**을 점진적으로 업데이트해 나갑니다. 이렇게 함으로써 역행렬을 계산하는 과정을 생략하고, 행렬-벡터 곱 연산인 O(N^2)의 복잡도만으로 순수 뉴턴법에 필적하는 초선형 수렴 속도(Superlinear Convergence)를 달성할 수 있습니다.</p>
+<p>[Sherman-Morrison-Woodbury 공식 활용] <a class="el" href="classOptimization_1_1BFGS.html" title="BFGS (Broyden–Fletcher–Goldfarb–Shanno) 알고리즘을 이용한 무제약 최적화(Unconstrained Optimization) 클래스">BFGS</a> 업데이트는 Rank-2 업데이트 방식으로 이루어지며, 헤시안 행렬의 근사치를 업데이트한 뒤 역행렬을 취하는 대신, 아예 역헤시안의 근사치 자체를 직접 업데이트하는 수식을 적용합니다. 이는 매 반복마다 계산 효율성을 극대화합니다.</p>
+<dl class="section note"><dt>Note</dt><dd>본 구현체는 동적 메모리 할당(예: std::vector)을 완전히 배제하고, <code>std::array</code>를 이용한 스택(Stack) 또는 정적(Static) 메모리 기반으로 설계되었습니다. 이를 통해 힙 메모리 할당 지연 및 단편화를 방지하고, 제어 주기가 매우 빠른 로보틱스 등의 실시간(Real-Time) 환경과 자원이 제한된 임베디드(Embedded) 시스템에 매우 적합합니다. 또한, OpenMP SIMD 지시어를 활용하여 하드웨어 가속(Vectorization)을 통한 성능 극대화를 도모하였습니다. </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a9ec3a611b1847cd285e6b8ef2fed1b31" name="a9ec3a611b1847cd285e6b8ef2fed1b31"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a9ec3a611b1847cd285e6b8ef2fed1b31">&#9670;&#160;</a></span>optimize()</h2>
@@ -153,24 +155,25 @@ template&lt;size_t N, typename Func &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="classOptimization_1_1BFGS.html" title="BFGS (Broyden–Fletcher–Goldfarb–Shanno) 최적화 알고리즘">BFGS</a> 알고리즘 메인 최적화 함수 </p>
+<p>주어진 목적 함수를 최소화하는 해를 찾는 <a class="el" href="classOptimization_1_1BFGS.html" title="BFGS (Broyden–Fletcher–Goldfarb–Shanno) 알고리즘을 이용한 무제약 최적화(Unconstrained Optimization) 클래스">BFGS</a> 알고리즘의 메인 함수 </p>
+<p>이 함수는 주어진 초기 추정치에서 시작하여, 목적 함수의 기울기가 허용치 이하로 수렴할 때까지 변수의 위치를 반복적으로 업데이트합니다. 자동 미분(AutoDiff)을 사용하여 미분 오차 없이 정확하게 기울기를 구하며, 백트래킹 선 탐색(Backtracking Line Search)으로 강건하게 스텝 사이즈(이동 거리)를 조절합니다.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">N</td><td>최적화 변수의 차원 </td></tr>
-    <tr><td class="paramname">Func</td><td>목적 함수 타입 (람다, 펑터 등) </td></tr>
+    <tr><td class="paramname">N</td><td>최적화하려는 변수 벡터의 차원 </td></tr>
+    <tr><td class="paramname">Func</td><td>목적 함수의 타입. 람다 함수(Lambda), 함수 포인터, 펑터(Functor) 등을 모두 허용합니다. </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">f</td><td>최소화할 목적 함수 </td></tr>
-    <tr><td class="paramname">x_init</td><td>최적화 시작 지점 (초기 추정값) </td></tr>
-    <tr><td class="paramname">tol</td><td>수렴 판정을 위한 허용 오차 (Gradient의 Norm이 이 값보다 작아지면 수렴으로 판단) </td></tr>
-    <tr><td class="paramname">max_iter</td><td>무한 루프를 방지하기 위한 최대 허용 반복 횟수 </td></tr>
+    <tr><td class="paramname">f</td><td>스칼라 값을 반환하는 최적화 목적 함수 (예: <code>double f(const std::array&lt;double, N&gt;&amp; x)</code>) </td></tr>
+    <tr><td class="paramname">x_init</td><td>탐색을 시작할 초기 위치 벡터 (Initial Guess) </td></tr>
+    <tr><td class="paramname">tol</td><td>허용 오차 (Tolerance). 현재 위치에서의 기울기 벡터의 크기(L2-norm의 제곱)가 이 값 미만이면 극솟값에 충분히 가까워졌다고 판단하고 최적화 루프를 조기 종료합니다. 기본값은 1e-6. </td></tr>
+    <tr><td class="paramname">max_iter</td><td>최적화가 수렴하지 않을 경우를 대비한 최대 반복 횟수(안전 장치). 무한 루프를 방지합니다. 기본값은 200. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>OptimizationResultND&lt;N&gt; 최적해, 함수값, 반복 횟수, 소요 시간 정보 </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>OptimizationResultND&lt;N&gt; 최적화가 끝난 후의 최종 상태(최적해, 함숫값, 반복 횟수, 소요 시간)를 담은 구조체 </dd></dl>
 
 </div>
 </div>
