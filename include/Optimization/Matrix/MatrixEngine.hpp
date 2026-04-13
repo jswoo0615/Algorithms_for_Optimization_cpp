@@ -978,7 +978,8 @@ class StaticMatrix {
             for (size_t i = 0; i < Rows; ++i) {
                 b_col(i) = B(static_cast<int>(i), static_cast<int>(j));
             }
-            // LDLT_solve를 호출하여 1개 열에 대한 해를 구함 (미리 LDLT_decompose가 호출되어 있어야 함)
+            // LDLT_solve를 호출하여 1개 열에 대한 해를 구함 (미리 LDLT_decompose가 호출되어 있어야
+            // 함)
             StaticVector<T, Rows> x_col = this->LDLT_solve(b_col);
 
             for (size_t i = 0; i < Rows; ++i) {
