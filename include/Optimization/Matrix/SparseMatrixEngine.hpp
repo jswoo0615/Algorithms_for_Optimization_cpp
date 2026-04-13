@@ -20,20 +20,6 @@ namespace Optimization {
                 row_ptr.set_zero();
             }
 
-    void finalize() {
-        for (size_t i = 0; i < Rows; ++i) {
-            row_ptr(i + 1) += row_ptr(i);
-        }
-    }
-
-    void add_value(int r, int c, T val) {
-        if (nnz_count < MaxNNZ) {
-            values(static_cast<int>(nnz_count)) = val;
-            col_index(static_cast<int>(nnz_count)) = c;
-            row_ptr(r + 1) += 1;  // 임시로 해당 행의 원소 개수를 누적 (finalize에서 포인터로 변환)
-            nnz_count++;
-        }
-    }
             // CSR 구조 조립을 위한 요소 추가 함수
             void add_value(int r, int c, T val) {
                 if (nnz_count < MaxNNZ) {
@@ -50,19 +36,6 @@ namespace Optimization {
                 }
             }
 
-    void multiply(const StaticVector<T, Cols>& x, StaticVector<T, Rows>& y) const {
-        y.set_zero();
-        for (size_t i = 0; i < Rows; ++i) {
-            T sum = 0.0;
-            for (int j = row_ptr(i); j < row_ptr(i + 1); ++j) {
-                sum += values(j) * x(col_index(j));
-            }
-            y(static_cast<int>(i)) = sum;
-        }
-    }
-    y(static_cast<int>(i)) = sum;
-}
-}
             void multiply(const StaticVector<T, Cols>& x, StaticVector<T, Rows>& y) const {
                 y.set_zero();
                 for (size_t i = 0; i < Rows; ++i) {
@@ -74,19 +47,6 @@ namespace Optimization {
                 }
             }
 
-// 전치 행렬-벡터 곱셈 (y = A^T * x)
-void multiply_transpose(const StaticVector<T, Rows>& x, StaticVector<T, Cols>& y) const {
-    y.set_zero();
-    for (size_t i = 0; i < Rows; ++i) {
-        T xi = x(i);
-        for (int j = row_ptr(i); j < row_ptr(i + 1); ++j) {
-            y(col_index(j)) += values(j) * xi;
-        }
-    }
-}
-}
-;
-}  // namespace Optimization
             // 전치 행렬-벡터 곱셈 (y = A^T * x)
             void multiply_transpose(const StaticVector<T, Rows>& x, StaticVector<T, Cols>& y) const {
                 y.set_zero();
