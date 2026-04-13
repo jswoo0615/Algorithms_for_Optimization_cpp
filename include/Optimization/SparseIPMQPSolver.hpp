@@ -195,12 +195,12 @@ class SparseIPMQPSolver {
                 z(i) += alpha_d * dz(i);
             }
         }
-        
+
         u_opt = x;
         return false;
     }
 };
 
-} // namespace Optimization
+}  // namespace Optimization
 
 #endif  // OPTIMIZATION_SPARSE_IPM_QP_SOLVER_HPP_
