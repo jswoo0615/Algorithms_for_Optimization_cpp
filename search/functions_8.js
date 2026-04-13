@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['ldlt_5fdecompose_0',['LDLT_decompose',['../classStaticMatrix.html#a41fe1aba4edb465f1543784b8a135225',1,'StaticMatrix']]],
-  ['ldlt_5fsolve_1',['LDLT_solve',['../classStaticMatrix.html#abcbd4cca0fb1a424482849cd598601f4',1,'StaticMatrix']]],
-  ['lu_5fdecompose_2',['LU_decompose',['../classStaticMatrix.html#a91cd13826279e32a6a73ac0408fdabd5',1,'StaticMatrix']]],
-  ['lu_5fsolve_3',['LU_solve',['../classStaticMatrix.html#a1d47cdeee8dcf860ac36b41fd6920320',1,'StaticMatrix']]]
+  ['near_5fzero_0',['near_zero',['../structMathTraits.html#ae4bdc59135c8d5d2cb6093d6e7208758',1,'MathTraits::near_zero()'],['../structMathTraits_3_01Optimization_1_1Dual_3_01T_01_4_01_4.html#a5ce19b2b6c719ee9b20d4349544d65e7',1,'MathTraits&lt; Optimization::Dual&lt; T &gt; &gt;::near_zero()']]]
 ];

@@ -1,5 +1,4 @@
 var searchData=
 [
-  ['evaluate_5feqp_0',['evaluate_EQP',['../classKKTMonitor.html#ac4d0b74bf08bcd30a3d744d531122d81',1,'KKTMonitor']]],
-  ['extract_5fblock_1',['extract_block',['../classStaticMatrix.html#a7f6df05797ecc86684b69928e320bde5',1,'StaticMatrix']]]
+  ['forward_5fpass_0',['forward_pass',['../classOptimization_1_1BlockBandedSolver.html#ac6475a6e1cc5218f43a1e0702b66b751',1,'Optimization::BlockBandedSolver']]]
 ];

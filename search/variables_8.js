@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['s_0',['s',['../classOptimization_1_1SparseIPMQPSolver.html#a6d7cc6d9319bc598226de29b1fb50d57',1,'Optimization::SparseIPMQPSolver']]]
+  ['x_5fopt_0',['x_opt',['../structOptimization_1_1OptimizationResultND.html#a0106e12c1664683185cba14cba9ddebc',1,'Optimization::OptimizationResultND']]]
 ];

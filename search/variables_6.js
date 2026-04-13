@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['p_0',['p',['../classActiveSetSolver.html#a2b11e6f0fdd682a9b2cb116e89bfc788',1,'ActiveSetSolver::P'],['../classOptimization_1_1SparseIPMQPSolver.html#a9c2b7b82bb7ede050e9ccaf2c62ce297',1,'Optimization::SparseIPMQPSolver::P']]]
+  ['q_0',['q',['../classActiveSetSolver.html#aa18b25308442a24be70e5db4574d5e9b',1,'ActiveSetSolver']]]
 ];
