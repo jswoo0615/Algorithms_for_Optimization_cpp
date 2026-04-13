@@ -5,5 +5,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
   node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
   rankdir="LR";
-  Node0 [id="Node000000",label="Optimization::IPMQPSolver\l\< N_vars, N_eq, N_ineq \>",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classOptimization_1_1IPMQPSolver.html",tooltip=" "];
+  Node0 [id="Node000000",label="Optimization::Integrator",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classOptimization_1_1Integrator.html",tooltip="Layer 3 - RK4 (Runge-Kutta 4th Order) Integrator."];
 }

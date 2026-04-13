@@ -5,6 +5,5 @@ var searchData=
   ['insert_5ftransposed_5fblock_2',['insert_transposed_block',['../classStaticMatrix.html#a1a8e7a70a9910ddcf2dbd09fc295d247',1,'StaticMatrix']]],
   ['integrator_3',['Integrator',['../classOptimization_1_1Integrator.html',1,'Optimization']]],
   ['ipmqpsolver_4',['IPMQPSolver',['../classOptimization_1_1IPMQPSolver.html',1,'Optimization']]],
-  ['ipmqpsolver_3c_20n_5fvars_2c_20n_5fineq_20_3e_5',['IPMQPSolver&lt; N_vars, N_ineq &gt;',['../classOptimization_1_1IPMQPSolver.html',1,'Optimization']]],
-  ['iterations_6',['iterations',['../structOptimization_1_1OptimizationResultND.html#a97219625aa18497e876783546a56c985',1,'Optimization::OptimizationResultND']]]
+  ['iterations_5',['iterations',['../structOptimization_1_1OptimizationResultND.html#a97219625aa18497e876783546a56c985',1,'Optimization::OptimizationResultND']]]
 ];

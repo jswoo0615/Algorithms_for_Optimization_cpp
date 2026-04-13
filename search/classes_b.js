@@ -6,6 +6,7 @@ var searchData=
   ['nestrovmomentumtest_3',['NestrovMomentumTest',['../classOptimization_1_1Test_1_1NestrovMomentumTest.html',1,'Optimization::Test']]],
   ['newtonmethod_4',['NewtonMethod',['../classOptimization_1_1NewtonMethod.html',1,'Optimization']]],
   ['nmpccontroller_5',['NMPCController',['../classOptimization_1_1NMPCController.html',1,'Optimization']]],
-  ['noisydescent_6',['NoisyDescent',['../classOptimization_1_1NoisyDescent.html',1,'Optimization']]],
-  ['nondifferentiable2d_7',['NonDifferentiable2D',['../structOptimization_1_1Tests_1_1NonDifferentiable2D.html',1,'Optimization::Tests']]]
+  ['nmpcstoragedata_6',['NMPCStorageData',['../structOptimization_1_1NMPCStorageData.html',1,'Optimization']]],
+  ['noisydescent_7',['NoisyDescent',['../classOptimization_1_1NoisyDescent.html',1,'Optimization']]],
+  ['nondifferentiable2d_8',['NonDifferentiable2D',['../structOptimization_1_1Tests_1_1NonDifferentiable2D.html',1,'Optimization::Tests']]]
 ];

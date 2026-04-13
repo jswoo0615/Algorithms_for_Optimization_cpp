@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['gradient_0',['gradient',['../classOptimization_1_1AutoDiff.html#a58e4c087ad635622012694e6851455b1',1,'Optimization::AutoDiff']]]
+  ['forward_5fpass_0',['forward_pass',['../classOptimization_1_1BlockBandedSolver.html#ac6475a6e1cc5218f43a1e0702b66b751',1,'Optimization::BlockBandedSolver']]]
 ];

@@ -5,5 +5,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
   node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
   rankdir="LR";
-  Node0 [id="Node000000",label="Optimization::StaticSparse\lMatrix\< T, Rows, Cols,\l MaxNNZ \>",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classOptimization_1_1StaticSparseMatrix.html",tooltip=" "];
+  Node0 [id="Node000000",label="Optimization::StaticSparse\lMatrix\< double, N_vars,\l N_vars, MaxNNZ_P \>",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classOptimization_1_1StaticSparseMatrix.html",tooltip=" "];
 }

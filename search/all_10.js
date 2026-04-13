@@ -7,5 +7,6 @@ var searchData=
   ['qr_5fsolve_5fhouseholder_4',['QR_solve_Householder',['../classStaticMatrix.html#a9829ffe5f0256a94000578740984f33b',1,'StaticMatrix']]],
   ['quadratic1d_5',['Quadratic1D',['../structOptimization_1_1Tests_1_1Quadratic1D.html',1,'Optimization::Tests']]],
   ['quadratic2d_6',['Quadratic2D',['../structOptimization_1_1Tests_1_1Quadratic2D.html',1,'Optimization::Tests']]],
-  ['quadraticfunc_7',['QuadraticFunc',['../structOptimization_1_1Test_1_1QuadraticFunc.html',1,'Optimization::Test']]]
+  ['quadratic_5fmultiply_7',['quadratic_multiply',['../classStaticMatrix.html#a0b291cb8d1d7ac48954bdeae918ff5ef',1,'StaticMatrix']]],
+  ['quadraticfunc_8',['QuadraticFunc',['../structOptimization_1_1Test_1_1QuadraticFunc.html',1,'Optimization::Test']]]
 ];
