@@ -131,7 +131,7 @@ class RTINMPCController {
         ResidualFunc res_f{current_x, {}, Q, Qf, R, R_rate, u_last, model, dt, obstacles};
         for (size_t k = 0; k < Np; ++k) res_f.ref_horizon[k] = ref_horizon[k];
         BoundIneq ineq_f{current_x, model, dt};
-        bool success = rti.solve(
+        bool success = rti.solve_sparse(
             U_guess, res_f, [](const auto&) { return StaticVector<double, 0>(); }, ineq_f);
         u_last(0) = U_guess(0);
         u_last(1) = U_guess(1);

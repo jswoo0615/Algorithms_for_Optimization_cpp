@@ -13,7 +13,7 @@ namespace Optimization {
 
     class RTISolver {
         public:
-            IPMQPSolver<N_vars, N_ineq> qp_solver_dense;
+            IPMQPSolver<N_vars, N_eq, N_ineq> qp_solver_dense;
             // Sparse IPM 인스턴스 (제약조건 포함 KKT용)
             SparseIPMQPSolver<N_vars, N_ineq, MaxNNZ, N_vars * 8> qp_solver_sparse;
 
@@ -33,7 +33,7 @@ namespace Optimization {
                 auto start = std::chrono::high_resolution_clock::now();
                 profile.current_engine = "Dense (Gaussian IPM)";
                 StaticVector<double, N_res> r_val = res_f(u);
-                StaticMatrix<double, N_res, N_vars> J_res = AutoDiff::jacobian<>N_res, N_vars>(res_f, u);
+                StaticMatrix<double, N_res, N_vars> J_res = AutoDiff::jacobian<N_res, N_vars>(res_f, u);
                 StaticMatrix<double, N_vars, N_vars> H_GN;
                 StaticVector<double, N_vars> grad_f;
                 H_GN.set_zero();
@@ -83,7 +83,7 @@ namespace Optimization {
             }
 
             template <typename ResidualFunc, typename EqFunc, typename IneqFunc>
-            bool solve_sparse(StaticVector<double, N_vars>& u, ResidualFunc res_f, EqFunc eq_f, Ineqfunc ineq_f) {
+            bool solve_sparse(StaticVector<double, N_vars>& u, ResidualFunc res_f, EqFunc eq_f, IneqFunc ineq_f) {
                 auto start = std::chrono::high_resolution_clock::now();
                 profile.current_engine = "Sparse (Matrix-Free IPM)";
 
@@ -106,48 +106,54 @@ namespace Optimization {
                         if (std::abs(val) > 1e-9) {
                             qp_solver_sparse.P.add_value(i, j, val);
                         }
-                        double sum_g = 0.0;
-                        for (size_t k = 0; k < N_res; ++k) {
-                            sum_g += J_res(k, i) * r_val(k);
-                        }
-                        qp_solver_sparse.q(i) = sum_g;
+                    } // j 루프 종료
+                    
+                    double sum_g = 0.0;
+                    for (size_t k = 0; k < N_res; ++k) {
+                        sum_g += J_res(k, i) * r_val(k);
                     }
-                    qp_solver_sparse.P.finalize();
-
-                    // 2. Constraint 조립
-                    StaticVector<double, N_ineq> ineq_val = ineq_f(u);
-                    StaticMatrix<double, N_ineq, N_vars> J_ineq = AutoDiff::jacobian<N_ineq, N_vars>(ineq_f, u);
-
-                    qp_solver_sparse.A_ineq.nnz_count = 0;
-                    qp_solver_sparse.A_ineq.row_ptr.set_zero();
-
-                    for (size_t i = 0; i < N_ineq; ++i) {
-                        qp_solver_sparse.b_ineq(i) = -ineq_val(i);
-                        for (size_t j = 0; j < N_vars; ++j) {
-                            if (std::abs(J_ineq(i, j)) > 1e-9) {
-                                qp_solver_sparse.A_ineq.add_value(i, j, J_ineq(i, j));
-                            }
-                        }
-                    }
-                    qp_solver_sparse.A_ineq.finalize();
-
-                    // 3. Sparse IPM Solve (Warm-start u)
-                    StaticVector<double, N_vars> p;
-                    p.set_zero();
-                    bool success = qp_solver_sparse.solve(p, 10, 1e-3);
-                    if (success) {
-                        for (size_t i = 0; i < N_vars; ++i) {
-                            u(i) += p(i);
-                        }
-                    }
-                    auto end = std::chrono::high_resolution_clock::now();
-                    std::chrono::duration<double, std::milli> elapsed = end - start;
-                    profile.last_exec_time_ms = elapsed.count();
-                    if (profile.last_exec_time_ms > profile.wcet_ms) {
-                        profile.wcet_ms = profile.last_exec_time_ms;
-                    }
-                    return success;
+                    qp_solver_sparse.q(i) = sum_g;
                 }
+
+                qp_solver_sparse.P.finalize();
+
+                // 2. Constraint 조립
+                StaticVector<double, N_ineq> ineq_val = ineq_f(u);
+                StaticMatrix<double, N_ineq, N_vars> J_ineq = AutoDiff::jacobian<N_ineq, N_vars>(ineq_f, u);
+
+                qp_solver_sparse.A_ineq.nnz_count = 0;
+                qp_solver_sparse.A_ineq.row_ptr.set_zero();
+
+                for (size_t i = 0; i < N_ineq; ++i) {
+                    qp_solver_sparse.b_ineq(i) = -ineq_val(i);
+                    for (size_t j = 0; j < N_vars; ++j) {
+                        if (std::abs(J_ineq(i, j)) > 1e-9) {
+                            qp_solver_sparse.A_ineq.add_value(i, j, J_ineq(i, j));
+                        }
+                    }
+                }
+                qp_solver_sparse.A_ineq.finalize();
+
+                // 3. Sparse IPM Solve (Warm-start u)
+                StaticVector<double, N_vars> p;
+                p.set_zero();
+                bool success = qp_solver_sparse.solve(p, 10, 1e-3);
+                
+                if (success) {
+                    for (size_t i = 0; i < N_vars; ++i) {
+                        u(i) += p(i);
+                    }
+                }
+                
+                // 4. 타이밍 프로파일링
+                auto end = std::chrono::high_resolution_clock::now();
+                std::chrono::duration<double, std::milli> elapsed = end - start;
+                profile.last_exec_time_ms = elapsed.count();
+                if (profile.last_exec_time_ms > profile.wcet_ms) {
+                    profile.wcet_ms = profile.last_exec_time_ms;
+                }
+
+                return success; 
             }
 
     };

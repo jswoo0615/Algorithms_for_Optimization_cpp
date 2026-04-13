@@ -948,6 +948,47 @@ class StaticMatrix {
     }
 
     // ============================================================
+    // NMPC 구조적 해제 전용 연산
+    // ============================================================
+    /**
+     * @brief 샌드위치 2차 형식 곱셈 : Result = A^T * P * A
+     * Riccati Backward Pass에서 H_xx, H_uu를 조립할 때 캐시 미스를 최소화하여 계산
+     */
+    template <size_t P_Dim>
+    StaticMatrix<T, Cols, Cols> quadratic_multiply(const StaticMatrix<T, P_Dim, P_Dim>& P) const {
+        // 1. Temp = P * A (P_Dim x P_Dim * P_Dim x Cols)
+        StaticMatrix<T, P_Dim, Cols> Temp = P * (*this);
+        // 2. Result = A^T * Temp (Cols x P_Dim * P_Dim x Cols)
+        return this->transpose() * Temp;
+    }
+
+    /**
+     * @brief 다중 열 (Multi-Column) 시스템 풀이 : A * X = B
+     * K_k = -H_uu^{-1} * H_ux를 구할 때 역행렬을 직접 구하지 않고
+     * LDLT 분해된 상태에서 B의 열 벡터들을 순차적으로 풀어냅니다
+     */
+    template <size_t B_Cols>
+    StaticMatrix<T, Rows, B_Cols> solve_multiple(const StaticMatrix<T, Rows, B_Cols>& B) const {
+        static_assert(Rows == Cols, "Solver requires a square matrix");
+        StaticMatrix<T, Rows, B_Cols> X;
+
+        // B행렬 각 열 (Column)을 추출하여 벡터로 풀고 다시 X에 조립
+        for (size_t j = 0; j < B_Cols; ++j) {
+            StaticVector<T, Rows> b_col;
+            for (size_t i = 0; i < Rows; ++i) {
+                b_col(i) = B(static_cast<int>(i), static_cast<int>(j));
+            }
+            // LDLT_solve를 호출하여 1개 열에 대한 해를 구함 (미리 LDLT_decompose가 호출되어 있어야 함)
+            StaticVector<T, Rows> x_col = this->LDLT_solve(b_col);
+
+            for (size_t i = 0; i < Rows; ++i) {
+                X(static_cast<int>(i), static_cast<int>(j)) = x_col(i);
+            }
+        }
+        return X;
+    }
+
+    // ============================================================
     // 디버깅 및 시각화 유틸리티
     //
     // 제어 솔버가 최적해를 도출하는 데 실패하거나 차량이 튀는(Jitter) 이상 증상을 보일 때,

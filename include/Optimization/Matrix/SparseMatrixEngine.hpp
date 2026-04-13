@@ -25,6 +25,15 @@ namespace Optimization {
                 }
             }
 
+            void add_value(int r, int c, T val) {
+                if (nnz_count < MaxNNZ) {
+                    values(static_cast<int>(nnz_count)) = val;
+                    col_index(static_cast<int>(nnz_count)) = c;
+                    row_ptr(r + 1) += 1; // 임시로 해당 행의 원소 개수를 누적 (finalize에서 포인터로 변환)
+                    nnz_count++;
+                }
+            }
+
             void multiply(const StaticVector<T, Cols>& x, StaticVector<T, Rows>& y) const {
                 y.set_zero();
                 for (size_t i = 0; i < Rows; ++i) {

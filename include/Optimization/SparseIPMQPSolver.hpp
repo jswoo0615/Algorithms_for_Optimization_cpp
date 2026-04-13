@@ -107,7 +107,7 @@ namespace Optimization {
                 }
 
                 for (int iter = 0; iter < 30; ++iter) { // 고정 반복 (WCET 보장)
-                    apply_H_sys(p_cg, Ap_cg);
+                    apply_H_sys(p_cg, W, Ap_cg);
                     double pAp = 0.0;
                     for (size_t i = 0; i < N_vars; ++i) {
                         pAp += p_cg(i) * Ap_cg(i);
@@ -155,7 +155,7 @@ namespace Optimization {
                     A_ineq.multiply(x, Ax);
                     StaticVector<double, N_ineq> r_p; // r_p = Ax - b + s
                     for (size_t i = 0; i < N_ineq; ++i) {
-                        r_p(i) = Ax(i) - b_ineq(i); + s(i);
+                        r_p(i) = Ax(i) - b_ineq(i) + s(i);
                     }
 
                     double gap = 0.0;
@@ -173,7 +173,7 @@ namespace Optimization {
 
                     // 2. Weight Matrix (W = lambda * S^{-1}) 및 RHS 조립
                     StaticVector<double, N_ineq> W;
-                    StaticVector<double, N_ineq> rhs = r_d;     // rhs = -r_d - A^T (S^{-1} (Lambda r_p - r_c))
+                    StaticVector<double, N_vars> rhs = r_d;     // rhs = -r_d - A^T (S^{-1} (Lambda r_p - r_c))
                     StaticVector<double, N_ineq> temp_vec;
                     for (size_t i = 0; i < N_ineq; ++i) {
                         W(i) = lambda(i) / s(i);
