@@ -26,12 +26,24 @@ class StaticSparseMatrix {
         }
     }
 
-    void multiply(const StaticVector<T, Cols>& x, StaticVector<T, Rows>& y) const {
-        y.set_zero();
-        for (size_t i = 0; i < Rows; ++i) {
-            T sum = 0.0;
-            for (int j = row_ptr(i); j < row_ptr(i + 1); ++j) {
-                sum += values(j) * x(col_index(j));
+            void add_value(int r, int c, T val) {
+                if (nnz_count < MaxNNZ) {
+                    values(static_cast<int>(nnz_count)) = val;
+                    col_index(static_cast<int>(nnz_count)) = c;
+                    row_ptr(r + 1) += 1; // 임시로 해당 행의 원소 개수를 누적 (finalize에서 포인터로 변환)
+                    nnz_count++;
+                }
+            }
+
+            void multiply(const StaticVector<T, Cols>& x, StaticVector<T, Rows>& y) const {
+                y.set_zero();
+                for (size_t i = 0; i < Rows; ++i) {
+                    T sum = 0.0;
+                    for (int j = row_ptr(i); j < row_ptr(i + 1); ++j) {
+                        sum += values(j) * x(col_index(j));
+                    }
+                    y(static_cast<int>(i)) = sum;
+                }
             }
             y(static_cast<int>(i)) = sum;
         }

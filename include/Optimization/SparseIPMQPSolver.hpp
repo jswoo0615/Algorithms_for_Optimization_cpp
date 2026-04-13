@@ -185,10 +185,32 @@ class SparseIPMQPSolver {
                 temp_vec(i) = (lambda(i) * r_p(i) - r_c) / s(i);
             }
 
-            StaticVector<double, N_vars> AT_temp;
-            A_ineq.multiply_transpose(temp_vec, AT_temp);
-            for (size_t i = 0; i < N_vars; ++i) {
-                rhs(i) = -r_d(i) - AT_temp(i);
+                for (int iter = 0; iter < 30; ++iter) { // 고정 반복 (WCET 보장)
+                    apply_H_sys(p_cg, W, Ap_cg);
+                    double pAp = 0.0;
+                    for (size_t i = 0; i < N_vars; ++i) {
+                        pAp += p_cg(i) * Ap_cg(i);
+                    }
+                    if (std::abs(pAp) < 1e-12) {
+                        break;
+                    }
+                    double alpha = rsold / pAp;
+                    double rsnew = 0.0;
+                    for (size_t i = 0; i < N_vars; ++i) {
+                        dx(i) += alpha * p_cg(i);
+                        r(i) -= alpha * Ap_cg(i);
+                        rsnew += r(i) * r(i);
+                    }
+                    if (rsnew < 1e-6) {
+                        return true;
+                    }
+                    double beta = rsnew / rsold;
+                    for (size_t i = 0; i < N_vars; ++i) {
+                        p_cg(i) = r(i) + beta * p_cg(i);
+                    }
+                    rsold = rsnew;
+                }
+                return false;
             }
 
             // 3. Newton Step 계산 (Implicit CG)
@@ -206,11 +228,87 @@ class SparseIPMQPSolver {
                 dlambda(i) = -(r_c + lambda(i) * ds(i)) / s(i);
             }
 
-            // 5. Fraction-to-the-boundary step size
-            double alpha_p = 1.0, alpha_d = 1.0;
-            for (size_t i = 0; i < N_ineq; ++i) {
-                if (ds(i) < 0.0) {
-                    alpha_p = std::min(alpha_p, -0.99 * s(i) / ds(i));
+                for (int iter = 0; iter < max_iter; ++iter) {
+                    // 1. Residual 계산 (KKT 시스템의 잔차)
+                    StaticVector<double, N_vars> Px;
+                    P.multiply(x, Px);
+                    StaticVector<double, N_vars> AT_lambda; 
+                    A_ineq.multiply_transpose(lambda, AT_lambda);
+                    StaticVector<double, N_vars> r_d; // r_d = Px + q + A^T lambda
+                    for (size_t i = 0; i < N_vars; ++i) {
+                        r_d(i) = Px(i) + q(i) + AT_lambda(i);
+                    }
+
+                    StaticVector<double, N_ineq> Ax;
+                    A_ineq.multiply(x, Ax);
+                    StaticVector<double, N_ineq> r_p; // r_p = Ax - b + s
+                    for (size_t i = 0; i < N_ineq; ++i) {
+                        r_p(i) = Ax(i) - b_ineq(i) + s(i);
+                    }
+
+                    double gap = 0.0;
+                    for (size_t i = 0; i < N_ineq; ++i) {
+                        gap += lambda(i) * s(i);
+                    }
+                    double mu = gap / N_ineq;
+
+                    if (mu < tol) {     // 수렴 시
+                        break;
+                    }
+
+                    double sigma = 0.1; // Centering 파라미터
+                    double target_mu = sigma * mu;
+
+                    // 2. Weight Matrix (W = lambda * S^{-1}) 및 RHS 조립
+                    StaticVector<double, N_ineq> W;
+                    StaticVector<double, N_vars> rhs = r_d;     // rhs = -r_d - A^T (S^{-1} (Lambda r_p - r_c))
+                    StaticVector<double, N_ineq> temp_vec;
+                    for (size_t i = 0; i < N_ineq; ++i) {
+                        W(i) = lambda(i) / s(i);
+                        double r_c = lambda(i) * s(i) - target_mu;
+                        temp_vec(i) = (lambda(i) * r_p(i) - r_c) / s(i);
+                    }
+                    
+                    StaticVector<double, N_vars> AT_temp;
+                    A_ineq.multiply_transpose(temp_vec, AT_temp);
+                    for (size_t i = 0; i < N_vars; ++i) {
+                        rhs(i) = -r_d(i) - AT_temp(i);
+                    }
+
+                    // 3. Newton Step 계산 (Implicit CG)
+                    StaticVector<double, N_vars> dx;
+                    dx.set_zero();
+                    solve_implicit_cg(rhs, W, dx);
+
+                    // 4. 슬랙 및 듀얼 스텝 복원
+                    StaticVector<double, N_ineq> A_dx; 
+                    A_ineq.multiply(dx, A_dx);
+                    StaticVector<double, N_ineq> ds, dlambda;
+                    for (size_t i = 0; i < N_ineq; ++i) {
+                        ds(i) = -r_p(i) - A_dx(i);
+                        double r_c = lambda(i) * s(i) - target_mu;
+                        dlambda(i) = -(r_c + lambda(i) * ds(i)) / s(i);
+                    }
+
+                    // 5. Fraction-to-the-boundary step size
+                    double alpha_p = 1.0, alpha_d = 1.0;
+                    for (size_t i = 0; i < N_ineq; ++i) {
+                        if (ds(i) < 0.0) {
+                            alpha_p = std::min(alpha_p, -0.99 * s(i) / ds(i));
+                        }
+                        if (dlambda(i) < 0.0) {
+                            alpha_d = std::min(alpha_d, -0.99 * lambda(i) / dlambda(i));
+                        }
+                    }
+
+                    // 6. 업데이트
+                    for (size_t i = 0; i < N_vars; ++i) {
+                        x(i) += alpha_p * dx(i);
+                    }
+                    for (size_t i = 0; i < N_ineq; ++i) {
+                        s(i) += alpha_p * ds(i);
+                        lambda(i) += alpha_d * dlambda(i);
+                    }
                 }
                 if (dlambda(i) < 0.0) {
                     alpha_d = std::min(alpha_d, -0.99 * lambda(i) / dlambda(i));
