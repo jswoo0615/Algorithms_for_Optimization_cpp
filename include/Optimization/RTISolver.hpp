@@ -1,12 +1,13 @@
 #ifndef OPTIMIZATION_RTI_SOLVER_HPP_
 #define OPTIMIZATION_RTI_SOLVER_HPP_
 
-#include "Optimization/Matrix/SparseMatrixEngine.hpp"
-#include "Optimization/SparseIPMQPSolver.hpp"
+#include <chrono>
+#include <cmath>
+
 #include "Optimization/AutoDiff.hpp"
 #include "Optimization/IPMQPSolver.hpp"
-#include <cmath>
-#include <chrono>
+#include "Optimization/Matrix/SparseMatrixEngine.hpp"
+#include "Optimization/SparseIPMQPSolver.hpp"
 
 namespace Optimization {
 

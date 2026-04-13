@@ -116,10 +116,10 @@ class RTINMPCController {
                 ut(0) = a;
                 ut(1) = d;
                 x = Integrator::rk4<6, 2, DynamicBicycleModel, T>(model, x, ut, dt);
-                ineq(static_cast<int>(k * 8 + 4)) = x(0) - T(50.0); // X 상한선 50m로 연장
-                ineq(static_cast<int>(k * 8 + 5)) = T(-5.0) - x(0); // X 하한선
-                ineq(static_cast<int>(k * 8 + 6)) = x(1) - T(5.0);  // Y 상한선 5m (도로 폭)
-                ineq(static_cast<int>(k * 8 + 7)) = T(-5.0) - x(1); // Y 하한선 -5m
+                ineq(static_cast<int>(k * 8 + 4)) = x(0) - T(50.0);  // X 상한선 50m로 연장
+                ineq(static_cast<int>(k * 8 + 5)) = T(-5.0) - x(0);  // X 하한선
+                ineq(static_cast<int>(k * 8 + 6)) = x(1) - T(5.0);   // Y 상한선 5m (도로 폭)
+                ineq(static_cast<int>(k * 8 + 7)) = T(-5.0) - x(1);  // Y 하한선 -5m
             }
             return ineq;
         }

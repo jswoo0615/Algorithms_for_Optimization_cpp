@@ -1,15 +1,16 @@
 #ifndef OPTIMIZATION_SPARSE_IPM_QP_SOLVER_HPP_
 #define OPTIMIZATION_SPARSE_IPM_QP_SOLVER_HPP_
 
-#include "Optimization/Matrix/SparseMatrixEngine.hpp"
-#include <cmath>
 #include <algorithm>
+#include <cmath>
+
+#include "Optimization/Matrix/SparseMatrixEngine.hpp"
 
 namespace Optimization {
 
 template <size_t N_vars, size_t N_ineq, size_t MaxNNZ_P, size_t MaxNNZ_A>
 class SparseIPMQPSolver {
-public:
+   public:
     StaticSparseMatrix<double, N_vars, N_vars, MaxNNZ_P> P;
     StaticVector<double, N_vars> q;
     StaticSparseMatrix<double, N_ineq, N_vars, MaxNNZ_A> A_ineq;
@@ -21,7 +22,8 @@ public:
     }
 
     // 1. 암시적 헤시안-벡터 곱 연산: Hp = (P + A^T * W * A) * p
-    void apply_H_sys(const StaticVector<double, N_vars>& p, const StaticVector<double, N_ineq>& W, StaticVector<double, N_vars>& Hp) const {
+    void apply_H_sys(const StaticVector<double, N_vars>& p, const StaticVector<double, N_ineq>& W,
+                     StaticVector<double, N_vars>& Hp) const {
         StaticVector<double, N_vars> Pp;
         P.multiply(p, Pp);
 
@@ -42,12 +44,14 @@ public:
     }
 
     // 2. Matrix-Free Conjugate Gradient (켤레 기울기법) 솔버
-    bool solve_implicit_cg(const StaticVector<double, N_vars>& rhs, const StaticVector<double, N_ineq>& W, StaticVector<double, N_vars>& dx) const {
+    bool solve_implicit_cg(const StaticVector<double, N_vars>& rhs,
+                           const StaticVector<double, N_ineq>& W,
+                           StaticVector<double, N_vars>& dx) const {
         dx.set_zero();
         StaticVector<double, N_vars> r = rhs;
         StaticVector<double, N_vars> p_cg = r;
         double rsold = 0.0;
-        
+
         for (size_t i = 0; i < N_vars; ++i) {
             rsold += r(i) * r(i);
         }
@@ -90,7 +94,7 @@ public:
         StaticVector<double, N_vars> x = u_opt;
         StaticVector<double, N_ineq> s;
         StaticVector<double, N_ineq> z;
-        
+
         for (size_t i = 0; i < N_ineq; ++i) {
             s(i) = 1.0;
             z(i) = 1.0;
@@ -99,10 +103,10 @@ public:
         for (int iter = 0; iter < max_iter; ++iter) {
             StaticVector<double, N_vars> Px;
             P.multiply(x, Px);
-            
+
             StaticVector<double, N_vars> At_z;
             A_ineq.multiply_transpose(z, At_z);
-            
+
             StaticVector<double, N_vars> r_d;
             for (size_t i = 0; i < N_vars; ++i) {
                 r_d(i) = Px(i) + q(i) + At_z(i);
@@ -110,7 +114,7 @@ public:
 
             StaticVector<double, N_ineq> Ax;
             A_ineq.multiply(x, Ax);
-            
+
             StaticVector<double, N_ineq> r_p;
             for (size_t i = 0; i < N_ineq; ++i) {
                 r_p(i) = Ax(i) - b_ineq(i) + s(i);
@@ -125,8 +129,8 @@ public:
             mu /= N_ineq;
 
             double r_norm = 0.0;
-            for(size_t i = 0; i < N_vars; ++i) r_norm += r_d(i) * r_d(i);
-            for(size_t i = 0; i < N_ineq; ++i) r_norm += r_p(i) * r_p(i);
+            for (size_t i = 0; i < N_vars; ++i) r_norm += r_d(i) * r_d(i);
+            for (size_t i = 0; i < N_ineq; ++i) r_norm += r_p(i) * r_p(i);
             r_norm = std::sqrt(r_norm);
 
             if (r_norm < tol && mu < tol) {
@@ -199,4 +203,4 @@ public:
 
 } // namespace Optimization
 
-#endif // OPTIMIZATION_SPARSE_IPM_QP_SOLVER_HPP_
+#endif  // OPTIMIZATION_SPARSE_IPM_QP_SOLVER_HPP_
