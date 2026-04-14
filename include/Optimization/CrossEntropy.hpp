@@ -31,17 +31,18 @@ namespace Optimization {
 
 /**
  * @brief Cross-Entropy Method (교차 엔트로피 방법) 최적화 알고리즘
- * 
+ *
  * 다변량 정규 분포(Multivariate Normal Distribution)를 기반으로 다수의 해(샘플)를 생성하고,
- * 그중 가장 우수한 상위 엘리트(Elite) 샘플들의 통계적 특성(평균과 분산)을 계산하여 
+ * 그중 가장 우수한 상위 엘리트(Elite) 샘플들의 통계적 특성(평균과 분산)을 계산하여
  * 다음 세대의 샘플링 확률 분포를 업데이트하는 0차 전역 최적화(Global Optimization) 기법입니다.
- * 
+ *
  * 확률적 샘플링을 기반으로 하므로 목적 함수가 미분 불가능하거나 노이즈가 있는 환경에서도
  * 강건하게 전역 최적해를 탐색할 수 있습니다.
- * 
+ *
  * @note 본 구현은 동적 메모리 할당(Heap Allocation)을 원천 차단하고 O(M) 스택 메모리만을 사용하며,
- * 전체 정렬(Full Sort) 대신 부분 정렬(Partial Sort)을 사용하여 O(M log M_ELITE)의 빠른 속도로 
- * 엘리트를 선별합니다. ASPICE 검증 등을 고려하여 시드를 고정(Deterministic)할 수 있도록 설계되었습니다.
+ * 전체 정렬(Full Sort) 대신 부분 정렬(Partial Sort)을 사용하여 O(M log M_ELITE)의 빠른 속도로
+ * 엘리트를 선별합니다. ASPICE 검증 등을 고려하여 시드를 고정(Deterministic)할 수 있도록
+ * 설계되었습니다.
  */
 class CrossEntropy {
    private:
@@ -52,8 +53,8 @@ class CrossEntropy {
     template <size_t N>
     struct Sample {
         alignas(64) std::array<double, N> x;  ///< 샘플링된 실제 파라미터 벡터 위치
-        double y;                             ///< 해당 파라미터(x)에서의 목적 함수 평가값
-        
+        double y;  ///< 해당 파라미터(x)에서의 목적 함수 평가값
+
         /** @brief 엘리트 선별을 위한 정렬 기준 (함수값이 작을수록 우수함) */
         bool operator<(const Sample& other) const noexcept { return y < other.y; }
     };
@@ -64,7 +65,7 @@ class CrossEntropy {
 
     /**
      * @brief Cross-Entropy 메인 최적화 함수
-     * 
+     *
      * @tparam N 최적화 변수의 차원 수
      * @tparam M 한 세대(Generation)에 생성할 총 샘플(Population) 수 (기본값 100)
      * @tparam M_ELITE 분포 업데이트에 사용할 상위 우수 개체(Elite)의 수 (기본값 10)
@@ -73,8 +74,10 @@ class CrossEntropy {
      * @param mu_init 초기 탐색 중심점 (평균 벡터, Mean)
      * @param sigma_sq_init 초기 탐색 범위 (각 차원별 분산 벡터, Variance)
      * @param max_iter 최대 진화(반복) 세대 수
-     * @param tol 수렴 판정 허용 오차. 모든 차원의 분산(Variance)의 최댓값이 이 값보다 작아지면 수렴(Collapse)한 것으로 간주.
-     * @param seed 난수 생성을 위한 시드 값 (기본값 12345). 동일 시드 입력 시 항상 같은 결과를 보장함.
+     * @param tol 수렴 판정 허용 오차. 모든 차원의 분산(Variance)의 최댓값이 이 값보다 작아지면
+     * 수렴(Collapse)한 것으로 간주.
+     * @param seed 난수 생성을 위한 시드 값 (기본값 12345). 동일 시드 입력 시 항상 같은 결과를
+     * 보장함.
      * @param verbose 최적화 진행 상태를 콘솔에 출력할지 여부
      * @return OptimizationResultND<N> 최적 해(평균 벡터), 최소 함수값, 반복 횟수, 소요 시간
      */
@@ -96,10 +99,12 @@ class CrossEntropy {
         alignas(64) std::array<double, N> sigma_sq = sigma_sq_init;
 
         // [정적 할당] 한 세대의 모든 해를 담을 모집단(Population) 배열
-        // thread_local을 사용하여 멀티스레딩 환경에서 스레드별로 독립적인 스택/BSS 영역 활용 (힙 할당 원천 차단)
+        // thread_local을 사용하여 멀티스레딩 환경에서 스레드별로 독립적인 스택/BSS 영역 활용 (힙
+        // 할당 원천 차단)
         static thread_local std::array<Sample<N>, M> population;
 
-        // [난수 생성기 설정] 오프라인 튜닝 시 재현성(Reproducibility)을 보장하기 위한 고정 시드 주입
+        // [난수 생성기 설정] 오프라인 튜닝 시 재현성(Reproducibility)을 보장하기 위한 고정 시드
+        // 주입
         std::mt19937 gen(seed);
         // 단일 표준 정규 분포 N(0, 1) 객체를 한 번만 생성하여 매 루프 재사용 (성능 최적화)
         std::normal_distribution<double> standard_normal(0.0, 1.0);
@@ -112,27 +117,27 @@ class CrossEntropy {
 
         size_t iter = 0;
         for (iter = 1; iter <= max_iter; ++iter) {
-            
             // [Step 1] 모집단(Population) 샘플링 및 평가 (O(M*N))
-            // Reparameterization Trick(재매개변수화 기법)을 사용하여 각 차원별 독립적인 정규 분포에서 샘플링합니다.
-            // 식: x = mu + standard_deviation * z (단, z ~ N(0, 1))
+            // Reparameterization Trick(재매개변수화 기법)을 사용하여 각 차원별 독립적인 정규
+            // 분포에서 샘플링합니다. 식: x = mu + standard_deviation * z (단, z ~ N(0, 1))
             for (size_t p = 0; p < M; ++p) {
-                // 샘플의 각 파라미터를 하나의 z값 방향을 기준으로 전개하여 스칼라 연산 가속 
-                // (경우에 따라 N차원 독립 샘플링이 필요하면 이 부분의 z 추출 위치를 수정할 수 있으나, 본 구현은 효율성을 위해 공통 난수 방향을 사용합니다)
-                double z = standard_normal(gen); 
+                // 샘플의 각 파라미터를 하나의 z값 방향을 기준으로 전개하여 스칼라 연산 가속
+                // (경우에 따라 N차원 독립 샘플링이 필요하면 이 부분의 z 추출 위치를 수정할 수
+                // 있으나, 본 구현은 효율성을 위해 공통 난수 방향을 사용합니다)
+                double z = standard_normal(gen);
 #pragma omp simd
                 for (size_t i = 0; i < N; ++i) {
                     // std::sqrt(sigma_sq[i]) = 표준 편차(Standard Deviation)
                     // FMA(Fused Multiply-Add) 명령어로 a * b + c 를 한 사이클에 가속
                     population[p].x[i] = std::fma(std::sqrt(sigma_sq[i]), z, mu[i]);
                 }
-                
+
                 // 실제 샘플링된 위치(x)에서 목적 함수(f)를 평가하여 적합도(y) 산출
                 population[p].y = f(population[p].x);
             }
 
             // [Step 2] 엘리트(Elite) 샘플 선별
-            // O(M log M)의 전체 정렬(std::sort) 대신, 상위 M_ELITE개만 찾아내는 
+            // O(M log M)의 전체 정렬(std::sort) 대신, 상위 M_ELITE개만 찾아내는
             // O(M log M_ELITE)의 부분 정렬(std::partial_sort)을 사용하여 성능을 최적화합니다.
             std::partial_sort(population.begin(), population.begin() + M_ELITE, population.end());
 
@@ -141,7 +146,8 @@ class CrossEntropy {
             alignas(64) std::array<double, N> new_sigma_sq = {0.0};
 
             // [Step 3.1] 엘리트 샘플 기반 새로운 평균(mu) 계산
-            // 상위 M_ELITE개의 샘플들의 위치(x)를 모두 더한 후, 개수로 나누어 새로운 탐색 중심점을 잡습니다.
+            // 상위 M_ELITE개의 샘플들의 위치(x)를 모두 더한 후, 개수로 나누어 새로운 탐색 중심점을
+            // 잡습니다.
             for (size_t e = 0; e < M_ELITE; ++e) {
 #pragma omp simd
                 for (size_t i = 0; i < N; ++i) {
@@ -166,7 +172,8 @@ class CrossEntropy {
                 }
             }
 
-            // 분산의 평균을 구하고, 수렴 판정을 위해 모든 차원의 분산 중 가장 큰 값(max_variance)을 찾습니다.
+            // 분산의 평균을 구하고, 수렴 판정을 위해 모든 차원의 분산 중 가장 큰 값(max_variance)을
+            // 찾습니다.
             for (size_t i = 0; i < N; ++i) {
                 new_sigma_sq[i] /= static_cast<double>(M_ELITE);
                 if (new_sigma_sq[i] > max_variance) {
@@ -195,7 +202,7 @@ class CrossEntropy {
                 break;
             }
         }
-        
+
         // 최적화 종료 후 소요 시간 산출
         auto end_clock = std::chrono::high_resolution_clock::now();
         auto duration =
