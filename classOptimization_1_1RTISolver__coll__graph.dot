@@ -9,7 +9,7 @@ digraph "Optimization::RTISolver&lt; N_vars, N_eq, N_ineq, N_res, MaxNNZ &gt;"
   Node2 -> Node1 [id="edge1_Node000001_Node000002",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" qp_solver_sparse",fontcolor="grey" ];
   Node2 [id="Node000002",label="Optimization::SparseIPMQPSolver\l\< N_vars, N_ineq, N_vars *N\l_vars, N_vars *8 \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$classOptimization_1_1SparseIPMQPSolver.html",tooltip=" "];
   Node3 -> Node2 [id="edge2_Node000002_Node000003",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" P",fontcolor="grey" ];
-  Node3 [id="Node000003",label="Optimization::StaticSparse\lMatrix\< double, N_vars,\l N_vars, MaxNNZ_P \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$classOptimization_1_1StaticSparseMatrix.html",tooltip=" "];
+  Node3 [id="Node000003",label="Optimization::StaticSparse\lMatrix\< double, N_vars,\l N_vars, MaxNNZ_P \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$classOptimization_1_1StaticSparseMatrix.html",tooltip=" "];
   Node4 -> Node3 [id="edge3_Node000003_Node000004",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" values",fontcolor="grey" ];
   Node4 [id="Node000004",label="StaticMatrix\< double,\l MaxNNZ \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$classStaticMatrix.html",tooltip=" "];
   Node5 -> Node3 [id="edge4_Node000003_Node000005",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" col_index",fontcolor="grey" ];
@@ -19,7 +19,7 @@ digraph "Optimization::RTISolver&lt; N_vars, N_eq, N_ineq, N_res, MaxNNZ &gt;"
   Node7 -> Node2 [id="edge6_Node000002_Node000007",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" q",fontcolor="grey" ];
   Node7 [id="Node000007",label="StaticMatrix\< double,\l N_vars \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$classStaticMatrix.html",tooltip=" "];
   Node8 -> Node2 [id="edge7_Node000002_Node000008",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" A_ineq",fontcolor="grey" ];
-  Node8 [id="Node000008",label="Optimization::StaticSparse\lMatrix\< double, N_ineq,\l N_vars, MaxNNZ_A \>",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$classOptimization_1_1StaticSparseMatrix.html",tooltip=" "];
+  Node8 [id="Node000008",label="Optimization::StaticSparse\lMatrix\< double, N_ineq,\l N_vars, MaxNNZ_A \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$classOptimization_1_1StaticSparseMatrix.html",tooltip=" "];
   Node4 -> Node8 [id="edge8_Node000008_Node000004",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" values",fontcolor="grey" ];
   Node5 -> Node8 [id="edge9_Node000008_Node000005",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" col_index",fontcolor="grey" ];
   Node6 -> Node8 [id="edge10_Node000008_Node000006",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" row_ptr",fontcolor="grey" ];

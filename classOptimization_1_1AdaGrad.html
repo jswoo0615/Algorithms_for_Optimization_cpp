@@ -103,7 +103,7 @@ Static Public Member Functions</h2></td></tr>
 <div class="textblock"><p><a class="el" href="classOptimization_1_1AdaGrad.html" title="AdaGrad (Adaptive Gradient) 최적화 알고리즘을 구현한 정적 클래스">AdaGrad</a> (Adaptive Gradient) 최적화 알고리즘을 구현한 정적 클래스 </p>
 <p>AdaGrad는 경사 하강법(Gradient Descent)의 변형으로, 모든 매개변수(최적화 변수)에 대해 동일한 학습률(Learning Rate)을 적용하는 대신, **각 매개변수마다 맞춤형 학습률을 계산**하여 적용하는 알고리즘입니다.</p>
 <p>핵심 아이디어: 과거에 많이 변화했던(기울기가 컸던) 변수는 학습률을 작게 하여 세밀하게 조정하고, 과거에 거의 변화하지 않았던(기울기가 작았던) 변수는 학습률을 크게 하여 빠르게 학습되도록 유도합니다. 이는 희소한(Sparse) 특징을 가진 데이터나 함수에서 특히 효과적입니다.</p>
-<p>단점: 과거 기울기의 제곱이 계속 누적만 되기 때문에($G_i$ 가 단조 증가), 반복 횟수가 많아질수록 학습률이 $0$에 수렴하여 결국 학습이 멈추는(Premature Convergence) 문제가 발생할 수 있습니다. (이를 해결하기 위해 등장한 것이 <a class="el" href="classOptimization_1_1RMSProp.html" title="RMSProp (Root Mean Square Propagation) 최적화 알고리즘을 구현한 클래스">RMSProp</a>, <a class="el" href="classOptimization_1_1AdaDelta.html" title="AdaDelta 최적화 알고리즘">AdaDelta</a> 등입니다.)</p>
+<p>단점: 과거 기울기의 제곱이 계속 누적만 되기 때문에($G_i$ 가 단조 증가), 반복 횟수가 많아질수록 학습률이 $0$에 수렴하여 결국 학습이 멈추는(Premature Convergence) 문제가 발생할 수 있습니다. (이를 해결하기 위해 등장한 것이 <a class="el" href="classOptimization_1_1RMSProp.html" title="RMSProp (Root Mean Square Propagation) 최적화 알고리즘을 구현한 클래스">RMSProp</a>, <a class="el" href="classOptimization_1_1AdaDelta.html" title="AdaDelta 최적화 알고리즘을 구현한 정적 클래스">AdaDelta</a> 등입니다.)</p>
 <dl class="section note"><dt>Note</dt><dd>MISRA C++ 및 실시간 제어(RT) 코딩 표준 준수: 동적 메모리 할당(힙 할당)을 완전히 배제하고 O(1) 정적 배열 및 In-place 연산을 사용하여 속도와 안정성을 극대화했습니다. </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="ab7308a43ac27b08205420224eb7d3408" name="ab7308a43ac27b08205420224eb7d3408"></a>

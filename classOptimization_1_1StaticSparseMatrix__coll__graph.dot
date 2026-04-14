@@ -4,7 +4,7 @@ digraph "Optimization::StaticSparseMatrix&lt; T, Rows, Cols, MaxNNZ &gt;"
   bgcolor="transparent";
   edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
   node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
-  Node1 [id="Node000001",label="Optimization::StaticSparse\lMatrix\< T, Rows, Cols,\l MaxNNZ \>",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
+  Node1 [id="Node000001",label="Optimization::StaticSparse\lMatrix\< T, Rows, Cols,\l MaxNNZ \>",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="정적 할당 기반의 희소 행렬(Sparse Matrix) 클래스 (CSR 포맷 사용)"];
   Node2 -> Node1 [id="edge1_Node000001_Node000002",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" values",fontcolor="grey" ];
   Node2 [id="Node000002",label="StaticMatrix\< T, MaxNNZ \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$classStaticMatrix.html",tooltip=" "];
   Node3 -> Node1 [id="edge2_Node000001_Node000003",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" col_index",fontcolor="grey" ];

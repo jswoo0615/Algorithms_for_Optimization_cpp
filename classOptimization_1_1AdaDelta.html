@@ -87,7 +87,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="classOptimization_1_1AdaDelta.html" title="AdaDelta 최적화 알고리즘">AdaDelta</a> 최적화 알고리즘  
+<p><a class="el" href="classOptimization_1_1AdaDelta.html" title="AdaDelta 최적화 알고리즘을 구현한 정적 클래스">AdaDelta</a> 최적화 알고리즘을 구현한 정적 클래스  
  <a href="classOptimization_1_1AdaDelta.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="AdaDelta_8hpp_source.html">AdaDelta.hpp</a>&gt;</code></p>
@@ -96,17 +96,17 @@ $(function() {
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:af4a124f7ed2061bfc9633dc9b9553c6c" id="r_af4a124f7ed2061bfc9633dc9b9553c6c"><td class="memTemplParams" colspan="2">template&lt;size_t N, typename Func &gt; </td></tr>
 <tr class="memitem:af4a124f7ed2061bfc9633dc9b9553c6c"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="structOptimization_1_1OptimizationResultND.html">OptimizationResultND</a>&lt; N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1AdaDelta.html#af4a124f7ed2061bfc9633dc9b9553c6c">optimize</a> (Func f, std::array&lt; double, N &gt; x_init, double gamma=0.9, double epsilon=1e-8, size_t max_iter=15000, double tol=1e-4, bool verbose=false) noexcept</td></tr>
-<tr class="memdesc:af4a124f7ed2061bfc9633dc9b9553c6c"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classOptimization_1_1AdaDelta.html" title="AdaDelta 최적화 알고리즘">AdaDelta</a> 메인 최적화 함수  <br /></td></tr>
+<tr class="memdesc:af4a124f7ed2061bfc9633dc9b9553c6c"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classOptimization_1_1AdaDelta.html" title="AdaDelta 최적화 알고리즘을 구현한 정적 클래스">AdaDelta</a> 메인 최적화 함수  <br /></td></tr>
 <tr class="separator:af4a124f7ed2061bfc9633dc9b9553c6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="classOptimization_1_1AdaDelta.html" title="AdaDelta 최적화 알고리즘">AdaDelta</a> 최적화 알고리즘 </p>
-<p><a class="el" href="classOptimization_1_1AdaGrad.html" title="AdaGrad (Adaptive Gradient) 최적화 알고리즘을 구현한 정적 클래스">AdaGrad</a> 알고리즘은 과거의 기울기 제곱을 계속 누적하기 때문에 반복이 진행될수록 학습률(Step Size)이 급격히 작아져 결국 학습이 멈추는(Premature Convergence) 단점이 있습니다.</p>
-<p>AdaDelta는 이를 극복하기 위해 제안된 알고리즘으로, 다음 두 가지 핵심 개선 사항을 가집니다:</p><ol type="1">
-<li>기울기 누적합 대신 지수 이동 평균(Exponential Moving Average, EMA)을 사용하여 최근 기울기 정보에 가중치를 부여합니다.</li>
-<li>변수 업데이트량(Δx)의 지수 이동 평균을 함께 추적하여, 사용자가 직접 지정해야 하는 글로벌 '학습률(Learning Rate)' 파라미터를 완전히 제거했습니다. (업데이트의 물리적 단위가 일치하도록 차원 분석을 통해 자체적인 Step Size를 생성합니다.)</li>
+<div class="textblock"><p><a class="el" href="classOptimization_1_1AdaDelta.html" title="AdaDelta 최적화 알고리즘을 구현한 정적 클래스">AdaDelta</a> 최적화 알고리즘을 구현한 정적 클래스 </p>
+<p>기존의 <a class="el" href="classOptimization_1_1AdaGrad.html" title="AdaGrad (Adaptive Gradient) 최적화 알고리즘을 구현한 정적 클래스">AdaGrad</a> 알고리즘은 과거의 모든 기울기 제곱을 누적하므로 반복이 진행될수록 분모가 무한히 커지고, 결과적으로 학습률(Step Size)이 0에 수렴하여 학습이 조기 종료(Premature Convergence)되는 단점이 있습니다.</p>
+<p>AdaDelta는 이를 극복하기 위해 제안된 알고리즘으로, 두 가지 핵심 개선점을 가집니다:</p><ol type="1">
+<li>전체 과거 기울기가 아닌, 최근 기울기 정보에 가중치를 두는 '지수 이동 평균(Exponential Moving Average, EMA)'을 사용하여 기울기 제곱을 추적합니다.</li>
+<li>변수 업데이트량(Δx)의 지수 이동 평균도 함께 추적합니다. 이를 통해 업데이트의 물리적 단위(Unit)를 맞추어 사용자가 직접 지정해야 하는 글로벌 '학습률(Learning Rate)' 하이퍼파라미터를 완전히 제거했습니다.</li>
 </ol>
-<dl class="section note"><dt>Note</dt><dd>MISRA C++ 코딩 표준을 지향하여 동적 메모리 할당을 배제하고, O(1) 정적 메모리와 FMA(Fused Multiply-Add) 명령어를 통해 최적화 속도를 가속합니다. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>본 클래스는 MISRA C++ 코딩 표준을 지향하여 동적 메모리 할당을 배제하고, O(1) 정적 메모리와 FMA(Fused Multiply-Add) 명령어 지원, SIMD 벡터 최적화 구문을 통해 성능을 극대화하도록 설계되었습니다. </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="af4a124f7ed2061bfc9633dc9b9553c6c" name="af4a124f7ed2061bfc9633dc9b9553c6c"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#af4a124f7ed2061bfc9633dc9b9553c6c">&#9670;&#160;</a></span>optimize()</h2>
@@ -174,27 +174,27 @@ template&lt;size_t N, typename Func &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p><a class="el" href="classOptimization_1_1AdaDelta.html" title="AdaDelta 최적화 알고리즘">AdaDelta</a> 메인 최적화 함수 </p>
+<p><a class="el" href="classOptimization_1_1AdaDelta.html" title="AdaDelta 최적화 알고리즘을 구현한 정적 클래스">AdaDelta</a> 메인 최적화 함수 </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">N</td><td>최적화 변수의 차원 </td></tr>
+    <tr><td class="paramname">N</td><td>최적화 변수의 차원 (N차원 배열) </td></tr>
     <tr><td class="paramname">Func</td><td>목적 함수 타입 (람다식, 펑터 등) </td></tr>
   </table>
   </dd>
 </dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">f</td><td>최소화할 목적 함수 </td></tr>
-    <tr><td class="paramname">x_init</td><td>최적화 시작 지점 (초기 추정값) </td></tr>
-    <tr><td class="paramname">gamma</td><td>감쇠율 (Decay Rate, 보통 0.9 ~ 0.99 사용). 과거 정보가 잊혀지는 속도를 결정합니다. </td></tr>
-    <tr><td class="paramname">epsilon</td><td>0으로 나누어지는 것을 방지하는 수치적 안정성 상수 (작은 양수) </td></tr>
+    <tr><td class="paramname">f</td><td>최소화하고자 하는 목적 함수 </td></tr>
+    <tr><td class="paramname">x_init</td><td>최적화 시작 지점 (초기 파라미터 추정값 배열) </td></tr>
+    <tr><td class="paramname">gamma</td><td>감쇠율 (Decay Rate, 보통 0.9 ~ 0.99 사용). 과거 정보가 잊혀지는 속도를 결정하는 가중치 파라미터. </td></tr>
+    <tr><td class="paramname">epsilon</td><td>0으로 나누어지는 것(Division by zero)을 방지하기 위한 수치적 안정성 상수 (보통 1e-8 등 매우 작은 양수) </td></tr>
     <tr><td class="paramname">max_iter</td><td>무한 루프를 방지하기 위한 최대 허용 반복 횟수 </td></tr>
-    <tr><td class="paramname">tol</td><td>수렴 판정을 위한 허용 오차 (Gradient의 노름(Norm)이 이 값보다 작아지면 수렴으로 판정) </td></tr>
-    <tr><td class="paramname">verbose</td><td>콘솔에 최적화 진행 상황을 출력할지 여부 </td></tr>
+    <tr><td class="paramname">tol</td><td>수렴 판정을 위한 허용 오차. 기울기(Gradient) 벡터의 L2-Norm(크기)이 이 값보다 작아지면 극값(최적점)에 도달했다고 판정합니다. </td></tr>
+    <tr><td class="paramname">verbose</td><td>콘솔에 최적화 진행 상황(반복 횟수, 함수값, 기울기 크기 등)을 출력할지 여부 </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>OptimizationResultND&lt;N&gt; 최적화가 완료된 해, 목적 함수 값, 반복 횟수, 수행 시간 정보 </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>OptimizationResultND&lt;N&gt; 최적화가 완료된 해(x_opt), 최소 목적 함수 값(f_opt), 실제 수행된 반복 횟수, 소요 시간 정보 </dd></dl>
 
 </div>
 </div>

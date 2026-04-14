@@ -116,10 +116,10 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keywordtype">void</span> apply_H_sys(<span class="keyword">const</span> <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_vars&gt;</a>&amp; p, <span class="keyword">const</span> <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_ineq&gt;</a>&amp; W,</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>                     <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_vars&gt;</a>&amp; Hp)<span class="keyword"> const </span>{</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_vars&gt;</a> Pp;</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        P.multiply(p, Pp);</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        P.<a class="code hl_function" href="classOptimization_1_1StaticSparseMatrix.html#afb9be59a34220ed9246fe707ea29e6c3">multiply</a>(p, Pp);</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_ineq&gt;</a> Ap;</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        A_ineq.multiply(p, Ap);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        A_ineq.<a class="code hl_function" href="classOptimization_1_1StaticSparseMatrix.html#afb9be59a34220ed9246fe707ea29e6c3">multiply</a>(p, Ap);</div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_ineq&gt;</a> WAp;</div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N_ineq; ++i) {</div>
@@ -127,7 +127,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        }</div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_vars&gt;</a> AtWAp;</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        A_ineq.multiply_transpose(WAp, AtWAp);</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        A_ineq.<a class="code hl_function" href="classOptimization_1_1StaticSparseMatrix.html#a7aba0ef74baf4735e654394a1d611936">multiply_transpose</a>(WAp, AtWAp);</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N_vars; ++i) {</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>            Hp(i) = Pp(i) + AtWAp(i);</div>
@@ -193,10 +193,10 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> iter = 0; iter &lt; max_iter; ++iter) {</div>
 <div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_vars&gt;</a> Px;</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            P.multiply(x, Px);</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            P.<a class="code hl_function" href="classOptimization_1_1StaticSparseMatrix.html#afb9be59a34220ed9246fe707ea29e6c3">multiply</a>(x, Px);</div>
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_vars&gt;</a> At_z;</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            A_ineq.multiply_transpose(z, At_z);</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            A_ineq.<a class="code hl_function" href="classOptimization_1_1StaticSparseMatrix.html#a7aba0ef74baf4735e654394a1d611936">multiply_transpose</a>(z, At_z);</div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_vars&gt;</a> r_d;</div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N_vars; ++i) {</div>
@@ -204,7 +204,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>            }</div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
 <div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_ineq&gt;</a> Ax;</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            A_ineq.multiply(x, Ax);</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            A_ineq.<a class="code hl_function" href="classOptimization_1_1StaticSparseMatrix.html#afb9be59a34220ed9246fe707ea29e6c3">multiply</a>(x, Ax);</div>
 <div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
 <div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_ineq&gt;</a> r_p;</div>
 <div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N_ineq; ++i) {</div>
@@ -248,7 +248,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>            }</div>
 <div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span> </div>
 <div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_vars&gt;</a> At_temp;</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>            A_ineq.multiply_transpose(temp_vec, At_temp);</div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>            A_ineq.<a class="code hl_function" href="classOptimization_1_1StaticSparseMatrix.html#a7aba0ef74baf4735e654394a1d611936">multiply_transpose</a>(temp_vec, At_temp);</div>
 <div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span> </div>
 <div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N_vars; ++i) {</div>
 <div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>                rhs(i) = -r_d(i) - At_temp(i);</div>
@@ -258,7 +258,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>            solve_implicit_cg(rhs, W, dx);</div>
 <div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
 <div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_ineq&gt;</a> Adx;</div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>            A_ineq.multiply(dx, Adx);</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>            A_ineq.<a class="code hl_function" href="classOptimization_1_1StaticSparseMatrix.html#afb9be59a34220ed9246fe707ea29e6c3">multiply</a>(dx, Adx);</div>
 <div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> </div>
 <div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_ineq&gt;</a> ds;</div>
 <div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_ineq&gt;</a> dz;</div>
@@ -286,18 +286,20 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>                z(i) += alpha_d * dz(i);</div>
 <div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>            }</div>
 <div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        }</div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>        </div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span> </div>
 <div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>        u_opt = x;</div>
 <div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>    }</div>
 <div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span>};</div>
 </div>
 <div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span> </div>
-<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>} <span class="comment">// namespace Optimization</span></div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>}  <span class="comment">// namespace Optimization</span></div>
 <div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span> </div>
 <div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_SPARSE_IPM_QP_SOLVER_HPP_</span></div>
 <div class="ttc" id="aclassOptimization_1_1SparseIPMQPSolver_html"><div class="ttname"><a href="classOptimization_1_1SparseIPMQPSolver.html">Optimization::SparseIPMQPSolver</a></div><div class="ttdef"><b>Definition</b> SparseIPMQPSolver.hpp:12</div></div>
-<div class="ttc" id="aclassOptimization_1_1StaticSparseMatrix_html"><div class="ttname"><a href="classOptimization_1_1StaticSparseMatrix.html">Optimization::StaticSparseMatrix</a></div><div class="ttdef"><b>Definition</b> SparseMatrixEngine.hpp:11</div></div>
+<div class="ttc" id="aclassOptimization_1_1StaticSparseMatrix_html"><div class="ttname"><a href="classOptimization_1_1StaticSparseMatrix.html">Optimization::StaticSparseMatrix</a></div><div class="ttdoc">정적 할당 기반의 희소 행렬(Sparse Matrix) 클래스 (CSR 포맷 사용)</div><div class="ttdef"><b>Definition</b> SparseMatrixEngine.hpp:22</div></div>
+<div class="ttc" id="aclassOptimization_1_1StaticSparseMatrix_html_a7aba0ef74baf4735e654394a1d611936"><div class="ttname"><a href="classOptimization_1_1StaticSparseMatrix.html#a7aba0ef74baf4735e654394a1d611936">Optimization::StaticSparseMatrix::multiply_transpose</a></div><div class="ttdeci">void multiply_transpose(const StaticVector&lt; T, Rows &gt; &amp;x, StaticVector&lt; T, Cols &gt; &amp;y) const</div><div class="ttdoc">희소 행렬의 전치 행렬과 벡터의 곱셈 (y = A^T * x)</div><div class="ttdef"><b>Definition</b> SparseMatrixEngine.hpp:117</div></div>
+<div class="ttc" id="aclassOptimization_1_1StaticSparseMatrix_html_afb9be59a34220ed9246fe707ea29e6c3"><div class="ttname"><a href="classOptimization_1_1StaticSparseMatrix.html#afb9be59a34220ed9246fe707ea29e6c3">Optimization::StaticSparseMatrix::multiply</a></div><div class="ttdeci">void multiply(const StaticVector&lt; T, Cols &gt; &amp;x, StaticVector&lt; T, Rows &gt; &amp;y) const</div><div class="ttdoc">희소 행렬과 벡터의 곱셈 (y = A * x)</div><div class="ttdef"><b>Definition</b> SparseMatrixEngine.hpp:96</div></div>
 <div class="ttc" id="aclassStaticMatrix_html"><div class="ttname"><a href="classStaticMatrix.html">StaticMatrix</a></div><div class="ttdoc">전방 선언 (Forward Declaration)</div><div class="ttdef"><b>Definition</b> MatrixEngine.hpp:109</div></div>
 <div class="ttc" id="aclassStaticMatrix_html_a9d9c516df2280ffe76094dbea19371fd"><div class="ttname"><a href="classStaticMatrix.html#a9d9c516df2280ffe76094dbea19371fd">StaticMatrix::set_zero</a></div><div class="ttdeci">void set_zero()</div><div class="ttdoc">고속 영행렬 초기화 (Zero Initialization)</div><div class="ttdef"><b>Definition</b> MatrixEngine.hpp:172</div></div>
 </div><!-- fragment --></div><!-- contents -->

@@ -7,7 +7,8 @@ var searchData=
   ['nestrovmomentumtest_4',['NestrovMomentumTest',['../classOptimization_1_1Test_1_1NestrovMomentumTest.html',1,'Optimization::Test']]],
   ['newtonmethod_5',['NewtonMethod',['../classOptimization_1_1NewtonMethod.html',1,'Optimization']]],
   ['nmpccontroller_6',['NMPCController',['../classOptimization_1_1NMPCController.html',1,'Optimization']]],
-  ['nmpcstoragedata_7',['NMPCStorageData',['../structOptimization_1_1NMPCStorageData.html',1,'Optimization']]],
-  ['noisydescent_8',['NoisyDescent',['../classOptimization_1_1NoisyDescent.html',1,'Optimization']]],
-  ['nondifferentiable2d_9',['NonDifferentiable2D',['../structOptimization_1_1Tests_1_1NonDifferentiable2D.html',1,'Optimization::Tests']]]
+  ['nmpcstoragedata_7',['nmpcstoragedata',['../structOptimization_1_1NMPCStorageData.html',1,'Optimization::NMPCStorageData&lt; Nx, Nu &gt;'],['../structOptimization_1_1NMPCStorageData.html#aea94e3ad87497b8459f40811eaf2ff7e',1,'Optimization::NMPCStorageData::NMPCStorageData()']]],
+  ['nnz_5fcount_8',['nnz_count',['../classOptimization_1_1StaticSparseMatrix.html#aca2775fcd535e94a11889bc263b43834',1,'Optimization::StaticSparseMatrix']]],
+  ['noisydescent_9',['NoisyDescent',['../classOptimization_1_1NoisyDescent.html',1,'Optimization']]],
+  ['nondifferentiable2d_10',['NonDifferentiable2D',['../structOptimization_1_1Tests_1_1NonDifferentiable2D.html',1,'Optimization::Tests']]]
 ];

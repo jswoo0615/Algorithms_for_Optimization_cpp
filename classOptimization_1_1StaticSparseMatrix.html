@@ -87,6 +87,11 @@ $(function() {
   <div class="headertitle"><div class="title">Optimization::StaticSparseMatrix&lt; T, Rows, Cols, MaxNNZ &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>정적 할당 기반의 희소 행렬(Sparse Matrix) 클래스 (CSR 포맷 사용)  
+ <a href="classOptimization_1_1StaticSparseMatrix.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="SparseMatrixEngine_8hpp_source.html">SparseMatrixEngine.hpp</a>&gt;</code></p>
 <div class="dynheader">
 Collaboration diagram for Optimization::StaticSparseMatrix&lt; T, Rows, Cols, MaxNNZ &gt;:</div>
 <div class="dyncontent">
@@ -95,34 +100,236 @@ Collaboration diagram for Optimization::StaticSparseMatrix&lt; T, Rows, Cols, Ma
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a72f6569b50903361bbd2b92cf819d2c7" id="r_a72f6569b50903361bbd2b92cf819d2c7"><td class="memItemLeft" align="right" valign="top"><a id="a72f6569b50903361bbd2b92cf819d2c7" name="a72f6569b50903361bbd2b92cf819d2c7"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>add_value</b> (int r, int c, T val)</td></tr>
+<tr class="memitem:a03c8a0ec994cf81508663bb379fa7343" id="r_a03c8a0ec994cf81508663bb379fa7343"><td class="memItemLeft" align="right" valign="top"><a id="a03c8a0ec994cf81508663bb379fa7343" name="a03c8a0ec994cf81508663bb379fa7343"></a>
+&#160;</td><td class="memItemRight" valign="bottom"><b>StaticSparseMatrix</b> ()</td></tr>
+<tr class="memdesc:a03c8a0ec994cf81508663bb379fa7343"><td class="mdescLeft">&#160;</td><td class="mdescRight">생성자: 초기화 및 메모리 0으로 설정 <br /></td></tr>
+<tr class="separator:a03c8a0ec994cf81508663bb379fa7343"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a72f6569b50903361bbd2b92cf819d2c7" id="r_a72f6569b50903361bbd2b92cf819d2c7"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptimization_1_1StaticSparseMatrix.html#a72f6569b50903361bbd2b92cf819d2c7">add_value</a> (int r, int c, T val)</td></tr>
+<tr class="memdesc:a72f6569b50903361bbd2b92cf819d2c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSR 구조 조립을 위한 요소 추가 함수  <br /></td></tr>
 <tr class="separator:a72f6569b50903361bbd2b92cf819d2c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab88bf239685979999cef9e1adb50f93b" id="r_ab88bf239685979999cef9e1adb50f93b"><td class="memItemLeft" align="right" valign="top"><a id="ab88bf239685979999cef9e1adb50f93b" name="ab88bf239685979999cef9e1adb50f93b"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>finalize</b> ()</td></tr>
+<tr class="memitem:ab88bf239685979999cef9e1adb50f93b" id="r_ab88bf239685979999cef9e1adb50f93b"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptimization_1_1StaticSparseMatrix.html#ab88bf239685979999cef9e1adb50f93b">finalize</a> ()</td></tr>
+<tr class="memdesc:ab88bf239685979999cef9e1adb50f93b"><td class="mdescLeft">&#160;</td><td class="mdescRight">CSR 포맷의 <code>row_ptr</code> 구성을 완료하는 함수  <br /></td></tr>
 <tr class="separator:ab88bf239685979999cef9e1adb50f93b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afb9be59a34220ed9246fe707ea29e6c3" id="r_afb9be59a34220ed9246fe707ea29e6c3"><td class="memItemLeft" align="right" valign="top"><a id="afb9be59a34220ed9246fe707ea29e6c3" name="afb9be59a34220ed9246fe707ea29e6c3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>multiply</b> (const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; T, Cols &gt; &amp;x, <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; T, Rows &gt; &amp;y) const</td></tr>
+<tr class="memitem:afb9be59a34220ed9246fe707ea29e6c3" id="r_afb9be59a34220ed9246fe707ea29e6c3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptimization_1_1StaticSparseMatrix.html#afb9be59a34220ed9246fe707ea29e6c3">multiply</a> (const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; T, Cols &gt; &amp;x, <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; T, Rows &gt; &amp;y) const</td></tr>
+<tr class="memdesc:afb9be59a34220ed9246fe707ea29e6c3"><td class="mdescLeft">&#160;</td><td class="mdescRight">희소 행렬과 벡터의 곱셈 (y = A * x)  <br /></td></tr>
 <tr class="separator:afb9be59a34220ed9246fe707ea29e6c3"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7aba0ef74baf4735e654394a1d611936" id="r_a7aba0ef74baf4735e654394a1d611936"><td class="memItemLeft" align="right" valign="top"><a id="a7aba0ef74baf4735e654394a1d611936" name="a7aba0ef74baf4735e654394a1d611936"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>multiply_transpose</b> (const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; T, Rows &gt; &amp;x, <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; T, Cols &gt; &amp;y) const</td></tr>
+<tr class="memitem:a7aba0ef74baf4735e654394a1d611936" id="r_a7aba0ef74baf4735e654394a1d611936"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptimization_1_1StaticSparseMatrix.html#a7aba0ef74baf4735e654394a1d611936">multiply_transpose</a> (const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; T, Rows &gt; &amp;x, <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; T, Cols &gt; &amp;y) const</td></tr>
+<tr class="memdesc:a7aba0ef74baf4735e654394a1d611936"><td class="mdescLeft">&#160;</td><td class="mdescRight">희소 행렬의 전치 행렬과 벡터의 곱셈 (y = A^T * x)  <br /></td></tr>
 <tr class="separator:a7aba0ef74baf4735e654394a1d611936"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a85f2b0c68aaa1defa3dae5ebc4c6c48b" id="r_a85f2b0c68aaa1defa3dae5ebc4c6c48b"><td class="memItemLeft" align="right" valign="top"><a id="a85f2b0c68aaa1defa3dae5ebc4c6c48b" name="a85f2b0c68aaa1defa3dae5ebc4c6c48b"></a>
 <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; T, MaxNNZ &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>values</b></td></tr>
+<tr class="memdesc:a85f2b0c68aaa1defa3dae5ebc4c6c48b"><td class="mdescLeft">&#160;</td><td class="mdescRight">0이 아닌 실제 데이터 값들을 순차적으로 저장하는 배열 <br /></td></tr>
 <tr class="separator:a85f2b0c68aaa1defa3dae5ebc4c6c48b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a2dc6d740d273d9abebda2366d42322fc" id="r_a2dc6d740d273d9abebda2366d42322fc"><td class="memItemLeft" align="right" valign="top"><a id="a2dc6d740d273d9abebda2366d42322fc" name="a2dc6d740d273d9abebda2366d42322fc"></a>
 <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; int, MaxNNZ &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>col_index</b></td></tr>
+<tr class="memdesc:a2dc6d740d273d9abebda2366d42322fc"><td class="mdescLeft">&#160;</td><td class="mdescRight"><code>values</code> 배열의 각 원소가 속한 열(Column)의 인덱스를 저장하는 배열 <br /></td></tr>
 <tr class="separator:a2dc6d740d273d9abebda2366d42322fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a78122208167d79ff0f2e1c57b137f5ef" id="r_a78122208167d79ff0f2e1c57b137f5ef"><td class="memItemLeft" align="right" valign="top"><a id="a78122208167d79ff0f2e1c57b137f5ef" name="a78122208167d79ff0f2e1c57b137f5ef"></a>
 <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; int, Rows+1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>row_ptr</b></td></tr>
+<tr class="memdesc:a78122208167d79ff0f2e1c57b137f5ef"><td class="mdescLeft">&#160;</td><td class="mdescRight">각 행(Row)의 첫 번째 0이 아닌 원소가 <code>values</code> 배열에서 어느 위치부터 시작하는지 나타내는 배열. 크기는 (Rows + 1)이며, 마지막 원소는 총 NNZ(Non-Zero) 개수를 나타냅니다. <br /></td></tr>
 <tr class="separator:a78122208167d79ff0f2e1c57b137f5ef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aca2775fcd535e94a11889bc263b43834" id="r_aca2775fcd535e94a11889bc263b43834"><td class="memItemLeft" align="right" valign="top"><a id="aca2775fcd535e94a11889bc263b43834" name="aca2775fcd535e94a11889bc263b43834"></a>
 size_t&#160;</td><td class="memItemRight" valign="bottom"><b>nnz_count</b></td></tr>
+<tr class="memdesc:aca2775fcd535e94a11889bc263b43834"><td class="mdescLeft">&#160;</td><td class="mdescRight">현재까지 저장된 0이 아닌 값(NNZ)의 총 개수 <br /></td></tr>
 <tr class="separator:aca2775fcd535e94a11889bc263b43834"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename T, size_t Rows, size_t Cols, size_t MaxNNZ&gt;<br />
+class Optimization::StaticSparseMatrix&lt; T, Rows, Cols, MaxNNZ &gt;</div><p>정적 할당 기반의 희소 행렬(Sparse Matrix) 클래스 (CSR 포맷 사용) </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>데이터 타입 (예: float, double) </td></tr>
+    <tr><td class="paramname">Rows</td><td>행렬의 행(Row) 개수 </td></tr>
+    <tr><td class="paramname">Cols</td><td>행렬의 열(Column) 개수 </td></tr>
+    <tr><td class="paramname">MaxNNZ</td><td>행렬 내 0이 아닌 값(Non-Zero)의 최대 개수</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>이 클래스는 CSR (Compressed Sparse Row) 형식을 사용하여 희소 행렬을 메모리 효율적으로 표현합니다. 동적 할당을 피하기 위해 StaticVector를 사용하여 컴파일 타임에 결정된 크기의 버퍼를 사용합니다. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a72f6569b50903361bbd2b92cf819d2c7" name="a72f6569b50903361bbd2b92cf819d2c7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a72f6569b50903361bbd2b92cf819d2c7">&#9670;&#160;</a></span>add_value()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t Rows, size_t Cols, size_t MaxNNZ&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classOptimization_1_1StaticSparseMatrix.html">Optimization::StaticSparseMatrix</a>&lt; T, Rows, Cols, MaxNNZ &gt;::add_value </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>r</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>c</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">T&#160;</td>
+          <td class="paramname"><em>val</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>CSR 구조 조립을 위한 요소 추가 함수 </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">r</td><td>행(Row) 인덱스 </td></tr>
+    <tr><td class="paramname">c</td><td>열(Column) 인덱스 </td></tr>
+    <tr><td class="paramname">val</td><td>행렬에 삽입할 0이 아닌 데이터 값</td></tr>
+  </table>
+  </dd>
+</dl>
+<p>주의: 이 함수를 호출할 때는 행(Row) 순서대로(위에서 아래로, 왼쪽에서 오른쪽으로) 추가하는 것이 좋습니다. 이 함수를 모두 호출한 후에는 반드시 <code><a class="el" href="classOptimization_1_1StaticSparseMatrix.html#ab88bf239685979999cef9e1adb50f93b" title="CSR 포맷의 row_ptr 구성을 완료하는 함수">finalize()</a></code>를 호출하여 <code>row_ptr</code>를 올바른 CSR 형식으로 완성해야 합니다. </p>
+
+</div>
+</div>
+<a id="ab88bf239685979999cef9e1adb50f93b" name="ab88bf239685979999cef9e1adb50f93b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab88bf239685979999cef9e1adb50f93b">&#9670;&#160;</a></span>finalize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t Rows, size_t Cols, size_t MaxNNZ&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classOptimization_1_1StaticSparseMatrix.html">Optimization::StaticSparseMatrix</a>&lt; T, Rows, Cols, MaxNNZ &gt;::finalize </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>CSR 포맷의 <code>row_ptr</code> 구성을 완료하는 함수 </p>
+<p><code><a class="el" href="classOptimization_1_1StaticSparseMatrix.html#a72f6569b50903361bbd2b92cf819d2c7" title="CSR 구조 조립을 위한 요소 추가 함수">add_value()</a></code>를 통해 각 행의 원소 개수만 임시로 저장된 <code>row_ptr</code> 배열을 누적합(Prefix Sum)으로 변환하여, 각 행의 시작 인덱스를 정확히 가리키도록 만듭니다. 희소 행렬 요소 추가가 모두 끝난 후 곱셈 등의 연산을 수행하기 전에 반드시 한 번 호출해야 합니다. </p>
+
+</div>
+</div>
+<a id="afb9be59a34220ed9246fe707ea29e6c3" name="afb9be59a34220ed9246fe707ea29e6c3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afb9be59a34220ed9246fe707ea29e6c3">&#9670;&#160;</a></span>multiply()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t Rows, size_t Cols, size_t MaxNNZ&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classOptimization_1_1StaticSparseMatrix.html">Optimization::StaticSparseMatrix</a>&lt; T, Rows, Cols, MaxNNZ &gt;::multiply </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; T, Cols &gt; &amp;&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; T, Rows &gt; &amp;&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>희소 행렬과 벡터의 곱셈 (y = A * x) </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>곱할 열 벡터 (크기: Cols) </td></tr>
+    <tr><td class="paramname">y</td><td>결과가 저장될 열 벡터 (크기: Rows) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
+<a id="a7aba0ef74baf4735e654394a1d611936" name="a7aba0ef74baf4735e654394a1d611936"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a7aba0ef74baf4735e654394a1d611936">&#9670;&#160;</a></span>multiply_transpose()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t Rows, size_t Cols, size_t MaxNNZ&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="classOptimization_1_1StaticSparseMatrix.html">Optimization::StaticSparseMatrix</a>&lt; T, Rows, Cols, MaxNNZ &gt;::multiply_transpose </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; T, Rows &gt; &amp;&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; T, Cols &gt; &amp;&#160;</td>
+          <td class="paramname"><em>y</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>희소 행렬의 전치 행렬과 벡터의 곱셈 (y = A^T * x) </p>
+<p>원본 행렬 A를 전치하지 않고, A의 CSR 구조를 그대로 사용하여 전치 행렬 곱셈을 수행합니다.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td>곱할 열 벡터 (크기: Rows) </td></tr>
+    <tr><td class="paramname">y</td><td>결과가 저장될 열 벡터 (크기: Cols) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/Optimization/Matrix/<a class="el" href="SparseMatrixEngine_8hpp_source.html">SparseMatrixEngine.hpp</a></li>
 </ul>

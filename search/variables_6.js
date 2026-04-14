@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['q_0',['q',['../classActiveSetSolver.html#aa18b25308442a24be70e5db4574d5e9b',1,'ActiveSetSolver']]]
+  ['iterations_0',['iterations',['../structOptimization_1_1OptimizationResultND.html#a97219625aa18497e876783546a56c985',1,'Optimization::OptimizationResultND']]]
 ];

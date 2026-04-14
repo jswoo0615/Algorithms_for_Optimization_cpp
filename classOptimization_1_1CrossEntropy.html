@@ -88,22 +88,117 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Cross-Entropy Method (교차 엔트로피 방법)  
+<p>Cross-Entropy Method (교차 엔트로피 방법) 최적화 알고리즘  
  <a href="classOptimization_1_1CrossEntropy.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="CrossEntropy_8hpp_source.html">CrossEntropy.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:aab46aad8b4ebc73b615ea129f06b6a02" id="r_aab46aad8b4ebc73b615ea129f06b6a02"><td class="memTemplParams" colspan="2"><a id="aab46aad8b4ebc73b615ea129f06b6a02" name="aab46aad8b4ebc73b615ea129f06b6a02"></a>
-template&lt;size_t N, size_t M = 100, size_t M_ELITE = 10, typename Func &gt; </td></tr>
-<tr class="memitem:aab46aad8b4ebc73b615ea129f06b6a02"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="structOptimization_1_1OptimizationResultND.html">OptimizationResultND</a>&lt; N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>optimize</b> (Func f, std::array&lt; double, N &gt; mu_init, std::array&lt; double, N &gt; sigma_sq_init, size_t max_iter=100, double tol=1e-5, uint32_t seed=12345, bool verbose=false) noexcept</td></tr>
+<tr class="memitem:aab46aad8b4ebc73b615ea129f06b6a02" id="r_aab46aad8b4ebc73b615ea129f06b6a02"><td class="memTemplParams" colspan="2">template&lt;size_t N, size_t M = 100, size_t M_ELITE = 10, typename Func &gt; </td></tr>
+<tr class="memitem:aab46aad8b4ebc73b615ea129f06b6a02"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="structOptimization_1_1OptimizationResultND.html">OptimizationResultND</a>&lt; N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1CrossEntropy.html#aab46aad8b4ebc73b615ea129f06b6a02">optimize</a> (Func f, std::array&lt; double, N &gt; mu_init, std::array&lt; double, N &gt; sigma_sq_init, size_t max_iter=100, double tol=1e-5, uint32_t seed=12345, bool verbose=false) noexcept</td></tr>
+<tr class="memdesc:aab46aad8b4ebc73b615ea129f06b6a02"><td class="mdescLeft">&#160;</td><td class="mdescRight">Cross-Entropy 메인 최적화 함수  <br /></td></tr>
 <tr class="separator:aab46aad8b4ebc73b615ea129f06b6a02"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Cross-Entropy Method (교차 엔트로피 방법) </p>
-<dl class="section note"><dt>Note</dt><dd>다수의 샘플 대신 상위 샘플들로 확률 분포를 업데이트하며 전역 최적해 찾는 방법 ASPICE 검증을 위한 시드 고정 (Deterministic) 및 Reparameterization 최적화 적용 </dd></dl>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<div class="textblock"><p>Cross-Entropy Method (교차 엔트로피 방법) 최적화 알고리즘 </p>
+<p>다변량 정규 분포(Multivariate Normal Distribution)를 기반으로 다수의 해(샘플)를 생성하고, 그중 가장 우수한 상위 엘리트(Elite) 샘플들의 통계적 특성(평균과 분산)을 계산하여 다음 세대의 샘플링 확률 분포를 업데이트하는 0차 전역 최적화(Global Optimization) 기법입니다.</p>
+<p>확률적 샘플링을 기반으로 하므로 목적 함수가 미분 불가능하거나 노이즈가 있는 환경에서도 강건하게 전역 최적해를 탐색할 수 있습니다.</p>
+<dl class="section note"><dt>Note</dt><dd>본 구현은 동적 메모리 할당(Heap Allocation)을 원천 차단하고 O(M) 스택 메모리만을 사용하며, 전체 정렬(Full Sort) 대신 부분 정렬(Partial Sort)을 사용하여 O(M log M_ELITE)의 빠른 속도로 엘리트를 선별합니다. ASPICE 검증 등을 고려하여 시드를 고정(Deterministic)할 수 있도록 설계되었습니다. </dd></dl>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="aab46aad8b4ebc73b615ea129f06b6a02" name="aab46aad8b4ebc73b615ea129f06b6a02"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aab46aad8b4ebc73b615ea129f06b6a02">&#9670;&#160;</a></span>optimize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N, size_t M = 100, size_t M_ELITE = 10, typename Func &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="structOptimization_1_1OptimizationResultND.html">OptimizationResultND</a>&lt; N &gt; Optimization::CrossEntropy::optimize </td>
+          <td>(</td>
+          <td class="paramtype">Func&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::array&lt; double, N &gt;&#160;</td>
+          <td class="paramname"><em>mu_init</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::array&lt; double, N &gt;&#160;</td>
+          <td class="paramname"><em>sigma_sq_init</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>max_iter</em> = <code>100</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>tol</em> = <code>1e-5</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>seed</em> = <code>12345</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>verbose</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Cross-Entropy 메인 최적화 함수 </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">N</td><td>최적화 변수의 차원 수 </td></tr>
+    <tr><td class="paramname">M</td><td>한 세대(Generation)에 생성할 총 샘플(Population) 수 (기본값 100) </td></tr>
+    <tr><td class="paramname">M_ELITE</td><td>분포 업데이트에 사용할 상위 우수 개체(Elite)의 수 (기본값 10) </td></tr>
+    <tr><td class="paramname">Func</td><td>목적 함수 타입 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>최소화하고자 하는 목적 함수 </td></tr>
+    <tr><td class="paramname">mu_init</td><td>초기 탐색 중심점 (평균 벡터, Mean) </td></tr>
+    <tr><td class="paramname">sigma_sq_init</td><td>초기 탐색 범위 (각 차원별 분산 벡터, Variance) </td></tr>
+    <tr><td class="paramname">max_iter</td><td>최대 진화(반복) 세대 수 </td></tr>
+    <tr><td class="paramname">tol</td><td>수렴 판정 허용 오차. 모든 차원의 분산(Variance)의 최댓값이 이 값보다 작아지면 수렴(Collapse)한 것으로 간주. </td></tr>
+    <tr><td class="paramname">seed</td><td>난수 생성을 위한 시드 값 (기본값 12345). 동일 시드 입력 시 항상 같은 결과를 보장함. </td></tr>
+    <tr><td class="paramname">verbose</td><td>최적화 진행 상태를 콘솔에 출력할지 여부 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>OptimizationResultND&lt;N&gt; 최적 해(평균 벡터), 최소 함수값, 반복 횟수, 소요 시간 </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/Optimization/<a class="el" href="CrossEntropy_8hpp_source.html">CrossEntropy.hpp</a></li>
 </ul>
 </div><!-- contents -->

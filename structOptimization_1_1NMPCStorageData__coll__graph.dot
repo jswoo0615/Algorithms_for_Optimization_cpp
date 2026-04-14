@@ -5,7 +5,7 @@ digraph "Optimization::NMPCStorageData&lt; Nx, Nu &gt;"
   edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
   node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
   rankdir="LR";
-  Node1 [id="Node000001",label="Optimization::NMPCStorage\lData\< Nx, Nu \>",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="NMPC 단일 스테이지 (t = k)의 데이터 블록 구조체 Nx : 상태 변수 갯수 (6) Nu : 제어 변수 갯수 (2)"];
+  Node1 [id="Node000001",label="Optimization::NMPCStorage\lData\< Nx, Nu \>",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip="NMPC (Nonlinear Model Predictive Control) 최적화 문제에서 단일 예측 스텝 (t = k)의 데이터를 담는 블록 구조체."];
   Node2 -> Node1 [id="edge1_Node000001_Node000002",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" A\nP\nQ",fontcolor="grey" ];
   Node2 [id="Node000002",label="StaticMatrix\< double,\l Nx, Nx \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$classStaticMatrix.html",tooltip=" "];
   Node3 -> Node1 [id="edge2_Node000001_Node000003",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" B",fontcolor="grey" ];

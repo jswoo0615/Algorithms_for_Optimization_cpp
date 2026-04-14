@@ -86,14 +86,101 @@ $(function() {
   <div class="headertitle"><div class="title">Optimization::ConjugateGradient Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>공액 기울기법 (Conjugate Gradient Method) 최적화 알고리즘  
+ <a href="classOptimization_1_1ConjugateGradient.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="ConjugateGradient_8hpp_source.html">ConjugateGradient.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:afcc732ab873a61406281d80b2a8830d7" id="r_afcc732ab873a61406281d80b2a8830d7"><td class="memTemplParams" colspan="2"><a id="afcc732ab873a61406281d80b2a8830d7" name="afcc732ab873a61406281d80b2a8830d7"></a>
-template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:afcc732ab873a61406281d80b2a8830d7"><td class="memTemplItemLeft" align="right" valign="top">static std::array&lt; double, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>optimize</b> (Func f, std::array&lt; double, N &gt; x, size_t max_iter=1000, double tol=1e-4, bool verbose=false)</td></tr>
+<tr class="memitem:afcc732ab873a61406281d80b2a8830d7" id="r_afcc732ab873a61406281d80b2a8830d7"><td class="memTemplParams" colspan="2">template&lt;size_t N, typename Func &gt; </td></tr>
+<tr class="memitem:afcc732ab873a61406281d80b2a8830d7"><td class="memTemplItemLeft" align="right" valign="top">static std::array&lt; double, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1ConjugateGradient.html#afcc732ab873a61406281d80b2a8830d7">optimize</a> (Func f, std::array&lt; double, N &gt; x, size_t max_iter=1000, double tol=1e-4, bool verbose=false)</td></tr>
+<tr class="memdesc:afcc732ab873a61406281d80b2a8830d7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Conjugate Gradient (Fletcher-Reeves Method) 메인 최적화 함수  <br /></td></tr>
 <tr class="separator:afcc732ab873a61406281d80b2a8830d7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>공액 기울기법 (Conjugate Gradient Method) 최적화 알고리즘 </p>
+<p>1차 미분(Gradient) 정보만을 사용하여 최적점을 찾는 알고리즘으로, 순수 경사 하강법(Gradient Descent)이 가진 지그재그(Zig-zag) 현상과 느린 수렴 속도를 개선하기 위해 고안되었습니다.</p>
+<p>가장 큰 특징은 이전의 탐색 방향과 새로운 탐색 방향이 서로 '공액(Conjugate, 직교를 일반화한 개념)'을 이루도록 방향을 설정한다는 것입니다. 이를 통해 N차원 2차 함수(Quadratic Function)의 경우 최대 N번의 반복 내에 정확한 최적해를 찾을 수 있다는 수학적 보장이 있습니다.</p>
+<p>본 구현에서는 비선형 함수에 널리 사용되는 Fletcher-Reeves 방식을 채택하였으며, 학습률(Learning Rate, alpha)을 고정하지 않고 Exact Line Search(선 탐색)를 통해 매 스텝마다 최적의 보폭을 스스로 찾습니다. </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="afcc732ab873a61406281d80b2a8830d7" name="afcc732ab873a61406281d80b2a8830d7"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afcc732ab873a61406281d80b2a8830d7">&#9670;&#160;</a></span>optimize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N, typename Func &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::array&lt; double, N &gt; Optimization::ConjugateGradient::optimize </td>
+          <td>(</td>
+          <td class="paramtype">Func&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::array&lt; double, N &gt;&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>max_iter</em> = <code>1000</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>tol</em> = <code>1e-4</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>verbose</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Conjugate Gradient (Fletcher-Reeves Method) 메인 최적화 함수 </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">N</td><td>최적화 변수의 차원 수 </td></tr>
+    <tr><td class="paramname">Func</td><td>목적 함수 타입 (람다식, 펑터 등) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>최소화하고자 하는 목적 함수 </td></tr>
+    <tr><td class="paramname">x</td><td>탐색을 시작할 초기 위치 배열 </td></tr>
+    <tr><td class="paramname">max_iter</td><td>무한 루프를 방지하기 위한 최대 허용 반복 횟수 </td></tr>
+    <tr><td class="paramname">tol</td><td>수렴 판정을 위한 허용 오차 (기울기 벡터의 크기가 이 값보다 작아지면 수렴 판정) </td></tr>
+    <tr><td class="paramname">verbose</td><td>최적화 진행 상황(반복 횟수, 함수값 등)을 콘솔에 출력할지 여부 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::array&lt;double, N&gt; 최적화가 완료된 최종 해(파라미터 벡터) </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/Optimization/<a class="el" href="ConjugateGradient_8hpp_source.html">ConjugateGradient.hpp</a></li>
 </ul>

@@ -92,129 +92,161 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define OPTIMIZATION_BLOCK_BANDED_SOLVER_HPP_</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;Optimization/Matrix/BlockBandedStorage.hpp&quot;</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span>Optimization {</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> Nx, <span class="keywordtype">size_t</span> Nu, <span class="keywordtype">size_t</span> Np&gt;</div>
-<div class="foldopen" id="foldopen00010" data-start="{" data-end="};">
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno"><a class="line" href="classOptimization_1_1BlockBandedSolver.html">   10</a></span><span class="keyword">class </span><a class="code hl_class" href="classOptimization_1_1BlockBandedSolver.html">BlockBandedSolver</a> {</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>   <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    <span class="comment">// 호라이즌 전체의 데이터를 담는 배열 (힙 할당 없음)</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    std::array&lt;NMPCStorageData&lt;Nx, Nu&gt;, Np&gt; stages;</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="comment">// 터미널 코스트 (Terminal Stage)</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <a class="code hl_class" href="classStaticMatrix.html">StaticMatrix&lt;double, Nx, Nx&gt;</a> P_N;</div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, Nx&gt;</a> p_N_vec;</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span> </div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="comment">// 전체 시스템의 해 (Delta x, Delta u)</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    std::array&lt;StaticVector&lt;double, Nx&gt;, Np + 1&gt; dx;</div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    std::array&lt;StaticVector&lt;double, Nu&gt;, Np&gt; du;</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span> </div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <a class="code hl_class" href="classOptimization_1_1BlockBandedSolver.html">BlockBandedSolver</a>() {</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        P_N.<a class="code hl_function" href="classStaticMatrix.html#a9d9c516df2280ffe76094dbea19371fd">set_zero</a>();</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        p_N_vec.<a class="code hl_function" href="classStaticMatrix.html#a9d9c516df2280ffe76094dbea19371fd">set_zero</a>();</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    }</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
-<div class="foldopen" id="foldopen00033" data-start="{" data-end="}">
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="classOptimization_1_1BlockBandedSolver.html#a65900cc41cbd835a5b683124b4f735bd">   33</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classOptimization_1_1BlockBandedSolver.html#a65900cc41cbd835a5b683124b4f735bd">backward_pass</a>() {</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        <span class="comment">// 1. 종단 조건 (Terminal Condition) 초기화</span></div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        <a class="code hl_class" href="classStaticMatrix.html">StaticMatrix&lt;double, Nx, Nx&gt;</a> P_next = P_N;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, Nx&gt;</a> p_next = p_N_vec;</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <span class="comment">// 2. 미래 (Np-1)부터 현재 (0)로 역행</span></div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> k = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(Np) - 1; k &gt;= 0; --k) {</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>            <span class="keyword">auto</span>&amp; s = stages[k];</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>            <span class="comment">// H_xx = Q_k + A_k^T * P_{k+1} * A_k</span></div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticMatrix&lt;double, Nx, Nx&gt;</a> H_xx = s.Q + s.A.<a class="code hl_function" href="classStaticMatrix.html#a0b291cb8d1d7ac48954bdeae918ff5ef">quadratic_multiply</a>(P_next);</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>            <span class="comment">// H_uu = R_k + B_k^T * P_{k+1} * B_k</span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticMatrix&lt;double, Nu, Nu&gt;</a> H_uu = s.R + s.B.<a class="code hl_function" href="classStaticMatrix.html#a0b291cb8d1d7ac48954bdeae918ff5ef">quadratic_multiply</a>(P_next);</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>            <span class="comment">// H_ux = B_k^T * P_{k+1} * A_k</span></div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticMatrix&lt;double, Nx, Nx&gt;</a> P_A = P_next * s.A;</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticMatrix&lt;double, Nu, Nx&gt;</a> H_ux = s.B.transpose() * P_A;</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            <span class="comment">// 벡터 항 계산 (Gradient)</span></div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>            <span class="comment">// g_u = r_k + B_k^T * (P_{k+1} * d_k + p_{k+1})</span></div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, Nx&gt;</a> P_d_p = (P_next * s.d) + p_next;</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, Nu&gt;</a> g_u = s.r + (s.B.transpose() * P_d_p);</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>            <span class="comment">// g_x = q_k + A_k^T * (P_{k+1} * d_k + p_{k+1})</span></div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, Nx&gt;</a> g_x = s.q + (s.A.transpose() * P_d_p);</div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>            <span class="comment">// H_uu 분해 (Positive Definite 검증)</span></div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>            <span class="keywordflow">if</span> (!H_uu.<a class="code hl_function" href="classStaticMatrix.html#a41fe1aba4edb465f1543784b8a135225">LDLT_decompose</a>()) {</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>                <span class="comment">// 수치적 불안정성 방어 (Damping)</span></div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>                <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; Nu; ++i) {</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                    H_uu(i, i) += 1e-4;</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>                }</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>                <span class="keywordflow">if</span> (!H_uu.<a class="code hl_function" href="classStaticMatrix.html#a41fe1aba4edb465f1543784b8a135225">LDLT_decompose</a>()) {</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>                }</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            }</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span> </div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            <span class="comment">// 피드백 게인 K_k = -H_uu^{-1} * H_ux</span></div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticMatrix&lt;double, Nu, Nx&gt;</a> neg_H_ux = H_ux * -1.0;</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            s.K = H_uu.template solve_multiple&lt;Nx&gt;(neg_H_ux);</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            <span class="comment">// 피드포워드 게인 k_ff = -H_uu^{-1} * g_u</span></div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, Nu&gt;</a> neg_g_u;</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; Nu; ++i) {</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>                neg_g_u(i) = -g_u(i);</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            }</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>            s.k_ff = H_uu.<a class="code hl_function" href="classStaticMatrix.html#abcbd4cca0fb1a424482849cd598601f4">LDLT_solve</a>(neg_g_u);</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            <span class="comment">// Value Function 갱신 (P_k, p_k)</span></div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            <span class="comment">// P_k = H_xx + K_k^T * H_uu * K_k + K_k^T * H_ux + H_ux^T * K_k</span></div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>            <span class="comment">// 구조적 단순화 : P_k = H_xx + H_ux^T * K_k</span></div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>            s.P = H_xx + (H_ux.transpose() * s.K);</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            <span class="comment">// p_k = g_x + H_ux^T * k_ff</span></div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            s.p_vec = g_x + (H_ux.transpose() * s.k_ff);</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            <span class="comment">// 다음 스텝 (뒤로 이동)을 위해 갱신</span></div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>            P_next = s.P;</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>            p_next = s.p_vec;</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>        }</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    }</div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;array&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;Optimization/Matrix/BlockBandedStorage.hpp&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span>Optimization {</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span><span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> Nx, <span class="keywordtype">size_t</span> Nu, <span class="keywordtype">size_t</span> Np&gt;</div>
+<div class="foldopen" id="foldopen00027" data-start="{" data-end="};">
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="classOptimization_1_1BlockBandedSolver.html">   27</a></span><span class="keyword">class </span><a class="code hl_class" href="classOptimization_1_1BlockBandedSolver.html">BlockBandedSolver</a> {</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>   <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno"><a class="line" href="classOptimization_1_1BlockBandedSolver.html#a2fa8f13d83b60608546165b4832fec72">   33</a></span>    std::array&lt;NMPCStorageData&lt;Nx, Nu&gt;, Np&gt; <a class="code hl_variable" href="classOptimization_1_1BlockBandedSolver.html#a2fa8f13d83b60608546165b4832fec72">stages</a>;</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="comment">// =====================================================================</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="comment">// 종단 비용 (Terminal Stage Cost) 블록</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="comment">// 호라이즌의 마지막 시점(t = Np)에 도달했을 때 적용되는 2차 비용 및 선형 비용입니다.</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="comment">// L_N(x) = 0.5 * x_N^T * P_N * x_N + p_N_vec^T * x_N</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="comment">// =====================================================================</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <a class="code hl_class" href="classStaticMatrix.html">StaticMatrix&lt;double, Nx, Nx&gt;</a> P_N;</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, Nx&gt;</a> p_N_vec;</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="comment">// =====================================================================</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="comment">// 최적 해(Optimal Solution) 저장 배열</span></div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="comment">// =====================================================================</span></div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="classOptimization_1_1BlockBandedSolver.html#a6d494c8f49c5ac3748e39f332040c71d">   48</a></span>    std::array&lt;StaticVector&lt;double, Nx&gt;, Np + 1&gt; <a class="code hl_variable" href="classOptimization_1_1BlockBandedSolver.html#a6d494c8f49c5ac3748e39f332040c71d">dx</a>;</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="classOptimization_1_1BlockBandedSolver.html#a60c154f014006d9b5d07b3b7607bda84">   51</a></span>    std::array&lt;StaticVector&lt;double, Nu&gt;, Np&gt; <a class="code hl_variable" href="classOptimization_1_1BlockBandedSolver.html#a60c154f014006d9b5d07b3b7607bda84">du</a>;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="foldopen" id="foldopen00057" data-start="{" data-end="}">
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="classOptimization_1_1BlockBandedSolver.html#aeb2d146f03403af1d3f49c80c2687019">   57</a></span>    <a class="code hl_function" href="classOptimization_1_1BlockBandedSolver.html#aeb2d146f03403af1d3f49c80c2687019">BlockBandedSolver</a>() {</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        P_N.<a class="code hl_function" href="classStaticMatrix.html#a9d9c516df2280ffe76094dbea19371fd">set_zero</a>();</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        p_N_vec.<a class="code hl_function" href="classStaticMatrix.html#a9d9c516df2280ffe76094dbea19371fd">set_zero</a>();</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    }</div>
 </div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span> </div>
-<div class="foldopen" id="foldopen00102" data-start="{" data-end="}">
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno"><a class="line" href="classOptimization_1_1BlockBandedSolver.html#ac6475a6e1cc5218f43a1e0702b66b751">  102</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classOptimization_1_1BlockBandedSolver.html#ac6475a6e1cc5218f43a1e0702b66b751">forward_pass</a>(<span class="keyword">const</span> <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, Nx&gt;</a>&amp; dx_0) {</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        dx[0] = dx_0;  <span class="comment">// 초기 상태 오차</span></div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> k = 0; k &lt; Np; ++k) {</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            <span class="keyword">auto</span>&amp; s = stages[k];</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            <span class="comment">// u_k = K_k * x_k + k_ff</span></div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>            du[k] = (s.K * dx[k]) + s.k_ff;</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>            <span class="comment">// x_{k+1} = A_k * x_k + B_k * u_k + d_k</span></div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            dx[k + 1] = (s.A * dx[k]) + (s.B * du[k]) + s.d;</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        }</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    }</div>
-</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span> </div>
+<div class="foldopen" id="foldopen00072" data-start="{" data-end="}">
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno"><a class="line" href="classOptimization_1_1BlockBandedSolver.html#a65900cc41cbd835a5b683124b4f735bd">   72</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classOptimization_1_1BlockBandedSolver.html#a65900cc41cbd835a5b683124b4f735bd">backward_pass</a>() {</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="comment">// 1. 종단 조건 (Terminal Condition)을 초기 가치 함수의 파라미터로 설정 (V_N(x) = Terminal Cost)</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <a class="code hl_class" href="classStaticMatrix.html">StaticMatrix&lt;double, Nx, Nx&gt;</a> P_next = P_N;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, Nx&gt;</a> p_next = p_N_vec;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="comment">// 2. 미래 (Np-1)부터 현재 (0)로 역행하며 동적 계획법(Dynamic Programming) 수행</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="keywordflow">for</span> (<span class="keywordtype">int</span> k = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(Np) - 1; k &gt;= 0; --k) {</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            <span class="keyword">auto</span>&amp; s = <a class="code hl_variable" href="classOptimization_1_1BlockBandedSolver.html#a2fa8f13d83b60608546165b4832fec72">stages</a>[k];</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>            <span class="comment">// [Step 2-1] Q 함수 (State-Action Value Function) 근사를 위한 블록 텐서(Hessian 블록) 계산</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            <span class="comment">// H_xx = Q_k + A_k^T * P_{k+1} * A_k (상태에 대한 2차 미분)</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticMatrix&lt;double, Nx, Nx&gt;</a> H_xx = s.Q + s.A.<a class="code hl_function" href="classStaticMatrix.html#a0b291cb8d1d7ac48954bdeae918ff5ef">quadratic_multiply</a>(P_next);</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>            <span class="comment">// H_uu = R_k + B_k^T * P_{k+1} * B_k (제어 입력에 대한 2차 미분)</span></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticMatrix&lt;double, Nu, Nu&gt;</a> H_uu = s.R + s.B.<a class="code hl_function" href="classStaticMatrix.html#a0b291cb8d1d7ac48954bdeae918ff5ef">quadratic_multiply</a>(P_next);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>            <span class="comment">// H_ux = B_k^T * P_{k+1} * A_k (상태와 제어 입력 간의 교차 2차 미분)</span></div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticMatrix&lt;double, Nx, Nx&gt;</a> P_A = P_next * s.A;</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticMatrix&lt;double, Nu, Nx&gt;</a> H_ux = s.B.transpose() * P_A;</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>            <span class="comment">// [Step 2-2] Q 함수 (State-Action Value Function) 근사를 위한 1차 Gradient 벡터 계산</span></div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>            <span class="comment">// 보조 벡터: P_{k+1} * d_k + p_{k+1}</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, Nx&gt;</a> P_d_p = (P_next * s.d) + p_next;</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            </div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            <span class="comment">// g_u = r_k + B_k^T * (P_{k+1} * d_k + p_{k+1}) (제어 입력에 대한 1차 미분)</span></div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, Nu&gt;</a> g_u = s.r + (s.B.transpose() * P_d_p);</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>            <span class="comment">// g_x = q_k + A_k^T * (P_{k+1} * d_k + p_{k+1}) (상태에 대한 1차 미분)</span></div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, Nx&gt;</a> g_x = s.q + (s.A.transpose() * P_d_p);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>            <span class="comment">// [Step 2-3] H_uu의 역행렬 연산을 위한 LDLT 분해 (H_uu는 Positive Definite여야 함)</span></div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>            <span class="keywordflow">if</span> (!H_uu.<a class="code hl_function" href="classStaticMatrix.html#a41fe1aba4edb465f1543784b8a135225">LDLT_decompose</a>()) {</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>                <span class="comment">// H_uu가 양의 정부호(Positive Definite)가 아니어 역행렬을 구할 수 없는 경우 (수치적 불안정성 발생)</span></div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>                <span class="comment">// 대각 원소에 작은 양수(1e-4)를 더해주는 Damping(Tikhonov Regularization)을 적용하여 방어합니다.</span></div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>                <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; Nu; ++i) {</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>                    H_uu(i, i) += 1e-4;</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>                }</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>                <span class="comment">// Damping 적용 후 다시 분해 시도. 그래도 실패하면 문제를 풀 수 없으므로 false 반환.</span></div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>                <span class="keywordflow">if</span> (!H_uu.<a class="code hl_function" href="classStaticMatrix.html#a41fe1aba4edb465f1543784b8a135225">LDLT_decompose</a>()) {</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>                    <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>                }</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>            }</div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
-<div class="foldopen" id="foldopen00118" data-start="{" data-end="}">
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno"><a class="line" href="classOptimization_1_1BlockBandedSolver.html#a7a52243645fff61f13c35384ee9480c7">  118</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classOptimization_1_1BlockBandedSolver.html#a7a52243645fff61f13c35384ee9480c7">solve</a>(<span class="keyword">const</span> <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, Nx&gt;</a>&amp; dx_0) {</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        <span class="keywordflow">if</span> (!<a class="code hl_function" href="classOptimization_1_1BlockBandedSolver.html#a65900cc41cbd835a5b683124b4f735bd">backward_pass</a>()) {</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;  <span class="comment">// H_uu 행렬 특이성 발생 (Infeasible)</span></div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        }</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        <a class="code hl_function" href="classOptimization_1_1BlockBandedSolver.html#ac6475a6e1cc5218f43a1e0702b66b751">forward_pass</a>(dx_0);</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    }</div>
-</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>};</div>
-</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>}  <span class="comment">// namespace Optimization</span></div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>            <span class="comment">// [Step 2-4] 최적 제어 이득(Gain) 계산</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            <span class="comment">// 피드백 게인: K_k = -H_uu^{-1} * H_ux</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>            <span class="comment">// (H_ux 각 열에 대해 H_uu의 역행렬을 곱하는 solve_multiple 연산 수행)</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticMatrix&lt;double, Nu, Nx&gt;</a> neg_H_ux = H_ux * -1.0;</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            s.K = H_uu.template solve_multiple&lt;Nx&gt;(neg_H_ux);</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>            <span class="comment">// 피드포워드 게인: k_ff_k = -H_uu^{-1} * g_u</span></div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>            <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, Nu&gt;</a> neg_g_u;</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; Nu; ++i) {</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>                neg_g_u(i) = -g_u(i);</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>            }</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>            s.k_ff = H_uu.<a class="code hl_function" href="classStaticMatrix.html#abcbd4cca0fb1a424482849cd598601f4">LDLT_solve</a>(neg_g_u);</div>
 <div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_BLOCK_BANDED_SOLVER_HPP_</span></div>
-<div class="ttc" id="aclassOptimization_1_1BlockBandedSolver_html"><div class="ttname"><a href="classOptimization_1_1BlockBandedSolver.html">Optimization::BlockBandedSolver</a></div><div class="ttdef"><b>Definition</b> BlockBandedSolver.hpp:10</div></div>
-<div class="ttc" id="aclassOptimization_1_1BlockBandedSolver_html_a65900cc41cbd835a5b683124b4f735bd"><div class="ttname"><a href="classOptimization_1_1BlockBandedSolver.html#a65900cc41cbd835a5b683124b4f735bd">Optimization::BlockBandedSolver::backward_pass</a></div><div class="ttdeci">bool backward_pass()</div><div class="ttdoc">역방향 탐색 (Backward Pass) 목적지 (N_p)에서 시작하여 현재 (0)까지 Value Function을 갱신하며 최적 제어 법칙 (K)과 피드포워드 (k_ff)를 도출합...</div><div class="ttdef"><b>Definition</b> BlockBandedSolver.hpp:33</div></div>
-<div class="ttc" id="aclassOptimization_1_1BlockBandedSolver_html_a7a52243645fff61f13c35384ee9480c7"><div class="ttname"><a href="classOptimization_1_1BlockBandedSolver.html#a7a52243645fff61f13c35384ee9480c7">Optimization::BlockBandedSolver::solve</a></div><div class="ttdeci">bool solve(const StaticVector&lt; double, Nx &gt; &amp;dx_0)</div><div class="ttdoc">전체 해법 실행 (O(Np) Complexity)</div><div class="ttdef"><b>Definition</b> BlockBandedSolver.hpp:118</div></div>
-<div class="ttc" id="aclassOptimization_1_1BlockBandedSolver_html_ac6475a6e1cc5218f43a1e0702b66b751"><div class="ttname"><a href="classOptimization_1_1BlockBandedSolver.html#ac6475a6e1cc5218f43a1e0702b66b751">Optimization::BlockBandedSolver::forward_pass</a></div><div class="ttdeci">void forward_pass(const StaticVector&lt; double, Nx &gt; &amp;dx_0)</div><div class="ttdoc">순방향 탐색 (Forward Pass) Backward Pass에서 만든 지도 (K, k_ff)를 따라가며 실제 제어 입력 (du)과 예상 궤적 (dx)을 산출합시다.</div><div class="ttdef"><b>Definition</b> BlockBandedSolver.hpp:102</div></div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>            <span class="comment">// [Step 2-5] 가치 함수(Value Function) 갱신 (P_k, p_k 계산)</span></div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>            <span class="comment">// 원래 식: P_k = H_xx + K_k^T * H_uu * K_k + K_k^T * H_ux + H_ux^T * K_k</span></div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>            <span class="comment">// 위 식은 K_k = -H_uu^{-1} * H_ux 를 대입하면 구조적으로 아래와 같이 단순화됩니다:</span></div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>            <span class="comment">// P_k = H_xx + H_ux^T * K_k</span></div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>            s.P = H_xx + (H_ux.transpose() * s.K);</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>            <span class="comment">// p_k = g_x + H_ux^T * k_ff_k</span></div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>            s.p_vec = g_x + (H_ux.transpose() * s.k_ff);</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>            <span class="comment">// 다음 시간 스텝(더 과거의 시간, k-1)의 계산을 위해 P_next와 p_next를 갱신합니다.</span></div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>            P_next = s.P;</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>            p_next = s.p_vec;</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>        }</div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    }</div>
+</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span> </div>
+<div class="foldopen" id="foldopen00153" data-start="{" data-end="}">
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno"><a class="line" href="classOptimization_1_1BlockBandedSolver.html#ac6475a6e1cc5218f43a1e0702b66b751">  153</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="classOptimization_1_1BlockBandedSolver.html#ac6475a6e1cc5218f43a1e0702b66b751">forward_pass</a>(<span class="keyword">const</span> <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, Nx&gt;</a>&amp; dx_0) {</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        <a class="code hl_variable" href="classOptimization_1_1BlockBandedSolver.html#a6d494c8f49c5ac3748e39f332040c71d">dx</a>[0] = dx_0;  <span class="comment">// 시점 t = 0 의 초기 상태 세팅</span></div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>        </div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        <span class="comment">// 현재 (0)부터 미래 (Np-1)까지 순행하며 궤적 생성</span></div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> k = 0; k &lt; Np; ++k) {</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>            <span class="keyword">auto</span>&amp; s = <a class="code hl_variable" href="classOptimization_1_1BlockBandedSolver.html#a2fa8f13d83b60608546165b4832fec72">stages</a>[k];</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>            <span class="comment">// 최적 제어 입력 산출: u_k = K_k * x_k + k_ff_k</span></div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>            <a class="code hl_variable" href="classOptimization_1_1BlockBandedSolver.html#a60c154f014006d9b5d07b3b7607bda84">du</a>[k] = (s.K * <a class="code hl_variable" href="classOptimization_1_1BlockBandedSolver.html#a6d494c8f49c5ac3748e39f332040c71d">dx</a>[k]) + s.k_ff;</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span> </div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>            <span class="comment">// 다음 상태 예측 (선형화된 시스템 동역학 방정식 적용): </span></div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>            <span class="comment">// x_{k+1} = A_k * x_k + B_k * u_k + d_k</span></div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>            <a class="code hl_variable" href="classOptimization_1_1BlockBandedSolver.html#a6d494c8f49c5ac3748e39f332040c71d">dx</a>[k + 1] = (s.A * <a class="code hl_variable" href="classOptimization_1_1BlockBandedSolver.html#a6d494c8f49c5ac3748e39f332040c71d">dx</a>[k]) + (s.B * <a class="code hl_variable" href="classOptimization_1_1BlockBandedSolver.html#a60c154f014006d9b5d07b3b7607bda84">du</a>[k]) + s.d;</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        }</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    }</div>
+</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span> </div>
+<div class="foldopen" id="foldopen00178" data-start="{" data-end="}">
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno"><a class="line" href="classOptimization_1_1BlockBandedSolver.html#a7a52243645fff61f13c35384ee9480c7">  178</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classOptimization_1_1BlockBandedSolver.html#a7a52243645fff61f13c35384ee9480c7">solve</a>(<span class="keyword">const</span> <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, Nx&gt;</a>&amp; dx_0) {</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>        <span class="comment">// 1. 역방향 탐색을 통해 최적 제어 이득(K, k_ff) 계산</span></div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>        <span class="keywordflow">if</span> (!<a class="code hl_function" href="classOptimization_1_1BlockBandedSolver.html#a65900cc41cbd835a5b683124b4f735bd">backward_pass</a>()) {</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>            <span class="comment">// H_uu 행렬이 특이행렬(Singular)이 되거나 Damping으로도 해결 불가능한 경우 (Infeasible)</span></div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;  </div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>        }</div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>        </div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>        <span class="comment">// 2. 도출된 제어 이득을 바탕으로 초기 상태 dx_0부터 순방향으로 제어 입력과 상태 궤적 시뮬레이션</span></div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        <a class="code hl_function" href="classOptimization_1_1BlockBandedSolver.html#ac6475a6e1cc5218f43a1e0702b66b751">forward_pass</a>(dx_0);</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        </div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>    }</div>
+</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>};</div>
+</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>}  <span class="comment">// namespace Optimization</span></div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span> </div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_BLOCK_BANDED_SOLVER_HPP_</span></div>
+<div class="ttc" id="aclassOptimization_1_1BlockBandedSolver_html"><div class="ttname"><a href="classOptimization_1_1BlockBandedSolver.html">Optimization::BlockBandedSolver</a></div><div class="ttdoc">NMPC(Nonlinear Model Predictive Control) 최적화를 위한 블록 밴드형(Block-Banded) 리카티(Riccati) 솔버 클래스.</div><div class="ttdef"><b>Definition</b> BlockBandedSolver.hpp:27</div></div>
+<div class="ttc" id="aclassOptimization_1_1BlockBandedSolver_html_a2fa8f13d83b60608546165b4832fec72"><div class="ttname"><a href="classOptimization_1_1BlockBandedSolver.html#a2fa8f13d83b60608546165b4832fec72">Optimization::BlockBandedSolver::stages</a></div><div class="ttdeci">std::array&lt; NMPCStorageData&lt; Nx, Nu &gt;, Np &gt; stages</div><div class="ttdoc">호라이즌 전체의 시점(t = 0 ~ Np-1)마다 필요한 선형화 모델 및 비용 함수 데이터를 담는 배열. 동적 할당 없이 std::array를 사용하여 스택(또는 BSS 섹션)에 할...</div><div class="ttdef"><b>Definition</b> BlockBandedSolver.hpp:33</div></div>
+<div class="ttc" id="aclassOptimization_1_1BlockBandedSolver_html_a60c154f014006d9b5d07b3b7607bda84"><div class="ttname"><a href="classOptimization_1_1BlockBandedSolver.html#a60c154f014006d9b5d07b3b7607bda84">Optimization::BlockBandedSolver::du</a></div><div class="ttdeci">std::array&lt; StaticVector&lt; double, Nu &gt;, Np &gt; du</div><div class="ttdoc">0부터 Np-1까지 각 시점의 최적 제어 입력 오차(Control input error, Delta u). 크기는 Np 입니다.</div><div class="ttdef"><b>Definition</b> BlockBandedSolver.hpp:51</div></div>
+<div class="ttc" id="aclassOptimization_1_1BlockBandedSolver_html_a65900cc41cbd835a5b683124b4f735bd"><div class="ttname"><a href="classOptimization_1_1BlockBandedSolver.html#a65900cc41cbd835a5b683124b4f735bd">Optimization::BlockBandedSolver::backward_pass</a></div><div class="ttdeci">bool backward_pass()</div><div class="ttdoc">역방향 탐색 (Backward Pass / Riccati Recursion)</div><div class="ttdef"><b>Definition</b> BlockBandedSolver.hpp:72</div></div>
+<div class="ttc" id="aclassOptimization_1_1BlockBandedSolver_html_a6d494c8f49c5ac3748e39f332040c71d"><div class="ttname"><a href="classOptimization_1_1BlockBandedSolver.html#a6d494c8f49c5ac3748e39f332040c71d">Optimization::BlockBandedSolver::dx</a></div><div class="ttdeci">std::array&lt; StaticVector&lt; double, Nx &gt;, Np+1 &gt; dx</div><div class="ttdoc">0부터 Np까지 각 시점의 상태 궤적 오차(State trajectory error, Delta x). 크기는 Np + 1 입니다.</div><div class="ttdef"><b>Definition</b> BlockBandedSolver.hpp:48</div></div>
+<div class="ttc" id="aclassOptimization_1_1BlockBandedSolver_html_a7a52243645fff61f13c35384ee9480c7"><div class="ttname"><a href="classOptimization_1_1BlockBandedSolver.html#a7a52243645fff61f13c35384ee9480c7">Optimization::BlockBandedSolver::solve</a></div><div class="ttdeci">bool solve(const StaticVector&lt; double, Nx &gt; &amp;dx_0)</div><div class="ttdoc">전체 해법 실행 (Solve)</div><div class="ttdef"><b>Definition</b> BlockBandedSolver.hpp:178</div></div>
+<div class="ttc" id="aclassOptimization_1_1BlockBandedSolver_html_ac6475a6e1cc5218f43a1e0702b66b751"><div class="ttname"><a href="classOptimization_1_1BlockBandedSolver.html#ac6475a6e1cc5218f43a1e0702b66b751">Optimization::BlockBandedSolver::forward_pass</a></div><div class="ttdeci">void forward_pass(const StaticVector&lt; double, Nx &gt; &amp;dx_0)</div><div class="ttdoc">순방향 탐색 (Forward Pass)</div><div class="ttdef"><b>Definition</b> BlockBandedSolver.hpp:153</div></div>
+<div class="ttc" id="aclassOptimization_1_1BlockBandedSolver_html_aeb2d146f03403af1d3f49c80c2687019"><div class="ttname"><a href="classOptimization_1_1BlockBandedSolver.html#aeb2d146f03403af1d3f49c80c2687019">Optimization::BlockBandedSolver::BlockBandedSolver</a></div><div class="ttdeci">BlockBandedSolver()</div><div class="ttdoc">생성자. 종단 비용을 나타내는 행렬 P_N과 벡터 p_N_vec를 0으로 초기화합니다.</div><div class="ttdef"><b>Definition</b> BlockBandedSolver.hpp:57</div></div>
 <div class="ttc" id="aclassStaticMatrix_html"><div class="ttname"><a href="classStaticMatrix.html">StaticMatrix</a></div><div class="ttdoc">전방 선언 (Forward Declaration)</div><div class="ttdef"><b>Definition</b> MatrixEngine.hpp:109</div></div>
 <div class="ttc" id="aclassStaticMatrix_html_a0b291cb8d1d7ac48954bdeae918ff5ef"><div class="ttname"><a href="classStaticMatrix.html#a0b291cb8d1d7ac48954bdeae918ff5ef">StaticMatrix::quadratic_multiply</a></div><div class="ttdeci">StaticMatrix&lt; T, Cols, Cols &gt; quadratic_multiply(const StaticMatrix&lt; T, P_Dim, P_Dim &gt; &amp;P) const</div><div class="ttdoc">샌드위치 2차 형식 곱셈 : Result = A^T * P * A Riccati Backward Pass에서 H_xx, H_uu를 조립할 때 캐시 미스를 최소화하여 계산</div><div class="ttdef"><b>Definition</b> MatrixEngine.hpp:958</div></div>
 <div class="ttc" id="aclassStaticMatrix_html_a41fe1aba4edb465f1543784b8a135225"><div class="ttname"><a href="classStaticMatrix.html#a41fe1aba4edb465f1543784b8a135225">StaticMatrix::LDLT_decompose</a></div><div class="ttdeci">bool LDLT_decompose()</div><div class="ttdoc">LDLT 분해 (Square-Root-Free Cholesky, A = L * D * L^T)</div><div class="ttdef"><b>Definition</b> MatrixEngine.hpp:522</div></div>
