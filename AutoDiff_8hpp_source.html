@@ -133,7 +133,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            <span class="comment">// 이원수를 인자로 함수를 평가하면 반환되는 결과 역시 이원수(Dual Number)가 됩니다.</span></div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            <span class="comment">// 반환된 이원수의 &#39;d&#39; 부분이 바로 우리가 찾고자 하는 i번째 변수에 대한 편미분 값입니다.</span></div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            <a class="code hl_struct" href="structOptimization_1_1Dual.html">Dual&lt;double&gt;</a> res = f(x_dual);</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            g(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(i)) = res.d;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            g(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(i)) = res.<a class="code hl_variable" href="structOptimization_1_1Dual.html#aaefd8e908ae455dc322d4e6b95db09c4">d</a>;</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        }</div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <span class="keywordflow">return</span> g;</div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    }</div>
@@ -160,10 +160,10 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>            <span class="comment">// 첫 번째 변수에 대한 순회(i == 0)에서 함수의 스칼라 결과값(실수부 v)을 추출합니다.</span></div>
 <div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>            <span class="comment">// 모든 반복에서 res.v는 동일한 f(x) 값을 가지므로 한 번만 저장하면 됩니다.</span></div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            <span class="keywordflow">if</span> (i == 0) {</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>                v_out = res.v;</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>                v_out = res.<a class="code hl_variable" href="structOptimization_1_1Dual.html#ad0413bca82bdd0c139225b080313c442">v</a>;</div>
 <div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>            }</div>
 <div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            <span class="comment">// 쌍대부(d)는 i번째 방향으로의 방향 도함수(편미분 값)입니다.</span></div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            g_out(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(i)) = res.d;</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            g_out(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(i)) = res.<a class="code hl_variable" href="structOptimization_1_1Dual.html#aaefd8e908ae455dc322d4e6b95db09c4">d</a>;</div>
 <div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        }</div>
 <div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    }</div>
 </div>
@@ -217,7 +217,9 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="aclassOptimization_1_1AutoDiff_html_afc2d3807943994aad03a4a1e1113e4b5"><div class="ttname"><a href="classOptimization_1_1AutoDiff.html#afc2d3807943994aad03a4a1e1113e4b5">Optimization::AutoDiff::value</a></div><div class="ttdeci">static double value(Func f, const StaticVector&lt; double, N &gt; &amp;x)</div><div class="ttdoc">목적 함수 또는 제약 조건 함수의 단순 스칼라 평가값(Value)을 반환합니다.</div><div class="ttdef"><b>Definition</b> AutoDiff.hpp:39</div></div>
 <div class="ttc" id="aclassStaticMatrix_html"><div class="ttname"><a href="classStaticMatrix.html">StaticMatrix</a></div><div class="ttdoc">전방 선언 (Forward Declaration)</div><div class="ttdef"><b>Definition</b> MatrixEngine.hpp:109</div></div>
 <div class="ttc" id="aclassStaticMatrix_html_a9d9c516df2280ffe76094dbea19371fd"><div class="ttname"><a href="classStaticMatrix.html#a9d9c516df2280ffe76094dbea19371fd">StaticMatrix::set_zero</a></div><div class="ttdeci">void set_zero()</div><div class="ttdoc">고속 영행렬 초기화 (Zero Initialization)</div><div class="ttdef"><b>Definition</b> MatrixEngine.hpp:172</div></div>
-<div class="ttc" id="astructOptimization_1_1Dual_html"><div class="ttname"><a href="structOptimization_1_1Dual.html">Optimization::Dual</a></div><div class="ttdef"><b>Definition</b> Dual.hpp:14</div></div>
+<div class="ttc" id="astructOptimization_1_1Dual_html"><div class="ttname"><a href="structOptimization_1_1Dual.html">Optimization::Dual</a></div><div class="ttdoc">전진 모드 자동 미분(Forward-mode Automatic Differentiation)을 위한 스칼라 듀얼(Dual) 수 구조체</div><div class="ttdef"><b>Definition</b> Dual.hpp:24</div></div>
+<div class="ttc" id="astructOptimization_1_1Dual_html_aaefd8e908ae455dc322d4e6b95db09c4"><div class="ttname"><a href="structOptimization_1_1Dual.html#aaefd8e908ae455dc322d4e6b95db09c4">Optimization::Dual::d</a></div><div class="ttdeci">T d</div><div class="ttdoc">값에 대한 1계 미분값 (Derivative)</div><div class="ttdef"><b>Definition</b> Dual.hpp:26</div></div>
+<div class="ttc" id="astructOptimization_1_1Dual_html_ad0413bca82bdd0c139225b080313c442"><div class="ttname"><a href="structOptimization_1_1Dual.html#ad0413bca82bdd0c139225b080313c442">Optimization::Dual::v</a></div><div class="ttdeci">T v</div><div class="ttdoc">원본 함수의 평가된 값 (Value)</div><div class="ttdef"><b>Definition</b> Dual.hpp:25</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

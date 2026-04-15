@@ -101,7 +101,8 @@ Static Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>공액 기울기법 (Conjugate Gradient Method) 최적화 알고리즘 </p>
-<p>1차 미분(Gradient) 정보만을 사용하여 최적점을 찾는 알고리즘으로, 순수 경사 하강법(Gradient Descent)이 가진 지그재그(Zig-zag) 현상과 느린 수렴 속도를 개선하기 위해 고안되었습니다.</p>
+<p>1차 미분(Gradient) 정보만을 사용하여 최적점을 찾는 알고리즘으로, 순수 경사 하강법(Gradient
+Descent)이 가진 지그재그(Zig-zag) 현상과 느린 수렴 속도를 개선하기 위해 고안되었습니다.</p>
 <p>가장 큰 특징은 이전의 탐색 방향과 새로운 탐색 방향이 서로 '공액(Conjugate, 직교를 일반화한 개념)'을 이루도록 방향을 설정한다는 것입니다. 이를 통해 N차원 2차 함수(Quadratic Function)의 경우 최대 N번의 반복 내에 정확한 최적해를 찾을 수 있다는 수학적 보장이 있습니다.</p>
 <p>본 구현에서는 비선형 함수에 널리 사용되는 Fletcher-Reeves 방식을 채택하였으며, 학습률(Learning Rate, alpha)을 고정하지 않고 Exact Line Search(선 탐색)를 통해 매 스텝마다 최적의 보폭을 스스로 찾습니다. </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>

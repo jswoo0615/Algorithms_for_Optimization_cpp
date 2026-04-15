@@ -92,88 +92,130 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define EQP_SOLVER_HPP_</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;Optimization/Matrix/MatrixEngine.hpp&quot;</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N_vars, <span class="keywordtype">size_t</span> N_cons&gt;</div>
-<div class="foldopen" id="foldopen00011" data-start="{" data-end="};">
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno"><a class="line" href="classEQPSolver.html">   11</a></span><span class="keyword">class </span><a class="code hl_class" href="classEQPSolver.html">EQPSolver</a> {</div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>   <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="comment">// ===========================================================</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="comment">// 1. Input Interface (문제 정의 파라미터)</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="comment">// ===========================================================</span></div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    <a class="code hl_class" href="classStaticMatrix.html">StaticMatrix&lt;double, N_vars, N_vars&gt;</a> P;  <span class="comment">// Hessian 근사치 (J^T J + R)</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_vars&gt;</a> q;          <span class="comment">// 선형 비용 (보통 에러 벡터의 투영)</span></div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>    <a class="code hl_class" href="classStaticMatrix.html">StaticMatrix&lt;double, N_cons, N_vars&gt;</a> A;  <span class="comment">// 등식 제약 행렬 (Dynamic 제약)</span></div>
-<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_cons&gt;</a> b;          <span class="comment">// 등식 제약 경곗값</span></div>
-<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span> </div>
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="comment">// ===========================================================</span></div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="comment">// 2. Output Interface (최적화 결과)</span></div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    <span class="comment">// ===========================================================</span></div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_vars&gt;</a> u_opt;       <span class="comment">// 최적 제어 입력 (Optimal Control)</span></div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_cons&gt;</a> lambda_opt;  <span class="comment">// 라그랑주 상수 (Dual Variables)</span></div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>   <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="comment">// ===========================================================</span></div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="comment">// 3. KKT System 정적 메모리</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N_vars, <span class="keywordtype">size_t</span> N_cons&gt;</div>
+<div class="foldopen" id="foldopen00028" data-start="{" data-end="};">
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno"><a class="line" href="classEQPSolver.html">   28</a></span><span class="keyword">class </span><a class="code hl_class" href="classEQPSolver.html">EQPSolver</a> {</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>   <span class="keyword">public</span>:</div>
 <div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    <span class="comment">// ===========================================================</span></div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">size_t</span> KKT_Size = N_vars + N_cons;</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <a class="code hl_class" href="classStaticMatrix.html">StaticMatrix&lt;double, KKT_Size, KKT_Size&gt;</a> KKT_Matrix;</div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, KKT_Size&gt;</a> KKT_rhs;</div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, KKT_Size&gt;</a> KKT_solution;</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>   <span class="keyword">public</span>:</div>
-<div class="foldopen" id="foldopen00042" data-start="{" data-end="}">
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno"><a class="line" href="classEQPSolver.html#a1f58abbd1cceae64471ca7a9c22da4cb">   42</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classEQPSolver.html#a1f58abbd1cceae64471ca7a9c22da4cb">solve</a>() {</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="comment">// LDLT_decompose는 행렬을 인플레이스 (In-place)로 덮어쓰며 파괴합니다.</span></div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="comment">// 따라서 매 solve 호출 시마다 이전 데이터의 찌꺼기를 완전히 지워야 합니다.</span></div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        KKT_Matrix.<a class="code hl_function" href="classStaticMatrix.html#a9d9c516df2280ffe76094dbea19371fd">set_zero</a>();</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        KKT_rhs.<a class="code hl_function" href="classStaticMatrix.html#a9d9c516df2280ffe76094dbea19371fd">set_zero</a>();</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        <span class="comment">// -------------------------------------------------------</span></div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        <span class="comment">// Step 1 : KKT_Matrix 블록 조립</span></div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        <span class="comment">// [P   A^T]</span></div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        <span class="comment">// [A   0  ]</span></div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        <span class="comment">// -------------------------------------------------------</span></div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        KKT_Matrix.<a class="code hl_function" href="classStaticMatrix.html#a7b00b0d5d9d322cfebdeef89bda1ddf6">insert_block</a>(0, 0, P);</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        KKT_Matrix.<a class="code hl_function" href="classStaticMatrix.html#a1a8e7a70a9910ddcf2dbd09fc295d247">insert_transposed_block</a>(0, N_vars, A);  <span class="comment">// Zero-copy Transpose</span></div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        KKT_Matrix.<a class="code hl_function" href="classStaticMatrix.html#a7b00b0d5d9d322cfebdeef89bda1ddf6">insert_block</a>(N_vars, 0, A);</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        <span class="comment">// 우하단 N_cons x N_cons 크기의 &#39;0&#39; 블록은 set_zero()로 인해 이미 0입니다</span></div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <span class="comment">// -------------------------------------------------------</span></div>
-<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <span class="comment">// Step 2 : RHS 블록 조립</span></div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        <span class="comment">// [ -q ]</span></div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        <span class="comment">// [  b ]</span></div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <span class="comment">// -------------------------------------------------------</span></div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_vars&gt;</a> neg_q = q * <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(-1.0);</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        KKT_rhs.<a class="code hl_function" href="classStaticMatrix.html#a7b00b0d5d9d322cfebdeef89bda1ddf6">insert_block</a>(0, 0, neg_q);</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        KKT_rhs.<a class="code hl_function" href="classStaticMatrix.html#a7b00b0d5d9d322cfebdeef89bda1ddf6">insert_block</a>(N_vars, 0, b);</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="comment">// -------------------------------------------------------</span></div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <span class="comment">// Step 3 : 최적화 엔진 가동 (LDLT 분해)</span></div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <span class="comment">// -------------------------------------------------------</span></div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="comment">// 주의 : KKT 행렬의 우하단이 0이므로 전체 행렬은 엄밀히 양정치 (PD)가 아닙니다.</span></div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="comment">// LDLT가 중간에 터진다면 KKT의 0 위치에 Regularization (예 : 1e-8 * I)이 필요할 수</span></div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        <span class="comment">// 있습니다.</span></div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="keywordflow">if</span> (!KKT_Matrix.<a class="code hl_function" href="classStaticMatrix.html#a41fe1aba4edb465f1543784b8a135225">LDLT_decompose</a>()) {</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;  <span class="comment">// 특이 행렬이거나 솔버 실패 (Fallback 로직 발동 필요)</span></div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        }</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="comment">// 1. Input Interface (문제 정의 파라미터)</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="comment">// ===========================================================</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno"><a class="line" href="classEQPSolver.html#aa9bb24f54f2695f6f6fe0aac9c4ab734">   39</a></span>    <a class="code hl_class" href="classStaticMatrix.html">StaticMatrix&lt;double, N_vars, N_vars&gt;</a> <a class="code hl_variable" href="classEQPSolver.html#aa9bb24f54f2695f6f6fe0aac9c4ab734">P</a>;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    </div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno"><a class="line" href="classEQPSolver.html#afd87a45a0c824f4b15051b3568e2bd0f">   45</a></span>    <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_vars&gt;</a> <a class="code hl_variable" href="classEQPSolver.html#afd87a45a0c824f4b15051b3568e2bd0f">q</a>;</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno"><a class="line" href="classEQPSolver.html#a9b1047055ecb45658309f4cfb3db9490">   51</a></span>    <a class="code hl_class" href="classStaticMatrix.html">StaticMatrix&lt;double, N_cons, N_vars&gt;</a> <a class="code hl_variable" href="classEQPSolver.html#a9b1047055ecb45658309f4cfb3db9490">A</a>;</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="classEQPSolver.html#a1207e41ddee5497ff7a31b588aca10a0">   57</a></span>    <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_cons&gt;</a> <a class="code hl_variable" href="classEQPSolver.html#a1207e41ddee5497ff7a31b588aca10a0">b</a>;</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="comment">// ===========================================================</span></div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="comment">// 2. Output Interface (최적화 결과)</span></div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="comment">// ===========================================================</span></div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno"><a class="line" href="classEQPSolver.html#a1587d9fb87f73bd41205ebe350383bdc">   68</a></span>    <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_vars&gt;</a> <a class="code hl_variable" href="classEQPSolver.html#a1587d9fb87f73bd41205ebe350383bdc">u_opt</a>;</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno"><a class="line" href="classEQPSolver.html#ab13cd98ec664a08e60325081cd7075fc">   75</a></span>    <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_cons&gt;</a> <a class="code hl_variable" href="classEQPSolver.html#ab13cd98ec664a08e60325081cd7075fc">lambda_opt</a>;</div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        KKT_solution = KKT_Matrix.<a class="code hl_function" href="classStaticMatrix.html#abcbd4cca0fb1a424482849cd598601f4">LDLT_solve</a>(KKT_rhs);</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="comment">// -------------------------------------------------------</span></div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <span class="comment">// Step 4 : 최적해 (u, lambda) 분리 추출</span></div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <span class="comment">// -------------------------------------------------------</span></div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        u_opt = KKT_solution.template extract_block&lt;N_vars, 1&gt;(0, 0);</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        lambda_opt = KKT_solution.template extract_block&lt;N_cons, 1&gt;(N_vars, 0);</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>   <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <span class="comment">// ===========================================================</span></div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="comment">// 3. KKT System 정적 메모리 (Static Memory Allocation)</span></div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <span class="comment">// ===========================================================</span></div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>    </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    <span class="keyword">static</span> <span class="keyword">constexpr</span> <span class="keywordtype">size_t</span> KKT_Size = N_vars + N_cons;</div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span> </div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    }</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    <span class="comment">// 동적 힙 메모리 할당(new/malloc)을 배제하여 실시간(Real-Time) 제어 환경에서의 안전성과 속도를 확보합니다.</span></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <a class="code hl_class" href="classStaticMatrix.html">StaticMatrix&lt;double, KKT_Size, KKT_Size&gt;</a> KKT_Matrix; </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, KKT_Size&gt;</a> KKT_rhs;              </div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, KKT_Size&gt;</a> KKT_solution;         </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>   <span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00112" data-start="{" data-end="}">
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno"><a class="line" href="classEQPSolver.html#a1f58abbd1cceae64471ca7a9c22da4cb">  112</a></span>    <span class="keywordtype">bool</span> <a class="code hl_function" href="classEQPSolver.html#a1f58abbd1cceae64471ca7a9c22da4cb">solve</a>() {</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        <span class="comment">// -------------------------------------------------------</span></div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        <span class="comment">// [초기화]</span></div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        <span class="comment">// -------------------------------------------------------</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        <span class="comment">// LDLT_decompose는 계산 효율을 위해 대상 행렬을 덮어쓰면서(In-place 파괴) 진행됩니다.</span></div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        <span class="comment">// 따라서 같은 EQPSolver 인스턴스를 재사용하여 매번 solve()를 호출할 때,</span></div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>        <span class="comment">// 이전 루프에서 덮어씌워진 찌꺼기(데이터 쓰레기값)가 남지 않도록 완전히 0으로 초기화해야 합니다.</span></div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        KKT_Matrix.<a class="code hl_function" href="classStaticMatrix.html#a9d9c516df2280ffe76094dbea19371fd">set_zero</a>();</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        KKT_rhs.<a class="code hl_function" href="classStaticMatrix.html#a9d9c516df2280ffe76094dbea19371fd">set_zero</a>();</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        <span class="comment">// -------------------------------------------------------</span></div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        <span class="comment">// Step 1 : KKT_Matrix 블록(Block) 단위 조립</span></div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        <span class="comment">// 행렬 구조:</span></div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        <span class="comment">// [ P    A^T ]</span></div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        <span class="comment">// [ A     0  ]</span></div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        <span class="comment">// -------------------------------------------------------</span></div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>        </div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>        <span class="comment">// (1) 좌상단에 비용 함수 헤시안 행렬 P 삽입</span></div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>        KKT_Matrix.<a class="code hl_function" href="classStaticMatrix.html#a7b00b0d5d9d322cfebdeef89bda1ddf6">insert_block</a>(0, 0, <a class="code hl_variable" href="classEQPSolver.html#aa9bb24f54f2695f6f6fe0aac9c4ab734">P</a>);</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>        </div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>        <span class="comment">// (2) 우상단에 제약 조건 행렬 A의 전치(A^T) 삽입 </span></div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        <span class="comment">// (Zero-copy Transpose와 같은 최적화 기능이 포함된 insert_transposed_block 활용 권장)</span></div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        KKT_Matrix.<a class="code hl_function" href="classStaticMatrix.html#a1a8e7a70a9910ddcf2dbd09fc295d247">insert_transposed_block</a>(0, N_vars, <a class="code hl_variable" href="classEQPSolver.html#a9b1047055ecb45658309f4cfb3db9490">A</a>);  </div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        </div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>        <span class="comment">// (3) 좌하단에 제약 조건 행렬 A 삽입</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        KKT_Matrix.<a class="code hl_function" href="classStaticMatrix.html#a7b00b0d5d9d322cfebdeef89bda1ddf6">insert_block</a>(N_vars, 0, <a class="code hl_variable" href="classEQPSolver.html#a9b1047055ecb45658309f4cfb3db9490">A</a>);</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        </div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>        <span class="comment">// (4) 우하단 N_cons x N_cons 크기의 블록 행렬은, KKT_Matrix.set_zero()로 </span></div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>        <span class="comment">// 이미 메모리가 0으로 덮어씌워져 있으므로 추가적인 연산 없이 자연스럽게 &#39;0 블록&#39;이 됩니다.</span></div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span> </div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>        <span class="comment">// -------------------------------------------------------</span></div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        <span class="comment">// Step 2 : 우변 벡터(RHS Vector) 블록 조립</span></div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>        <span class="comment">// 벡터 구조:</span></div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>        <span class="comment">// [ -q ]</span></div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>        <span class="comment">// [  b ]</span></div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>        <span class="comment">// -------------------------------------------------------</span></div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>        </div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>        <span class="comment">// (1) 상단 파트: 비용 벡터 q의 부호 반전(-q) 삽입</span></div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>        <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_vars&gt;</a> neg_q = <a class="code hl_variable" href="classEQPSolver.html#afd87a45a0c824f4b15051b3568e2bd0f">q</a> * <span class="keyword">static_cast&lt;</span><span class="keywordtype">double</span><span class="keyword">&gt;</span>(-1.0);</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>        KKT_rhs.<a class="code hl_function" href="classStaticMatrix.html#a7b00b0d5d9d322cfebdeef89bda1ddf6">insert_block</a>(0, 0, neg_q);</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>        </div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>        <span class="comment">// (2) 하단 파트: 제약 조건 경곗값 벡터 b 삽입</span></div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>        KKT_rhs.<a class="code hl_function" href="classStaticMatrix.html#a7b00b0d5d9d322cfebdeef89bda1ddf6">insert_block</a>(N_vars, 0, <a class="code hl_variable" href="classEQPSolver.html#a1207e41ddee5497ff7a31b588aca10a0">b</a>);</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span> </div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>        <span class="comment">// -------------------------------------------------------</span></div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>        <span class="comment">// Step 3 : 최적화 연립방정식 풀이 (LDLT 분해 및 전/후진 대입)</span></div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>        <span class="comment">// -------------------------------------------------------</span></div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>        </div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>        <span class="comment">// KKT 행렬을 L(하삼각행렬) * D(대각행렬) * L^T 꼴로 분해합니다.</span></div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>        <span class="comment">// 분해가 터지는 경우(Zero Pivot 발생 등)는 수치적으로 풀 수 없음을 의미합니다.</span></div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>        <span class="comment">// 실무에서는 이런 현상을 대비하기 위해 우하단 0 블록에 (1e-8 * I) 같은 작은 값을 더해주는 </span></div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>        <span class="comment">// 정규화(Regularization) 기법(Fallback 로직)을 추가로 구성하기도 합니다.</span></div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>        <span class="keywordflow">if</span> (!KKT_Matrix.<a class="code hl_function" href="classStaticMatrix.html#a41fe1aba4edb465f1543784b8a135225">LDLT_decompose</a>()) {</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>            <span class="keywordflow">return</span> <span class="keyword">false</span>;  <span class="comment">// 특이 행렬이거나 솔버가 파탄(Singularity)나면 실패 처리</span></div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>        }</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>        <span class="comment">// 분해된 행렬 인자들(L, D)을 이용하여 O(N^2) 속도로 RHS에 대한 해를 구합니다.</span></div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>        KKT_solution = KKT_Matrix.<a class="code hl_function" href="classStaticMatrix.html#abcbd4cca0fb1a424482849cd598601f4">LDLT_solve</a>(KKT_rhs);</div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span> </div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>        <span class="comment">// -------------------------------------------------------</span></div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>        <span class="comment">// Step 4 : 결과 도출 (Primal &amp; Dual 최적해 분리 및 추출)</span></div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>        <span class="comment">// -------------------------------------------------------</span></div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>        </div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>        <span class="comment">// KKT 해 벡터의 앞부분(상단 N_vars 개)은 실제 우리가 구하고자 하는 최적 제어 변수(u) 입니다.</span></div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>        <a class="code hl_variable" href="classEQPSolver.html#a1587d9fb87f73bd41205ebe350383bdc">u_opt</a> = KKT_solution.template extract_block&lt;N_vars, 1&gt;(0, 0);</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>        </div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>        <span class="comment">// KKT 해 벡터의 뒷부분(하단 N_cons 개)은 최적 라그랑주 승수(lambda) 입니다.</span></div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>        <a class="code hl_variable" href="classEQPSolver.html#ab13cd98ec664a08e60325081cd7075fc">lambda_opt</a> = KKT_solution.template extract_block&lt;N_cons, 1&gt;(N_vars, 0);</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span> </div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>        <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>    }</div>
 </div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>};</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>};</div>
 </div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span><span class="preprocessor">#endif  </span><span class="comment">// EQP_SOLVER_HPP_</span></div>
-<div class="ttc" id="aclassEQPSolver_html"><div class="ttname"><a href="classEQPSolver.html">EQPSolver</a></div><div class="ttdoc">Equality-Constrainted Quadratic Programming Solver.</div><div class="ttdef"><b>Definition</b> EQPSolver.hpp:11</div></div>
-<div class="ttc" id="aclassEQPSolver_html_a1f58abbd1cceae64471ca7a9c22da4cb"><div class="ttname"><a href="classEQPSolver.html#a1f58abbd1cceae64471ca7a9c22da4cb">EQPSolver::solve</a></div><div class="ttdeci">bool solve()</div><div class="ttdoc">KKT 시스템을 조립하고 최적해를 도출합니다</div><div class="ttdef"><b>Definition</b> EQPSolver.hpp:42</div></div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span> </div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span><span class="preprocessor">#endif  </span><span class="comment">// EQP_SOLVER_HPP_</span></div>
+<div class="ttc" id="aclassEQPSolver_html"><div class="ttname"><a href="classEQPSolver.html">EQPSolver</a></div><div class="ttdoc">등식 제약 조건이 있는 이차 계획법(Equality-Constrained Quadratic Programming, EQP) 솔버 클래스</div><div class="ttdef"><b>Definition</b> EQPSolver.hpp:28</div></div>
+<div class="ttc" id="aclassEQPSolver_html_a1207e41ddee5497ff7a31b588aca10a0"><div class="ttname"><a href="classEQPSolver.html#a1207e41ddee5497ff7a31b588aca10a0">EQPSolver::b</a></div><div class="ttdeci">StaticVector&lt; double, N_cons &gt; b</div><div class="ttdoc">등식 제약 조건의 경곗값 벡터 (Equality Constraint Bound Vector)</div><div class="ttdef"><b>Definition</b> EQPSolver.hpp:57</div></div>
+<div class="ttc" id="aclassEQPSolver_html_a1587d9fb87f73bd41205ebe350383bdc"><div class="ttname"><a href="classEQPSolver.html#a1587d9fb87f73bd41205ebe350383bdc">EQPSolver::u_opt</a></div><div class="ttdeci">StaticVector&lt; double, N_vars &gt; u_opt</div><div class="ttdoc">계산된 최적의 제어 입력 벡터 (Optimal Control / Primal Variables)</div><div class="ttdef"><b>Definition</b> EQPSolver.hpp:68</div></div>
+<div class="ttc" id="aclassEQPSolver_html_a1f58abbd1cceae64471ca7a9c22da4cb"><div class="ttname"><a href="classEQPSolver.html#a1f58abbd1cceae64471ca7a9c22da4cb">EQPSolver::solve</a></div><div class="ttdeci">bool solve()</div><div class="ttdoc">KKT 시스템을 조립하고 선형대수 솔버(LDLT 분해)를 통해 최적해를 도출합니다.</div><div class="ttdef"><b>Definition</b> EQPSolver.hpp:112</div></div>
+<div class="ttc" id="aclassEQPSolver_html_a9b1047055ecb45658309f4cfb3db9490"><div class="ttname"><a href="classEQPSolver.html#a9b1047055ecb45658309f4cfb3db9490">EQPSolver::A</a></div><div class="ttdeci">StaticMatrix&lt; double, N_cons, N_vars &gt; A</div><div class="ttdoc">등식 제약 조건 행렬 (Equality Constraint / Dynamic 제약)</div><div class="ttdef"><b>Definition</b> EQPSolver.hpp:51</div></div>
+<div class="ttc" id="aclassEQPSolver_html_aa9bb24f54f2695f6f6fe0aac9c4ab734"><div class="ttname"><a href="classEQPSolver.html#aa9bb24f54f2695f6f6fe0aac9c4ab734">EQPSolver::P</a></div><div class="ttdeci">StaticMatrix&lt; double, N_vars, N_vars &gt; P</div><div class="ttdoc">목적 함수의 이차항 계수 행렬 (Hessian Matrix Approximation)</div><div class="ttdef"><b>Definition</b> EQPSolver.hpp:39</div></div>
+<div class="ttc" id="aclassEQPSolver_html_ab13cd98ec664a08e60325081cd7075fc"><div class="ttname"><a href="classEQPSolver.html#ab13cd98ec664a08e60325081cd7075fc">EQPSolver::lambda_opt</a></div><div class="ttdeci">StaticVector&lt; double, N_cons &gt; lambda_opt</div><div class="ttdoc">계산된 라그랑주 승수 벡터 (Lagrange Multipliers / Dual Variables)</div><div class="ttdef"><b>Definition</b> EQPSolver.hpp:75</div></div>
+<div class="ttc" id="aclassEQPSolver_html_afd87a45a0c824f4b15051b3568e2bd0f"><div class="ttname"><a href="classEQPSolver.html#afd87a45a0c824f4b15051b3568e2bd0f">EQPSolver::q</a></div><div class="ttdeci">StaticVector&lt; double, N_vars &gt; q</div><div class="ttdoc">목적 함수의 선형항 계수 벡터 (Linear Cost Vector / Gradient)</div><div class="ttdef"><b>Definition</b> EQPSolver.hpp:45</div></div>
 <div class="ttc" id="aclassStaticMatrix_html"><div class="ttname"><a href="classStaticMatrix.html">StaticMatrix</a></div><div class="ttdoc">전방 선언 (Forward Declaration)</div><div class="ttdef"><b>Definition</b> MatrixEngine.hpp:109</div></div>
 <div class="ttc" id="aclassStaticMatrix_html_a1a8e7a70a9910ddcf2dbd09fc295d247"><div class="ttname"><a href="classStaticMatrix.html#a1a8e7a70a9910ddcf2dbd09fc295d247">StaticMatrix::insert_transposed_block</a></div><div class="ttdeci">void insert_transposed_block(size_t start_row, size_t start_col, const StaticMatrix&lt; T, SubRows, SubCols &gt; &amp;block)</div><div class="ttdoc">전치(Transposed) 형태의 부분 행렬을 조립하여 바로 삽입</div><div class="ttdef"><b>Definition</b> MatrixEngine.hpp:905</div></div>
 <div class="ttc" id="aclassStaticMatrix_html_a41fe1aba4edb465f1543784b8a135225"><div class="ttname"><a href="classStaticMatrix.html#a41fe1aba4edb465f1543784b8a135225">StaticMatrix::LDLT_decompose</a></div><div class="ttdeci">bool LDLT_decompose()</div><div class="ttdoc">LDLT 분해 (Square-Root-Free Cholesky, A = L * D * L^T)</div><div class="ttdef"><b>Definition</b> MatrixEngine.hpp:522</div></div>

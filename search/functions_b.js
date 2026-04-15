@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['operator_2a_0',['operator*',['../classStaticMatrix.html#a53794cb9755606a6e37d24119c5b3bbb',1,'StaticMatrix']]],
-  ['optimize_1',['optimize',['../classOptimization_1_1AdaDelta.html#af4a124f7ed2061bfc9633dc9b9553c6c',1,'Optimization::AdaDelta::optimize()'],['../classOptimization_1_1AdaGrad.html#ab7308a43ac27b08205420224eb7d3408',1,'Optimization::AdaGrad::optimize()'],['../classOptimization_1_1Adam.html#ab5645f885d9e49bd9388ee5c4c474125',1,'Optimization::Adam::optimize()'],['../classOptimization_1_1BFGS.html#a9ec3a611b1847cd285e6b8ef2fed1b31',1,'Optimization::BFGS::optimize()'],['../classOptimization_1_1CMA__ES.html#a256a3991ece4c5abcb65969f0f4444ba',1,'Optimization::CMA_ES::optimize()'],['../classOptimization_1_1ConjugateGradient.html#afcc732ab873a61406281d80b2a8830d7',1,'Optimization::ConjugateGradient::optimize()'],['../classOptimization_1_1CrossEntropy.html#aab46aad8b4ebc73b615ea129f06b6a02',1,'Optimization::CrossEntropy::optimize()']]]
+  ['near_5fzero_0',['near_zero',['../structMathTraits.html#ae4bdc59135c8d5d2cb6093d6e7208758',1,'MathTraits::near_zero()'],['../structMathTraits_3_01Optimization_1_1Dual_3_01T_01_4_01_4.html#a5ce19b2b6c719ee9b20d4349544d65e7',1,'MathTraits&lt; Optimization::Dual&lt; T &gt; &gt;::near_zero()']]],
+  ['nmpcstoragedata_1',['NMPCStorageData',['../structOptimization_1_1NMPCStorageData.html#aea94e3ad87497b8459f40811eaf2ff7e',1,'Optimization::NMPCStorageData']]]
 ];

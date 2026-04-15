@@ -87,22 +87,88 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p><a class="el" href="classOptimization_1_1LineSearch.html">LineSearch</a> 모듈을 순환 좌표 탐색에 연결  
+<p>선 탐색(Line Search)을 순환 좌표 탐색에 연결하는 전략 구조체  
  <a href="structOptimization_1_1GoldenSectionStrategy.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="CyclicCoordinate_8hpp_source.html">CyclicCoordinate.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a6d408aef71c5aefed47c02985d2caa65" id="r_a6d408aef71c5aefed47c02985d2caa65"><td class="memTemplParams" colspan="2"><a id="a6d408aef71c5aefed47c02985d2caa65" name="a6d408aef71c5aefed47c02985d2caa65"></a>
-template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:a6d408aef71c5aefed47c02985d2caa65"><td class="memTemplItemLeft" align="right" valign="top">std::array&lt; double, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator()</b> (Func f, const std::array&lt; double, N &gt; &amp;x, const std::array&lt; double, N &gt; &amp;d) const noexcept</td></tr>
+<tr class="memitem:a6d408aef71c5aefed47c02985d2caa65" id="r_a6d408aef71c5aefed47c02985d2caa65"><td class="memTemplParams" colspan="2">template&lt;size_t N, typename Func &gt; </td></tr>
+<tr class="memitem:a6d408aef71c5aefed47c02985d2caa65"><td class="memTemplItemLeft" align="right" valign="top">std::array&lt; double, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="structOptimization_1_1GoldenSectionStrategy.html#a6d408aef71c5aefed47c02985d2caa65">operator()</a> (Func f, const std::array&lt; double, N &gt; &amp;x, const std::array&lt; double, N &gt; &amp;d) const noexcept</td></tr>
+<tr class="memdesc:a6d408aef71c5aefed47c02985d2caa65"><td class="mdescLeft">&#160;</td><td class="mdescRight">함수 f에 대해 위치 x에서 방향 d로 이동할 때의 최적 위치를 반환합니다.  <br /></td></tr>
 <tr class="separator:a6d408aef71c5aefed47c02985d2caa65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p><a class="el" href="classOptimization_1_1LineSearch.html">LineSearch</a> 모듈을 순환 좌표 탐색에 연결 </p>
-<p>구간 추정 (Bracket Minimum) 후 황금 분할 탐색 (Golden Section Search)을 연속 수행 </p>
-</div><hr/>The documentation for this struct was generated from the following file:<ul>
+<div class="textblock"><p>선 탐색(Line Search)을 순환 좌표 탐색에 연결하는 전략 구조체 </p>
+<p>최적화 과정에서 주어진 방향(d)으로 얼마나 이동할지(step size, alpha)를 결정하는 역할을 합니다. 본 구조체는 다음 두 단계를 거쳐 최적의 이동 보폭을 찾습니다.</p><ol type="1">
+<li>Bracket Minimum (구간 추정): 최솟값이 포함될 것으로 예상되는 초기 구간 [a, b]를 찾습니다.</li>
+<li>Golden Section Search (황금 분할 탐색): 해당 구간 내에서 황금비를 이용해 구간을 좁혀가며 정밀하게 최솟값을 찾습니다. </li>
+</ol>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a6d408aef71c5aefed47c02985d2caa65" name="a6d408aef71c5aefed47c02985d2caa65"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6d408aef71c5aefed47c02985d2caa65">&#9670;&#160;</a></span>operator()()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N, typename Func &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">std::array&lt; double, N &gt; Optimization::GoldenSectionStrategy::operator() </td>
+          <td>(</td>
+          <td class="paramtype">Func&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::array&lt; double, N &gt; &amp;&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::array&lt; double, N &gt; &amp;&#160;</td>
+          <td class="paramname"><em>d</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>함수 f에 대해 위치 x에서 방향 d로 이동할 때의 최적 위치를 반환합니다. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">N</td><td>변수의 차원 </td></tr>
+    <tr><td class="paramname">Func</td><td>목적 함수의 타입 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>최적화하려는 목적 함수 </td></tr>
+    <tr><td class="paramname">x</td><td>현재 위치 벡터 </td></tr>
+    <tr><td class="paramname">d</td><td>탐색 방향 벡터 (통상적으로 좌표축 중 하나를 나타내는 단위 벡터) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>최적의 step size를 적용하여 이동한 새로운 위치 벡터 </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following file:<ul>
 <li>include/Optimization/<a class="el" href="CyclicCoordinate_8hpp_source.html">CyclicCoordinate.hpp</a></li>
 </ul>
 </div><!-- contents -->

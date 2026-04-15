@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['iterations_0',['iterations',['../structOptimization_1_1OptimizationResultND.html#a97219625aa18497e876783546a56c985',1,'Optimization::OptimizationResultND']]]
+  ['g_0',['g',['../structOptimization_1_1DualVec.html#a262844a26e409eb1f25a06e4c8764774',1,'Optimization::DualVec']]]
 ];

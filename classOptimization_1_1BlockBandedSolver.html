@@ -175,7 +175,8 @@ template&lt;size_t Nx, size_t Nu, size_t Np&gt; </div>
 </div><div class="memdoc">
 
 <p>역방향 탐색 (Backward Pass / Riccati Recursion) </p>
-<p>목적지 (t = Np)에서 시작하여 현재 시점 (t = 0)까지 시간을 역행하며 가치 함수(Value Function)의 2차 미분(Hessian) 행렬인 <code>P</code>와 1차 미분(Gradient) 벡터인 <code>p_vec</code>를 갱신합니다. 이 과정을 통해 각 시점 k에서 최적의 피드백 제어 게인(K_k)과 피드포워드 제어 게인(k_ff_k)을 도출합니다.</p>
+<p>목적지 (t = Np)에서 시작하여 현재 시점 (t = 0)까지 시간을 역행하며 가치 함수(Value
+Function)의 2차 미분(Hessian) 행렬인 <code>P</code>와 1차 미분(Gradient) 벡터인 <code>p_vec</code>를 갱신합니다. 이 과정을 통해 각 시점 k에서 최적의 피드백 제어 게인(K_k)과 피드포워드 제어 게인(k_ff_k)을 도출합니다.</p>
 <dl class="section return"><dt>Returns</dt><dd>bool 연산 중 H_uu 행렬의 역행렬을 구할 수 없는 상태(수치적 불안정성, Positive Definite 조건 위배)가 발생하여 실패하면 false, 정상적으로 역방향 탐색을 마치면 true를 반환합니다. </dd></dl>
 
 </div>

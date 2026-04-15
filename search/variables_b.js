@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['r_0',['r',['../structOptimization_1_1NMPCStorageData.html#a365dc32b5b5e8555bb6a3b407dbe9295',1,'Optimization::NMPCStorageData::R'],['../structOptimization_1_1NMPCStorageData.html#ae025b940e728aad84a47922ba4ae4db3',1,'Optimization::NMPCStorageData::r']]],
-  ['row_5fptr_1',['row_ptr',['../classOptimization_1_1StaticSparseMatrix.html#a78122208167d79ff0f2e1c57b137f5ef',1,'Optimization::StaticSparseMatrix']]]
+  ['p_0',['p',['../classActiveSetSolver.html#a2b11e6f0fdd682a9b2cb116e89bfc788',1,'ActiveSetSolver::P'],['../classEQPSolver.html#aa9bb24f54f2695f6f6fe0aac9c4ab734',1,'EQPSolver::P'],['../structOptimization_1_1NMPCStorageData.html#a523022bca066c73f5d1e23d416198c3b',1,'Optimization::NMPCStorageData::P']]],
+  ['p_5fvec_1',['p_vec',['../structOptimization_1_1NMPCStorageData.html#aaef5665987f3dacfa161000b3fc3e623',1,'Optimization::NMPCStorageData']]]
 ];

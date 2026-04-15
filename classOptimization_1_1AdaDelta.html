@@ -101,9 +101,11 @@ Static Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p><a class="el" href="classOptimization_1_1AdaDelta.html" title="AdaDelta 최적화 알고리즘을 구현한 정적 클래스">AdaDelta</a> 최적화 알고리즘을 구현한 정적 클래스 </p>
-<p>기존의 <a class="el" href="classOptimization_1_1AdaGrad.html" title="AdaGrad (Adaptive Gradient) 최적화 알고리즘을 구현한 정적 클래스">AdaGrad</a> 알고리즘은 과거의 모든 기울기 제곱을 누적하므로 반복이 진행될수록 분모가 무한히 커지고, 결과적으로 학습률(Step Size)이 0에 수렴하여 학습이 조기 종료(Premature Convergence)되는 단점이 있습니다.</p>
+<p>기존의 <a class="el" href="classOptimization_1_1AdaGrad.html" title="AdaGrad (Adaptive Gradient) 최적화 알고리즘을 구현한 정적 클래스">AdaGrad</a> 알고리즘은 과거의 모든 기울기 제곱을 누적하므로 반복이 진행될수록 분모가 무한히 커지고, 결과적으로 학습률(Step Size)이 0에 수렴하여 학습이 조기 종료(Premature
+Convergence)되는 단점이 있습니다.</p>
 <p>AdaDelta는 이를 극복하기 위해 제안된 알고리즘으로, 두 가지 핵심 개선점을 가집니다:</p><ol type="1">
-<li>전체 과거 기울기가 아닌, 최근 기울기 정보에 가중치를 두는 '지수 이동 평균(Exponential Moving Average, EMA)'을 사용하여 기울기 제곱을 추적합니다.</li>
+<li>전체 과거 기울기가 아닌, 최근 기울기 정보에 가중치를 두는 '지수 이동 평균(Exponential Moving
+Average, EMA)'을 사용하여 기울기 제곱을 추적합니다.</li>
 <li>변수 업데이트량(Δx)의 지수 이동 평균도 함께 추적합니다. 이를 통해 업데이트의 물리적 단위(Unit)를 맞추어 사용자가 직접 지정해야 하는 글로벌 '학습률(Learning Rate)' 하이퍼파라미터를 완전히 제거했습니다.</li>
 </ol>
 <dl class="section note"><dt>Note</dt><dd>본 클래스는 MISRA C++ 코딩 표준을 지향하여 동적 메모리 할당을 배제하고, O(1) 정적 메모리와 FMA(Fused Multiply-Add) 명령어 지원, SIMD 벡터 최적화 구문을 통해 성능을 극대화하도록 설계되었습니다. </dd></dl>

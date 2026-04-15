@@ -87,26 +87,36 @@ $(function() {
   <div class="headertitle"><div class="title">Optimization::Dual&lt; T &gt; Struct Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>전진 모드 자동 미분(Forward-mode Automatic Differentiation)을 위한 스칼라 듀얼(Dual) 수 구조체  
+ <a href="structOptimization_1_1Dual.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Dual_8hpp_source.html">Dual.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:aaaa3073e088ec9788629aca8da3b6bbe" id="r_aaaa3073e088ec9788629aca8da3b6bbe"><td class="memItemLeft" align="right" valign="top"><a id="aaaa3073e088ec9788629aca8da3b6bbe" name="aaaa3073e088ec9788629aca8da3b6bbe"></a>
-constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>Dual</b> (const T &amp;value=T(0), const T &amp;deriv=T(0)) noexcept</td></tr>
+<tr class="memitem:aaaa3073e088ec9788629aca8da3b6bbe" id="r_aaaa3073e088ec9788629aca8da3b6bbe"><td class="memItemLeft" align="right" valign="top">constexpr&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOptimization_1_1Dual.html#aaaa3073e088ec9788629aca8da3b6bbe">Dual</a> (const T &amp;value=T(0), const T &amp;deriv=T(0)) noexcept</td></tr>
+<tr class="memdesc:aaaa3073e088ec9788629aca8da3b6bbe"><td class="mdescLeft">&#160;</td><td class="mdescRight">스칼라 값과 미분값으로 <a class="el" href="structOptimization_1_1Dual.html" title="전진 모드 자동 미분(Forward-mode Automatic Differentiation)을 위한 스칼라 듀얼(Dual) 수 구조체">Dual</a> Number를 초기화합니다.  <br /></td></tr>
 <tr class="separator:aaaa3073e088ec9788629aca8da3b6bbe"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a5ab2f9bc1d0689c26132cac89abf3dc9" id="r_a5ab2f9bc1d0689c26132cac89abf3dc9"><td class="memItemLeft" align="right" valign="top"><a id="a5ab2f9bc1d0689c26132cac89abf3dc9" name="a5ab2f9bc1d0689c26132cac89abf3dc9"></a>
 constexpr <a class="el" href="structOptimization_1_1Dual.html">Dual</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> () const noexcept</td></tr>
+<tr class="memdesc:a5ab2f9bc1d0689c26132cac89abf3dc9"><td class="mdescLeft">&#160;</td><td class="mdescRight">단항 음수 연산자 (f(x) = -x -&gt; f'(x) = -x') <br /></td></tr>
 <tr class="separator:a5ab2f9bc1d0689c26132cac89abf3dc9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab602a3d76aec8220ebe1b2515bc12f5f" id="r_ab602a3d76aec8220ebe1b2515bc12f5f"><td class="memItemLeft" align="right" valign="top"><a id="ab602a3d76aec8220ebe1b2515bc12f5f" name="ab602a3d76aec8220ebe1b2515bc12f5f"></a>
 constexpr <a class="el" href="structOptimization_1_1Dual.html">Dual</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (const <a class="el" href="structOptimization_1_1Dual.html">Dual</a> &amp;rhs) const noexcept</td></tr>
+<tr class="memdesc:ab602a3d76aec8220ebe1b2515bc12f5f"><td class="mdescLeft">&#160;</td><td class="mdescRight">덧셈 연산자 (f + g)' = f' + g' <br /></td></tr>
 <tr class="separator:ab602a3d76aec8220ebe1b2515bc12f5f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee3319b52430045d33ccced6b0d9ede3" id="r_aee3319b52430045d33ccced6b0d9ede3"><td class="memItemLeft" align="right" valign="top"><a id="aee3319b52430045d33ccced6b0d9ede3" name="aee3319b52430045d33ccced6b0d9ede3"></a>
 constexpr <a class="el" href="structOptimization_1_1Dual.html">Dual</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (const <a class="el" href="structOptimization_1_1Dual.html">Dual</a> &amp;rhs) const noexcept</td></tr>
+<tr class="memdesc:aee3319b52430045d33ccced6b0d9ede3"><td class="mdescLeft">&#160;</td><td class="mdescRight">뺄셈 연산자 (f - g)' = f' - g' <br /></td></tr>
 <tr class="separator:aee3319b52430045d33ccced6b0d9ede3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aebcf366983dff3321f21464dcba563e4" id="r_aebcf366983dff3321f21464dcba563e4"><td class="memItemLeft" align="right" valign="top"><a id="aebcf366983dff3321f21464dcba563e4" name="aebcf366983dff3321f21464dcba563e4"></a>
 constexpr <a class="el" href="structOptimization_1_1Dual.html">Dual</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (const <a class="el" href="structOptimization_1_1Dual.html">Dual</a> &amp;rhs) const noexcept</td></tr>
+<tr class="memdesc:aebcf366983dff3321f21464dcba563e4"><td class="mdescLeft">&#160;</td><td class="mdescRight">곱셈 연산자 (f * g)' = f'g + fg' (곱의 미분법) <br /></td></tr>
 <tr class="separator:aebcf366983dff3321f21464dcba563e4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a34c0099e89f01f0ee3a832a94fba34ac" id="r_a34c0099e89f01f0ee3a832a94fba34ac"><td class="memItemLeft" align="right" valign="top"><a id="a34c0099e89f01f0ee3a832a94fba34ac" name="a34c0099e89f01f0ee3a832a94fba34ac"></a>
 constexpr <a class="el" href="structOptimization_1_1Dual.html">Dual</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator/</b> (const <a class="el" href="structOptimization_1_1Dual.html">Dual</a> &amp;rhs) const noexcept</td></tr>
+<tr class="memdesc:a34c0099e89f01f0ee3a832a94fba34ac"><td class="mdescLeft">&#160;</td><td class="mdescRight">나눗셈 연산자 (f / g)' = (f'g - fg') / g^2 (몫의 미분법) <br /></td></tr>
 <tr class="separator:a34c0099e89f01f0ee3a832a94fba34ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac2f12063c653a044659bff7de2c9aa1d" id="r_ac2f12063c653a044659bff7de2c9aa1d"><td class="memItemLeft" align="right" valign="top"><a id="ac2f12063c653a044659bff7de2c9aa1d" name="ac2f12063c653a044659bff7de2c9aa1d"></a>
 constexpr <a class="el" href="structOptimization_1_1Dual.html">Dual</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (const T &amp;rhs) const noexcept</td></tr>
@@ -149,11 +159,71 @@ constexpr <a class="el" href="structOptimization_1_1Dual.html">Dual</a> &amp;&#1
 Public Attributes</h2></td></tr>
 <tr class="memitem:ad0413bca82bdd0c139225b080313c442" id="r_ad0413bca82bdd0c139225b080313c442"><td class="memItemLeft" align="right" valign="top"><a id="ad0413bca82bdd0c139225b080313c442" name="ad0413bca82bdd0c139225b080313c442"></a>
 T&#160;</td><td class="memItemRight" valign="bottom"><b>v</b></td></tr>
+<tr class="memdesc:ad0413bca82bdd0c139225b080313c442"><td class="mdescLeft">&#160;</td><td class="mdescRight">원본 함수의 평가된 값 (Value) <br /></td></tr>
 <tr class="separator:ad0413bca82bdd0c139225b080313c442"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aaefd8e908ae455dc322d4e6b95db09c4" id="r_aaefd8e908ae455dc322d4e6b95db09c4"><td class="memItemLeft" align="right" valign="top"><a id="aaefd8e908ae455dc322d4e6b95db09c4" name="aaefd8e908ae455dc322d4e6b95db09c4"></a>
 T&#160;</td><td class="memItemRight" valign="bottom"><b>d</b></td></tr>
+<tr class="memdesc:aaefd8e908ae455dc322d4e6b95db09c4"><td class="mdescLeft">&#160;</td><td class="mdescRight">값에 대한 1계 미분값 (Derivative) <br /></td></tr>
 <tr class="separator:aaefd8e908ae455dc322d4e6b95db09c4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;typename T&gt;<br />
+struct Optimization::Dual&lt; T &gt;</div><p>전진 모드 자동 미분(Forward-mode Automatic Differentiation)을 위한 스칼라 듀얼(Dual) 수 구조체 </p>
+<p><a class="el" href="structOptimization_1_1Dual.html" title="전진 모드 자동 미분(Forward-mode Automatic Differentiation)을 위한 스칼라 듀얼(Dual) 수 구조체">Dual</a> Number(이원수)는 f(x + ε) = f(x) + f'(x)ε (ε^2 = 0) 성질을 이용해 값(Value)과 함께 그 미분값(Derivative)을 동시에 계산하는 자료구조입니다. 이를 통해 함수의 기울기를 수치적 오차(Truncation/Round-off Error) 없이 정확하게 구할 수 있습니다.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">T</td><td>내부 값 및 미분값을 저장할 데이터 타입 (일반적으로 double) </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><h2 class="groupheader">Constructor &amp; Destructor Documentation</h2>
+<a id="aaaa3073e088ec9788629aca8da3b6bbe" name="aaaa3073e088ec9788629aca8da3b6bbe"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aaaa3073e088ec9788629aca8da3b6bbe">&#9670;&#160;</a></span>Dual()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">constexpr <a class="el" href="structOptimization_1_1Dual.html">Optimization::Dual</a>&lt; T &gt;::Dual </td>
+          <td>(</td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>value</em> = <code>T(0)</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const T &amp;&#160;</td>
+          <td class="paramname"><em>deriv</em> = <code>T(0)</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>스칼라 값과 미분값으로 <a class="el" href="structOptimization_1_1Dual.html" title="전진 모드 자동 미분(Forward-mode Automatic Differentiation)을 위한 스칼라 듀얼(Dual) 수 구조체">Dual</a> Number를 초기화합니다. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">value</td><td>초기 값 (기본값: 0) </td></tr>
+    <tr><td class="paramname">deriv</td><td>초기 미분값 (상수일 경우 0, 독립 변수일 경우 1로 설정) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li>include/Optimization/<a class="el" href="Dual_8hpp_source.html">Dual.hpp</a></li>
 </ul>

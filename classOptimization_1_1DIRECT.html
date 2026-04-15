@@ -88,23 +88,117 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Divided Rectangle (<a class="el" href="classOptimization_1_1DIRECT.html" title="Divided Rectangle (DIRECT) 전역 최적화 알고리즘">DIRECT</a>) 전역 최적화 알고리즘  
+<p><a class="el" href="classOptimization_1_1DIRECT.html" title="DIRECT (DIviding RECTangles) 전역 최적화 알고리즘 클래스">DIRECT</a> (DIviding RECTangles) 전역 최적화 알고리즘 클래스  
  <a href="classOptimization_1_1DIRECT.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="DIRECT_8hpp_source.html">DIRECT.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a258a4881e11e71c82913b92151a4fd66" id="r_a258a4881e11e71c82913b92151a4fd66"><td class="memTemplParams" colspan="2"><a id="a258a4881e11e71c82913b92151a4fd66" name="a258a4881e11e71c82913b92151a4fd66"></a>
-template&lt;typename Func &gt; </td></tr>
-<tr class="memitem:a258a4881e11e71c82913b92151a4fd66"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="structOptimization_1_1OptimizationResultND.html">OptimizationResultND</a>&lt; N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>optimize</b> (Func f, std::array&lt; double, N &gt; a, std::array&lt; double, N &gt; b, double epsilon=1e-4, size_t max_iter=100, bool verbose=false) noexcept</td></tr>
+<tr class="memitem:a258a4881e11e71c82913b92151a4fd66" id="r_a258a4881e11e71c82913b92151a4fd66"><td class="memTemplParams" colspan="2">template&lt;typename Func &gt; </td></tr>
+<tr class="memitem:a258a4881e11e71c82913b92151a4fd66"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="structOptimization_1_1OptimizationResultND.html">OptimizationResultND</a>&lt; N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1DIRECT.html#a258a4881e11e71c82913b92151a4fd66">optimize</a> (Func f, std::array&lt; double, N &gt; a, std::array&lt; double, N &gt; b, double epsilon=1e-4, size_t max_iter=100, bool verbose=false) noexcept</td></tr>
+<tr class="memdesc:a258a4881e11e71c82913b92151a4fd66"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classOptimization_1_1DIRECT.html" title="DIRECT (DIviding RECTangles) 전역 최적화 알고리즘 클래스">DIRECT</a> 알고리즘을 수행하여 주어진 범위 내에서 전역 최적해를 탐색합니다.  <br /></td></tr>
 <tr class="separator:a258a4881e11e71c82913b92151a4fd66"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;size_t N, size_t MAX_INTERVALS = 10000&gt;<br />
-class Optimization::DIRECT&lt; N, MAX_INTERVALS &gt;</div><p>Divided Rectangle (<a class="el" href="classOptimization_1_1DIRECT.html" title="Divided Rectangle (DIRECT) 전역 최적화 알고리즘">DIRECT</a>) 전역 최적화 알고리즘 </p>
-<dl class="section note"><dt>Note</dt><dd>립시츠 상수 없이 단위 하이퍼큐브 공간을 분할하여 전역 최솟값을 탐색합니다. MISRA C++ 준수. 동적 할당 (std::vector) 제로 및 스택 안전 (Static Pool) 설계 </dd></dl>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+class Optimization::DIRECT&lt; N, MAX_INTERVALS &gt;</div><p><a class="el" href="classOptimization_1_1DIRECT.html" title="DIRECT (DIviding RECTangles) 전역 최적화 알고리즘 클래스">DIRECT</a> (DIviding RECTangles) 전역 최적화 알고리즘 클래스 </p>
+<p><a class="el" href="classOptimization_1_1DIRECT.html" title="DIRECT (DIviding RECTangles) 전역 최적화 알고리즘 클래스">DIRECT</a> 알고리즘은 함수의 기울기(미분)를 필요로 하지 않는 Derivative-free 전역 최적화 기법입니다. 립시츠 상수(Lipschitz constant)를 미리 알 필요 없이, 탐색 공간을 여러 개의 하이퍼큐브(초직육면체)로 분할하며 전역 최솟값을 찾습니다.</p>
+<p>탐색 공간은 항상 정규화된 [0, 1]^N 공간에서 다루어지며, 목적 함수를 평가할 때만 원래의 범위 [a, b]로 변환(denormalize)합니다.</p>
+<dl class="section note"><dt>Note</dt><dd>본 구현은 동적 메모리 할당(<code>std::vector</code> 등)을 배제하고 <code>std::array</code>를 활용한 정적 메모리 풀(Static Pool) 패턴을 적용하여 실시간(Real-Time) 시스템 및 임베디드 환경에서의 안전성과 MISRA C++ 준수를 고려하였습니다.</dd></dl>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">N</td><td>최적화 문제의 차원 수 </td></tr>
+    <tr><td class="paramname">MAX_INTERVALS</td><td>분할 가능한 최대 하이퍼큐브(구간)의 개수 (기본값: 10000, 메모리 가용량에 따라 조절 필요) </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a258a4881e11e71c82913b92151a4fd66" name="a258a4881e11e71c82913b92151a4fd66"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a258a4881e11e71c82913b92151a4fd66">&#9670;&#160;</a></span>optimize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N, size_t MAX_INTERVALS = 10000&gt; </div>
+<div class="memtemplate">
+template&lt;typename Func &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="structOptimization_1_1OptimizationResultND.html">OptimizationResultND</a>&lt; N &gt; <a class="el" href="classOptimization_1_1DIRECT.html">Optimization::DIRECT</a>&lt; N, MAX_INTERVALS &gt;::optimize </td>
+          <td>(</td>
+          <td class="paramtype">Func&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::array&lt; double, N &gt;&#160;</td>
+          <td class="paramname"><em>a</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::array&lt; double, N &gt;&#160;</td>
+          <td class="paramname"><em>b</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>epsilon</em> = <code>1e-4</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>max_iter</em> = <code>100</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>verbose</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p><a class="el" href="classOptimization_1_1DIRECT.html" title="DIRECT (DIviding RECTangles) 전역 최적화 알고리즘 클래스">DIRECT</a> 알고리즘을 수행하여 주어진 범위 내에서 전역 최적해를 탐색합니다. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Func</td><td>목적 함수 타입 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>최소화하려는 목적 함수 </td></tr>
+    <tr><td class="paramname">a</td><td>탐색 범위의 하한 벡터 (Lower bound) </td></tr>
+    <tr><td class="paramname">b</td><td>탐색 범위의 상한 벡터 (Upper bound) </td></tr>
+    <tr><td class="paramname">epsilon</td><td>잠재적 최적 구간(Potentially Optimal Interval)을 판단하기 위한 허용 오차 (기본값: 1e-4) </td></tr>
+    <tr><td class="paramname">max_iter</td><td>알고리즘의 최대 반복 횟수 (기본값: 100) </td></tr>
+    <tr><td class="paramname">verbose</td><td>실행 과정 및 상태 출력 여부 (기본값: false) </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>전역 최적해와 관련 정보가 담긴 <a class="el" href="structOptimization_1_1OptimizationResultND.html" title="N차원 최적화 결과를 담는 구조체">OptimizationResultND</a> 구조체 </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/Optimization/<a class="el" href="DIRECT_8hpp_source.html">DIRECT.hpp</a></li>
 </ul>
 </div><!-- contents -->

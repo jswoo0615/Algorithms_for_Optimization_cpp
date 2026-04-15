@@ -84,7 +84,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Equality-Constrainted Quadratic Programming Solver.  
+<p>등식 제약 조건이 있는 이차 계획법(Equality-Constrained Quadratic Programming, EQP) 솔버 클래스  
  <a href="classEQPSolver.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="EQPSolver_8hpp_source.html">EQPSolver.hpp</a>&gt;</code></p>
@@ -97,34 +97,45 @@ Collaboration diagram for EQPSolver&lt; N_vars, N_cons &gt;:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a1f58abbd1cceae64471ca7a9c22da4cb" id="r_a1f58abbd1cceae64471ca7a9c22da4cb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEQPSolver.html#a1f58abbd1cceae64471ca7a9c22da4cb">solve</a> ()</td></tr>
-<tr class="memdesc:a1f58abbd1cceae64471ca7a9c22da4cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">KKT 시스템을 조립하고 최적해를 도출합니다  <br /></td></tr>
+<tr class="memdesc:a1f58abbd1cceae64471ca7a9c22da4cb"><td class="mdescLeft">&#160;</td><td class="mdescRight">KKT 시스템을 조립하고 선형대수 솔버(LDLT 분해)를 통해 최적해를 도출합니다.  <br /></td></tr>
 <tr class="separator:a1f58abbd1cceae64471ca7a9c22da4cb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:aa9bb24f54f2695f6f6fe0aac9c4ab734" id="r_aa9bb24f54f2695f6f6fe0aac9c4ab734"><td class="memItemLeft" align="right" valign="top"><a id="aa9bb24f54f2695f6f6fe0aac9c4ab734" name="aa9bb24f54f2695f6f6fe0aac9c4ab734"></a>
-<a class="el" href="classStaticMatrix.html">StaticMatrix</a>&lt; double, N_vars, N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>P</b></td></tr>
+<tr class="memitem:aa9bb24f54f2695f6f6fe0aac9c4ab734" id="r_aa9bb24f54f2695f6f6fe0aac9c4ab734"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classStaticMatrix.html">StaticMatrix</a>&lt; double, N_vars, N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEQPSolver.html#aa9bb24f54f2695f6f6fe0aac9c4ab734">P</a></td></tr>
+<tr class="memdesc:aa9bb24f54f2695f6f6fe0aac9c4ab734"><td class="mdescLeft">&#160;</td><td class="mdescRight">목적 함수의 이차항 계수 행렬 (Hessian Matrix Approximation)  <br /></td></tr>
 <tr class="separator:aa9bb24f54f2695f6f6fe0aac9c4ab734"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:afd87a45a0c824f4b15051b3568e2bd0f" id="r_afd87a45a0c824f4b15051b3568e2bd0f"><td class="memItemLeft" align="right" valign="top"><a id="afd87a45a0c824f4b15051b3568e2bd0f" name="afd87a45a0c824f4b15051b3568e2bd0f"></a>
-<a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>q</b></td></tr>
+<tr class="memitem:afd87a45a0c824f4b15051b3568e2bd0f" id="r_afd87a45a0c824f4b15051b3568e2bd0f"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEQPSolver.html#afd87a45a0c824f4b15051b3568e2bd0f">q</a></td></tr>
+<tr class="memdesc:afd87a45a0c824f4b15051b3568e2bd0f"><td class="mdescLeft">&#160;</td><td class="mdescRight">목적 함수의 선형항 계수 벡터 (Linear Cost Vector / Gradient)  <br /></td></tr>
 <tr class="separator:afd87a45a0c824f4b15051b3568e2bd0f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9b1047055ecb45658309f4cfb3db9490" id="r_a9b1047055ecb45658309f4cfb3db9490"><td class="memItemLeft" align="right" valign="top"><a id="a9b1047055ecb45658309f4cfb3db9490" name="a9b1047055ecb45658309f4cfb3db9490"></a>
-<a class="el" href="classStaticMatrix.html">StaticMatrix</a>&lt; double, N_cons, N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>A</b></td></tr>
+<tr class="memitem:a9b1047055ecb45658309f4cfb3db9490" id="r_a9b1047055ecb45658309f4cfb3db9490"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classStaticMatrix.html">StaticMatrix</a>&lt; double, N_cons, N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEQPSolver.html#a9b1047055ecb45658309f4cfb3db9490">A</a></td></tr>
+<tr class="memdesc:a9b1047055ecb45658309f4cfb3db9490"><td class="mdescLeft">&#160;</td><td class="mdescRight">등식 제약 조건 행렬 (Equality Constraint / Dynamic 제약)  <br /></td></tr>
 <tr class="separator:a9b1047055ecb45658309f4cfb3db9490"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1207e41ddee5497ff7a31b588aca10a0" id="r_a1207e41ddee5497ff7a31b588aca10a0"><td class="memItemLeft" align="right" valign="top"><a id="a1207e41ddee5497ff7a31b588aca10a0" name="a1207e41ddee5497ff7a31b588aca10a0"></a>
-<a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N_cons &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>b</b></td></tr>
+<tr class="memitem:a1207e41ddee5497ff7a31b588aca10a0" id="r_a1207e41ddee5497ff7a31b588aca10a0"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N_cons &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEQPSolver.html#a1207e41ddee5497ff7a31b588aca10a0">b</a></td></tr>
+<tr class="memdesc:a1207e41ddee5497ff7a31b588aca10a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">등식 제약 조건의 경곗값 벡터 (Equality Constraint Bound Vector)  <br /></td></tr>
 <tr class="separator:a1207e41ddee5497ff7a31b588aca10a0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a1587d9fb87f73bd41205ebe350383bdc" id="r_a1587d9fb87f73bd41205ebe350383bdc"><td class="memItemLeft" align="right" valign="top"><a id="a1587d9fb87f73bd41205ebe350383bdc" name="a1587d9fb87f73bd41205ebe350383bdc"></a>
-<a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>u_opt</b></td></tr>
+<tr class="memitem:a1587d9fb87f73bd41205ebe350383bdc" id="r_a1587d9fb87f73bd41205ebe350383bdc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEQPSolver.html#a1587d9fb87f73bd41205ebe350383bdc">u_opt</a></td></tr>
+<tr class="memdesc:a1587d9fb87f73bd41205ebe350383bdc"><td class="mdescLeft">&#160;</td><td class="mdescRight">계산된 최적의 제어 입력 벡터 (Optimal Control / Primal Variables)  <br /></td></tr>
 <tr class="separator:a1587d9fb87f73bd41205ebe350383bdc"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ab13cd98ec664a08e60325081cd7075fc" id="r_ab13cd98ec664a08e60325081cd7075fc"><td class="memItemLeft" align="right" valign="top"><a id="ab13cd98ec664a08e60325081cd7075fc" name="ab13cd98ec664a08e60325081cd7075fc"></a>
-<a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N_cons &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>lambda_opt</b></td></tr>
+<tr class="memitem:ab13cd98ec664a08e60325081cd7075fc" id="r_ab13cd98ec664a08e60325081cd7075fc"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N_cons &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEQPSolver.html#ab13cd98ec664a08e60325081cd7075fc">lambda_opt</a></td></tr>
+<tr class="memdesc:ab13cd98ec664a08e60325081cd7075fc"><td class="mdescLeft">&#160;</td><td class="mdescRight">계산된 라그랑주 승수 벡터 (Lagrange Multipliers / Dual Variables)  <br /></td></tr>
 <tr class="separator:ab13cd98ec664a08e60325081cd7075fc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;size_t N_vars, size_t N_cons&gt;<br />
-class EQPSolver&lt; N_vars, N_cons &gt;</div><p>Equality-Constrainted Quadratic Programming Solver. </p>
-<p>J(u) = 1/2 u^T P u + q^T u subject to Au = b </p>
+class EQPSolver&lt; N_vars, N_cons &gt;</div><p>등식 제약 조건이 있는 이차 계획법(Equality-Constrained Quadratic Programming, EQP) 솔버 클래스 </p>
+<p>다음과 같은 형태의 볼록 최적화(Convex Optimization) 문제를 풉니다.</p>
+<p>최소화(Minimize): J(u) = 1/2 u^T P u + q^T u</p>
+<p>제약조건(Subject to): A u = b</p>
+<p>여기서 u는 구하고자 하는 제어 변수(Optimal Control Vector)이며, P는 양의 정부호(Positive Definite) 혹은 양의 준정부호(Positive Semi-Definite) 대칭 행렬인 헤시안(Hessian) 행렬입니다.</p>
+<p>이 문제는 라그랑주 승수법(Lagrange Multipliers)을 사용하여 KKT(Karush-Kuhn-Tucker) 시스템이라는 선형 연립방정식을 블록 행렬 형태로 구성하고, 그 해를 구함으로써 해석적으로 단번에(closed-form) 최적해를 얻을 수 있습니다. 주로 비선형 제어(NMPC)나 순차적 이차 계획법(SQP), 내점법(Interior Point Method)의 내부 부분 문제(Subproblem)로 활용됩니다.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">N_vars</td><td>최적화할 변수(u)의 차원 개수 </td></tr>
+    <tr><td class="paramname">N_cons</td><td>등식 제약 조건의 개수 </td></tr>
+  </table>
+  </dd>
+</dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
 <a id="a1f58abbd1cceae64471ca7a9c22da4cb" name="a1f58abbd1cceae64471ca7a9c22da4cb"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a1f58abbd1cceae64471ca7a9c22da4cb">&#9670;&#160;</a></span>solve()</h2>
@@ -151,8 +162,127 @@ template&lt;size_t N_vars, size_t N_cons&gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>KKT 시스템을 조립하고 최적해를 도출합니다 </p>
-<dl class="section return"><dt>Returns</dt><dd>bool 분해 및 수렴 성공 여부 (Positive Definite 실패 시 false) </dd></dl>
+<p>KKT 시스템을 조립하고 선형대수 솔버(LDLT 분해)를 통해 최적해를 도출합니다. </p>
+<p>KKT 시스템(Lagrange 1차 필요조건)은 다음과 같은 형태의 연립방정식으로 도출됩니다:</p>
+<p>[ P A^T ] [ u ] = [ -q ] [ A 0 ] [ lambda ] [ b ]</p>
+<p>이 블록 행렬을 구성한 후, <code>MatrixEngine</code>에서 제공하는 <code>LDLT_decompose()</code> 및 <code>LDLT_solve()</code>를 이용하여 단번에 해를 구합니다.</p>
+<dl class="section note"><dt>Note</dt><dd>주의사항 (Regularization Caveats): KKT 행렬은 우하단 블록이 영행렬(0)이므로 전체적으로 양의 정부호(Positive Definite)가 될 수 없는 대칭 부정부호 행렬(Symmetric Indefinite Matrix, 안장점 구조)입니다. 따라서 일반적인 Cholesky (LL^T) 분해는 불가능하며 LDL^T 분해를 사용해야 합니다. 제약 조건 행렬 A의 행(Row)들이 선형 독립(Linear Independent)이 아니거나, P가 제약조건의 Null Space에서 충분히 양의 정부호가 아닐 경우 분해가 터지거나(실패) 특이 행렬(Singular)이 될 수 있습니다.</dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>bool KKT 시스템 분해 및 해 도출 성공 여부 (성공 시 true. 행렬이 특이 상태이거나 수치적 문제로 분해 실패 시 false 반환) </dd></dl>
+
+</div>
+</div>
+<h2 class="groupheader">Member Data Documentation</h2>
+<a id="a9b1047055ecb45658309f4cfb3db9490" name="a9b1047055ecb45658309f4cfb3db9490"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9b1047055ecb45658309f4cfb3db9490">&#9670;&#160;</a></span>A</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N_vars, size_t N_cons&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classStaticMatrix.html">StaticMatrix</a>&lt;double, N_cons, N_vars&gt; <a class="el" href="classEQPSolver.html">EQPSolver</a>&lt; N_vars, N_cons &gt;::A</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>등식 제약 조건 행렬 (Equality Constraint / Dynamic 제약) </p>
+<p>제약 조건 방정식 A u = b 에서 좌변 행렬을 구성합니다. (예: 동역학 모델의 선형화 된 상태 전이 행렬 등) </p>
+
+</div>
+</div>
+<a id="a1207e41ddee5497ff7a31b588aca10a0" name="a1207e41ddee5497ff7a31b588aca10a0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1207e41ddee5497ff7a31b588aca10a0">&#9670;&#160;</a></span>b</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N_vars, size_t N_cons&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classStaticMatrix.html">StaticVector</a>&lt;double, N_cons&gt; <a class="el" href="classEQPSolver.html">EQPSolver</a>&lt; N_vars, N_cons &gt;::b</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>등식 제약 조건의 경곗값 벡터 (Equality Constraint Bound Vector) </p>
+<p>제약 조건 방정식 A u = b 에서 우변 벡터를 구성합니다. </p>
+
+</div>
+</div>
+<a id="ab13cd98ec664a08e60325081cd7075fc" name="ab13cd98ec664a08e60325081cd7075fc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab13cd98ec664a08e60325081cd7075fc">&#9670;&#160;</a></span>lambda_opt</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N_vars, size_t N_cons&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classStaticMatrix.html">StaticVector</a>&lt;double, N_cons&gt; <a class="el" href="classEQPSolver.html">EQPSolver</a>&lt; N_vars, N_cons &gt;::lambda_opt</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>계산된 라그랑주 승수 벡터 (Lagrange Multipliers / Dual Variables) </p>
+<p>각 제약 조건에 대응되는 쌍대 변수(Dual Variable) 값들이며, 최적점에서 제약 조건이 목적 함수 비용에 미치는 민감도(Sensitivity / Shadow Price)를 의미합니다. </p>
+
+</div>
+</div>
+<a id="aa9bb24f54f2695f6f6fe0aac9c4ab734" name="aa9bb24f54f2695f6f6fe0aac9c4ab734"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#aa9bb24f54f2695f6f6fe0aac9c4ab734">&#9670;&#160;</a></span>P</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N_vars, size_t N_cons&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classStaticMatrix.html">StaticMatrix</a>&lt;double, N_vars, N_vars&gt; <a class="el" href="classEQPSolver.html">EQPSolver</a>&lt; N_vars, N_cons &gt;::P</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>목적 함수의 이차항 계수 행렬 (Hessian Matrix Approximation) </p>
+<p>비용 함수의 곡률(curvature)을 나타내며, 대칭 행렬(Symmetric Matrix)이어야 합니다. (예: Gauss-Newton 방식에서 J^T J + R 형태로 구성됨) </p>
+
+</div>
+</div>
+<a id="afd87a45a0c824f4b15051b3568e2bd0f" name="afd87a45a0c824f4b15051b3568e2bd0f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd87a45a0c824f4b15051b3568e2bd0f">&#9670;&#160;</a></span>q</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N_vars, size_t N_cons&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classStaticMatrix.html">StaticVector</a>&lt;double, N_vars&gt; <a class="el" href="classEQPSolver.html">EQPSolver</a>&lt; N_vars, N_cons &gt;::q</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>목적 함수의 선형항 계수 벡터 (Linear Cost Vector / Gradient) </p>
+<p>목적 함수의 일차 미분항(Gradient 방향) 혹은 에러 벡터의 투영값을 나타냅니다. </p>
+
+</div>
+</div>
+<a id="a1587d9fb87f73bd41205ebe350383bdc" name="a1587d9fb87f73bd41205ebe350383bdc"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a1587d9fb87f73bd41205ebe350383bdc">&#9670;&#160;</a></span>u_opt</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N_vars, size_t N_cons&gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classStaticMatrix.html">StaticVector</a>&lt;double, N_vars&gt; <a class="el" href="classEQPSolver.html">EQPSolver</a>&lt; N_vars, N_cons &gt;::u_opt</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>계산된 최적의 제어 입력 벡터 (Optimal Control / Primal Variables) </p>
+<p>KKT 연립방정식을 풀어낸 후 도출된 변수 u 가 이곳에 저장됩니다. </p>
 
 </div>
 </div>
