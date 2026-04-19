@@ -87,22 +87,113 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Hyper Gradient Descent Optimizer (Based on Algorithms for Optimization, Sec 5.9)  
+<p>Hyper Gradient Descent Optimizer를 수행하는 정적 클래스  
  <a href="classOptimization_1_1HyperGradientDescent.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="HyperGradientDescent_8hpp_source.html">HyperGradientDescent.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a01823287cc0c469050baffe99007262b" id="r_a01823287cc0c469050baffe99007262b"><td class="memTemplParams" colspan="2"><a id="a01823287cc0c469050baffe99007262b" name="a01823287cc0c469050baffe99007262b"></a>
-template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:a01823287cc0c469050baffe99007262b"><td class="memTemplItemLeft" align="right" valign="top">static constexpr std::array&lt; double, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>optimize</b> (Func f, std::array&lt; double, N &gt; x, double alpha_init=0.001, double mu=1e-6, double tol=1e-5, size_t max_iter=50000, bool verbose=false) noexcept</td></tr>
+<tr class="memitem:a01823287cc0c469050baffe99007262b" id="r_a01823287cc0c469050baffe99007262b"><td class="memTemplParams" colspan="2">template&lt;size_t N, typename Func &gt; </td></tr>
+<tr class="memitem:a01823287cc0c469050baffe99007262b"><td class="memTemplItemLeft" align="right" valign="top">static constexpr std::array&lt; double, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1HyperGradientDescent.html#a01823287cc0c469050baffe99007262b">optimize</a> (Func f, std::array&lt; double, N &gt; x, double alpha_init=0.001, double mu=1e-6, double tol=1e-5, size_t max_iter=50000, bool verbose=false) noexcept</td></tr>
+<tr class="memdesc:a01823287cc0c469050baffe99007262b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hyper Gradient Descent 알고리즘을 실행하여 함수의 최솟값을 찾습니다.  <br /></td></tr>
 <tr class="separator:a01823287cc0c469050baffe99007262b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Hyper Gradient Descent Optimizer (Based on Algorithms for Optimization, Sec 5.9) </p>
-<dl class="section note"><dt>Note</dt><dd>MISRA C++ 준수. O(1) 메모리 구조 및 실시간 발산 제어(Fail-safe) 적용. </dd></dl>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<div class="textblock"><p>Hyper Gradient Descent Optimizer를 수행하는 정적 클래스 </p>
+<dl class="section note"><dt>Note</dt><dd>MISRA C++ 준수 지향. 동적 메모리 할당이 없는 O(1) 메모리 구조를 가지며, 발산(Divergence)을 방지하기 위한 안전장치(Fail-safe) 및 Gradient Clipping이 적용되어 있습니다. </dd></dl>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a01823287cc0c469050baffe99007262b" name="a01823287cc0c469050baffe99007262b"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a01823287cc0c469050baffe99007262b">&#9670;&#160;</a></span>optimize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N, typename Func &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static constexpr std::array&lt; double, N &gt; Optimization::HyperGradientDescent::optimize </td>
+          <td>(</td>
+          <td class="paramtype">Func&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::array&lt; double, N &gt;&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>alpha_init</em> = <code>0.001</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>mu</em> = <code>1e-6</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>tol</em> = <code>1e-5</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>max_iter</em> = <code>50000</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>verbose</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Hyper Gradient Descent 알고리즘을 실행하여 함수의 최솟값을 찾습니다. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">N</td><td>최적화할 변수의 차원 수 </td></tr>
+    <tr><td class="paramname">Func</td><td>목적 함수 타입 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>최적화할 목적 함수 (<a class="el" href="classOptimization_1_1AutoDiff.html" title="정적 메모리 엔진(Layer 1)과 완벽히 호환되는 Forward-Mode Automatic Differentiation (자동 미분) 클래스">AutoDiff</a> 호환) </td></tr>
+    <tr><td class="paramname">x</td><td>초기 시작 위치 </td></tr>
+    <tr><td class="paramname">alpha_init</td><td>초기 학습률 (보폭, alpha). 기본값: 0.001 </td></tr>
+    <tr><td class="paramname">mu</td><td>학습률(alpha)을 업데이트하기 위한 메타-학습률(Meta-learning rate). 기본값: 1e-6 </td></tr>
+    <tr><td class="paramname">tol</td><td>수렴 판정을 위한 기울기 L2 Norm의 허용 오차. 기본값: 1e-5 </td></tr>
+    <tr><td class="paramname">max_iter</td><td>최대 반복 횟수. 기본값: 50000 </td></tr>
+    <tr><td class="paramname">verbose</td><td>진행 상황 콘솔 출력 여부. 기본값: false </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>std::array&lt;double, N&gt; 최적화된 결과 파라미터 배열 (최적해) </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/Optimization/<a class="el" href="HyperGradientDescent_8hpp_source.html">HyperGradientDescent.hpp</a></li>
 </ul>
 </div><!-- contents -->

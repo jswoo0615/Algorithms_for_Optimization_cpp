@@ -115,7 +115,7 @@ $(function() {
 
 <h3><a id="index_e" name="index_e"></a>- e -</h3><ul>
 <li>elapsed_ns&#160;:&#160;<a class="el" href="structOptimization_1_1OptimizationResultND.html#a19bc0e48b795d90ccd7bab9489fa652d">Optimization::OptimizationResultND&lt; N &gt;</a></li>
-<li>evaluate_EQP()&#160;:&#160;<a class="el" href="classKKTMonitor.html#ac4d0b74bf08bcd30a3d744d531122d81">KKTMonitor&lt; N_vars, N_cons &gt;</a></li>
+<li>evaluate_EQP()&#160;:&#160;<a class="el" href="classOptimization_1_1KKTMonitor.html#ae5096ffb2278997c260b97a885de7e94">Optimization::KKTMonitor&lt; N_vars, N_cons &gt;</a></li>
 <li>extract_block()&#160;:&#160;<a class="el" href="classStaticMatrix.html#a7f6df05797ecc86684b69928e320bde5">StaticMatrix&lt; T, Rows, Cols &gt;</a></li>
 </ul>
 
@@ -136,6 +136,8 @@ $(function() {
 <h3><a id="index_i" name="index_i"></a>- i -</h3><ul>
 <li>insert_block()&#160;:&#160;<a class="el" href="classStaticMatrix.html#a7b00b0d5d9d322cfebdeef89bda1ddf6">StaticMatrix&lt; T, Rows, Cols &gt;</a></li>
 <li>insert_transposed_block()&#160;:&#160;<a class="el" href="classStaticMatrix.html#a1a8e7a70a9910ddcf2dbd09fc295d247">StaticMatrix&lt; T, Rows, Cols &gt;</a></li>
+<li>IPMQPSolver()&#160;:&#160;<a class="el" href="classOptimization_1_1IPMQPSolver.html#a54006480c164bf79e127d49c785b94fa">Optimization::IPMQPSolver&lt; N_vars, N_eq, N_ineq &gt;</a></li>
+<li>is_optimal&#160;:&#160;<a class="el" href="structOptimization_1_1KKTMonitor_1_1KKT__Metrics.html#a683405f7090f26f11ae8105d0ba07fd9">Optimization::KKTMonitor&lt; N_vars, N_cons &gt;::KKT_Metrics</a></li>
 <li>iterations&#160;:&#160;<a class="el" href="structOptimization_1_1OptimizationResultND.html#a97219625aa18497e876783546a56c985">Optimization::OptimizationResultND&lt; N &gt;</a></li>
 </ul>
 
@@ -180,19 +182,21 @@ $(function() {
 <li>operator+()&#160;:&#160;<a class="el" href="structOptimization_1_1Dual.html#ab602a3d76aec8220ebe1b2515bc12f5f">Optimization::Dual&lt; T &gt;</a>, <a class="el" href="structOptimization_1_1DualVec.html#a273f9ad64bc840426ec7b07be34794cd">Optimization::DualVec&lt; T, N &gt;</a></li>
 <li>operator-()&#160;:&#160;<a class="el" href="structOptimization_1_1Dual.html#a5ab2f9bc1d0689c26132cac89abf3dc9">Optimization::Dual&lt; T &gt;</a>, <a class="el" href="structOptimization_1_1DualVec.html#a57a336c9ad25bb16abc85f2eda69d8d1">Optimization::DualVec&lt; T, N &gt;</a></li>
 <li>operator/()&#160;:&#160;<a class="el" href="structOptimization_1_1Dual.html#a34c0099e89f01f0ee3a832a94fba34ac">Optimization::Dual&lt; T &gt;</a>, <a class="el" href="structOptimization_1_1DualVec.html#a6424bd2d6c20d9f417d18b752422665c">Optimization::DualVec&lt; T, N &gt;</a></li>
-<li>optimize()&#160;:&#160;<a class="el" href="classOptimization_1_1AdaDelta.html#af4a124f7ed2061bfc9633dc9b9553c6c">Optimization::AdaDelta</a>, <a class="el" href="classOptimization_1_1AdaGrad.html#ab7308a43ac27b08205420224eb7d3408">Optimization::AdaGrad</a>, <a class="el" href="classOptimization_1_1Adam.html#ab5645f885d9e49bd9388ee5c4c474125">Optimization::Adam</a>, <a class="el" href="classOptimization_1_1BFGS.html#a9ec3a611b1847cd285e6b8ef2fed1b31">Optimization::BFGS</a>, <a class="el" href="classOptimization_1_1CMA__ES.html#a256a3991ece4c5abcb65969f0f4444ba">Optimization::CMA_ES</a>, <a class="el" href="classOptimization_1_1ConjugateGradient.html#afcc732ab873a61406281d80b2a8830d7">Optimization::ConjugateGradient</a>, <a class="el" href="classOptimization_1_1CrossEntropy.html#aab46aad8b4ebc73b615ea129f06b6a02">Optimization::CrossEntropy</a>, <a class="el" href="classOptimization_1_1CyclicCoordinateSearch.html#a4d77b0400e388531e08e26ba5474c52c">Optimization::CyclicCoordinateSearch</a>, <a class="el" href="classOptimization_1_1DIRECT.html#a258a4881e11e71c82913b92151a4fd66">Optimization::DIRECT&lt; N, MAX_INTERVALS &gt;</a>, <a class="el" href="classOptimization_1_1GeneralizedPatternSearch.html#a45dd19c2aba78f6660294e9ce57ffaac">Optimization::GeneralizedPatternSearch</a></li>
+<li>optimize()&#160;:&#160;<a class="el" href="classOptimization_1_1AdaDelta.html#af4a124f7ed2061bfc9633dc9b9553c6c">Optimization::AdaDelta</a>, <a class="el" href="classOptimization_1_1AdaGrad.html#ab7308a43ac27b08205420224eb7d3408">Optimization::AdaGrad</a>, <a class="el" href="classOptimization_1_1Adam.html#ab5645f885d9e49bd9388ee5c4c474125">Optimization::Adam</a>, <a class="el" href="classOptimization_1_1BFGS.html#a9ec3a611b1847cd285e6b8ef2fed1b31">Optimization::BFGS</a>, <a class="el" href="classOptimization_1_1CMA__ES.html#a256a3991ece4c5abcb65969f0f4444ba">Optimization::CMA_ES</a>, <a class="el" href="classOptimization_1_1ConjugateGradient.html#afcc732ab873a61406281d80b2a8830d7">Optimization::ConjugateGradient</a>, <a class="el" href="classOptimization_1_1CrossEntropy.html#aab46aad8b4ebc73b615ea129f06b6a02">Optimization::CrossEntropy</a>, <a class="el" href="classOptimization_1_1CyclicCoordinateSearch.html#a4d77b0400e388531e08e26ba5474c52c">Optimization::CyclicCoordinateSearch</a>, <a class="el" href="classOptimization_1_1DIRECT.html#a258a4881e11e71c82913b92151a4fd66">Optimization::DIRECT&lt; N, MAX_INTERVALS &gt;</a>, <a class="el" href="classOptimization_1_1GeneralizedPatternSearch.html#a45dd19c2aba78f6660294e9ce57ffaac">Optimization::GeneralizedPatternSearch</a>, <a class="el" href="classOptimization_1_1GradientDescent.html#a5398817e8c6f63a2be666d6a232a9633">Optimization::GradientDescent</a>, <a class="el" href="classOptimization_1_1HookeJeeves.html#affa309c025775db8d9145c74c686003c">Optimization::HookeJeeves</a>, <a class="el" href="classOptimization_1_1HyperGradientDescent.html#a01823287cc0c469050baffe99007262b">Optimization::HyperGradientDescent</a></li>
 <li>optimize_accelerated()&#160;:&#160;<a class="el" href="classOptimization_1_1CyclicCoordinateSearch.html#a4faf34c8ddc20739574bdba5732b3eea">Optimization::CyclicCoordinateSearch</a></li>
 </ul>
 
 
 <h3><a id="index_p" name="index_p"></a>- p -</h3><ul>
-<li>P&#160;:&#160;<a class="el" href="classActiveSetSolver.html#a2b11e6f0fdd682a9b2cb116e89bfc788">ActiveSetSolver&lt; N_vars, N_eq, N_ineq &gt;</a>, <a class="el" href="classEQPSolver.html#aa9bb24f54f2695f6f6fe0aac9c4ab734">EQPSolver&lt; N_vars, N_cons &gt;</a>, <a class="el" href="structOptimization_1_1NMPCStorageData.html#a523022bca066c73f5d1e23d416198c3b">Optimization::NMPCStorageData&lt; Nx, Nu &gt;</a></li>
+<li>P&#160;:&#160;<a class="el" href="classActiveSetSolver.html#a2b11e6f0fdd682a9b2cb116e89bfc788">ActiveSetSolver&lt; N_vars, N_eq, N_ineq &gt;</a>, <a class="el" href="classEQPSolver.html#aa9bb24f54f2695f6f6fe0aac9c4ab734">EQPSolver&lt; N_vars, N_cons &gt;</a>, <a class="el" href="classOptimization_1_1IPMQPSolver.html#a36c341a42a012f5f7d4ef4755ed6cee5">Optimization::IPMQPSolver&lt; N_vars, N_eq, N_ineq &gt;</a>, <a class="el" href="structOptimization_1_1NMPCStorageData.html#a523022bca066c73f5d1e23d416198c3b">Optimization::NMPCStorageData&lt; Nx, Nu &gt;</a></li>
 <li>p_vec&#160;:&#160;<a class="el" href="structOptimization_1_1NMPCStorageData.html#aaef5665987f3dacfa161000b3fc3e623">Optimization::NMPCStorageData&lt; Nx, Nu &gt;</a></li>
+<li>primal_feasibility_error&#160;:&#160;<a class="el" href="structOptimization_1_1KKTMonitor_1_1KKT__Metrics.html#ad3b7e5d5e9b6d4de9ea1e158786e1b85">Optimization::KKTMonitor&lt; N_vars, N_cons &gt;::KKT_Metrics</a></li>
+<li>print_metrics()&#160;:&#160;<a class="el" href="classOptimization_1_1KKTMonitor.html#aa0145d7b10153b48d8a1bc709d585532">Optimization::KKTMonitor&lt; N_vars, N_cons &gt;</a></li>
 </ul>
 
 
 <h3><a id="index_q" name="index_q"></a>- q -</h3><ul>
-<li>q&#160;:&#160;<a class="el" href="classActiveSetSolver.html#aa18b25308442a24be70e5db4574d5e9b">ActiveSetSolver&lt; N_vars, N_eq, N_ineq &gt;</a>, <a class="el" href="classEQPSolver.html#afd87a45a0c824f4b15051b3568e2bd0f">EQPSolver&lt; N_vars, N_cons &gt;</a>, <a class="el" href="structOptimization_1_1NMPCStorageData.html#a9965082fa06bda118f14303929453ec2">Optimization::NMPCStorageData&lt; Nx, Nu &gt;</a></li>
+<li>q&#160;:&#160;<a class="el" href="classActiveSetSolver.html#aa18b25308442a24be70e5db4574d5e9b">ActiveSetSolver&lt; N_vars, N_eq, N_ineq &gt;</a>, <a class="el" href="classEQPSolver.html#afd87a45a0c824f4b15051b3568e2bd0f">EQPSolver&lt; N_vars, N_cons &gt;</a>, <a class="el" href="classOptimization_1_1IPMQPSolver.html#ae9bc78c1a234878445bd52d31889f189">Optimization::IPMQPSolver&lt; N_vars, N_eq, N_ineq &gt;</a>, <a class="el" href="structOptimization_1_1NMPCStorageData.html#a9965082fa06bda118f14303929453ec2">Optimization::NMPCStorageData&lt; Nx, Nu &gt;</a></li>
 <li>Q&#160;:&#160;<a class="el" href="structOptimization_1_1NMPCStorageData.html#a81a6f3b1ce21eaaa4176df713668a85a">Optimization::NMPCStorageData&lt; Nx, Nu &gt;</a></li>
 <li>QR_decompose_Householder()&#160;:&#160;<a class="el" href="classStaticMatrix.html#a530a7e2d1c3d1dcc77405a11e8ee3f12">StaticMatrix&lt; T, Rows, Cols &gt;</a></li>
 <li>QR_decompose_MGS()&#160;:&#160;<a class="el" href="classStaticMatrix.html#a445718eb583abde69a88b451bb7b2bf7">StaticMatrix&lt; T, Rows, Cols &gt;</a></li>
@@ -212,11 +216,17 @@ $(function() {
 <h3><a id="index_s" name="index_s"></a>- s -</h3><ul>
 <li>search()&#160;:&#160;<a class="el" href="classOptimization_1_1BacktrackingLineSearch.html#af20668d50b8fcf15615a18581a1eef8b">Optimization::BacktrackingLineSearch</a></li>
 <li>set_zero()&#160;:&#160;<a class="el" href="classStaticMatrix.html#a9d9c516df2280ffe76094dbea19371fd">StaticMatrix&lt; T, Rows, Cols &gt;</a></li>
-<li>solve()&#160;:&#160;<a class="el" href="classActiveSetSolver.html#a5dc682fe44d18715ca28087939e42c0b">ActiveSetSolver&lt; N_vars, N_eq, N_ineq &gt;</a>, <a class="el" href="classEQPSolver.html#a1f58abbd1cceae64471ca7a9c22da4cb">EQPSolver&lt; N_vars, N_cons &gt;</a>, <a class="el" href="classOptimization_1_1BlockBandedSolver.html#a7a52243645fff61f13c35384ee9480c7">Optimization::BlockBandedSolver&lt; Nx, Nu, Np &gt;</a>, <a class="el" href="classOptimization_1_1SQPSolver.html#a9039a9df5fcf29713eaaea809057d20f">Optimization::SQPSolver&lt; N_vars, N_eq, N_ineq &gt;</a></li>
+<li>solve()&#160;:&#160;<a class="el" href="classActiveSetSolver.html#a5dc682fe44d18715ca28087939e42c0b">ActiveSetSolver&lt; N_vars, N_eq, N_ineq &gt;</a>, <a class="el" href="classEQPSolver.html#a1f58abbd1cceae64471ca7a9c22da4cb">EQPSolver&lt; N_vars, N_cons &gt;</a>, <a class="el" href="classOptimization_1_1BlockBandedSolver.html#a7a52243645fff61f13c35384ee9480c7">Optimization::BlockBandedSolver&lt; Nx, Nu, Np &gt;</a>, <a class="el" href="classOptimization_1_1IPMQPSolver.html#a32b08db5afa31f27dadb584bb7c28113">Optimization::IPMQPSolver&lt; N_vars, N_eq, N_ineq &gt;</a>, <a class="el" href="classOptimization_1_1SQPSolver.html#a9039a9df5fcf29713eaaea809057d20f">Optimization::SQPSolver&lt; N_vars, N_eq, N_ineq &gt;</a></li>
 <li>solve_multiple()&#160;:&#160;<a class="el" href="classStaticMatrix.html#a77a89dad8491c4519d2dcebc268ddce5">StaticMatrix&lt; T, Rows, Cols &gt;</a></li>
 <li>SQPSolver()&#160;:&#160;<a class="el" href="classOptimization_1_1SQPSolver.html#a2d5f83cc3bb4e5725d328b45b3ebd650">Optimization::SQPSolver&lt; N_vars, N_eq, N_ineq &gt;</a></li>
 <li>stages&#160;:&#160;<a class="el" href="classOptimization_1_1BlockBandedSolver.html#a2fa8f13d83b60608546165b4832fec72">Optimization::BlockBandedSolver&lt; Nx, Nu, Np &gt;</a></li>
 <li>StaticSparseMatrix()&#160;:&#160;<a class="el" href="classOptimization_1_1StaticSparseMatrix.html#a03c8a0ec994cf81508663bb379fa7343">Optimization::StaticSparseMatrix&lt; T, Rows, Cols, MaxNNZ &gt;</a></li>
+<li>stationarity_error&#160;:&#160;<a class="el" href="structOptimization_1_1KKTMonitor_1_1KKT__Metrics.html#adb747b9fa3f72ed97d9329cde2d6f4b4">Optimization::KKTMonitor&lt; N_vars, N_cons &gt;::KKT_Metrics</a></li>
+</ul>
+
+
+<h3><a id="index_t" name="index_t"></a>- t -</h3><ul>
+<li>TOLERANCE&#160;:&#160;<a class="el" href="classOptimization_1_1KKTMonitor.html#adad78863d3ac9e2e24ea212393da04e8">Optimization::KKTMonitor&lt; N_vars, N_cons &gt;</a></li>
 </ul>
 
 

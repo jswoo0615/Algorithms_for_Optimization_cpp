@@ -95,7 +95,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;cmath&gt;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;Optimization/AutoDiff.hpp&quot;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;Optimization/IPMQPSolver.hpp&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;<a class="code" href="IPMQPSolver_8hpp.html">Optimization/IPMQPSolver.hpp</a>&quot;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &quot;Optimization/Matrix/SparseMatrixEngine.hpp&quot;</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &quot;Optimization/SparseIPMQPSolver.hpp&quot;</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
@@ -167,12 +167,12 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            }</div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        }</div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        qp_solver_dense.P = H_GN;</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        qp_solver_dense.q = grad_f;</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        qp_solver_dense.<a class="code hl_variable" href="classOptimization_1_1IPMQPSolver.html#a36c341a42a012f5f7d4ef4755ed6cee5">P</a> = H_GN;</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        qp_solver_dense.<a class="code hl_variable" href="classOptimization_1_1IPMQPSolver.html#ae9bc78c1a234878445bd52d31889f189">q</a> = grad_f;</div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        <a class="code hl_class" href="classStaticMatrix.html">StaticVector&lt;double, N_vars&gt;</a> p;</div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        p.<a class="code hl_function" href="classStaticMatrix.html#a9d9c516df2280ffe76094dbea19371fd">set_zero</a>();</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        <span class="keywordtype">bool</span> success = qp_solver_dense.solve(p, 15, 1e-3);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        <span class="keywordtype">bool</span> success = qp_solver_dense.<a class="code hl_function" href="classOptimization_1_1IPMQPSolver.html#a32b08db5afa31f27dadb584bb7c28113">solve</a>(p, 15, 1e-3);</div>
 <div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        <span class="keywordflow">if</span> (success) {</div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N_vars; ++i) {</div>
@@ -273,7 +273,11 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span> </div>
 <div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>}  <span class="comment">// namespace Optimization</span></div>
 <div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_RTI_SOLVER_HPP_</span></div>
-<div class="ttc" id="aclassOptimization_1_1IPMQPSolver_html"><div class="ttname"><a href="classOptimization_1_1IPMQPSolver.html">Optimization::IPMQPSolver</a></div><div class="ttdef"><b>Definition</b> IPMQPSolver.hpp:12</div></div>
+<div class="ttc" id="aIPMQPSolver_8hpp_html"><div class="ttname"><a href="IPMQPSolver_8hpp.html">IPMQPSolver.hpp</a></div><div class="ttdoc">Primal-Dual Interior Point Method (내부점법) 기반의 Quadratic Programming (QP) Solver 구현</div></div>
+<div class="ttc" id="aclassOptimization_1_1IPMQPSolver_html"><div class="ttname"><a href="classOptimization_1_1IPMQPSolver.html">Optimization::IPMQPSolver</a></div><div class="ttdoc">정적 메모리 할당을 사용하는 IPM QP Solver 클래스</div><div class="ttdef"><b>Definition</b> IPMQPSolver.hpp:34</div></div>
+<div class="ttc" id="aclassOptimization_1_1IPMQPSolver_html_a32b08db5afa31f27dadb584bb7c28113"><div class="ttname"><a href="classOptimization_1_1IPMQPSolver.html#a32b08db5afa31f27dadb584bb7c28113">Optimization::IPMQPSolver::solve</a></div><div class="ttdeci">bool solve(StaticVector&lt; double, N_vars &gt; &amp;x, int max_iter=50, double tol=1e-3)</div><div class="ttdoc">설정된 QP 문제를 해결합니다.</div><div class="ttdef"><b>Definition</b> IPMQPSolver.hpp:68</div></div>
+<div class="ttc" id="aclassOptimization_1_1IPMQPSolver_html_a36c341a42a012f5f7d4ef4755ed6cee5"><div class="ttname"><a href="classOptimization_1_1IPMQPSolver.html#a36c341a42a012f5f7d4ef4755ed6cee5">Optimization::IPMQPSolver::P</a></div><div class="ttdeci">StaticMatrix&lt; double, N_vars, N_vars &gt; P</div><div class="ttdoc">Hessian 행렬 (반드시 양의 준정부호 Positive Semi-Definite 이어야 함)</div><div class="ttdef"><b>Definition</b> IPMQPSolver.hpp:37</div></div>
+<div class="ttc" id="aclassOptimization_1_1IPMQPSolver_html_ae9bc78c1a234878445bd52d31889f189"><div class="ttname"><a href="classOptimization_1_1IPMQPSolver.html#ae9bc78c1a234878445bd52d31889f189">Optimization::IPMQPSolver::q</a></div><div class="ttdeci">StaticVector&lt; double, N_vars &gt; q</div><div class="ttdoc">Gradient 벡터</div><div class="ttdef"><b>Definition</b> IPMQPSolver.hpp:38</div></div>
 <div class="ttc" id="aclassOptimization_1_1RTISolver_html"><div class="ttname"><a href="classOptimization_1_1RTISolver.html">Optimization::RTISolver</a></div><div class="ttdef"><b>Definition</b> RTISolver.hpp:15</div></div>
 <div class="ttc" id="aclassOptimization_1_1SparseIPMQPSolver_html"><div class="ttname"><a href="classOptimization_1_1SparseIPMQPSolver.html">Optimization::SparseIPMQPSolver</a></div><div class="ttdef"><b>Definition</b> SparseIPMQPSolver.hpp:12</div></div>
 <div class="ttc" id="aclassOptimization_1_1StaticSparseMatrix_html_a72f6569b50903361bbd2b92cf819d2c7"><div class="ttname"><a href="classOptimization_1_1StaticSparseMatrix.html#a72f6569b50903361bbd2b92cf819d2c7">Optimization::StaticSparseMatrix::add_value</a></div><div class="ttdeci">void add_value(int r, int c, T val)</div><div class="ttdoc">CSR 구조 조립을 위한 요소 추가 함수</div><div class="ttdef"><b>Definition</b> SparseMatrixEngine.hpp:65</div></div>
