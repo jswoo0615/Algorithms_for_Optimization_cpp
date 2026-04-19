@@ -4,14 +4,14 @@
 /**
  * @file IPMQPSolver.hpp
  * @brief Primal-Dual Interior Point Method (내부점법) 기반의 Quadratic Programming (QP) Solver 구현
- * 
+ *
  * 다음과 같은 형태의 2차 계획법(QP) 문제를 풉니다.
  *   Minimize    1/2 * x^T * P * x + q^T * x
  *   Subject to  A_eq * x = b_eq
  *               A_ineq * x <= b_ineq
- * 
- * 부등식 제약조건은 슬랙 변수(s)를 도입하여 A_ineq * x + s = b_ineq (s >= 0) 로 변환하여 처리합니다.
- * 이 구현체는 KKT 조건을 풀기 위해 Newton-Raphson 기반의 Primal-Dual 스텝을 계산하며,
+ *
+ * 부등식 제약조건은 슬랙 변수(s)를 도입하여 A_ineq * x + s = b_ineq (s >= 0) 로 변환하여
+ * 처리합니다. 이 구현체는 KKT 조건을 풀기 위해 Newton-Raphson 기반의 Primal-Dual 스텝을 계산하며,
  * 특이점(Singularity) 방지를 위한 Tikhonov 정규화와 발산 방지용 클램핑이 적용되어 있습니다.
  */
 
@@ -25,7 +25,7 @@ namespace Optimization {
 /**
  * @class IPMQPSolver
  * @brief 정적 메모리 할당을 사용하는 IPM QP Solver 클래스
- * 
+ *
  * @tparam N_vars 최적화 변수(x)의 차원
  * @tparam N_eq 등식 제약조건의 개수 (없을 경우 0, 내부적으로 크기 1로 처리되어 메모리 절약)
  * @tparam N_ineq 부등식 제약조건의 개수 (없을 경우 0, 내부적으로 크기 1로 처리되어 메모리 절약)
@@ -34,8 +34,9 @@ template <size_t N_vars, size_t N_eq, size_t N_ineq>
 class IPMQPSolver {
    public:
     // 목적 함수 행렬 및 벡터
-    StaticMatrix<double, N_vars, N_vars> P; ///< Hessian 행렬 (반드시 양의 준정부호 Positive Semi-Definite 이어야 함)
-    StaticVector<double, N_vars> q;         ///< Gradient 벡터
+    StaticMatrix<double, N_vars, N_vars>
+        P;  ///< Hessian 행렬 (반드시 양의 준정부호 Positive Semi-Definite 이어야 함)
+    StaticVector<double, N_vars> q;  ///< Gradient 벡터
 
     // 등식 제약조건 (A_eq * x = b_eq)
     StaticMatrix<double, (N_eq > 0 ? N_eq : 1), N_vars> A_eq;
@@ -59,29 +60,32 @@ class IPMQPSolver {
 
     /**
      * @brief 설정된 QP 문제를 해결합니다.
-     * 
+     *
      * @param[in,out] x 초기 추정값이자 최적화된 결과가 저장될 변수 벡터
      * @param max_iter 최대 반복 횟수 (기본값: 50)
      * @param tol 수렴 판정을 위한 허용 오차 (기본값: 1e-3)
-     * @return bool 성공 여부 (타임아웃 시에도 최선해를 반환하며 항상 true를 반환하여 외부 SQP 루프를 살림)
+     * @return bool 성공 여부 (타임아웃 시에도 최선해를 반환하며 항상 true를 반환하여 외부 SQP
+     * 루프를 살림)
      */
     bool solve(StaticVector<double, N_vars>& x, int max_iter = 50, double tol = 1e-3) {
         // Dual 변수 (Lagrange Multipliers)
-        StaticVector<double, (N_eq > 0 ? N_eq : 1)> y;     ///< 등식 제약조건에 대한 Dual 변수
+        StaticVector<double, (N_eq > 0 ? N_eq : 1)> y;  ///< 등식 제약조건에 대한 Dual 변수
         y.set_zero();
-        StaticVector<double, (N_ineq > 0 ? N_ineq : 1)> z; ///< 부등식 제약조건에 대한 Dual 변수 (z >= 0)
-        StaticVector<double, (N_ineq > 0 ? N_ineq : 1)> s; ///< 부등식 제약조건을 위한 Slack 변수 (s >= 0)
+        StaticVector<double, (N_ineq > 0 ? N_ineq : 1)>
+            z;  ///< 부등식 제약조건에 대한 Dual 변수 (z >= 0)
+        StaticVector<double, (N_ineq > 0 ? N_ineq : 1)>
+            s;  ///< 부등식 제약조건을 위한 Slack 변수 (s >= 0)
 
         // 부등식 제약조건에 대한 초기화
         for (size_t i = 0; i < N_ineq; ++i) {
-            z(static_cast<int>(i)) = 1.0; // 엄격히 양수여야 함 (Strictly feasible)
+            z(static_cast<int>(i)) = 1.0;  // 엄격히 양수여야 함 (Strictly feasible)
             // 슬랙 변수 초기화 (최소 1.0을 보장하여 로그 장벽 함수의 정의 구역 내에 있도록 함)
             s(static_cast<int>(i)) = std::max(1.0, b_ineq(static_cast<int>(i)));
         }
 
         // KKT 시스템의 전체 크기: Primal 변수 + 등식 Dual 변수 + 부등식 Dual 변수
         constexpr size_t KKT_size = N_vars + N_eq + N_ineq;
-        
+
         // Newton Step을 계산하기 위한 KKT 행렬(K)과 우변 벡터(rhs), 그리고 해를 담을 벡터(delta)
         StaticMatrix<double, (KKT_size > 0 ? KKT_size : 1), (KKT_size > 0 ? KKT_size : 1)> K;
         StaticVector<double, (KKT_size > 0 ? KKT_size : 1)> rhs;
@@ -90,7 +94,8 @@ class IPMQPSolver {
         // 메인 IPM 반복 루프
         for (int iter = 0; iter < max_iter; ++iter) {
             // 1. KKT 잔여물 (Residuals) 계산
-            // 1.1 라그랑지안(Lagrangian)의 그래디언트 잔여물 (r_L = P*x + q + A_eq^T*y + A_ineq^T*z)
+            // 1.1 라그랑지안(Lagrangian)의 그래디언트 잔여물 (r_L = P*x + q + A_eq^T*y +
+            // A_ineq^T*z)
             StaticVector<double, N_vars> r_L = (P * x) + q;
             if constexpr (N_eq > 0) r_L = r_L + (A_eq.transpose() * y);
             if constexpr (N_ineq > 0) r_L = r_L + (A_ineq.transpose() * z);
@@ -104,11 +109,11 @@ class IPMQPSolver {
             if constexpr (N_ineq > 0) r_ineq = (A_ineq * x) + s - b_ineq;
 
             // 2. Duality Gap 및 수렴 조건 검사
-            double gap = 0.0; // 상보성 여유(Complementarity slackness) 갭 (s^T * z / N_ineq)
+            double gap = 0.0;  // 상보성 여유(Complementarity slackness) 갭 (s^T * z / N_ineq)
             if constexpr (N_ineq > 0) {
                 for (size_t i = 0; i < N_ineq; ++i)
                     gap += s(static_cast<int>(i)) * z(static_cast<int>(i));
-                gap /= static_cast<double>(N_ineq); // 평균 갭 계산
+                gap /= static_cast<double>(N_ineq);  // 평균 갭 계산
             }
 
             // 모든 잔여물의 최대 절댓값(Infinity Norm)을 구함
@@ -128,8 +133,9 @@ class IPMQPSolver {
             }
 
             // 3. 중심 경로 매개변수 설정 (Centering Parameter)
-            // Barrier parameter(mu)를 점진적으로 줄이기 위한 설정 (보통 Mehrotra's predictor-corrector를 쓰지만 여기서는 고정된 sigma 사용)
-            double sigma = 0.1; 
+            // Barrier parameter(mu)를 점진적으로 줄이기 위한 설정 (보통 Mehrotra's
+            // predictor-corrector를 쓰지만 여기서는 고정된 sigma 사용)
+            double sigma = 0.1;
             double mu_target = sigma * gap;
 
             // KKT 행렬 및 우변 초기화
@@ -142,9 +148,10 @@ class IPMQPSolver {
                 for (size_t j = 0; j < N_vars; ++j)
                     K(static_cast<int>(i), static_cast<int>(j)) =
                         P(static_cast<int>(i), static_cast<int>(j));
-                
+
                 // [Architect's Armor 1] 티호노프 정규화 (Tikhonov Regularization)
-                // P가 양의 정부호가 아닐 경우나 특이점(Singularity) 도달 시 역행렬 계산이 폭발하는 것을 방지
+                // P가 양의 정부호가 아닐 경우나 특이점(Singularity) 도달 시 역행렬 계산이 폭발하는
+                // 것을 방지
                 K(static_cast<int>(i), static_cast<int>(i)) += 1e-6;
             }
 
@@ -169,9 +176,11 @@ class IPMQPSolver {
                         K(static_cast<int>(j), static_cast<int>(i + N_vars + N_eq)) =
                             A_ineq(static_cast<int>(i), static_cast<int>(j));
                     }
-                    // Slack 변수의 역수 계산 시 z가 0에 가까워져 0으로 나누어지는 오류(Division by Zero) 방지
+                    // Slack 변수의 역수 계산 시 z가 0에 가까워져 0으로 나누어지는 오류(Division by
+                    // Zero) 방지
                     double z_safe = std::max(z(static_cast<int>(i)), 1e-12);
-                    // 행렬의 우하단 블록에 부등식 정보(-S^-1 * Z 의 역방향 반영인 -S/Z 로 스케일링) 반영
+                    // 행렬의 우하단 블록에 부등식 정보(-S^-1 * Z 의 역방향 반영인 -S/Z 로 스케일링)
+                    // 반영
                     K(static_cast<int>(i + N_vars + N_eq), static_cast<int>(i + N_vars + N_eq)) =
                         -s(static_cast<int>(i)) / z_safe;
                 }
@@ -179,10 +188,11 @@ class IPMQPSolver {
 
             // 4.4 우변(rhs) 벡터 구성
             for (size_t i = 0; i < N_vars; ++i)
-                rhs(static_cast<int>(i)) = -r_L(static_cast<int>(i)); // Primal 업데이트 요구량
+                rhs(static_cast<int>(i)) = -r_L(static_cast<int>(i));  // Primal 업데이트 요구량
             if constexpr (N_eq > 0)
                 for (size_t i = 0; i < N_eq; ++i)
-                    rhs(static_cast<int>(i + N_vars)) = -r_eq(static_cast<int>(i)); // 등식 제약 조건 충족 요구량
+                    rhs(static_cast<int>(i + N_vars)) =
+                        -r_eq(static_cast<int>(i));  // 등식 제약 조건 충족 요구량
             if constexpr (N_ineq > 0) {
                 for (size_t i = 0; i < N_ineq; ++i) {
                     // 상보성 조건 잔여물 (Complementarity condition): s * z - mu_target
@@ -211,7 +221,8 @@ class IPMQPSolver {
                     }
                 }
 
-                // 수치적 불안정성 방지: 피벗 값이 너무 작으면 해당 행의 소거를 건너뜀 (정규화 덕에 거의 발생 안함)
+                // 수치적 불안정성 방지: 피벗 값이 너무 작으면 해당 행의 소거를 건너뜀 (정규화 덕에
+                // 거의 발생 안함)
                 if (max_val < 1e-12) {
                     continue;
                 }
@@ -250,10 +261,10 @@ class IPMQPSolver {
             }
 
             // 6. 계산된 델타(Delta) 분리 및 방향 벡터(Step Directions) 설정
-            StaticVector<double, N_vars> dx;                         // Primal 업데이트
-            StaticVector<double, (N_eq > 0 ? N_eq : 1)> dy;          // 등식 Dual 업데이트
-            StaticVector<double, (N_ineq > 0 ? N_ineq : 1)> dz;      // 부등식 Dual 업데이트
-            StaticVector<double, (N_ineq > 0 ? N_ineq : 1)> ds;      // Slack 변수 업데이트
+            StaticVector<double, N_vars> dx;                     // Primal 업데이트
+            StaticVector<double, (N_eq > 0 ? N_eq : 1)> dy;      // 등식 Dual 업데이트
+            StaticVector<double, (N_ineq > 0 ? N_ineq : 1)> dz;  // 부등식 Dual 업데이트
+            StaticVector<double, (N_ineq > 0 ? N_ineq : 1)> ds;  // Slack 변수 업데이트
 
             for (size_t i = 0; i < N_vars; ++i) {
                 // [안전 장치] IPM 내부 클램핑 (1차 방어)
@@ -266,7 +277,7 @@ class IPMQPSolver {
             if constexpr (N_eq > 0)
                 for (size_t i = 0; i < N_eq; ++i)
                     dy(static_cast<int>(i)) = delta(static_cast<int>(i + N_vars));
-            
+
             // Slack 변수의 방향(ds) 계산: ds = -r_ineq - A_ineq * dx
             if constexpr (N_ineq > 0) {
                 for (size_t i = 0; i < N_ineq; ++i) {
@@ -283,7 +294,7 @@ class IPMQPSolver {
             // Primal 변수와 Dual 변수가 항상 양의 제약(s > 0, z > 0)을 만족하도록 보폭을 제한
             double alpha_prim = 1.0;
             double alpha_dual = 1.0;
-            constexpr double tau = 0.995; // 경계에 너무 가까이 붙는 것을 막기 위한 백오프 파라미터
+            constexpr double tau = 0.995;  // 경계에 너무 가까이 붙는 것을 막기 위한 백오프 파라미터
 
             if constexpr (N_ineq > 0) {
                 for (size_t i = 0; i < N_ineq; ++i) {
@@ -303,7 +314,7 @@ class IPMQPSolver {
             if constexpr (N_eq > 0) y = y + (dy * alpha_dual);
             if constexpr (N_ineq > 0) {
                 z = z + (dz * alpha_dual);
-                s = s + (ds * alpha_prim); // Slack 변수는 Primal 스텝 사이즈 적용
+                s = s + (ds * alpha_prim);  // Slack 변수는 Primal 스텝 사이즈 적용
             }
         }
 
