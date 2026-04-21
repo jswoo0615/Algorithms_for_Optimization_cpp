@@ -16,11 +16,12 @@ namespace Optimization {
 /**
  * @class LineSearch
  * @brief 라인 서치(Line Search) 알고리즘들을 모아놓은 정적 클래스
- * 
- * 최적화 문제에서 주어진 탐색 방향(d)을 따라 이동할 때, 
+ *
+ * 최적화 문제에서 주어진 탐색 방향(d)을 따라 이동할 때,
  * 목적 함수 f(x + alpha * d)를 최소화하는 적절한 스텝 사이즈(alpha)를 찾는 알고리즘들을 제공합니다.
  * 최솟값을 감싸는 구간을 찾는 브래킷(Bracket) 기법부터, 해당 구간 내에서 정밀하게
- * 최솟값을 찾는 황금분할탐색(Golden Section Search), 이분법(Bisection), 2차 적합(Quadratic Fit) 등의 기법을 포함합니다.
+ * 최솟값을 찾는 황금분할탐색(Golden Section Search), 이분법(Bisection), 2차 적합(Quadratic Fit)
+ * 등의 기법을 포함합니다.
  */
 class LineSearch {
    private:
@@ -42,9 +43,10 @@ class LineSearch {
     }
 
     /**
-     * @brief 특정 지점(x + alpha * d)에서의 목적 함수의 방향 도함수(Directional Derivative)를 계산합니다.
-     * @details 방향 도함수는 함수의 기울기(Gradient)와 탐색 방향(d)의 내적(Dot Product)으로 정의됩니다.
-     *          AutoDiff를 이용해 기울기를 구한 후 방향 벡터와의 내적을 계산합니다.
+     * @brief 특정 지점(x + alpha * d)에서의 목적 함수의 방향 도함수(Directional Derivative)를
+     * 계산합니다.
+     * @details 방향 도함수는 함수의 기울기(Gradient)와 탐색 방향(d)의 내적(Dot Product)으로
+     * 정의됩니다. AutoDiff를 이용해 기울기를 구한 후 방향 벡터와의 내적을 계산합니다.
      * @param f 목적 함수
      * @param x 현재 위치
      * @param d 탐색 방향
@@ -122,7 +124,7 @@ class LineSearch {
             ya = yb;
             b = c;
             yb = yc;
-            s *= k; // 스텝 크기를 k배 증가 (가속 탐색)
+            s *= k;  // 스텝 크기를 k배 증가 (가속 탐색)
         }
     }
 
@@ -130,7 +132,8 @@ class LineSearch {
     // 2. Golden Section Search (Algorithm 3.3)
     // 최솟값이 포함된 구간 [a, b]가 주어졌을 때, 황금비(약 0.618)를 이용하여
     // 평가 횟수를 최소화하면서 구간을 지속적으로 축소해 나가는 탐색 기법입니다.
-    // 기존 구간을 황금비로 나누는 두 점 c, d 중 하나는 다음 스텝에서도 재사용되므로 연산 효율이 좋습니다.
+    // 기존 구간을 황금비로 나누는 두 점 c, d 중 하나는 다음 스텝에서도 재사용되므로 연산 효율이
+    // 좋습니다.
     // ================================================================================
     /**
      * @brief 황금 분할 탐색법을 이용한 라인 서치
@@ -147,7 +150,7 @@ class LineSearch {
     static double golden_section_search(Func f, const StaticVector<double, N>& x,
                                         const StaticVector<double, N>& d, double a, double b,
                                         double tol = 1e-5, bool verbose = false) {
-        const double phi = (3.0 - std::sqrt(5.0)) / 2.0; // 약 0.381966 (1 - 0.618034)
+        const double phi = (3.0 - std::sqrt(5.0)) / 2.0;  // 약 0.381966 (1 - 0.618034)
         double d_step = b - a;
         double c = a + phi * d_step;
         double d_val = b - phi * d_step;
@@ -167,20 +170,20 @@ class LineSearch {
 
             // f(c) < f(d) 이면 최솟값은 [a, d_val] 사이에 존재
             if (yc < yd) {
-                b = d_val;     // 구간의 오른쪽 끝을 d_val로 축소
-                d_val = c;     // 이전 c가 새로운 d_val이 됨 (함수값 재사용)
+                b = d_val;  // 구간의 오른쪽 끝을 d_val로 축소
+                d_val = c;  // 이전 c가 새로운 d_val이 됨 (함수값 재사용)
                 yd = yc;
                 d_step = b - a;
-                c = a + phi * d_step; // 새로운 c점만 평가
+                c = a + phi * d_step;  // 새로운 c점만 평가
                 yc = AutoDiff::value<N>(f, ray_point<N>(x, d, c));
-            } 
+            }
             // f(c) >= f(d) 이면 최솟값은 [c, b] 사이에 존재
             else {
-                a = c;         // 구간의 왼쪽 끝을 c로 축소
-                c = d_val;     // 이전 d_val이 새로운 c가 됨 (함수값 재사용)
+                a = c;      // 구간의 왼쪽 끝을 c로 축소
+                c = d_val;  // 이전 d_val이 새로운 c가 됨 (함수값 재사용)
                 yc = yd;
                 d_step = b - a;
-                d_val = b - phi * d_step; // 새로운 d_val점만 평가
+                d_val = b - phi * d_step;  // 새로운 d_val점만 평가
                 yd = AutoDiff::value<N>(f, ray_point<N>(x, d, d_val));
             }
         }
@@ -221,12 +224,12 @@ class LineSearch {
             // 세 점을 지나는 2차 다항식의 꼭짓점 계산을 위한 분자와 분모
             double num = (b - a) * (b - a) * (yb - yc) - (b - c) * (b - c) * (yb - ya);
             double den = (b - a) * (yb - yc) - (b - c) * (yb - ya);
-            
+
             // 세 점이 거의 일직선상에 있어 2차 근사가 불가능한 경우 루프 탈출
             if (std::abs(den) < 1e-16) {
                 break;
             }
-            
+
             // 2차 근사 다항식의 최소점 위치 (x_star)
             double x_star = b - 0.5 * num / den;
             double y_star = eval(x_star);
@@ -275,7 +278,7 @@ class LineSearch {
     // 4. Shubert-Piyavskii Algorithm (Algorithm 3.5)
     // 립시츠 연속(Lipschitz Continuous) 함수에서, 립시츠 상수(L)를 알고 있을 때
     // 함수의 전역 최솟값(Global Minimum)을 찾기 위해 사용되는 알고리즘입니다.
-    // 기존에 평가된 점들로부터 V자 형태의 하한선(Lower Bound)을 생성하여, 
+    // 기존에 평가된 점들로부터 V자 형태의 하한선(Lower Bound)을 생성하여,
     // 하한선의 교차점 중 가장 낮은 지점을 다음 탐색점으로 선택합니다.
     // ==================================================================
     /**
@@ -295,7 +298,7 @@ class LineSearch {
                                     const StaticVector<double, N>& d, double a, double b, double L,
                                     double tol = 1e-4, bool verbose = false) {
         auto eval = [&](double alpha) { return AutoDiff::value<N>(f, ray_point<N>(x, d, alpha)); };
-        
+
         // 탐색 구간의 하한선 교차점을 저장하는 구조체
         struct SPNode {
             double a, ya, b, yb, x_m, y_m;
@@ -303,7 +306,7 @@ class LineSearch {
         };
         std::array<SPNode, MAX_NODES> pool;
         size_t pool_size = 0;
-        
+
         double ya = eval(a), yb = eval(b);
         double min_val = std::min(ya, yb);
         double min_alpha = (ya < yb) ? a : b;
@@ -319,7 +322,7 @@ class LineSearch {
             double y_m = 0.5 * (n_ya + n_yb) - L * (n_b - n_a) / 2.0;
             pool[pool_size++] = {n_a, n_ya, n_b, n_yb, x_m, y_m, true};
         };
-        
+
         add_node(a, ya, b, yb);
 
         size_t iter = 0;
@@ -328,7 +331,7 @@ class LineSearch {
             double best_ym = 1e99;
             size_t best_idx = 0;
             bool found = false;
-            
+
             // 현재 활성화된 구간들 중 가장 낮은 하한값(y_m)을 가진 구간을 선택
             for (size_t i = 0; i < pool_size; ++i) {
                 if (pool[i].active && pool[i].y_m < best_ym) {
@@ -338,10 +341,10 @@ class LineSearch {
                 }
             }
 
-            if (!found) break; // 더 이상 탐색할 활성 구간이 없음
-            
+            if (!found) break;  // 더 이상 탐색할 활성 구간이 없음
+
             double x_m = pool[best_idx].x_m;
-            double y_eval = eval(x_m); // 교차점 위치에서의 실제 함수값 평가
+            double y_eval = eval(x_m);  // 교차점 위치에서의 실제 함수값 평가
 
             // 현재까지 발견된 최소 함수값 갱신
             if (y_eval < min_val) {
@@ -360,7 +363,7 @@ class LineSearch {
             if (std::abs(y_eval - pool[best_idx].y_m) < tol) {
                 break;
             }
-            
+
             // 탐색한 구간을 비활성화하고, x_m을 기준으로 두 개의 새로운 하위 구간을 생성
             pool[best_idx].active = false;
             add_node(pool[best_idx].a, pool[best_idx].ya, x_m, y_eval);
@@ -372,8 +375,8 @@ class LineSearch {
 
     // ==================================================================
     // 5. Bracket Sign Change (Algorithm 3.6)
-    // 함수의 도함수(Derivative)가 연속이라고 가정할 때, 방향 도함수의 부호가 
-    // 음수에서 양수로 바뀌는 구간을 찾는 알고리즘입니다. 도함수의 부호가 바뀌는 
+    // 함수의 도함수(Derivative)가 연속이라고 가정할 때, 방향 도함수의 부호가
+    // 음수에서 양수로 바뀌는 구간을 찾는 알고리즘입니다. 도함수의 부호가 바뀌는
     // 구간 내부에는 도함수가 0이 되는 지점(즉, 최솟값 후보인 임계점)이 존재하게 됩니다.
     // ==================================================================
     /**
@@ -398,7 +401,7 @@ class LineSearch {
         double center = (a + b) / 2.0;
         double half_width = (b - a) / 2.0;
         auto eval_deriv = [&](double alpha) { return directional_derivative<N>(f, x, d, alpha); };
-        
+
         double fp_a = eval_deriv(a);
         double fp_b = eval_deriv(b);
 
@@ -406,7 +409,7 @@ class LineSearch {
         // 양 끝점의 도함수 부호가 같으면 (곱이 양수) 최솟값을 포함하지 않으므로 구간을 확장
         while (fp_a * fp_b > 0.0) {
             iter++;
-            half_width *= k; // 구간을 k배 만큼 중심을 기준으로 확장
+            half_width *= k;  // 구간을 k배 만큼 중심을 기준으로 확장
             a = center - half_width;
             b = center + half_width;
             fp_a = eval_deriv(a);
@@ -420,7 +423,7 @@ class LineSearch {
         }
         return std::make_pair(a, b);
     }
-    
+
     // ======================================
     // 6. Bisection Method (Algorithm 3.7)
     // 도함수의 부호가 다른 두 점 a, b (f'(a) < 0, f'(b) > 0)가 주어졌을 때,
@@ -442,7 +445,7 @@ class LineSearch {
     static double bisection(Func f, const StaticVector<double, N>& x,
                             const StaticVector<double, N>& d, double a, double b, double tol = 1e-5,
                             bool verbose = false) {
-        if (a > b) std::swap(a, b); // a가 항상 작도록 정렬
+        if (a > b) std::swap(a, b);  // a가 항상 작도록 정렬
         auto eval_deriv = [&](double alpha) { return directional_derivative<N>(f, x, d, alpha); };
         double ya = eval_deriv(a);
         double yb = eval_deriv(b);
@@ -476,7 +479,7 @@ class LineSearch {
             if ((y_mid > 0.0 && ya > 0.0) || (y_mid < 0.0 && ya < 0.0)) {
                 a = mid;
                 ya = y_mid;
-            } 
+            }
             // 다르면 근은 a와 mid 사이에 존재
             else {
                 b = mid;
