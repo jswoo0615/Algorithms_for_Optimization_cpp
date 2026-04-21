@@ -102,152 +102,155 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">namespace </span>Optimization {</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N&gt;</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="keyword">struct </span>OptimizationResultND {</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    std::array&lt;double, N&gt; <a class="code hl_variable" href="structOptimization_1_1OptimizationResultND.html#a0106e12c1664683185cba14cba9ddebc">x_opt</a>;    </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keywordtype">double</span> <a class="code hl_variable" href="structOptimization_1_1OptimizationResultND.html#aeebc928723f3605b914941109afff683">f_opt</a>;                   </div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keywordtype">size_t</span> <a class="code hl_variable" href="structOptimization_1_1OptimizationResultND.html#a97219625aa18497e876783546a56c985">iterations</a>;              </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keywordtype">long</span> <span class="keywordtype">long</span> <a class="code hl_variable" href="structOptimization_1_1OptimizationResultND.html#a19bc0e48b795d90ccd7bab9489fa652d">elapsed_ns</a>;           </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    std::array&lt;double, N&gt; <a class="code hl_variable" href="structOptimization_1_1OptimizationResultND.html#a0106e12c1664683185cba14cba9ddebc">x_opt</a>;  </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    <span class="keywordtype">double</span> <a class="code hl_variable" href="structOptimization_1_1OptimizationResultND.html#aeebc928723f3605b914941109afff683">f_opt</a>;                 </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keywordtype">size_t</span> <a class="code hl_variable" href="structOptimization_1_1OptimizationResultND.html#a97219625aa18497e876783546a56c985">iterations</a>;            </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    <span class="keywordtype">long</span> <span class="keywordtype">long</span> <a class="code hl_variable" href="structOptimization_1_1OptimizationResultND.html#a19bc0e48b795d90ccd7bab9489fa652d">elapsed_ns</a>;         </div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>};</div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>}  <span class="comment">// namespace Optimization</span></div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_RESULT_ND_DEFINED</span></div>
 <div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span><span class="keyword">namespace </span>Optimization {</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span> </div>
-<div class="foldopen" id="foldopen00047" data-start="{" data-end="};">
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno"><a class="line" href="classOptimization_1_1HookeJeeves.html">   47</a></span><span class="keyword">class </span><a class="code hl_class" href="classOptimization_1_1HookeJeeves.html">HookeJeeves</a> {</div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>   <span class="keyword">private</span>:</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N, <span class="keyword">typename</span> Func&gt;</div>
-<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keyword">static</span> <span class="keyword">constexpr</span> std::array&lt;double, N&gt; explore(Func f, std::array&lt;double, N&gt; x, <span class="keywordtype">double</span> alpha,</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>                                                   <span class="keywordtype">double</span>&amp; f_best) <span class="keyword">noexcept</span> {</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>            <span class="comment">// 1. 양 (+)의 방향 탐색</span></div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            x[i] += alpha;</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            <span class="keywordtype">double</span> f_plus = f(x);</div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            <span class="keywordflow">if</span> (f_plus &lt; f_best) {</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>                <span class="comment">// 개선되었을 경우: 최적값 갱신 후 해당 축 탐색 종료 (위치 유지)</span></div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>                f_best = f_plus;</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>                <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>            }</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            <span class="comment">// 2. 음 (-)의 방향 탐색 (-2.0 * alpha를 빼서 원래 위치를 지나 반대편으로 이동)</span></div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>            x[i] -= 2.0 * alpha;</div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            <span class="keywordtype">double</span> f_minus = f(x);</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            <span class="keywordflow">if</span> (f_minus &lt; f_best) {</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>                <span class="comment">// 개선되었을 경우: 최적값 갱신 후 해당 축 탐색 종료 (위치 유지)</span></div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>                f_best = f_minus;</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>                <span class="keywordflow">continue</span>;</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            }</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span> </div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>            <span class="comment">// 3. 양쪽 모두 탐색에 실패(개선 없음) 시 원래 위치로 복구 (+alpha)</span></div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>            x[i] += alpha;</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        }</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        <span class="keywordflow">return</span> x; <span class="comment">// 각 축별 탐색 결과가 반영된 최종 위치 반환</span></div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    }</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>   <span class="keyword">public</span>:</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    <span class="comment">// 인스턴스화 방지</span></div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <a class="code hl_class" href="classOptimization_1_1HookeJeeves.html">HookeJeeves</a>() = <span class="keyword">delete</span>;</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span> </div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N, <span class="keyword">typename</span> Func&gt;</div>
-<div class="foldopen" id="foldopen00109" data-start="{" data-end="}">
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno"><a class="line" href="classOptimization_1_1HookeJeeves.html#affa309c025775db8d9145c74c686003c">  109</a></span>    [[nodiscard]] <span class="keyword">static</span> <a class="code hl_struct" href="structOptimization_1_1OptimizationResultND.html">OptimizationResultND&lt;N&gt;</a> <a class="code hl_function" href="classOptimization_1_1HookeJeeves.html#affa309c025775db8d9145c74c686003c">optimize</a>(Func f, std::array&lt;double, N&gt; x_start,</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>                                                          <span class="keywordtype">double</span> alpha = 0.5, <span class="keywordtype">double</span> shrink = 0.5,</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>                                                          <span class="keywordtype">double</span> tol = 1e-6, <span class="keywordtype">size_t</span> max_iter = 2000,</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>                                                          <span class="keywordtype">bool</span> verbose = <span class="keyword">false</span>) noexcept {</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        <span class="keyword">static_assert</span>(N &gt; 0, <span class="stringliteral">&quot;Dimension N must be greater than 0&quot;</span>);</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        <span class="keyword">auto</span> start_clock = std::chrono::high_resolution_clock::now();</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        <span class="keywordflow">if</span> (verbose) {</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>            std::cout &lt;&lt; <span class="stringliteral">&quot;========================================================\n&quot;</span>;</div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; 🐸 Hooke-Jeeves Pattern Search Started\n&quot;</span>;</div>
+<div class="foldopen" id="foldopen00048" data-start="{" data-end="};">
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="classOptimization_1_1HookeJeeves.html">   48</a></span><span class="keyword">class </span><a class="code hl_class" href="classOptimization_1_1HookeJeeves.html">HookeJeeves</a> {</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>   <span class="keyword">private</span>:</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N, <span class="keyword">typename</span> Func&gt;</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    <span class="keyword">static</span> <span class="keyword">constexpr</span> std::array&lt;double, N&gt; explore(Func f, std::array&lt;double, N&gt; x, <span class="keywordtype">double</span> alpha,</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>                                                   <span class="keywordtype">double</span>&amp; f_best) <span class="keyword">noexcept</span> {</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>            <span class="comment">// 1. 양 (+)의 방향 탐색</span></div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>            x[i] += alpha;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            <span class="keywordtype">double</span> f_plus = f(x);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            <span class="keywordflow">if</span> (f_plus &lt; f_best) {</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>                <span class="comment">// 개선되었을 경우: 최적값 갱신 후 해당 축 탐색 종료 (위치 유지)</span></div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>                f_best = f_plus;</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>                <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>            }</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>            <span class="comment">// 2. 음 (-)의 방향 탐색 (-2.0 * alpha를 빼서 원래 위치를 지나 반대편으로 이동)</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>            x[i] -= 2.0 * alpha;</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            <span class="keywordtype">double</span> f_minus = f(x);</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>            <span class="keywordflow">if</span> (f_minus &lt; f_best) {</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>                <span class="comment">// 개선되었을 경우: 최적값 갱신 후 해당 축 탐색 종료 (위치 유지)</span></div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>                f_best = f_minus;</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>                <span class="keywordflow">continue</span>;</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>            }</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>            <span class="comment">// 3. 양쪽 모두 탐색에 실패(개선 없음) 시 원래 위치로 복구 (+alpha)</span></div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            x[i] += alpha;</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        }</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>        <span class="keywordflow">return</span> x;  <span class="comment">// 각 축별 탐색 결과가 반영된 최종 위치 반환</span></div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    }</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>   <span class="keyword">public</span>:</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <span class="comment">// 인스턴스화 방지</span></div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <a class="code hl_class" href="classOptimization_1_1HookeJeeves.html">HookeJeeves</a>() = <span class="keyword">delete</span>;</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="keyword">template</span> &lt;<span class="keywordtype">size_t</span> N, <span class="keyword">typename</span> Func&gt;</div>
+<div class="foldopen" id="foldopen00111" data-start="{" data-end="}">
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno"><a class="line" href="classOptimization_1_1HookeJeeves.html#affa309c025775db8d9145c74c686003c">  111</a></span>    [[nodiscard]] <span class="keyword">static</span> <a class="code hl_struct" href="structOptimization_1_1OptimizationResultND.html">OptimizationResultND&lt;N&gt;</a> <a class="code hl_function" href="classOptimization_1_1HookeJeeves.html#affa309c025775db8d9145c74c686003c">optimize</a>(Func f, std::array&lt;double, N&gt; x_start,</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>                                                          <span class="keywordtype">double</span> alpha = 0.5, <span class="keywordtype">double</span> shrink = 0.5,</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>                                                          <span class="keywordtype">double</span> tol = 1e-6, <span class="keywordtype">size_t</span> max_iter = 2000,</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>                                                          <span class="keywordtype">bool</span> verbose = <span class="keyword">false</span>) noexcept {</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>        <span class="keyword">static_assert</span>(N &gt; 0, <span class="stringliteral">&quot;Dimension N must be greater than 0&quot;</span>);</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        <span class="keyword">auto</span> start_clock = std::chrono::high_resolution_clock::now();</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>        <span class="keywordflow">if</span> (verbose) {</div>
 <div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            std::cout &lt;&lt; <span class="stringliteral">&quot;========================================================\n&quot;</span>;</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        }</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        <span class="comment">// 메모리 정렬을 통한 SIMD / 캐시 최적화</span></div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        <span class="keyword">alignas</span>(64) std::array&lt;double, N&gt; x = x_start;</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        <span class="keywordtype">double</span> f_best = f(x);</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        <span class="keywordtype">size_t</span> iter = 0;</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        <span class="keywordflow">for</span> (iter = 1; iter &lt;= max_iter; ++iter) {</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>            <span class="keywordtype">double</span> f_prev = f_best;</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span> </div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>            <span class="comment">// Step 1. 현재 베이스 포인트(x)에서 탐색 이동 (Exploratory Move) 수행</span></div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>            <span class="keyword">alignas</span>(64) std::array&lt;double, N&gt; x_new = explore&lt;N&gt;(f, x, alpha, f_best);</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>            <span class="comment">// 부동 소수점 좌표 배열 자체를 비교하는 대신, 목적 함수값의 개선 여부로 탐색 성공을 판별합니다.</span></div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>            <span class="comment">// 이는 부동소수점 오차에 대해 더 강건(Robust)합니다.</span></div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>            <span class="keywordflow">if</span> (f_best &lt; f_prev) {</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>                <span class="comment">// 탐색 이동 성공: 이전 베이스(x)에서 새로운 베이스(x_new)로 이동한 방향을 기억함.</span></div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> </div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>                <span class="comment">// Step 2. 패턴 이동 (Pattern Move) 계산</span></div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>                <span class="comment">// 모멘텀 가속: 과거 이동 방향(x_new - x)을 연장하여 한 번 더 도약해봅니다.</span></div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>                <span class="keyword">alignas</span>(64) std::array&lt;double, N&gt; x_pattern = {0.0};</div>
-<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span><span class="preprocessor">#pragma omp simd</span></div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>                <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>                    <span class="comment">// 수식: x_pattern = x_new + (x_new - x) = 2 * x_new - x</span></div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>                    <span class="comment">// FMA(Fused Multiply-Add) 명령어를 사용하여 계산 속도 및 정밀도 향상</span></div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>                    x_pattern[i] = std::fma(2.0, x_new[i], -x[i]);</div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>                }</div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span> </div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>                <span class="comment">// 점프(Pattern Move)한 위치에서의 함수값 계산</span></div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>                <span class="keywordtype">double</span> f_pattern = f(x_pattern);</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>                </div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>                <span class="comment">// 도약한 위치(x_pattern)에서 다시 한 번 탐색 이동(Exploratory Move) 수행</span></div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>                <span class="keyword">alignas</span>(64) std::array&lt;double, N&gt; x_pattern_new =</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>                    explore&lt;N&gt;(f, x_pattern, alpha, f_pattern);</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>                <span class="comment">// 도약 후의 결과가 단순 탐색 이동 결과(f_best)보다 더 좋은지 검증</span></div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>                <span class="keywordflow">if</span> (f_pattern &lt; f_best) {</div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>                    <span class="comment">// 패턴 이동 성공: 더 좋은 결과를 얻었으므로 베이스 위치와 최적값을 도약 위치로 갱신</span></div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>                    x = x_pattern_new;</div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>                    f_best = f_pattern;</div>
-<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>                } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>                    <span class="comment">// 패턴 이동 실패: 도약이 오히려 안 좋은 결과를 낳았으므로 단순 탐색 결과(x_new)만 적용 (롤백)</span></div>
-<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>                    x = x_new;</div>
-<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>                }</div>
-<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>            } <span class="keywordflow">else</span> {</div>
-<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>                <span class="comment">// 탐색 이동 실패 (f_best &gt;= f_prev):</span></div>
-<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>                <span class="comment">// 현재 위치 근처에서 더 이상 좋은 곳을 찾을 수 없음을 의미함.</span></div>
-<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span> </div>
-<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>                <span class="comment">// Step 3. 보폭 수축 (Shrink)</span></div>
-<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>                <span class="comment">// 주변 탐색에 실패했으므로, 더 세밀한 탐색을 위해 보폭(alpha)을 줄입니다.</span></div>
-<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>                alpha *= shrink;</div>
-<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>                </div>
-<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>                <span class="comment">// 보폭이 설정된 허용 오차(tol)보다 작아지면 충분히 극솟값에 도달했다고 판단하고 종료합니다.</span></div>
-<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>                <span class="keywordflow">if</span> (alpha &lt; tol) {</div>
-<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>                    <span class="keywordflow">if</span> (verbose) std::cout &lt;&lt; <span class="stringliteral">&quot;  ↳ ✅ Converged at Iteration: &quot;</span> &lt;&lt; iter &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>                    <span class="keywordflow">break</span>;</div>
-<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>                }</div>
-<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>            }</div>
-<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span> </div>
-<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>            <span class="comment">// 지정된 주기마다 현재 진행 상태 출력</span></div>
-<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>            <span class="keywordflow">if</span> (verbose &amp;&amp; (iter % 100 == 0 || iter == 1)) {</div>
-<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>                std::cout &lt;&lt; <span class="stringliteral">&quot;[Iter &quot;</span> &lt;&lt; std::setw(4) &lt;&lt; iter &lt;&lt; <span class="stringliteral">&quot;] f(x): &quot;</span> &lt;&lt; std::fixed</div>
-<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>                          &lt;&lt; std::setprecision(6) &lt;&lt; f_best &lt;&lt; <span class="stringliteral">&quot; | Step(alpha): &quot;</span> &lt;&lt; alpha &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
-<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span>            }</div>
-<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>        }</div>
-<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span> </div>
-<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>        <span class="keyword">auto</span> end_clock = std::chrono::high_resolution_clock::now();</div>
-<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>        <span class="keyword">auto</span> duration =</div>
-<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>            std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(end_clock - start_clock);</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span> </div>
-<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>        <span class="keywordflow">if</span> (verbose) {</div>
-<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>            std::cout &lt;&lt; <span class="stringliteral">&quot;========================================================\n&quot;</span>;</div>
-<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; 🏁 Final Optimal Point: [&quot;</span> &lt;&lt; x[0];</div>
-<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (N &gt; 1) std::cout &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; x[1];</div>
-<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (N &gt; 2) std::cout &lt;&lt; <span class="stringliteral">&quot;, ...&quot;</span>;</div>
-<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>            std::cout &lt;&lt; <span class="stringliteral">&quot;]\n========================================================\n&quot;</span>;</div>
-<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>        }</div>
-<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span> </div>
-<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>        <span class="keywordflow">return</span> {x, f_best, iter, duration.count()};</div>
-<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>    }</div>
-</div>
-<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>};</div>
-</div>
-<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>}  <span class="comment">// namespace Optimization</span></div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; 🐸 Hooke-Jeeves Pattern Search Started\n&quot;</span>;</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>            std::cout &lt;&lt; <span class="stringliteral">&quot;========================================================\n&quot;</span>;</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        }</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span> </div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>        <span class="comment">// 메모리 정렬을 통한 SIMD / 캐시 최적화</span></div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        <span class="keyword">alignas</span>(64) std::array&lt;double, N&gt; x = x_start;</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>        <span class="keywordtype">double</span> f_best = f(x);</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>        <span class="keywordtype">size_t</span> iter = 0;</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>        <span class="keywordflow">for</span> (iter = 1; iter &lt;= max_iter; ++iter) {</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>            <span class="keywordtype">double</span> f_prev = f_best;</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>            <span class="comment">// Step 1. 현재 베이스 포인트(x)에서 탐색 이동 (Exploratory Move) 수행</span></div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>            <span class="keyword">alignas</span>(64) std::array&lt;double, N&gt; x_new = explore&lt;N&gt;(f, x, alpha, f_best);</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span> </div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>            <span class="comment">// 부동 소수점 좌표 배열 자체를 비교하는 대신, 목적 함수값의 개선 여부로 탐색 성공을</span></div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>            <span class="comment">// 판별합니다. 이는 부동소수점 오차에 대해 더 강건(Robust)합니다.</span></div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>            <span class="keywordflow">if</span> (f_best &lt; f_prev) {</div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>                <span class="comment">// 탐색 이동 성공: 이전 베이스(x)에서 새로운 베이스(x_new)로 이동한 방향을 기억함.</span></div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>                <span class="comment">// Step 2. 패턴 이동 (Pattern Move) 계산</span></div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span>                <span class="comment">// 모멘텀 가속: 과거 이동 방향(x_new - x)을 연장하여 한 번 더 도약해봅니다.</span></div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>                <span class="keyword">alignas</span>(64) std::array&lt;double, N&gt; x_pattern = {0.0};</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span><span class="preprocessor">#pragma omp simd</span></div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>                <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>                    <span class="comment">// 수식: x_pattern = x_new + (x_new - x) = 2 * x_new - x</span></div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>                    <span class="comment">// FMA(Fused Multiply-Add) 명령어를 사용하여 계산 속도 및 정밀도 향상</span></div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>                    x_pattern[i] = std::fma(2.0, x_new[i], -x[i]);</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>                }</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span> </div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>                <span class="comment">// 점프(Pattern Move)한 위치에서의 함수값 계산</span></div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>                <span class="keywordtype">double</span> f_pattern = f(x_pattern);</div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>                <span class="comment">// 도약한 위치(x_pattern)에서 다시 한 번 탐색 이동(Exploratory Move) 수행</span></div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>                <span class="keyword">alignas</span>(64) std::array&lt;double, N&gt; x_pattern_new =</div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>                    explore&lt;N&gt;(f, x_pattern, alpha, f_pattern);</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>                <span class="comment">// 도약 후의 결과가 단순 탐색 이동 결과(f_best)보다 더 좋은지 검증</span></div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>                <span class="keywordflow">if</span> (f_pattern &lt; f_best) {</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span>                    <span class="comment">// 패턴 이동 성공: 더 좋은 결과를 얻었으므로 베이스 위치와 최적값을 도약 위치로</span></div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>                    <span class="comment">// 갱신</span></div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>                    x = x_pattern_new;</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>                    f_best = f_pattern;</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>                } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>                    <span class="comment">// 패턴 이동 실패: 도약이 오히려 안 좋은 결과를 낳았으므로 단순 탐색</span></div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>                    <span class="comment">// 결과(x_new)만 적용 (롤백)</span></div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span>                    x = x_new;</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>                }</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>            } <span class="keywordflow">else</span> {</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span>                <span class="comment">// 탐색 이동 실패 (f_best &gt;= f_prev):</span></div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>                <span class="comment">// 현재 위치 근처에서 더 이상 좋은 곳을 찾을 수 없음을 의미함.</span></div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> </div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>                <span class="comment">// Step 3. 보폭 수축 (Shrink)</span></div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>                <span class="comment">// 주변 탐색에 실패했으므로, 더 세밀한 탐색을 위해 보폭(alpha)을 줄입니다.</span></div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>                alpha *= shrink;</div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span> </div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>                <span class="comment">// 보폭이 설정된 허용 오차(tol)보다 작아지면 충분히 극솟값에 도달했다고 판단하고</span></div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span>                <span class="comment">// 종료합니다.</span></div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span>                <span class="keywordflow">if</span> (alpha &lt; tol) {</div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>                    <span class="keywordflow">if</span> (verbose) std::cout &lt;&lt; <span class="stringliteral">&quot;  ↳ ✅ Converged at Iteration: &quot;</span> &lt;&lt; iter &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a id="l00180" name="l00180"></a><span class="lineno">  180</span>                    <span class="keywordflow">break</span>;</div>
+<div class="line"><a id="l00181" name="l00181"></a><span class="lineno">  181</span>                }</div>
+<div class="line"><a id="l00182" name="l00182"></a><span class="lineno">  182</span>            }</div>
+<div class="line"><a id="l00183" name="l00183"></a><span class="lineno">  183</span> </div>
+<div class="line"><a id="l00184" name="l00184"></a><span class="lineno">  184</span>            <span class="comment">// 지정된 주기마다 현재 진행 상태 출력</span></div>
+<div class="line"><a id="l00185" name="l00185"></a><span class="lineno">  185</span>            <span class="keywordflow">if</span> (verbose &amp;&amp; (iter % 100 == 0 || iter == 1)) {</div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span>                std::cout &lt;&lt; <span class="stringliteral">&quot;[Iter &quot;</span> &lt;&lt; std::setw(4) &lt;&lt; iter &lt;&lt; <span class="stringliteral">&quot;] f(x): &quot;</span> &lt;&lt; std::fixed</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>                          &lt;&lt; std::setprecision(6) &lt;&lt; f_best &lt;&lt; <span class="stringliteral">&quot; | Step(alpha): &quot;</span> &lt;&lt; alpha &lt;&lt; <span class="stringliteral">&quot;\n&quot;</span>;</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>            }</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        }</div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span> </div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>        <span class="keyword">auto</span> end_clock = std::chrono::high_resolution_clock::now();</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        <span class="keyword">auto</span> duration =</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>            std::chrono::duration_cast&lt;std::chrono::nanoseconds&gt;(end_clock - start_clock);</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span>        <span class="keywordflow">if</span> (verbose) {</div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>            std::cout &lt;&lt; <span class="stringliteral">&quot;========================================================\n&quot;</span>;</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>            std::cout &lt;&lt; <span class="stringliteral">&quot; 🏁 Final Optimal Point: [&quot;</span> &lt;&lt; x[0];</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (N &gt; 1) std::cout &lt;&lt; <span class="stringliteral">&quot;, &quot;</span> &lt;&lt; x[1];</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (N &gt; 2) std::cout &lt;&lt; <span class="stringliteral">&quot;, ...&quot;</span>;</div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span>            std::cout &lt;&lt; <span class="stringliteral">&quot;]\n========================================================\n&quot;</span>;</div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span>        }</div>
 <div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
-<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_HOOKE_JEEVES_HPP_</span></div>
-<div class="ttc" id="aclassOptimization_1_1HookeJeeves_html"><div class="ttname"><a href="classOptimization_1_1HookeJeeves.html">Optimization::HookeJeeves</a></div><div class="ttdoc">Hooke-Jeeves Pattern Search 알고리즘을 수행하는 정적 클래스</div><div class="ttdef"><b>Definition</b> HookeJeeves.hpp:47</div></div>
-<div class="ttc" id="aclassOptimization_1_1HookeJeeves_html_affa309c025775db8d9145c74c686003c"><div class="ttname"><a href="classOptimization_1_1HookeJeeves.html#affa309c025775db8d9145c74c686003c">Optimization::HookeJeeves::optimize</a></div><div class="ttdeci">static OptimizationResultND&lt; N &gt; optimize(Func f, std::array&lt; double, N &gt; x_start, double alpha=0.5, double shrink=0.5, double tol=1e-6, size_t max_iter=2000, bool verbose=false) noexcept</div><div class="ttdoc">Hooke-Jeeves 최적화를 실행합니다.</div><div class="ttdef"><b>Definition</b> HookeJeeves.hpp:109</div></div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span>        <span class="keywordflow">return</span> {x, f_best, iter, duration.count()};</div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span>    }</div>
+</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>};</div>
+</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>}  <span class="comment">// namespace Optimization</span></div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span> </div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_HOOKE_JEEVES_HPP_</span></div>
+<div class="ttc" id="aclassOptimization_1_1HookeJeeves_html"><div class="ttname"><a href="classOptimization_1_1HookeJeeves.html">Optimization::HookeJeeves</a></div><div class="ttdoc">Hooke-Jeeves Pattern Search 알고리즘을 수행하는 정적 클래스</div><div class="ttdef"><b>Definition</b> HookeJeeves.hpp:48</div></div>
+<div class="ttc" id="aclassOptimization_1_1HookeJeeves_html_affa309c025775db8d9145c74c686003c"><div class="ttname"><a href="classOptimization_1_1HookeJeeves.html#affa309c025775db8d9145c74c686003c">Optimization::HookeJeeves::optimize</a></div><div class="ttdeci">static OptimizationResultND&lt; N &gt; optimize(Func f, std::array&lt; double, N &gt; x_start, double alpha=0.5, double shrink=0.5, double tol=1e-6, size_t max_iter=2000, bool verbose=false) noexcept</div><div class="ttdoc">Hooke-Jeeves 최적화를 실행합니다.</div><div class="ttdef"><b>Definition</b> HookeJeeves.hpp:111</div></div>
 <div class="ttc" id="astructOptimization_1_1OptimizationResultND_html"><div class="ttname"><a href="structOptimization_1_1OptimizationResultND.html">Optimization::OptimizationResultND</a></div><div class="ttdoc">N차원 최적화 결과를 담는 구조체</div><div class="ttdef"><b>Definition</b> AdaDelta.hpp:19</div></div>
 <div class="ttc" id="astructOptimization_1_1OptimizationResultND_html_a0106e12c1664683185cba14cba9ddebc"><div class="ttname"><a href="structOptimization_1_1OptimizationResultND.html#a0106e12c1664683185cba14cba9ddebc">Optimization::OptimizationResultND::x_opt</a></div><div class="ttdeci">std::array&lt; double, N &gt; x_opt</div><div class="ttdoc">최적해 (Optimal Point)</div><div class="ttdef"><b>Definition</b> AdaDelta.hpp:20</div></div>
 <div class="ttc" id="astructOptimization_1_1OptimizationResultND_html_a19bc0e48b795d90ccd7bab9489fa652d"><div class="ttname"><a href="structOptimization_1_1OptimizationResultND.html#a19bc0e48b795d90ccd7bab9489fa652d">Optimization::OptimizationResultND::elapsed_ns</a></div><div class="ttdeci">long long elapsed_ns</div><div class="ttdoc">최적화에 소요된 시간 (나노초 단위)</div><div class="ttdef"><b>Definition</b> AdaDelta.hpp:23</div></div>

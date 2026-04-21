@@ -86,14 +86,107 @@ $(function() {
   <div class="headertitle"><div class="title">Optimization::Momentum Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>모멘텀(Momentum) 최적화 알고리즘 (Heavy Ball Method)  
+ <a href="classOptimization_1_1Momentum.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="Momentum_8hpp_source.html">Momentum.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:ac84618899a8d986659c79830b6f6d00f" id="r_ac84618899a8d986659c79830b6f6d00f"><td class="memTemplParams" colspan="2"><a id="ac84618899a8d986659c79830b6f6d00f" name="ac84618899a8d986659c79830b6f6d00f"></a>
-template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:ac84618899a8d986659c79830b6f6d00f"><td class="memTemplItemLeft" align="right" valign="top">static std::array&lt; double, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>optimize</b> (Func f, std::array&lt; double, N &gt; x, double alpha=0.001, double beta=0.9, size_t max_iter=15000, double tol=1e-4, bool verbose=false)</td></tr>
+<tr class="memitem:ac84618899a8d986659c79830b6f6d00f" id="r_ac84618899a8d986659c79830b6f6d00f"><td class="memTemplParams" colspan="2">template&lt;size_t N, typename Func &gt; </td></tr>
+<tr class="memitem:ac84618899a8d986659c79830b6f6d00f"><td class="memTemplItemLeft" align="right" valign="top">static std::array&lt; double, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1Momentum.html#ac84618899a8d986659c79830b6f6d00f">optimize</a> (Func f, std::array&lt; double, N &gt; x, double alpha=0.001, double beta=0.9, size_t max_iter=15000, double tol=1e-4, bool verbose=false)</td></tr>
+<tr class="memdesc:ac84618899a8d986659c79830b6f6d00f"><td class="mdescLeft">&#160;</td><td class="mdescRight">모멘텀 알고리즘을 이용해 함수의 최솟값을 찾습니다.  <br /></td></tr>
 <tr class="separator:ac84618899a8d986659c79830b6f6d00f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><p>모멘텀(Momentum) 최적화 알고리즘 (Heavy Ball Method) </p>
+<p>모멘텀 방식은 경사 하강법(Gradient Descent)의 진동(Oscillation) 문제를 줄이고 지역 최솟값(Local Minima)을 탈출하거나 평탄한 지역(Plateau)을 빠르게 지나가기 위해 고안되었습니다. 물리적인 '관성(Momentum)'의 개념을 차용하여, 과거에 이동했던 방향(속도, Velocity)을 기억해두고 현재의 기울기(Gradient) 업데이트에 일정 비율(beta)만큼 더해주는 방식입니다.</p>
+<p>수식: v_{t+1} = beta * v_t - alpha * g_t x_{t+1} = x_t + v_{t+1} (여기서 v는 속도, alpha는 학습률, beta는 모멘텀 계수, g_t는 기울기) </p>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="ac84618899a8d986659c79830b6f6d00f" name="ac84618899a8d986659c79830b6f6d00f"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac84618899a8d986659c79830b6f6d00f">&#9670;&#160;</a></span>optimize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N, typename Func &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static std::array&lt; double, N &gt; Optimization::Momentum::optimize </td>
+          <td>(</td>
+          <td class="paramtype">Func&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::array&lt; double, N &gt;&#160;</td>
+          <td class="paramname"><em>x</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>alpha</em> = <code>0.001</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>beta</em> = <code>0.9</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>max_iter</em> = <code>15000</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>tol</em> = <code>1e-4</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>verbose</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>모멘텀 알고리즘을 이용해 함수의 최솟값을 찾습니다. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>최적화할 목적 함수 (<a class="el" href="classOptimization_1_1AutoDiff.html" title="정적 메모리 엔진(Layer 1)과 완벽히 호환되는 Forward-Mode Automatic Differentiation (자동 미분) 클래스">AutoDiff</a> 호환 가능해야 함) </td></tr>
+    <tr><td class="paramname">x</td><td>탐색을 시작할 초기 위치 (N차원 벡터) </td></tr>
+    <tr><td class="paramname">alpha</td><td>학습률 (보폭, Learning Rate). 현재 기울기를 얼마나 반영할지 결정합니다. (기본값: 0.001) </td></tr>
+    <tr><td class="paramname">beta</td><td>관성 계수 (<a class="el" href="classOptimization_1_1Momentum.html" title="모멘텀(Momentum) 최적화 알고리즘 (Heavy Ball Method)">Momentum</a>). 과거 속도를 얼마나 유지할지 결정합니다. (일반적으로 0.9 근처의 값을 사용) </td></tr>
+    <tr><td class="paramname">max_iter</td><td>최대 반복 횟수 </td></tr>
+    <tr><td class="paramname">tol</td><td>허용 오차. 기울기의 노름(Norm)이 이 값보다 작아지면 수렴한 것으로 판단합니다. </td></tr>
+    <tr><td class="paramname">verbose</td><td>진행 과정 콘솔 출력 여부 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>최적화된 위치 벡터(x_opt) 반환 </dd></dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/Optimization/<a class="el" href="Momentum_8hpp_source.html">Momentum.hpp</a></li>
 </ul>
