@@ -87,22 +87,122 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Noisy Descent (노이즈 하강법) 알고리즘  
+<p>노이즈 하강법(Noisy Descent) 알고리즘 정적 클래스  
  <a href="classOptimization_1_1NoisyDescent.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="NoisyDescent_8hpp_source.html">NoisyDescent.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a9a7e9ef19d4441467b43b39e37024f67" id="r_a9a7e9ef19d4441467b43b39e37024f67"><td class="memTemplParams" colspan="2"><a id="a9a7e9ef19d4441467b43b39e37024f67" name="a9a7e9ef19d4441467b43b39e37024f67"></a>
-template&lt;size_t N, typename Func , typename SigmaFunc &gt; </td></tr>
-<tr class="memitem:a9a7e9ef19d4441467b43b39e37024f67"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="structOptimization_1_1OptimizationResultND.html">OptimizationResultND</a>&lt; N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>optimize</b> (Func f, std::array&lt; double, N &gt; x_start, SigmaFunc sigma_func, double alpha=0.01, double tol=1e-5, size_t max_iter=10000, bool verbose=false) noexcept</td></tr>
+<tr class="memitem:a9a7e9ef19d4441467b43b39e37024f67" id="r_a9a7e9ef19d4441467b43b39e37024f67"><td class="memTemplParams" colspan="2">template&lt;size_t N, typename Func , typename SigmaFunc &gt; </td></tr>
+<tr class="memitem:a9a7e9ef19d4441467b43b39e37024f67"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="structOptimization_1_1OptimizationResultND.html">OptimizationResultND</a>&lt; N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1NoisyDescent.html#a9a7e9ef19d4441467b43b39e37024f67">optimize</a> (Func f, std::array&lt; double, N &gt; x_start, SigmaFunc sigma_func, double alpha=0.01, double tol=1e-5, size_t max_iter=10000, bool verbose=false) noexcept</td></tr>
+<tr class="memdesc:a9a7e9ef19d4441467b43b39e37024f67"><td class="mdescLeft">&#160;</td><td class="mdescRight">노이즈 하강법을 사용하여 목적 함수의 최적해를 찾습니다.  <br /></td></tr>
 <tr class="separator:a9a7e9ef19d4441467b43b39e37024f67"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Noisy Descent (노이즈 하강법) 알고리즘 </p>
-<dl class="section note"><dt>Note</dt><dd><a class="el" href="classOptimization_1_1AutoDiff.html" title="정적 메모리 엔진(Layer 1)과 완벽히 호환되는 Forward-Mode Automatic Differentiation (자동 미분) 클래스">AutoDiff</a> 엔진의 정확한 1차 미분 (Gradient)에 점진적으로 감소하는 가우시안 노이즈를 결합하여 안장점 (Saddle Point) 및 국소 최적해 (Local Minima)를 탈출합니다. MISRA C++ 준수. 난수 생성기 정적 할당을 통한 지연 (Latency) 최소화 및 FMA 적용 </dd></dl>
-</div><hr/>The documentation for this class was generated from the following file:<ul>
+<div class="textblock"><p>노이즈 하강법(Noisy Descent) 알고리즘 정적 클래스 </p>
+<p>경사 하강법(Gradient Descent)은 지형의 기울기(Gradient)만을 따라 내려가므로 평탄한 지역(Plateau), 안장점(Saddle Point), 혹은 얕은 지역 최솟값(Local Minima)에 갇히기 쉽습니다. 노이즈 하강법은 기존의 1차 미분(Gradient) 업데이트 수식에 **무작위 가우시안 노이즈(Gaussian Noise)**를 추가로 주입하여 이러한 함정들을 확률적으로 탈출할 수 있도록 돕는 알고리즘입니다.</p>
+<p>핵심은 탐색 초반에는 노이즈를 크게 주어 넓은 영역을 탐색하게 하고, 최적해에 가까워질수록(반복 횟수가 증가할수록) 노이즈의 분산(sigma)을 점진적으로 줄여 정밀하게 수렴하도록 유도하는 것입니다.</p>
+<p>수식: x_{t+1} = x_t - alpha * g_t + N(0, sigma_t^2) (여기서 N(0, sigma_t^2)는 평균이 0, 표준 편차가 sigma_t인 가우시안 노이즈)</p>
+<dl class="section note"><dt>Note</dt><dd>본 구현체는 다음과 같은 성능 최적화를 포함합니다:<ol type="1">
+<li>MISRA C++ 준수 및 동적 할당 완전 배제.</li>
+<li>난수 생성기(mt19937)를 <code>thread_local</code>로 선언하여 매 호출 시 발생하는 초기화 오버헤드 원천 차단.</li>
+<li>벡터 연산 시 FMA(Fused Multiply-Add)를 적용하여 정밀도 손실 없이 단일 명령어로 연산 가속. </li>
+</ol>
+</dd></dl>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a9a7e9ef19d4441467b43b39e37024f67" name="a9a7e9ef19d4441467b43b39e37024f67"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9a7e9ef19d4441467b43b39e37024f67">&#9670;&#160;</a></span>optimize()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t N, typename Func , typename SigmaFunc &gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static <a class="el" href="structOptimization_1_1OptimizationResultND.html">OptimizationResultND</a>&lt; N &gt; Optimization::NoisyDescent::optimize </td>
+          <td>(</td>
+          <td class="paramtype">Func&#160;</td>
+          <td class="paramname"><em>f</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::array&lt; double, N &gt;&#160;</td>
+          <td class="paramname"><em>x_start</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">SigmaFunc&#160;</td>
+          <td class="paramname"><em>sigma_func</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>alpha</em> = <code>0.01</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>tol</em> = <code>1e-5</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">size_t&#160;</td>
+          <td class="paramname"><em>max_iter</em> = <code>10000</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>verbose</em> = <code>false</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">noexcept</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>노이즈 하강법을 사용하여 목적 함수의 최적해를 찾습니다. </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">N</td><td>최적화하려는 변수의 차원 수 </td></tr>
+    <tr><td class="paramname">Func</td><td>목적 함수 타입 </td></tr>
+    <tr><td class="paramname">SigmaFunc</td><td>노이즈의 표준 편차(sigma)를 제어하는 스케줄링 콜백 함수 타입 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">f</td><td>최적화할 목적 함수 (<a class="el" href="classOptimization_1_1AutoDiff.html" title="정적 메모리 엔진(Layer 1)과 완벽히 호환되는 Forward-Mode Automatic Differentiation (자동 미분) 클래스">AutoDiff</a> 호환 가능해야 함) </td></tr>
+    <tr><td class="paramname">x_start</td><td>탐색을 시작할 초기 위치 (N차원 벡터) </td></tr>
+    <tr><td class="paramname">sigma_func</td><td>현재 반복 횟수(iter)를 인자로 받아 현재 세대의 표준 편차(sigma)를 반환하는 콜백 함수. (예: <code>[](size_t iter) { return 1.0 / iter; }</code> 등 점진적 감소 형태 권장) </td></tr>
+    <tr><td class="paramname">alpha</td><td>학습률 (Learning Rate). 경사 하강 보폭 크기 (기본값: 0.01) </td></tr>
+    <tr><td class="paramname">tol</td><td>허용 오차. 기울기 크기와 노이즈 크기가 동시에 이 값 미만이 될 때 수렴으로 판단 (기본값: 1e-5) </td></tr>
+    <tr><td class="paramname">max_iter</td><td>최대 반복 횟수 (기본값: 10000) </td></tr>
+    <tr><td class="paramname">verbose</td><td>콘솔에 진행 과정을 출력할지 여부 </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>최적해(x_opt), 최적값(f_opt), 반복 횟수, 연산 시간을 포함하는 구조체 </dd></dl>
+
+</div>
+</div>
+<hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/Optimization/<a class="el" href="NoisyDescent_8hpp_source.html">NoisyDescent.hpp</a></li>
 </ul>
 </div><!-- contents -->

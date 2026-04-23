@@ -101,7 +101,8 @@ Static Public Member Functions</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><p>자연 진화 전략 (Natural Evolution Strategies, NES) 알고리즘 정적 클래스 </p>
-<p>NES는 확률 분포(주로 정규 분포)의 파라미터(평균 mu, 분산 sigma^2)를 업데이트하면서 목적 함수의 기댓값을 최적화하는 미분 불필요(Derivative-Free) 최적화 기법입니다. 일반적인 경사 하강법과 달리, 파라미터 공간의 기하학적 구조를 반영하는 피셔 정보 행렬(Fisher Information Matrix)의 역행렬을 곱한 '자연 기울기(Natural Gradient)'를 사용하여 업데이트 방향을 결정합니다.</p>
+<p>NES는 확률 분포(주로 정규 분포)의 파라미터(평균 mu, 분산 sigma^2)를 업데이트하면서 목적 함수의 기댓값을 최적화하는 미분 불필요(Derivative-Free) 최적화 기법입니다. 일반적인 경사 하강법과 달리, 파라미터 공간의 기하학적 구조를 반영하는 피셔 정보 행렬(Fisher
+Information Matrix)의 역행렬을 곱한 '자연 기울기(Natural Gradient)'를 사용하여 업데이트 방향을 결정합니다.</p>
 <dl class="section note"><dt>Note</dt><dd>본 구현체는 다음과 같은 특징을 가집니다:<ol type="1">
 <li><b>Natural Gradient</b>: 피셔 정보 행렬 역행렬을 적용하여 바닐라 기울기가 가지는 스케일 및 나눗셈 폭탄(Division by zero) 문제를 해소하고 안전한 업데이트를 보장합니다.</li>
 <li><b>Fitness Normalization (Z-Score)</b>: 목적 함수의 절대적인 스케일 차이에 의해 기울기가 폭주(Overshooting)하는 현상을 막기 위해 평가된 함수값들을 정규화합니다. </li>
