@@ -87,18 +87,104 @@ $(function() {
   <div class="headertitle"><div class="title">Optimization::PathPlanner&lt; Np, Nx &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>장애물 회피 및 경로 생성을 수행하는 <a class="el" href="classOptimization_1_1PathPlanner.html" title="장애물 회피 및 경로 생성을 수행하는 PathPlanner 클래스">PathPlanner</a> 클래스  
+ <a href="classOptimization_1_1PathPlanner.html#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="PathPlanner_8hpp_source.html">PathPlanner.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOptimization_1_1PathPlanner_1_1ObstacleInfo.html">ObstacleInfo</a></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">장애물의 정보를 담는 구조체  <a href="structOptimization_1_1PathPlanner_1_1ObstacleInfo.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a0c66fa4bdc1e5657bfa939dd48c47db0" id="r_a0c66fa4bdc1e5657bfa939dd48c47db0"><td class="memItemLeft" align="right" valign="top"><a id="a0c66fa4bdc1e5657bfa939dd48c47db0" name="a0c66fa4bdc1e5657bfa939dd48c47db0"></a>
-static void&#160;</td><td class="memItemRight" valign="bottom"><b>generate_slalom_reference</b> (const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;x_curr, const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;x_final, const std::array&lt; <a class="el" href="structOptimization_1_1PathPlanner_1_1ObstacleInfo.html">ObstacleInfo</a>, 10 &gt; &amp;obstacles, double dt, <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; ref_horizon[Np])</td></tr>
+<tr class="memitem:a0c66fa4bdc1e5657bfa939dd48c47db0" id="r_a0c66fa4bdc1e5657bfa939dd48c47db0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptimization_1_1PathPlanner.html#a0c66fa4bdc1e5657bfa939dd48c47db0">generate_slalom_reference</a> (const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;x_curr, const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;x_final, const std::array&lt; <a class="el" href="structOptimization_1_1PathPlanner_1_1ObstacleInfo.html">ObstacleInfo</a>, 10 &gt; &amp;obstacles, double dt, <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; ref_horizon[Np])</td></tr>
+<tr class="memdesc:a0c66fa4bdc1e5657bfa939dd48c47db0"><td class="mdescLeft">&#160;</td><td class="mdescRight">[Architect's Extreme Slalom] 장애물 사이의 '게이트'를 통과하도록 강제로 슬라롬(Slalom) 참조 경로를 생성합니다.  <br /></td></tr>
 <tr class="separator:a0c66fa4bdc1e5657bfa939dd48c47db0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
+<div class="textblock"><div class="compoundTemplParams">template&lt;size_t Np, size_t Nx&gt;<br />
+class Optimization::PathPlanner&lt; Np, Nx &gt;</div><p>장애물 회피 및 경로 생성을 수행하는 <a class="el" href="classOptimization_1_1PathPlanner.html" title="장애물 회피 및 경로 생성을 수행하는 PathPlanner 클래스">PathPlanner</a> 클래스 </p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Np</td><td>예측 구간(Prediction Horizon)의 길이 (미래 경로점의 개수) </td></tr>
+    <tr><td class="paramname">Nx</td><td>상태 벡터(State Vector)의 차원 </td></tr>
+  </table>
+  </dd>
+</dl>
+</div><h2 class="groupheader">Member Function Documentation</h2>
+<a id="a0c66fa4bdc1e5657bfa939dd48c47db0" name="a0c66fa4bdc1e5657bfa939dd48c47db0"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a0c66fa4bdc1e5657bfa939dd48c47db0">&#9670;&#160;</a></span>generate_slalom_reference()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;size_t Np, size_t Nx&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void <a class="el" href="classOptimization_1_1PathPlanner.html">Optimization::PathPlanner</a>&lt; Np, Nx &gt;::generate_slalom_reference </td>
+          <td>(</td>
+          <td class="paramtype">const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;&#160;</td>
+          <td class="paramname"><em>x_curr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;&#160;</td>
+          <td class="paramname"><em>x_final</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">const std::array&lt; <a class="el" href="structOptimization_1_1PathPlanner_1_1ObstacleInfo.html">ObstacleInfo</a>, 10 &gt; &amp;&#160;</td>
+          <td class="paramname"><em>obstacles</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>dt</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype"><a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, Nx &gt;&#160;</td>
+          <td class="paramname"><em>ref_horizon</em>[Np]&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>[Architect's Extreme Slalom] 장애물 사이의 '게이트'를 통과하도록 강제로 슬라롬(Slalom) 참조 경로를 생성합니다. </p>
+<p>현재 상태(x_curr)에서 목표 상태(x_final)까지 이동하되, 주어진 장애물(obstacles) 사이를 지그재그 혹은 사이사이로 통과하도록 Np개의 참조(Reference) 경로(Horizon)를 생성합니다.</p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x_curr</td><td>현재 차량/에이전트의 상태 벡터 </td></tr>
+    <tr><td class="paramname">x_final</td><td>최종 목표 상태 벡터 </td></tr>
+    <tr><td class="paramname">obstacles</td><td>10개의 장애물 정보를 담은 배열 (장애물 2개씩 짝지어 게이트로 활용) </td></tr>
+    <tr><td class="paramname">dt</td><td>샘플링 시간(이산화 주기) </td></tr>
+    <tr><td class="paramname">ref_horizon</td><td>생성된 참조 상태(Reference state)들이 저장될 Np 크기의 배열 (출력용) </td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/Optimization/<a class="el" href="PathPlanner_8hpp_source.html">PathPlanner.hpp</a></li>
 </ul>
