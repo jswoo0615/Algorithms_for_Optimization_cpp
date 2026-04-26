@@ -101,7 +101,7 @@ Classes</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a0c66fa4bdc1e5657bfa939dd48c47db0" id="r_a0c66fa4bdc1e5657bfa939dd48c47db0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptimization_1_1PathPlanner.html#a0c66fa4bdc1e5657bfa939dd48c47db0">generate_slalom_reference</a> (const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;x_curr, const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;x_final, const std::array&lt; <a class="el" href="structOptimization_1_1PathPlanner_1_1ObstacleInfo.html">ObstacleInfo</a>, 10 &gt; &amp;obstacles, double dt, <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; ref_horizon[Np])</td></tr>
+<tr class="memitem:a0c66fa4bdc1e5657bfa939dd48c47db0" id="r_a0c66fa4bdc1e5657bfa939dd48c47db0"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptimization_1_1PathPlanner.html#a0c66fa4bdc1e5657bfa939dd48c47db0">generate_slalom_reference</a> (const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;x_curr, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;x_final, const std::array&lt; <a class="el" href="structOptimization_1_1PathPlanner_1_1ObstacleInfo.html">ObstacleInfo</a>, 10 &gt; &amp;obstacles, double dt, <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; ref_horizon[Np])</td></tr>
 <tr class="memdesc:a0c66fa4bdc1e5657bfa939dd48c47db0"><td class="mdescLeft">&#160;</td><td class="mdescRight">[Architect's Extreme Slalom] 장애물 사이의 '게이트'를 통과하도록 강제로 슬라롬(Slalom) 참조 경로를 생성합니다.  <br /></td></tr>
 <tr class="separator:a0c66fa4bdc1e5657bfa939dd48c47db0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -130,13 +130,13 @@ template&lt;size_t Np, size_t Nx&gt; </div>
         <tr>
           <td class="memname">static void <a class="el" href="classOptimization_1_1PathPlanner.html">Optimization::PathPlanner</a>&lt; Np, Nx &gt;::generate_slalom_reference </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;&#160;</td>
           <td class="paramname"><em>x_curr</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;&#160;</td>
           <td class="paramname"><em>x_final</em>, </td>
         </tr>
         <tr>
@@ -154,7 +154,7 @@ template&lt;size_t Np, size_t Nx&gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, Nx &gt;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nx &gt;&#160;</td>
           <td class="paramname"><em>ref_horizon</em>[Np]&#160;</td>
         </tr>
         <tr>

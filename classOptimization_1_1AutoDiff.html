@@ -95,19 +95,19 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:afc2d3807943994aad03a4a1e1113e4b5" id="r_afc2d3807943994aad03a4a1e1113e4b5"><td class="memTemplParams" colspan="2">template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:afc2d3807943994aad03a4a1e1113e4b5"><td class="memTemplItemLeft" align="right" valign="top">static double&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1AutoDiff.html#afc2d3807943994aad03a4a1e1113e4b5">value</a> (Func f, const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x)</td></tr>
+<tr class="memitem:afc2d3807943994aad03a4a1e1113e4b5"><td class="memTemplItemLeft" align="right" valign="top">static double&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1AutoDiff.html#afc2d3807943994aad03a4a1e1113e4b5">value</a> (Func f, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x)</td></tr>
 <tr class="memdesc:afc2d3807943994aad03a4a1e1113e4b5"><td class="mdescLeft">&#160;</td><td class="mdescRight">목적 함수 또는 제약 조건 함수의 단순 스칼라 평가값(Value)을 반환합니다.  <br /></td></tr>
 <tr class="separator:afc2d3807943994aad03a4a1e1113e4b5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a58e4c087ad635622012694e6851455b1" id="r_a58e4c087ad635622012694e6851455b1"><td class="memTemplParams" colspan="2">template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:a58e4c087ad635622012694e6851455b1"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1AutoDiff.html#a58e4c087ad635622012694e6851455b1">gradient</a> (Func f, const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x)</td></tr>
+<tr class="memitem:a58e4c087ad635622012694e6851455b1"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1AutoDiff.html#a58e4c087ad635622012694e6851455b1">gradient</a> (Func f, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x)</td></tr>
 <tr class="memdesc:a58e4c087ad635622012694e6851455b1"><td class="mdescLeft">&#160;</td><td class="mdescRight">목적 함수 f: R^N -&gt; R 에 대한 기울기(Gradient) 벡터를 계산합니다.  <br /></td></tr>
 <tr class="separator:a58e4c087ad635622012694e6851455b1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1aa249fc72dc4dbf5932cc451daad711" id="r_a1aa249fc72dc4dbf5932cc451daad711"><td class="memTemplParams" colspan="2">template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:a1aa249fc72dc4dbf5932cc451daad711"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1AutoDiff.html#a1aa249fc72dc4dbf5932cc451daad711">value_and_gradient</a> (Func f, const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x, double &amp;v_out, <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;g_out)</td></tr>
+<tr class="memitem:a1aa249fc72dc4dbf5932cc451daad711"><td class="memTemplItemLeft" align="right" valign="top">static void&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1AutoDiff.html#a1aa249fc72dc4dbf5932cc451daad711">value_and_gradient</a> (Func f, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x, double &amp;v_out, <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;g_out)</td></tr>
 <tr class="memdesc:a1aa249fc72dc4dbf5932cc451daad711"><td class="mdescLeft">&#160;</td><td class="mdescRight">스칼라 함수 평가값(Value)과 기울기(Gradient) 벡터를 한 번에 계산합니다.  <br /></td></tr>
 <tr class="separator:a1aa249fc72dc4dbf5932cc451daad711"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a091af479e8d81d8440ee3b1f7d742283" id="r_a091af479e8d81d8440ee3b1f7d742283"><td class="memTemplParams" colspan="2">template&lt;size_t M, size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:a091af479e8d81d8440ee3b1f7d742283"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="classStaticMatrix.html">StaticMatrix</a>&lt; double, M, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1AutoDiff.html#a091af479e8d81d8440ee3b1f7d742283">jacobian</a> (Func f, const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x)</td></tr>
+<tr class="memitem:a091af479e8d81d8440ee3b1f7d742283"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; double, M, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1AutoDiff.html#a091af479e8d81d8440ee3b1f7d742283">jacobian</a> (Func f, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x)</td></tr>
 <tr class="memdesc:a091af479e8d81d8440ee3b1f7d742283"><td class="mdescLeft">&#160;</td><td class="mdescRight">다변수 벡터 함수 f: R^N -&gt; R^M 에 대한 야코비안(Jacobian) 행렬을 계산합니다.  <br /></td></tr>
 <tr class="separator:a091af479e8d81d8440ee3b1f7d742283"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -130,7 +130,7 @@ template&lt;size_t N, typename Func &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; Optimization::AutoDiff::gradient </td>
+          <td class="memname">static <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; Optimization::AutoDiff::gradient </td>
           <td>(</td>
           <td class="paramtype">Func&#160;</td>
           <td class="paramname"><em>f</em>, </td>
@@ -138,7 +138,7 @@ template&lt;size_t N, typename Func &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>&#160;</td>
         </tr>
         <tr>
@@ -186,7 +186,7 @@ template&lt;size_t M, size_t N, typename Func &gt; </div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="classStaticMatrix.html">StaticMatrix</a>&lt; double, M, N &gt; Optimization::AutoDiff::jacobian </td>
+          <td class="memname">static <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; double, M, N &gt; Optimization::AutoDiff::jacobian </td>
           <td>(</td>
           <td class="paramtype">Func&#160;</td>
           <td class="paramname"><em>f</em>, </td>
@@ -194,7 +194,7 @@ template&lt;size_t M, size_t N, typename Func &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>&#160;</td>
         </tr>
         <tr>
@@ -251,7 +251,7 @@ template&lt;size_t N, typename Func &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>&#160;</td>
         </tr>
         <tr>
@@ -306,7 +306,7 @@ template&lt;size_t N, typename Func &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>, </td>
         </tr>
         <tr>
@@ -318,7 +318,7 @@ template&lt;size_t N, typename Func &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype"><a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
           <td class="paramname"><em>g_out</em>&#160;</td>
         </tr>
         <tr>

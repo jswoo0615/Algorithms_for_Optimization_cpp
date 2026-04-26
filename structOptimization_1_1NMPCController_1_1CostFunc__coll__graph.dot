@@ -7,9 +7,9 @@ digraph "Optimization::NMPCController&lt; Np &gt;::CostFunc"
   rankdir="LR";
   Node1 [id="Node000001",label="Optimization::NMPCController\l\< Np \>::CostFunc",height=0.2,width=0.4,color="gray40", fillcolor="grey60", style="filled", fontcolor="black",tooltip=" "];
   Node2 -> Node1 [id="edge1_Node000001_Node000002",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" Q\nQf\nx0\nx_ref",fontcolor="grey" ];
-  Node2 [id="Node000002",label="StaticMatrix\< double,\l Nx \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$classStaticMatrix.html",tooltip=" "];
+  Node2 [id="Node000002",label="Optimization::StaticMatrix\l\< double, Nx \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$classOptimization_1_1StaticMatrix.html",tooltip=" "];
   Node3 -> Node1 [id="edge2_Node000001_Node000003",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" R\nR_rate\nu_last",fontcolor="grey" ];
-  Node3 [id="Node000003",label="StaticMatrix\< double,\l Nu \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$classStaticMatrix.html",tooltip=" "];
+  Node3 [id="Node000003",label="Optimization::StaticMatrix\l\< double, Nu \>",height=0.2,width=0.4,color="gray40", fillcolor="white", style="filled",URL="$classOptimization_1_1StaticMatrix.html",tooltip=" "];
   Node4 -> Node1 [id="edge3_Node000001_Node000004",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" model",fontcolor="grey" ];
   Node4 [id="Node000004",label="Optimization::DynamicBicycle\lModel",height=0.2,width=0.4,color="grey75", fillcolor="white", style="filled",URL="$classOptimization_1_1DynamicBicycleModel.html",tooltip=" "];
   Node5 -> Node4 [id="edge4_Node000004_Node000005",dir="back",color="darkorchid3",style="dashed",tooltip=" ",label=" param",fontcolor="grey" ];

@@ -95,27 +95,27 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
 <tr class="memitem:ac1f7446efb7eafaf408fca672e5172ad" id="r_ac1f7446efb7eafaf408fca672e5172ad"><td class="memTemplParams" colspan="2">template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:ac1f7446efb7eafaf408fca672e5172ad"><td class="memTemplItemLeft" align="right" valign="top">static std::pair&lt; double, double &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1LineSearch.html#ac1f7446efb7eafaf408fca672e5172ad">bracket_minimum</a> (Func f, const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x, const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;d, double s=1e-2, double k=2.0, bool verbose=false)</td></tr>
+<tr class="memitem:ac1f7446efb7eafaf408fca672e5172ad"><td class="memTemplItemLeft" align="right" valign="top">static std::pair&lt; double, double &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1LineSearch.html#ac1f7446efb7eafaf408fca672e5172ad">bracket_minimum</a> (Func f, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;d, double s=1e-2, double k=2.0, bool verbose=false)</td></tr>
 <tr class="memdesc:ac1f7446efb7eafaf408fca672e5172ad"><td class="mdescLeft">&#160;</td><td class="mdescRight">최솟값을 포함하는 구간 [a, c]를 찾는 브래킷 알고리즘  <br /></td></tr>
 <tr class="separator:ac1f7446efb7eafaf408fca672e5172ad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae0f16aea51b36b664bfe865a57267e8a" id="r_ae0f16aea51b36b664bfe865a57267e8a"><td class="memTemplParams" colspan="2">template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:ae0f16aea51b36b664bfe865a57267e8a"><td class="memTemplItemLeft" align="right" valign="top">static double&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1LineSearch.html#ae0f16aea51b36b664bfe865a57267e8a">golden_section_search</a> (Func f, const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x, const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;d, double a, double b, double tol=1e-5, bool verbose=false)</td></tr>
+<tr class="memitem:ae0f16aea51b36b664bfe865a57267e8a"><td class="memTemplItemLeft" align="right" valign="top">static double&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1LineSearch.html#ae0f16aea51b36b664bfe865a57267e8a">golden_section_search</a> (Func f, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;d, double a, double b, double tol=1e-5, bool verbose=false)</td></tr>
 <tr class="memdesc:ae0f16aea51b36b664bfe865a57267e8a"><td class="mdescLeft">&#160;</td><td class="mdescRight">황금 분할 탐색법을 이용한 라인 서치  <br /></td></tr>
 <tr class="separator:ae0f16aea51b36b664bfe865a57267e8a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a37b6fd2a9bd30400996626f69673fd57" id="r_a37b6fd2a9bd30400996626f69673fd57"><td class="memTemplParams" colspan="2">template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:a37b6fd2a9bd30400996626f69673fd57"><td class="memTemplItemLeft" align="right" valign="top">static double&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1LineSearch.html#a37b6fd2a9bd30400996626f69673fd57">quadratic_fit_search</a> (Func f, const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x, const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;d, double a, double b, double c, size_t max_iter=50, double tol=1e-5, bool verbose=false)</td></tr>
+<tr class="memitem:a37b6fd2a9bd30400996626f69673fd57"><td class="memTemplItemLeft" align="right" valign="top">static double&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1LineSearch.html#a37b6fd2a9bd30400996626f69673fd57">quadratic_fit_search</a> (Func f, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;d, double a, double b, double c, size_t max_iter=50, double tol=1e-5, bool verbose=false)</td></tr>
 <tr class="memdesc:a37b6fd2a9bd30400996626f69673fd57"><td class="mdescLeft">&#160;</td><td class="mdescRight">2차 적합 탐색(Quadratic Fit Search)을 통한 라인 서치  <br /></td></tr>
 <tr class="separator:a37b6fd2a9bd30400996626f69673fd57"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a30ae7d550dd400ae5500731bc71abcb8" id="r_a30ae7d550dd400ae5500731bc71abcb8"><td class="memTemplParams" colspan="2">template&lt;size_t N, size_t MAX_NODES = 100, typename Func &gt; </td></tr>
-<tr class="memitem:a30ae7d550dd400ae5500731bc71abcb8"><td class="memTemplItemLeft" align="right" valign="top">static double&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1LineSearch.html#a30ae7d550dd400ae5500731bc71abcb8">shubert_piyavskii</a> (Func f, const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x, const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;d, double a, double b, double L, double tol=1e-4, bool verbose=false)</td></tr>
+<tr class="memitem:a30ae7d550dd400ae5500731bc71abcb8"><td class="memTemplItemLeft" align="right" valign="top">static double&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1LineSearch.html#a30ae7d550dd400ae5500731bc71abcb8">shubert_piyavskii</a> (Func f, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;d, double a, double b, double L, double tol=1e-4, bool verbose=false)</td></tr>
 <tr class="memdesc:a30ae7d550dd400ae5500731bc71abcb8"><td class="mdescLeft">&#160;</td><td class="mdescRight">슈베르트-피야프스키 전역 탐색 알고리즘  <br /></td></tr>
 <tr class="separator:a30ae7d550dd400ae5500731bc71abcb8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8e802b69f1fe354538c842f42526858e" id="r_a8e802b69f1fe354538c842f42526858e"><td class="memTemplParams" colspan="2">template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:a8e802b69f1fe354538c842f42526858e"><td class="memTemplItemLeft" align="right" valign="top">static std::pair&lt; double, double &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1LineSearch.html#a8e802b69f1fe354538c842f42526858e">bracket_sign_change</a> (Func f, const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x, const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;d, double a, double b, double k=2.0, bool verbose=false)</td></tr>
+<tr class="memitem:a8e802b69f1fe354538c842f42526858e"><td class="memTemplItemLeft" align="right" valign="top">static std::pair&lt; double, double &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1LineSearch.html#a8e802b69f1fe354538c842f42526858e">bracket_sign_change</a> (Func f, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;d, double a, double b, double k=2.0, bool verbose=false)</td></tr>
 <tr class="memdesc:a8e802b69f1fe354538c842f42526858e"><td class="mdescLeft">&#160;</td><td class="mdescRight">도함수의 부호가 바뀌는 구간을 찾는 브래킷 알고리즘  <br /></td></tr>
 <tr class="separator:a8e802b69f1fe354538c842f42526858e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8db4497c62f7619c275e8a81b45633d5" id="r_a8db4497c62f7619c275e8a81b45633d5"><td class="memTemplParams" colspan="2">template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:a8db4497c62f7619c275e8a81b45633d5"><td class="memTemplItemLeft" align="right" valign="top">static double&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1LineSearch.html#a8db4497c62f7619c275e8a81b45633d5">bisection</a> (Func f, const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x, const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;d, double a, double b, double tol=1e-5, bool verbose=false)</td></tr>
+<tr class="memitem:a8db4497c62f7619c275e8a81b45633d5"><td class="memTemplItemLeft" align="right" valign="top">static double&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1LineSearch.html#a8db4497c62f7619c275e8a81b45633d5">bisection</a> (Func f, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;d, double a, double b, double tol=1e-5, bool verbose=false)</td></tr>
 <tr class="memdesc:a8db4497c62f7619c275e8a81b45633d5"><td class="mdescLeft">&#160;</td><td class="mdescRight">방향 도함수의 근(최솟값 위치)을 찾는 이분법 탐색  <br /></td></tr>
 <tr class="separator:a8db4497c62f7619c275e8a81b45633d5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -143,13 +143,13 @@ template&lt;size_t N, typename Func &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
           <td class="paramname"><em>d</em>, </td>
         </tr>
         <tr>
@@ -226,13 +226,13 @@ template&lt;size_t N, typename Func &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
           <td class="paramname"><em>d</em>, </td>
         </tr>
         <tr>
@@ -302,13 +302,13 @@ template&lt;size_t N, typename Func &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
           <td class="paramname"><em>d</em>, </td>
         </tr>
         <tr>
@@ -385,13 +385,13 @@ template&lt;size_t N, typename Func &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
           <td class="paramname"><em>d</em>, </td>
         </tr>
         <tr>
@@ -468,13 +468,13 @@ template&lt;size_t N, typename Func &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
           <td class="paramname"><em>d</em>, </td>
         </tr>
         <tr>
@@ -565,13 +565,13 @@ template&lt;size_t N, size_t MAX_NODES = 100, typename Func &gt; </div>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;&#160;</td>
           <td class="paramname"><em>d</em>, </td>
         </tr>
         <tr>
