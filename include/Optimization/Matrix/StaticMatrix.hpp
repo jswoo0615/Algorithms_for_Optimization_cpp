@@ -83,8 +83,8 @@ class StaticMatrix {
         return data[i];
     }
 
-    T& data_ptr() { return data; }
-    const T& data_ptr() const { return data; }
+    T* data_ptr() { return data; }
+    const T* data_ptr() const { return data; }
 
     /**
      * @brief 영행렬 초기화 (Zero Initialization)
@@ -132,14 +132,14 @@ class StaticMatrix {
     }
 
     template <size_t SubRows, size_t SubCols>
-    StaticMatrix<T, SubRows, SubCols> extra_block(size_t start_row, size_t start_col) const {
+    StaticMatrix<T, SubRows, SubCols> extract_block(size_t start_row, size_t start_col) const {
         assert(start_row + SubRows <= Rows && "Row index out of bounds");
         assert(start_col + SubCols <= Cols && "Col index out of bounds");
 
         StaticMatrix<T, SubRows, SubCols> result;
         for (size_t j = 0; j < SubCols; ++j) {
             const T* src = this->data_ptr() + ((start_col + j) * Rows) + start_row;
-            T* dest = result.data_ptr() * (j * SubRows);
+            T* dest = result.data_ptr() + (j * SubRows);
             std::copy(src, src + SubRows, dest);
         }
         return result;
