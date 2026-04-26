@@ -1,10 +1,5 @@
 var searchData=
 [
-  ['search_0',['search',['../classOptimization_1_1BacktrackingLineSearch.html#af20668d50b8fcf15615a18581a1eef8b',1,'Optimization::BacktrackingLineSearch::search(Func f, const std::array&lt; double, N &gt; &amp;x, const std::array&lt; double, N &gt; &amp;d, double f_x, const std::array&lt; double, N &gt; &amp;grad_x, double alpha=1.0, double p=0.5, double c=1e-4, bool verbose=false) noexcept'],['../classOptimization_1_1BacktrackingLineSearch.html#a77cd6a489194be1c869e28a2885b640c',1,'Optimization::BacktrackingLineSearch::search(Func f, const std::array&lt; double, N &gt; &amp;x, const std::array&lt; double, N &gt; &amp;d, double alpha=1.0, double p=0.5, double c=1e-4, bool verbose=false) noexcept']]],
-  ['set_5fzero_1',['set_zero',['../classStaticMatrix.html#a9d9c516df2280ffe76094dbea19371fd',1,'StaticMatrix']]],
-  ['shubert_5fpiyavskii_2',['shubert_piyavskii',['../classOptimization_1_1LineSearch.html#a30ae7d550dd400ae5500731bc71abcb8',1,'Optimization::LineSearch']]],
-  ['solve_3',['solve',['../classActiveSetSolver.html#a5dc682fe44d18715ca28087939e42c0b',1,'ActiveSetSolver::solve()'],['../classOptimization_1_1BlockBandedSolver.html#a7a52243645fff61f13c35384ee9480c7',1,'Optimization::BlockBandedSolver::solve()'],['../classEQPSolver.html#a1f58abbd1cceae64471ca7a9c22da4cb',1,'EQPSolver::solve()'],['../classOptimization_1_1IPMQPSolver.html#a32b08db5afa31f27dadb584bb7c28113',1,'Optimization::IPMQPSolver::solve()'],['../classOptimization_1_1SQPSolver.html#a9039a9df5fcf29713eaaea809057d20f',1,'Optimization::SQPSolver::solve()']]],
-  ['solve_5fmultiple_4',['solve_multiple',['../classStaticMatrix.html#a77a89dad8491c4519d2dcebc268ddce5',1,'StaticMatrix']]],
-  ['sqpsolver_5',['SQPSolver',['../classOptimization_1_1SQPSolver.html#a2d5f83cc3bb4e5725d328b45b3ebd650',1,'Optimization::SQPSolver']]],
-  ['staticsparsematrix_6',['StaticSparseMatrix',['../classOptimization_1_1StaticSparseMatrix.html#a03c8a0ec994cf81508663bb379fa7343',1,'Optimization::StaticSparseMatrix']]]
+  ['value_0',['value',['../classOptimization_1_1AutoDiff.html#afc2d3807943994aad03a4a1e1113e4b5',1,'Optimization::AutoDiff']]],
+  ['value_5fand_5fgradient_1',['value_and_gradient',['../classOptimization_1_1AutoDiff.html#a1aa249fc72dc4dbf5932cc451daad711',1,'Optimization::AutoDiff']]]
 ];

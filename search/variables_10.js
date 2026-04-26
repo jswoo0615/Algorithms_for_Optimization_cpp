@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['u_5fopt_0',['u_opt',['../classEQPSolver.html#a1587d9fb87f73bd41205ebe350383bdc',1,'EQPSolver']]]
+  ['working_5fset_0',['working_set',['../classActiveSetSolver.html#aa020fbb2c733983b1985c9c084cd92eb',1,'ActiveSetSolver']]]
 ];

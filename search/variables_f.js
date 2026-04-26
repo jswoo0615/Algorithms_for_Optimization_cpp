@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['tolerance_0',['TOLERANCE',['../classOptimization_1_1KKTMonitor.html#adad78863d3ac9e2e24ea212393da04e8',1,'Optimization::KKTMonitor']]]
+  ['v_0',['v',['../structOptimization_1_1Dual.html#ad0413bca82bdd0c139225b080313c442',1,'Optimization::Dual::v'],['../structOptimization_1_1DualVec.html#adb2e985496c58fe9c25cd8c4fa5640fc',1,'Optimization::DualVec::v']]]
 ];

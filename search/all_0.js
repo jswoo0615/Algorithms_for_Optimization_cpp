@@ -11,7 +11,6 @@ var searchData=
   ['adagradtest_8',['AdaGradTest',['../classOptimization_1_1Test_1_1AdaGradTest.html',1,'Optimization::Test']]],
   ['adam_9',['Adam',['../classOptimization_1_1Adam.html',1,'Optimization']]],
   ['adamtest_10',['AdamTest',['../classOptimization_1_1Test_1_1AdamTest.html',1,'Optimization::Test']]],
-  ['add_5fvalue_11',['add_value',['../classOptimization_1_1StaticSparseMatrix.html#a72f6569b50903361bbd2b92cf819d2c7',1,'Optimization::StaticSparseMatrix']]],
-  ['autodiff_12',['AutoDiff',['../classOptimization_1_1AutoDiff.html',1,'Optimization']]],
-  ['autodifftest_13',['AutoDiffTest',['../classAutoDiffTest.html',1,'']]]
+  ['autodiff_11',['AutoDiff',['../classOptimization_1_1AutoDiff.html',1,'Optimization']]],
+  ['autodifftest_12',['AutoDiffTest',['../classAutoDiffTest.html',1,'']]]
 ];
