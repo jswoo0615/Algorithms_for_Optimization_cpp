@@ -139,7 +139,8 @@ StaticMatrix<T, Rows, Cols> operator/(const StaticMatrix<T, Rows, Cols>& A, T sc
  * 적용하여 루프를 병렬로 묶어 처리하기 가장 이상적인 형태가 됩니다.
  */
 template <typename T, size_t Rows, size_t Cols, size_t OtherCols>
-StaticMatrix<T, Rows, OtherCols> operator*(const StaticMatrix<T, Rows, Cols>& A, const StaticMatrix<T, Cols, OtherCols>& B) {
+StaticMatrix<T, Rows, OtherCols> operator*(const StaticMatrix<T, Rows, Cols>& A,
+                                           const StaticMatrix<T, Cols, OtherCols>& B) {
     StaticMatrix<T, Rows, OtherCols> Result;
     T* res_base = Result.data_ptr();
     const T* a_base = A.data_ptr();
@@ -195,79 +196,84 @@ StaticMatrix<T, Cols, Rows> transpose(const StaticMatrix<T, Rows, Cols>& mat) {
  * 구합니다.
  */
 // ============================================================
-    // 1. LUP 분해 및 솔버 (Partial Pivoting 도입으로 수치적 안정성 극대화)
-    // ============================================================
-    template <typename T, size_t Rows, size_t Cols>
-    bool LU_decompose(StaticMatrix<T, Rows, Cols>& mat, StaticVector<int, Rows>& P) {
-        static_assert(Rows == Cols, "LUP Decomposition requires a square matrix");
+// 1. LUP 분해 및 솔버 (Partial Pivoting 도입으로 수치적 안정성 극대화)
+// ============================================================
+template <typename T, size_t Rows, size_t Cols>
+bool LU_decompose(StaticMatrix<T, Rows, Cols>& mat, StaticVector<int, Rows>& P) {
+    static_assert(Rows == Cols, "LUP Decomposition requires a square matrix");
 
-        // 피벗 배열 초기화 (P[i] = i)
-        for (size_t i = 0; i < Rows; ++i) P(i) = static_cast<int>(i);
+    // 피벗 배열 초기화 (P[i] = i)
+    for (size_t i = 0; i < Rows; ++i) P(i) = static_cast<int>(i);
 
-        for (size_t i = 0; i < Rows; ++i) {
-            // 1. 부분 피보팅 (Partial Pivoting): 현재 열에서 절대값이 가장 큰 행 찾기
-            T max_val = static_cast<T>(0);
-            size_t pivot_row = i;
-            for (size_t j = i; j < Rows; ++j) {
-                T abs_val = MathTraits<T>::abs(mat(static_cast<int>(j), static_cast<int>(i)));
-                if (abs_val > max_val) {
-                    max_val = abs_val;
-                    pivot_row = j;
-                }
-            }
-
-            // 행렬 특이성(Singularity) 검사
-            if (MathTraits<T>::near_zero(max_val)) return false;
-
-            // 2. 행 교환 (Row Swapping)
-            if (pivot_row != i) {
-                for (size_t k = 0; k < Cols; ++k) {
-                    T temp = mat(static_cast<int>(i), static_cast<int>(k));
-                    mat(static_cast<int>(i), static_cast<int>(k)) = mat(static_cast<int>(pivot_row), static_cast<int>(k));
-                    mat(static_cast<int>(pivot_row), static_cast<int>(k)) = temp;
-                }
-                int temp_p = P(i);
-                P(i) = P(pivot_row);
-                P(pivot_row) = temp_p;
-            }
-
-            // 3. 분해 (Schur Complement 업데이트 기반)
-            for (size_t j = i + 1; j < Rows; ++j) {
-                mat(static_cast<int>(j), static_cast<int>(i)) /= mat(static_cast<int>(i), static_cast<int>(i)); // L 성분
-                for (size_t k = i + 1; k < Cols; ++k) {
-                    mat(static_cast<int>(j), static_cast<int>(k)) -= mat(static_cast<int>(j), static_cast<int>(i)) * mat(static_cast<int>(i), static_cast<int>(k)); // U 성분
-                }
+    for (size_t i = 0; i < Rows; ++i) {
+        // 1. 부분 피보팅 (Partial Pivoting): 현재 열에서 절대값이 가장 큰 행 찾기
+        T max_val = static_cast<T>(0);
+        size_t pivot_row = i;
+        for (size_t j = i; j < Rows; ++j) {
+            T abs_val = MathTraits<T>::abs(mat(static_cast<int>(j), static_cast<int>(i)));
+            if (abs_val > max_val) {
+                max_val = abs_val;
+                pivot_row = j;
             }
         }
-        return true;
+
+        // 행렬 특이성(Singularity) 검사
+        if (MathTraits<T>::near_zero(max_val)) return false;
+
+        // 2. 행 교환 (Row Swapping)
+        if (pivot_row != i) {
+            for (size_t k = 0; k < Cols; ++k) {
+                T temp = mat(static_cast<int>(i), static_cast<int>(k));
+                mat(static_cast<int>(i), static_cast<int>(k)) =
+                    mat(static_cast<int>(pivot_row), static_cast<int>(k));
+                mat(static_cast<int>(pivot_row), static_cast<int>(k)) = temp;
+            }
+            int temp_p = P(i);
+            P(i) = P(pivot_row);
+            P(pivot_row) = temp_p;
+        }
+
+        // 3. 분해 (Schur Complement 업데이트 기반)
+        for (size_t j = i + 1; j < Rows; ++j) {
+            mat(static_cast<int>(j), static_cast<int>(i)) /=
+                mat(static_cast<int>(i), static_cast<int>(i));  // L 성분
+            for (size_t k = i + 1; k < Cols; ++k) {
+                mat(static_cast<int>(j), static_cast<int>(k)) -=
+                    mat(static_cast<int>(j), static_cast<int>(i)) *
+                    mat(static_cast<int>(i), static_cast<int>(k));  // U 성분
+            }
+        }
+    }
+    return true;
+}
+
+template <typename T, size_t Rows, size_t Cols>
+StaticVector<T, Rows> LU_solve(const StaticMatrix<T, Rows, Cols>& mat,
+                               const StaticVector<int, Rows>& P, const StaticVector<T, Rows>& b) {
+    static_assert(Rows == Cols, "Solve requires a square matrix");
+    StaticVector<T, Rows> x;
+
+    // 1. 피벗 배열을 바탕으로 우항 벡터 b를 섞음 (Permutation)
+    for (size_t i = 0; i < Rows; ++i) {
+        x(i) = b(P(i));
     }
 
-    template <typename T, size_t Rows, size_t Cols>
-    StaticVector<T, Rows> LU_solve(const StaticMatrix<T, Rows, Cols>& mat, const StaticVector<int, Rows>& P, const StaticVector<T, Rows>& b) {
-        static_assert(Rows == Cols, "Solve requires a square matrix");
-        StaticVector<T, Rows> x;
-
-        // 1. 피벗 배열을 바탕으로 우항 벡터 b를 섞음 (Permutation)
-        for (size_t i = 0; i < Rows; ++i) {
-            x(i) = b(P(i));
+    // 2. 전진 대입 (Forward substitution: L * y = Pb) - x 배열을 임시 y로 활용
+    for (size_t i = 0; i < Rows; ++i) {
+        for (size_t j = 0; j < i; ++j) {
+            x(i) -= mat(static_cast<int>(i), static_cast<int>(j)) * x(j);
         }
-
-        // 2. 전진 대입 (Forward substitution: L * y = Pb) - x 배열을 임시 y로 활용
-        for (size_t i = 0; i < Rows; ++i) {
-            for (size_t j = 0; j < i; ++j) {
-                x(i) -= mat(static_cast<int>(i), static_cast<int>(j)) * x(j);
-            }
-        }
-
-        // 3. 후진 대입 (Backward substitution: U * x = y)
-        for (int i = static_cast<int>(Rows) - 1; i >= 0; --i) {
-            for (size_t j = static_cast<size_t>(i) + 1; j < Cols; ++j) {
-                x(static_cast<size_t>(i)) -= mat(i, static_cast<int>(j)) * x(j);
-            }
-            x(static_cast<size_t>(i)) /= mat(i, i);
-        }
-        return x;
     }
+
+    // 3. 후진 대입 (Backward substitution: U * x = y)
+    for (int i = static_cast<int>(Rows) - 1; i >= 0; --i) {
+        for (size_t j = static_cast<size_t>(i) + 1; j < Cols; ++j) {
+            x(static_cast<size_t>(i)) -= mat(i, static_cast<int>(j)) * x(j);
+        }
+        x(static_cast<size_t>(i)) /= mat(i, i);
+    }
+    return x;
+}
 
 /**
  * @brief 촐레스키 분해 (Cholesky Decomposition, A = L * L^{T})
@@ -525,7 +531,9 @@ bool QR_decompose_Householder(StaticMatrix<T, Rows, Cols>& mat, StaticVector<T, 
     static_assert(Rows >= Cols, "Householder-QR requires Rows >= Cols");
     for (size_t i = 0; i < Cols; ++i) {
         T norm_sq = static_cast<T>(0);
-        for (size_t k = i; k < Rows; ++k) norm_sq += mat(static_cast<int>(k), static_cast<int>(i)) * mat(static_cast<int>(k), static_cast<int>(i));
+        for (size_t k = i; k < Rows; ++k)
+            norm_sq += mat(static_cast<int>(k), static_cast<int>(i)) *
+                       mat(static_cast<int>(k), static_cast<int>(i));
         T norm_x = MathTraits<T>::sqrt(norm_sq);
 
         if (MathTraits<T>::near_zero(norm_x)) {
@@ -533,14 +541,17 @@ bool QR_decompose_Householder(StaticMatrix<T, Rows, Cols>& mat, StaticVector<T, 
             continue;
         }
 
-        T sign = (mat(static_cast<int>(i), static_cast<int>(i)) >= static_cast<T>(0)) ? static_cast<T>(1.0) : static_cast<T>(-1.0);
+        T sign = (mat(static_cast<int>(i), static_cast<int>(i)) >= static_cast<T>(0))
+                     ? static_cast<T>(1.0)
+                     : static_cast<T>(-1.0);
         T v0 = mat(static_cast<int>(i), static_cast<int>(i)) + sign * norm_x;
 
         for (size_t k = i + 1; k < Rows; ++k) mat(static_cast<int>(k), static_cast<int>(i)) /= v0;
 
         T v_sq_norm = static_cast<T>(1.0);
         for (size_t k = i + 1; k < Rows; ++k) {
-            v_sq_norm += mat(static_cast<int>(k), static_cast<int>(i)) * mat(static_cast<int>(k), static_cast<int>(i));
+            v_sq_norm += mat(static_cast<int>(k), static_cast<int>(i)) *
+                         mat(static_cast<int>(k), static_cast<int>(i));
         }
         tau(i) = static_cast<T>(2.0) / v_sq_norm;
 
@@ -548,18 +559,24 @@ bool QR_decompose_Householder(StaticMatrix<T, Rows, Cols>& mat, StaticVector<T, 
 
         for (size_t j = i + 1; j < Cols; ++j) {
             T dot = mat(static_cast<int>(i), static_cast<int>(j));
-            for (size_t k = i + 1; k < Rows; ++k) dot += mat(static_cast<int>(k), static_cast<int>(i)) * mat(static_cast<int>(k), static_cast<int>(j));
+            for (size_t k = i + 1; k < Rows; ++k)
+                dot += mat(static_cast<int>(k), static_cast<int>(i)) *
+                       mat(static_cast<int>(k), static_cast<int>(j));
             T tau_dot = tau(i) * dot;
 
             mat(static_cast<int>(i), static_cast<int>(j)) -= tau_dot;
-            for (size_t k = i + 1; k < Rows; ++k) mat(static_cast<int>(k), static_cast<int>(j)) -= tau_dot * mat(static_cast<int>(k), static_cast<int>(i));
+            for (size_t k = i + 1; k < Rows; ++k)
+                mat(static_cast<int>(k), static_cast<int>(j)) -=
+                    tau_dot * mat(static_cast<int>(k), static_cast<int>(i));
         }
     }
     return true;
 }
 
 template <typename T, size_t Rows, size_t Cols>
-StaticVector<T, Cols> QR_solve_Householder(const StaticMatrix<T, Rows, Cols>& mat, const StaticVector<T, Cols>& tau, const StaticVector<T, Rows>& b) {
+StaticVector<T, Cols> QR_solve_Householder(const StaticMatrix<T, Rows, Cols>& mat,
+                                           const StaticVector<T, Cols>& tau,
+                                           const StaticVector<T, Rows>& b) {
     StaticVector<T, Rows> y = b;
 
     for (size_t i = 0; i < Cols; ++i) {
@@ -593,26 +610,26 @@ StaticVector<T, Cols> QR_solve_Householder(const StaticMatrix<T, Rows, Cols>& ma
 // NMPC 구조적 해제 전용 연산 (Free functions)
 // ======================================================
 template <typename T, size_t Rows, size_t Cols, size_t P_Dim>
-StaticMatrix<T, Cols, Cols> quadratic_multiply(const StaticMatrix<T, Rows, Cols>& A, const StaticMatrix<T, P_Dim, P_Dim>& P) {
+StaticMatrix<T, Cols, Cols> quadratic_multiply(const StaticMatrix<T, Rows, Cols>& A,
+                                               const StaticMatrix<T, P_Dim, P_Dim>& P) {
     StaticMatrix<T, P_Dim, Cols> Temp = P * A;
     return transpose(A) * Temp;
 }
 
 template <typename T, size_t Rows, size_t Cols, size_t B_Cols>
-StaticMatrix<T, Rows, B_Cols> solve_multiple(const StaticMatrix<T, Rows, Cols>& mat, const StaticMatrix<T, Rows, B_Cols>& B) {
+StaticMatrix<T, Rows, B_Cols> solve_multiple(const StaticMatrix<T, Rows, Cols>& mat,
+                                             const StaticMatrix<T, Rows, B_Cols>& B) {
     static_assert(Rows == Cols, "Solver requires a square matrix");
     StaticMatrix<T, Rows, B_Cols> X;
 
     for (size_t j = 0; j < B_Cols; ++j) {
         StaticVector<T, Rows> b_col;
-        for (size_t i = 0; i < Rows; ++i)
-            b_col(i) = B(static_cast<int>(i), static_cast<int>(j));
+        for (size_t i = 0; i < Rows; ++i) b_col(i) = B(static_cast<int>(i), static_cast<int>(j));
 
         // 미리 분해되었다고 가정한 후 솔버 직접 호출
         StaticVector<T, Rows> x_col = LDLT_solve(mat, b_col);
 
-        for (size_t i = 0; i < Rows; ++i)
-            X(static_cast<int>(i), static_cast<int>(j)) = x_col(i);
+        for (size_t i = 0; i < Rows; ++i) X(static_cast<int>(i), static_cast<int>(j)) = x_col(i);
     }
     return X;
 }
