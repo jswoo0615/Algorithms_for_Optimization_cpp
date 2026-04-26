@@ -43,8 +43,8 @@ void run_eqp_test() {
     // ==========================================================
     // [Architect's Check] KKT Monitor 가동
     // ==========================================================
-    auto kkt_metrics = Optimization::KKTMonitor<2, 1>::evaluate_EQP(solver.P, solver.q, solver.A, solver.b,
-                                                      solver.u_opt, solver.lambda_opt);
+    auto kkt_metrics = Optimization::KKTMonitor<2, 1>::evaluate_EQP(
+        solver.P, solver.q, solver.A, solver.b, solver.u_opt, solver.lambda_opt);
 
     Optimization::KKTMonitor<2, 1>::print_metrics(kkt_metrics);
 
