@@ -6,7 +6,7 @@
 namespace Optimization {
 namespace linalg {
 template <typename T, size_t Rows, size_t Cols>
-bool LU_decompose(StaticMatrix<T, Rows, Cols>& mat, StaticVector<int, Rows>& P) {
+MathStatus LU_decompose(StaticMatrix<T, Rows, Cols>& mat, StaticVector<int, Rows>& P) {
     static_assert(Rows == Cols, "LUP Decomposition requires a square matrix");
     for (size_t i = 0; i < Rows; ++i) {
         P(i) = static_cast<int>(i);
@@ -22,7 +22,7 @@ bool LU_decompose(StaticMatrix<T, Rows, Cols>& mat, StaticVector<int, Rows>& P) 
             }
         }
         if (MathTraits<T>::near_zero(max_val)) {
-            return false;
+            return MathStatus::SINGULAR;
         }
         if (pivot_row != i) {
             for (size_t k = 0; k < Cols; ++k) {
@@ -45,7 +45,7 @@ bool LU_decompose(StaticMatrix<T, Rows, Cols>& mat, StaticVector<int, Rows>& P) 
             }
         }
     }
-    return true;
+    return MathStatus::SUCCESS;
 }
 
 template <typename T, size_t Rows, size_t Cols>
