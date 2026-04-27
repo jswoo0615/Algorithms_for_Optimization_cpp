@@ -6,7 +6,7 @@
 namespace Optimization {
 namespace linalg {
 template <typename T, size_t Rows, size_t Cols>
-bool Cholesky_decompose(StaticMatrix<T, Rows, Cols>& mat) {
+MathStatus Cholesky_decompose(StaticMatrix<T, Rows, Cols>& mat) {
     static_assert(Rows == Cols, "Cholesky requires a square matrix");
     for (size_t j = 0; j < Cols; ++j) {
         T s = static_cast<T>(0);
@@ -16,7 +16,7 @@ bool Cholesky_decompose(StaticMatrix<T, Rows, Cols>& mat) {
         }
         T d = mat(static_cast<int>(j), static_cast<int>(j)) - s;
         if (d <= std::numeric_limits<T>::epsilon()) {
-            return false;
+            return MathStatus::SINGULAR;
         }
         mat(static_cast<int>(j), static_cast<int>(j)) = MathTraits<T>::sqrt(d);
         for (size_t i = j + 1; j < Rows; ++i) {
@@ -30,7 +30,7 @@ bool Cholesky_decompose(StaticMatrix<T, Rows, Cols>& mat) {
                 mat(static_cast<int>(j), static_cast<int>(j));
         }
     }
-    return true;
+    return MathStatus::SUCCESS;
 }
 
 template <typename T, size_t Rows, size_t Cols>
