@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+
 #include "Optimization/Solver/NewtonSolver.hpp"
 
 using namespace Optimization;
@@ -21,8 +22,8 @@ struct NonlinearSystem {
 TEST(NewtonSolverTest, MaxIterationReached) {
     // 1. 자코비안이 터지지 않는 정상적인 위치에서 시작 (x0=3.0, x1=1.0)
     StaticVector<double, 2> x_init;
-    x_init(0) = 3.0; 
-    x_init(1) = 1.0; 
+    x_init(0) = 3.0;
+    x_init(1) = 1.0;
 
     NonlinearSystem sys;
     // 2. 루프를 단 1번만 돌도록 제한하여 고의로 수렴하지 못하게 만듦
@@ -35,8 +36,8 @@ TEST(NewtonSolverTest, MaxIterationReached) {
 TEST(NewtonSolverTest, SingularJacobianMathError) {
     // 1. 자코비안 행렬식이 0이 되는 악의적인 대칭점 주입
     StaticVector<double, 2> x_init;
-    x_init(0) = 1e5; 
-    x_init(1) = -1e5; 
+    x_init(0) = 1e5;
+    x_init(1) = -1e5;
 
     NonlinearSystem sys;
     SolverStatus status = solve_newton(x_init, sys, 20, 1e-6);

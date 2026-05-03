@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+
 #include "Optimization/Solver/LevenbergMarquardt.hpp"
 
 using namespace Optimization;
@@ -25,8 +26,8 @@ TEST(LevenbergMarquardtTest, MinimizeRosenbrock) {
     // N=2 (변수), M=2 (잔차)
     StaticVector<double, 2> x_opt;
     // 일부러 해(1,1)에서 꽤 먼 악의적인 계곡 벽면(-1.2, 1.0)에서 시작
-    x_opt(0) = -1.2; 
-    x_opt(1) = 1.0;  
+    x_opt(0) = -1.2;
+    x_opt(1) = 1.0;
 
     RosenbrockResiduals res_func;
     SolverStatus status = solve_LM<2, 2>(x_opt, res_func, 100, 1e-6);
