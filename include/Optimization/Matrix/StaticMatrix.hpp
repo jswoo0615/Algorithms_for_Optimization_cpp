@@ -131,6 +131,20 @@ class StaticMatrix {
         }
     }
 
+    /**
+     * @brief 전치 행렬(Transpose) 반환
+     * @details Rows x Cols 행렬을 Cols x Rows 행렬로 변환하여 반환합니다.
+     */
+    StaticMatrix<T, Cols, Rows> transpose() const {
+        StaticMatrix<T, Cols, Rows> res;
+        for (size_t i = 0; i < Rows; ++i) {
+            for (size_t j = 0; j < Cols; ++j) {
+                res(static_cast<int>(j), static_cast<int>(i)) = (*this)(static_cast<int>(i), static_cast<int>(j));
+            }
+        }
+        return res;
+    }
+
     template <size_t SubRows, size_t SubCols>
     StaticMatrix<T, SubRows, SubCols> extract_block(size_t start_row, size_t start_col) const {
         assert(start_row + SubRows <= Rows && "Row index out of bounds");
