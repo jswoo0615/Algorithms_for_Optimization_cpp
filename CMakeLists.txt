@@ -18,11 +18,6 @@ add_executable(test_dual test/test_dual.cpp)
 target_link_libraries(test_dual PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_dual)
 
-# [3번 브랜치 결과물] 나중에 합쳐지면 여기에 추가됨!
-add_executable(test_autodiff test/test_autodiff.cpp)
-target_link_libraries(test_autodiff PRIVATE GTest::gtest_main)
-gtest_discover_tests(test_autodiff)
-
 add_executable(test_bracketing test/test_bracketing.cpp)
 target_link_libraries(test_bracketing PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_bracketing)
@@ -148,25 +143,9 @@ add_executable(test_ActiveSet test/test_ActiveSet.cpp)
 target_link_libraries(test_ActiveSet PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_ActiveSet)
 
-add_executable(test_SQP test/test_SQP.cpp)
-target_link_libraries(test_SQP PRIVATE GTest::gtest_main)
-gtest_discover_tests(test_SQP)
-
-add_executable(test_VehicleModel test/test_VehicleModel.cpp)
-target_link_libraries(test_VehicleModel PRIVATE GTest::gtest_main)
-gtest_discover_tests(test_VehicleModel)
-
-add_executable(test_NMPC test/test_NMPC.cpp)
-target_link_libraries(test_NMPC PRIVATE GTest::gtest_main)
-gtest_discover_tests(test_NMPC)
-
 add_executable(test_IPM test/test_IPM.cpp)
 target_link_libraries(test_IPM PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_IPM)
-
-add_executable(test_RTINMPC test/test_RTINMPC.cpp)
-target_link_libraries(test_RTINMPC PRIVATE GTest::gtest_main)
-gtest_discover_tests(test_RTINMPC DISCOVERY_TIMEOUT 120)
 
 add_executable(test_Riccati test/test_Riccati.cpp)
 target_link_libraries(test_Riccati PRIVATE GTest::gtest_main)

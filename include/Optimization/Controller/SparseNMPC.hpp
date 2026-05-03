@@ -1,257 +1,231 @@
 #ifndef OPTIMIZATION_SPARSE_NMPC_HPP_
 #define OPTIMIZATION_SPARSE_NMPC_HPP_
 
+#include "Optimization/Matrix/StaticMatrix.hpp"
+#include "Optimization/VehicleModel/DynamicBicycleModel.hpp"
+#include "Optimization/Integrator/RK4.hpp"
+#include "Optimization/Solver/RiccatiSolver.hpp"
+#include "Optimization/Dual.hpp"
+#include "Optimization/Utils/RigidTransform.hpp"
 #include <array>
 #include <cmath>
-
-#include "Optimization/Dual.hpp"
-#include "Optimization/Integrator/RK4.hpp"
-#include "Optimization/Matrix/StaticMatrix.hpp"
-#include "Optimization/Solver/RiccatiSolver.hpp"
-#include "Optimization/VehicleModel/DynamicBicycleModel.hpp"
+#include <string>
+#include <iostream>
+#include <algorithm> 
 
 namespace Optimization {
 
 struct Obstacle {
-    double x = 0.0;
-    double y = 0.0;
-    double r = 0.5;
+    double x = 0.0; double y = 0.0; double r = 0.5;
 };
 
 namespace controller {
 
-template <size_t H, size_t Nx = 6, size_t Nu = 2>
-class SparseNMPC {
-   public:
-    StaticVector<double, Nx> Q, Qf;
-    StaticVector<double, Nu> R, R_rate;
-    double dt;
+    struct NMPCResult {
+        bool success = false; bool fallback_triggered = false;
+        double max_kkt_error = 0.0; int sqp_iterations = 0;
+        std::string status_msg = "OK";
+    };
 
-    std::array<StaticVector<double, Nu>, H> U_guess;
-    std::array<StaticVector<double, Nx>, H + 1> X_pred;
-
-    StaticVector<double, Nu> u_last;
-    std::array<Obstacle, 10> obstacles;
-
-    solver::RiccatiSolver<H, Nx, Nu> riccati;
-
-    SparseNMPC() {
-        // [Architect's Fix] X좌표 추종 페널티(Q(0)) 제거.
-        // 차량이 앞으로 나아가는 것을 처벌하면 차량은 스핀아웃을 선택합니다.
-        Q.set_zero();
-        Q(1) = 15.0;
-        Q(2) = 5.0;
-        Q(3) = 10.0;
-        Qf.set_zero();
-        for (size_t i = 0; i < Nx; ++i) Qf(i) = Q(i) * 10.0;
-        R.set_zero();
-        R(0) = 0.5;
-        R(1) = 10.0;
-        R_rate.set_zero();
-        R_rate(0) = 50.0;
-        R_rate(1) = 250.0;
-        u_last.set_zero();
-        dt = 0.1;
-        for (size_t k = 0; k < H; ++k) U_guess[k].set_zero();
-
-        // =========================================================
-        // [Architect's Fix] 유령 장애물 치우기
-        // 쓰지 않는 장애물 배열 초기값을 차량이 닿을 수 없는 곳으로 보냅니다.
-        // =========================================================
-        for (size_t i = 0; i < 10; ++i) {
-            obstacles[i].x = 10000.0;
-            obstacles[i].y = 10000.0;
-            obstacles[i].r = 0.1;
-        }
+    inline double normalize_angle(double angle) {
+        while (angle > M_PI) angle -= 2.0 * M_PI;
+        while (angle < -M_PI) angle += 2.0 * M_PI;
+        return angle;
     }
 
-    // =========================================================================
-    // [Architect's Tactics] 각 노드(Node)별 비선형 잔차 함수 (M_res = 26)
-    // 1. 상태 추종 (6) + 2. 제어 크기 (2) + 3. Slew Rate (2)
-    // 4. 장애물 (10) + 5. Log-Barrier 기반 하드 제약 (4+2)
-    // =========================================================================
-    // 잔차의 개수를 정확히 24개로 맞춤 (상태 6 + 제어 2 + Slew 2 + 장애물 10 + 제약 4)
-    template <typename T>
-    StaticVector<T, 24> eval_node_residuals(const StaticVector<T, Nx>& x,
-                                            const StaticVector<T, Nu>& u,
-                                            const StaticVector<T, Nu>& u_prev,
-                                            const StaticVector<double, Nx>& x_ref) {
-        // 이제 math_log, math_sqrt 라우터는 필요 없습니다. 완벽히 삭제하십시오.
+    template <size_t H, size_t Nx = 6, size_t Nu = 2>
+    class SparseNMPC {
+    public:
+        StaticVector<double, Nx> Q, Qf;
+        StaticVector<double, Nu> R, R_rate;
+        double dt;
+        std::array<StaticVector<double, Nu>, H> U_guess;
+        std::array<StaticVector<double, Nx>, H + 1> X_pred;
+        StaticVector<double, Nu> u_last;
+        std::array<Obstacle, 10> global_obstacles;
+        std::array<Obstacle, 10> local_obstacles;
+        solver::RiccatiSolver<H, Nx, Nu> riccati;
 
-        StaticVector<T, 24> res;
-        res.set_zero();
-        int idx = 0;
-
-        // 1. 상태 오차 잔차 (6)
-        for (size_t i = 0; i < Nx; ++i) res(idx++) = T(std::sqrt(Q(i))) * (x(i) - T(x_ref(i)));
-
-        // 2. 제어 입력 크기 잔차 (2)
-        for (size_t i = 0; i < Nu; ++i) res(idx++) = T(std::sqrt(R(i))) * u(i);
-
-        // 3. Slew Rate 잔차 (2)
-        for (size_t i = 0; i < Nu; ++i) res(idx++) = T(std::sqrt(R_rate(i))) * (u(i) - u_prev(i));
-
-        // 4. 장애물 회피망 (10)
-        for (size_t i = 0; i < 10; ++i) {
-            T dx = x(0) - T(obstacles[i].x);
-            T dy = x(1) - T(obstacles[i].y);
-            T dist_sq = dx * dx + dy * dy;
-            T r_safe = T(obstacles[i].r + 0.8);
-            T viol = r_safe * r_safe - dist_sq;
-            res(idx++) =
-                (Optimization::get_value(viol) > 0.0) ? T(std::sqrt(8000.0)) * viol : T(0.0);
+        SparseNMPC() {
+            // Q(2) 비중을 줄여 솔버가 각도에 너무 민감하게 반응하지 않도록 조절
+            Q.set_zero(); Q(1) = 15.0; Q(2) = 100.0; Q(3) = 10.0; 
+            Qf.set_zero(); for (size_t i=0; i<Nx; ++i) Qf(i) = Q(i) * 5.0;
+            R.set_zero(); R(0) = 1.0; R(1) = 20.0; 
+            R_rate.set_zero(); R_rate(0) = 50.0; R_rate(1) = 300.0;
+            u_last.set_zero(); dt = 0.1;
+            for (size_t k=0; k<H; ++k) U_guess[k].set_zero();
+            for (size_t i = 0; i < 10; ++i) {
+                global_obstacles[i].x = 10000.0; global_obstacles[i].y = 10000.0; global_obstacles[i].r = 0.1;
+            }
         }
 
-        // =========================================================
-        // [Architect's Tactics] Inverse Barrier Function (Gauss-Newton IPM)
-        // NaN의 위험이 없고, 연산이 압도적으로 빠르며 완벽한 하드 제약을 형성합니다.
-        // =========================================================
-        double mu = 0.5;  // Barrier Parameter
+        template <typename T>
+        StaticVector<T, 25> eval_node_residuals(const StaticVector<T, Nx>& x, 
+                                                const StaticVector<T, Nu>& u, 
+                                                const StaticVector<T, Nu>& u_prev,
+                                                const StaticVector<double, Nx>& x_ref_local,
+                                                const StaticVector<double, Nx>& x_curr_global,
+                                                const StaticVector<double, Nx>& x_ref_global) 
+        {
+            using std::abs; using std::sqrt;
 
-        // 가속도 한계 [-3.0, 3.0]
-        T a_viol_upper = u(0) - T(3.0);
-        T a_viol_lower = T(-3.0) - u(0);
-        res(idx++) = (Optimization::get_value(a_viol_upper) > 0.0)
-                         ? T(std::sqrt(100.0)) * a_viol_upper
-                         : T(0.0);
-        res(idx++) = (Optimization::get_value(a_viol_lower) > 0.0)
-                         ? T(std::sqrt(100.0)) * a_viol_lower
-                         : T(0.0);
+            StaticVector<T, 25> res; res.set_zero();
+            int idx = 0;
 
-        // 조향 한계 [-0.5, 0.5] rad
-        T steer_viol_upper = u(1) - T(0.5);
-        T steer_viol_lower = T(-0.5) - u(1);
-        res(idx++) = (Optimization::get_value(steer_viol_upper) > 0.0)
-                         ? T(std::sqrt(100.0)) * steer_viol_upper
-                         : T(0.0);
-        res(idx++) = (Optimization::get_value(steer_viol_lower) > 0.0)
-                         ? T(std::sqrt(100.0)) * steer_viol_lower
-                         : T(0.0);
+            T theta_c = T(x_curr_global(2));
+            T sin_t = T(std::sin(x_curr_global(2)));
+            T cos_t = T(std::cos(x_curr_global(2)));
+            T y_c = T(x_curr_global(1));
+            T y_target = T(x_ref_global(1));
+            
+            // True global Y error projected approximately to local Y scale
+            // Y_global = x(0)*sin_t + x(1)*cos_t + y_c
+            // error = Y_global - y_target
+            T y_err = x(0) * sin_t + x(1) * cos_t + y_c - y_target;
 
-        return res;
-    }
+            // [Architect's New Law] X는 무시한다. 오직 차선 유지와 속도뿐.
+            res(idx++) = T(0.0);                                          // X 오차 무시
+            res(idx++) = T(sqrt(200.0)) * y_err;                          // Y (차선) 엄격히 유지
+            res(idx++) = T(sqrt(500.0)) * (x(2) - T(x_ref_local(2)));     // Yaw 엄격히 정렬
+            res(idx++) = T(sqrt(50.0))  * (x(3) - T(10.0));              // 속도 10m/s 유지
 
-    void update_dynamic_weights(const StaticVector<double, Nx>& x_curr) {
-        double vx = x_curr(3);  // 현재 종방향 속도 (m/s)
+            // 조향 자체를 죄악시한다 (R 가중치 극대화)
+            res(idx++) = T(sqrt(10.0))   * u(0); // Accel
+            res(idx++) = T(sqrt(5000.0)) * u(1); // Steering (매우 무겁게)
 
-        // 1. 기본 가중치 (저속 상태의 Base 값)
-        double base_R_steer = 10.0;
-        double base_R_rate = 250.0;
-        double base_Q_psi = 5.0;
-
-        // 2. 동적 스케줄링 (속도에 따른 페널티 증가)
-        // 고속일수록 조향을 무겁게 만들고(폭주 방지), 헤딩 추종을 날카롭게 만듭니다.
-        R(1) = base_R_steer + 0.5 * (vx * vx);
-        R_rate(1) = base_R_rate + 2.0 * (vx * vx);
-        Q(2) = base_Q_psi + 0.5 * std::abs(vx);
-    }
-
-    bool solve(const StaticVector<double, Nx>& x_curr, const StaticVector<double, Nx>& x_ref) {
-        vehicle::DynamicBicycleModel model;
-
-        // 1. Forward Rollout (Nominal Trajectory)
-        X_pred[0] = x_curr;
-        for (size_t k = 0; k < H; ++k) {
-            X_pred[k + 1] = integrator::step_rk4<Nx, Nu>(model, X_pred[k], U_guess[k], dt);
-        }
-
-        // 2. Linearization & Gauss-Newton Cost Formulation
-        for (size_t k = 0; k < H; ++k) {
-            // 이전 제어 입력 (k=0 이면 u_last, 아니면 이전 스텝의 guess)
-            StaticVector<double, Nu> u_prev = (k == 0) ? u_last : U_guess[k - 1];
-
-            // --- A. 동역학 선형화 (A_k, B_k) ---
-            using ADVar = DualVec<double, Nx + Nu>;
-            StaticVector<ADVar, Nx> x_dual;
-            StaticVector<ADVar, Nu> u_dual;
-            StaticVector<ADVar, Nu> u_prev_dual;  // 잔차 평가용 상수로 취급
-
-            for (size_t i = 0; i < Nx; ++i) x_dual(i) = ADVar::make_variable(X_pred[k](i), i);
-            for (size_t i = 0; i < Nu; ++i) {
-                u_dual(i) = ADVar::make_variable(U_guess[k](i), Nx + i);
-                u_prev_dual(i) = ADVar(u_prev(i));  // Gradient 전파 안함
+            // 장애물 회피 (Margin 1.5m)
+            for (size_t i = 0; i < 10; ++i) {
+                T dx = x(0) - T(local_obstacles[i].x);
+                T dy = x(1) - T(local_obstacles[i].y);
+                T dist_sq = dx * dx + dy * dy;
+                T r_safe = T(local_obstacles[i].r + 1.5);
+                T viol = r_safe * r_safe - dist_sq;
+                res(idx++) = (Optimization::get_value(viol) > 0.0) ? T(sqrt(20000.0)) * viol : T(0.0);
             }
 
-            StaticVector<ADVar, Nx> x_next_dual =
-                integrator::step_rk4<Nx, Nu>(model, x_dual, u_dual, dt);
-            for (size_t i = 0; i < Nx; ++i) {
-                for (size_t j = 0; j < Nx; ++j) riccati.A[k](i, j) = x_next_dual(i).g[j];
-                for (size_t j = 0; j < Nu; ++j) riccati.B[k](i, j) = x_next_dual(i).g[Nx + j];
+            // [Hard Defense] Vx가 5m/s 아래로 떨어지면 기하급수적 처벌 (역주행 방지)
+            T v_min_viol = T(5.0) - x(3);
+            res(idx++) = (Optimization::get_value(v_min_viol) > 0.0) ? T(1000.0) * v_min_viol : T(0.0);
+
+            return res;
+        }
+
+        void update_dynamic_weights(const StaticVector<double, Nx>& x_curr) {
+            double vx = std::max(0.1, x_curr(3)); 
+            R(1) = 20.0 + 1.0 * (vx * vx); // 고속 시 조향 더 억제
+            R_rate(1) = 300.0 + 2.0 * (vx * vx);
+        }
+
+        void shift_sequence() {
+            for (size_t k = 0; k < H - 1; ++k) U_guess[k] = U_guess[k + 1];
+            U_guess[H-1](0) *= 0.5; U_guess[H-1](1) *= 0.5; // 더 가파른 감쇠
+        }
+
+        NMPCResult execute_fallback(NMPCResult& res, const std::string& reason) {
+            for (size_t k = 0; k < H; ++k) { U_guess[k](0) = -4.0; U_guess[k](1) = 0.0; }
+            u_last = U_guess[0]; res.success = false; res.fallback_triggered = true; res.status_msg = reason;
+            return res;
+        }
+
+        NMPCResult solve(const StaticVector<double, Nx>& x_curr_global, const StaticVector<double, Nx>& x_ref_global, int max_sqp_iter = 1) {
+            NMPCResult result;
+            auto T_g2l = utils::SE2Transform::get_global_to_local(x_curr_global(0), x_curr_global(1), x_curr_global(2));
+            for (size_t i = 0; i < 10; ++i) {
+                local_obstacles[i].r = global_obstacles[i].r;
+                utils::SE2Transform::transform_point(T_g2l, global_obstacles[i].x, global_obstacles[i].y, local_obstacles[i].x, local_obstacles[i].y);
             }
-            for (size_t i = 0; i < Nx; ++i) riccati.d[k](i) = 0.0;  // Nominal trajectory 일치
 
-            // --- B. 비용 함수 Gauss-Newton 선형화 (Q_k, R_k, q_k, r_k) ---
-            StaticVector<ADVar, 24> res_dual =
-                eval_node_residuals(x_dual, u_dual, u_prev_dual, x_ref);
+            StaticVector<double, Nx> x_curr_local; x_curr_local.set_zero();
+            x_curr_local(3) = std::max(0.1, x_curr_global(3)); 
+            x_curr_local(4) = x_curr_global(4); x_curr_local(5) = x_curr_global(5);
 
-            riccati.Q[k].set_zero();
-            riccati.R[k].set_zero();
-            riccati.q[k].set_zero();
-            riccati.r[k].set_zero();
+            StaticVector<double, Nx> x_ref_local;
+            utils::SE2Transform::transform_point(T_g2l, x_ref_global(0), x_ref_global(1), x_ref_local(0), x_ref_local(1));
+            x_ref_local(2) = normalize_angle(x_ref_global(2) - x_curr_global(2)); 
+            x_ref_local(3) = x_ref_global(3); x_ref_local(4) = x_ref_global(4); x_ref_local(5) = x_ref_global(5);
 
-            // J^T * J 및 J^T * res 조립
-            for (size_t res_idx = 0; res_idx < 24; ++res_idx) {
-                double r_val = res_dual(res_idx).v;
+            update_dynamic_weights(x_curr_local);
+            vehicle::DynamicBicycleModel model;
 
-                // State 방향 (Q, q)
-                for (size_t i = 0; i < Nx; ++i) {
-                    double J_xi = res_dual(res_idx).g[i];
-                    riccati.q[k](i) += J_xi * r_val;
-                    for (size_t j = 0; j < Nx; ++j) {
-                        riccati.Q[k](i, j) += J_xi * res_dual(res_idx).g[j];
+            for (int sqp = 0; sqp < max_sqp_iter; ++sqp) {
+                result.sqp_iterations = sqp + 1;
+                X_pred[0] = x_curr_local;
+                for (size_t k = 0; k < H; ++k) X_pred[k+1] = integrator::step_rk4<Nx, Nu>(model, X_pred[k], U_guess[k], dt);
+
+                for (size_t k = 0; k < H; ++k) {
+                    StaticVector<double, Nu> u_prev = (k == 0) ? u_last : U_guess[k - 1];
+                    using ADVar = DualVec<double, Nx + Nu>;
+                    StaticVector<ADVar, Nx> x_dual; StaticVector<ADVar, Nu> u_dual; StaticVector<ADVar, Nu> u_prev_dual;
+                    for (size_t i = 0; i < Nx; ++i) x_dual(i) = ADVar::make_variable(X_pred[k](i), i);
+                    for (size_t i = 0; i < Nu; ++i) {
+                        u_dual(i) = ADVar::make_variable(U_guess[k](i), Nx + i);
+                        u_prev_dual(i) = ADVar(u_prev(i));
+                    }
+
+                    StaticVector<ADVar, Nx> x_next_dual = integrator::step_rk4<Nx, Nu>(model, x_dual, u_dual, dt);
+                    for (size_t i = 0; i < Nx; ++i) {
+                        for (size_t j = 0; j < Nx; ++j) riccati.A[k](i, j) = x_next_dual(i).g[j];
+                        for (size_t j = 0; j < Nu; ++j) riccati.B[k](i, j) = x_next_dual(i).g[Nx + j];
+                        riccati.d[k](i) = 0.0; 
+                    }
+                    StaticVector<ADVar, 25> res_dual = eval_node_residuals(x_dual, u_dual, u_prev_dual, x_ref_local, x_curr_global, x_ref_global);
+                    riccati.Q[k].set_zero(); riccati.R[k].set_zero(); riccati.q[k].set_zero(); riccati.r[k].set_zero();
+                    for (size_t res_idx = 0; res_idx < 25; ++res_idx) {
+                        double r_val = res_dual(res_idx).v;
+                        for (size_t i = 0; i < Nx; ++i) {
+                            double J_xi = res_dual(res_idx).g[i]; riccati.q[k](i) += J_xi * r_val;
+                            for (size_t j = 0; j < Nx; ++j) riccati.Q[k](i, j) += J_xi * res_dual(res_idx).g[j];
+                        }
+                        for (size_t i = 0; i < Nu; ++i) {
+                            double J_ui = res_dual(res_idx).g[Nx + i]; riccati.r[k](i) += J_ui * r_val;
+                            for (size_t j = 0; j < Nu; ++j) riccati.R[k](i, j) += J_ui * res_dual(res_idx).g[Nx + j];
+                        }
+                    }
+                    // 강력한 정규화(Damping) 추가
+                    for (size_t i = 0; i < Nx; ++i) riccati.Q[k](i, i) += 5.0;
+                    for (size_t i = 0; i < Nu; ++i) riccati.R[k](i, i) += 500.0;
+                }
+                riccati.Q[H].set_zero(); riccati.q[H].set_zero();
+                double sin_t = std::sin(x_curr_global(2));
+                double cos_t = std::cos(x_curr_global(2));
+                for(size_t i=0; i<Nx; ++i) {
+                    if (i == 1) {
+                        double err_y = X_pred[H](0) * sin_t + X_pred[H](1) * cos_t + x_curr_global(1) - x_ref_global(1);
+                        riccati.Q[H](1, 1) += Qf(1) * cos_t * cos_t;
+                        riccati.Q[H](0, 0) += Qf(1) * sin_t * sin_t;
+                        riccati.Q[H](0, 1) += Qf(1) * sin_t * cos_t;
+                        riccati.Q[H](1, 0) += Qf(1) * sin_t * cos_t;
+                        riccati.q[H](1) += Qf(1) * err_y * cos_t;
+                        riccati.q[H](0) += Qf(1) * err_y * sin_t;
+                    } else if (i != 0) { // i=0 is handled above, but original Q(0)=0 anyway
+                        double err = X_pred[H](i) - x_ref_local(i);
+                        riccati.Q[H](i, i) += Qf(i); 
+                        riccati.q[H](i) += Qf(i) * err;
                     }
                 }
-                // Control 방향 (R, r)
-                for (size_t i = 0; i < Nu; ++i) {
-                    double J_ui = res_dual(res_idx).g[Nx + i];
-                    riccati.r[k](i) += J_ui * r_val;
-                    for (size_t j = 0; j < Nu; ++j) {
-                        riccati.R[k](i, j) += J_ui * res_dual(res_idx).g[Nx + j];
+
+                if (riccati.solve() != SolverStatus::SUCCESS) return execute_fallback(result, "Factorization Failed");
+
+                double max_step = 0.0;
+                for (size_t k = 0; k < H; ++k) {
+                    for (size_t i = 0; i < Nu; ++i) {
+                        // Trust Region: 더 보수적인 스텝 클램핑
+                        riccati.du[k](i) = std::clamp(riccati.du[k](i), -0.5, 0.5);
+                        max_step = std::max(max_step, std::abs(riccati.du[k](i)));
                     }
                 }
+                result.max_kkt_error = max_step;
+                if (std::isnan(max_step) || max_step > 5.0) return execute_fallback(result, "Divergence Detected");
+
+                double alpha = 0.3; // 극단적으로 보수적인 보폭
+                for (size_t k = 0; k < H; ++k) {
+                    for (size_t i = 0; i < Nu; ++i) U_guess[k](i) += alpha * riccati.du[k](i);
+                }
+                if (max_step < 1e-4) break; 
             }
-
-            // =========================================================
-            // [Architect's Fix] Levenberg-Marquardt Damping 주입
-            // 순수 Gauss-Newton의 오버슛(급조향)을 억제하는 국소적 Trust Region.
-            // =========================================================
-            double lambda_q = 2.0;
-            // [Architect's Tuning] 조향이 미친듯이 튀는 것을 막는 최강의 물리적 제동 장치
-            double lambda_r = 500.0;
-            for (size_t i = 0; i < Nx; ++i) riccati.Q[k](i, i) += lambda_q;
-            for (size_t i = 0; i < Nu; ++i) riccati.R[k](i, i) += lambda_r;
+            u_last = U_guess[0]; result.success = true; return result;
         }
-
-        // Terminal Node (H)
-        riccati.Q[H].set_zero();
-        riccati.q[H].set_zero();
-        for (size_t i = 0; i < Nx; ++i) {
-            double err = X_pred[H](i) - x_ref(i);
-            riccati.Q[H](i, i) = Qf(i);
-            riccati.q[H](i) = Qf(i) * err;
-        }
-
-        // 3. Solve & Update
-        SolverStatus status = riccati.solve();
-        if (status != SolverStatus::SUCCESS) return false;
-
-        // =========================================================
-        // [Architect's Tactics] Strict Interior Projection
-        // 해가 장벽(Barrier)의 점근선을 뛰어넘어 기울기가 0이 되는 것을 방지합니다.
-        // 무조건 허용 구역 내부([-0.49, 0.49])에 머물도록 투영시킵니다.
-        // =========================================================
-        for (size_t k = 0; k < H; ++k) {
-            for (size_t i = 0; i < Nu; ++i) U_guess[k](i) += riccati.du[k](i);
-        }
-
-        // 다음 제어 주기를 위한 Warm Start
-        u_last = U_guess[0];
-
-        return true;
-    }
-};
-
-}  // namespace controller
-}  // namespace Optimization
-
-#endif  // OPTIMIZATION_SPARSE_NMPC_HPP_
+    };
+}
+}
+#endif
