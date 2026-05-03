@@ -7,5 +7,5 @@ var searchData=
   ['dualvec_4',['DualVec',['../structOptimization_1_1DualVec.html',1,'Optimization']]],
   ['dummyeq_5',['dummyeq',['../structDummyEq.html',1,'DummyEq'],['../structOptimization_1_1NMPCController_1_1DummyEq.html',1,'Optimization::NMPCController&lt; Np &gt;::DummyEq']]],
   ['dx_6',['dx',['../classOptimization_1_1BlockBandedSolver.html#a6d494c8f49c5ac3748e39f332040c71d',1,'Optimization::BlockBandedSolver']]],
-  ['dynamicbicyclemodel_7',['DynamicBicycleModel',['../classOptimization_1_1DynamicBicycleModel.html',1,'Optimization']]]
+  ['dynamicbicyclemodel_7',['dynamicbicyclemodel',['../classOptimization_1_1DynamicBicycleModel.html',1,'Optimization::DynamicBicycleModel'],['../structOptimization_1_1vehicle_1_1DynamicBicycleModel.html',1,'Optimization::vehicle::DynamicBicycleModel']]]
 ];

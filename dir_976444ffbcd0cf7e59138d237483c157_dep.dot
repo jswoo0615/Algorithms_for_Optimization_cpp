@@ -11,10 +11,12 @@ digraph "include/Optimization"
     graph [ bgcolor="#edf0f7", pencolor="grey25", label="", fontname=Helvetica,fontsize=10 style="filled,bold", URL="dir_976444ffbcd0cf7e59138d237483c157.html",tooltip=""]
     dir_976444ffbcd0cf7e59138d237483c157 [shape=plaintext, label="Optimization"];
   dir_b0eb23d7880c1ce496ccacf085fb439e [label="Control", fillcolor="#a2b4d6", color="grey25", style="filled", URL="dir_b0eb23d7880c1ce496ccacf085fb439e.html",tooltip=""];
+  dir_5bb25db18c853031f62decd1534aca17 [label="Integrator", fillcolor="#a2b4d6", color="grey25", style="filled", URL="dir_5bb25db18c853031f62decd1534aca17.html",tooltip=""];
   dir_a66bc7e01f4013e53ad389310fb0c51c [label="Matrix", fillcolor="#a2b4d6", color="grey25", style="filled", URL="dir_a66bc7e01f4013e53ad389310fb0c51c.html",tooltip=""];
   dir_7cd0d73341d495ff5d164ebc59a94c80 [label="Physics", fillcolor="#a2b4d6", color="grey25", style="filled", URL="dir_7cd0d73341d495ff5d164ebc59a94c80.html",tooltip=""];
   dir_a867165be1459a38b824a228c75e4073 [label="Simulation", fillcolor="#a2b4d6", color="grey25", style="filled", URL="dir_a867165be1459a38b824a228c75e4073.html",tooltip=""];
   dir_344cbd1bd00ec6f2cef44081d8425e41 [label="Solver", fillcolor="#a2b4d6", color="grey25", style="filled", URL="dir_344cbd1bd00ec6f2cef44081d8425e41.html",tooltip=""];
+  dir_8efc3cca00435a7f2971e9aa93900fda [label="VehicleModel", fillcolor="#a2b4d6", color="grey25", style="filled", URL="dir_8efc3cca00435a7f2971e9aa93900fda.html",tooltip=""];
   }
   }
 }
