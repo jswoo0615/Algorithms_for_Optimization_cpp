@@ -95,7 +95,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;array&gt;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;cmath&gt;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;complex&gt;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;iostream&gt;</span> <span class="comment">// GTest 출력 포맷을 위해 추가됨</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;iostream&gt;</span>  <span class="comment">// GTest 출력 포맷을 위해 추가됨</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">namespace </span>Optimization {</div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
@@ -152,12 +152,12 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    }</div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keyword">constexpr</span> Dual&amp; operator*=(<span class="keyword">const</span> Dual&amp; rhs) <span class="keyword">noexcept</span> {</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <a class="code hl_variable" href="structOptimization_1_1Dual.html#aaefd8e908ae455dc322d4e6b95db09c4">d</a> = <a class="code hl_variable" href="structOptimization_1_1Dual.html#aaefd8e908ae455dc322d4e6b95db09c4">d</a> * rhs.v + <a class="code hl_variable" href="structOptimization_1_1Dual.html#ad0413bca82bdd0c139225b080313c442">v</a> * rhs.d;  </div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <a class="code hl_variable" href="structOptimization_1_1Dual.html#aaefd8e908ae455dc322d4e6b95db09c4">d</a> = <a class="code hl_variable" href="structOptimization_1_1Dual.html#aaefd8e908ae455dc322d4e6b95db09c4">d</a> * rhs.v + <a class="code hl_variable" href="structOptimization_1_1Dual.html#ad0413bca82bdd0c139225b080313c442">v</a> * rhs.d;</div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <a class="code hl_variable" href="structOptimization_1_1Dual.html#ad0413bca82bdd0c139225b080313c442">v</a> *= rhs.v;</div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    }</div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>    <span class="keyword">constexpr</span> Dual&amp; operator/=(<span class="keyword">const</span> Dual&amp; rhs) <span class="keyword">noexcept</span> {</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <a class="code hl_variable" href="structOptimization_1_1Dual.html#aaefd8e908ae455dc322d4e6b95db09c4">d</a> = (<a class="code hl_variable" href="structOptimization_1_1Dual.html#aaefd8e908ae455dc322d4e6b95db09c4">d</a> * rhs.v - <a class="code hl_variable" href="structOptimization_1_1Dual.html#ad0413bca82bdd0c139225b080313c442">v</a> * rhs.d) / (rhs.v * rhs.v);  </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <a class="code hl_variable" href="structOptimization_1_1Dual.html#aaefd8e908ae455dc322d4e6b95db09c4">d</a> = (<a class="code hl_variable" href="structOptimization_1_1Dual.html#aaefd8e908ae455dc322d4e6b95db09c4">d</a> * rhs.v - <a class="code hl_variable" href="structOptimization_1_1Dual.html#ad0413bca82bdd0c139225b080313c442">v</a> * rhs.d) / (rhs.v * rhs.v);</div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <a class="code hl_variable" href="structOptimization_1_1Dual.html#ad0413bca82bdd0c139225b080313c442">v</a> /= rhs.v;</div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span>;</div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    }</div>
@@ -186,23 +186,23 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span><span class="comment">// --- 좌측 스칼라(상수) 연산 (Scalar + Dual 등) ---</span></div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>[[nodiscard]] <span class="keyword">constexpr</span> Dual&lt;T&gt; operator+(<span class="keyword">const</span> T&amp; lhs, <span class="keyword">const</span> Dual&lt;T&gt;&amp; rhs) <span class="keyword">noexcept</span> {</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    <span class="keywordflow">return</span> {lhs + rhs.v, rhs.d};  </div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    <span class="keywordflow">return</span> {lhs + rhs.v, rhs.d};</div>
 <div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>}</div>
 <div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
 <div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>[[nodiscard]] <span class="keyword">constexpr</span> Dual&lt;T&gt; operator-(<span class="keyword">const</span> T&amp; lhs, <span class="keyword">const</span> Dual&lt;T&gt;&amp; rhs) <span class="keyword">noexcept</span> {</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="keywordflow">return</span> {lhs - rhs.v, -rhs.d};  </div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="keywordflow">return</span> {lhs - rhs.v, -rhs.d};</div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>}</div>
 <div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>[[nodiscard]] <span class="keyword">constexpr</span> Dual&lt;T&gt; operator*(<span class="keyword">const</span> T&amp; lhs, <span class="keyword">const</span> Dual&lt;T&gt;&amp; rhs) <span class="keyword">noexcept</span> {</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="keywordflow">return</span> {lhs * rhs.v, lhs * rhs.d};  </div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="keywordflow">return</span> {lhs * rhs.v, lhs * rhs.d};</div>
 <div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>}</div>
 <div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>[[nodiscard]] <span class="keyword">constexpr</span> Dual&lt;T&gt; operator/(<span class="keyword">const</span> T&amp; lhs, <span class="keyword">const</span> Dual&lt;T&gt;&amp; rhs) <span class="keyword">noexcept</span> {</div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    T den = rhs.v * rhs.v;</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    <span class="keywordflow">return</span> {lhs / rhs.v, (-lhs * rhs.d) / den};  </div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    <span class="keywordflow">return</span> {lhs / rhs.v, (-lhs * rhs.d) / den};</div>
 <div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>}</div>
 <div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
 <div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span><span class="comment">// =====================================================================</span></div>
@@ -219,7 +219,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    [[nodiscard]] <span class="keyword">static</span> <span class="keyword">constexpr</span> DualVec make_variable(T value, <span class="keywordtype">size_t</span> index) <span class="keyword">noexcept</span> {</div>
 <div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>        DualVec res(value);</div>
 <div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>        <span class="keywordflow">if</span> (index &lt; N) {</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>            res.g[index] = T(1);  </div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>            res.g[index] = T(1);</div>
 <div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>        }</div>
 <div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        <span class="keywordflow">return</span> res;</div>
 <div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    }</div>
@@ -272,7 +272,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00186" name="l00186"></a><span class="lineno">  186</span> </div>
 <div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>    <span class="comment">// --- 우측 스칼라 (DualVec + Scalar 등) ---</span></div>
 <div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>    [[nodiscard]] <span class="keyword">constexpr</span> DualVec operator+(<span class="keyword">const</span> T&amp; rhs) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
-<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span> + DualVec(rhs);  </div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span> + DualVec(rhs);</div>
 <div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>    }</div>
 <div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>    [[nodiscard]] <span class="keyword">constexpr</span> DualVec operator-(<span class="keyword">const</span> T&amp; rhs) <span class="keyword">const</span> <span class="keyword">noexcept</span> {</div>
 <div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>        <span class="keywordflow">return</span> *<span class="keyword">this</span> - DualVec(rhs);</div>
@@ -354,7 +354,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span><span class="comment">// --- 좌측 스칼라 (Scalar + DualVec 등) ---</span></div>
 <div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keywordtype">size_t</span> N&gt;</div>
 <div class="line"><a id="l00269" name="l00269"></a><span class="lineno">  269</span>[[nodiscard]] <span class="keyword">constexpr</span> DualVec&lt;T, N&gt; operator+(<span class="keyword">const</span> T&amp; lhs, <span class="keyword">const</span> DualVec&lt;T, N&gt;&amp; rhs) <span class="keyword">noexcept</span> {</div>
-<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>    <span class="keywordflow">return</span> rhs + lhs;  </div>
+<div class="line"><a id="l00270" name="l00270"></a><span class="lineno">  270</span>    <span class="keywordflow">return</span> rhs + lhs;</div>
 <div class="line"><a id="l00271" name="l00271"></a><span class="lineno">  271</span>}</div>
 <div class="line"><a id="l00272" name="l00272"></a><span class="lineno">  272</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keywordtype">size_t</span> N&gt;</div>
 <div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>[[nodiscard]] <span class="keyword">constexpr</span> DualVec&lt;T, N&gt; operator-(<span class="keyword">const</span> T&amp; lhs, <span class="keyword">const</span> DualVec&lt;T, N&gt;&amp; rhs) <span class="keyword">noexcept</span> {</div>
@@ -366,7 +366,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00279" name="l00279"></a><span class="lineno">  279</span>}</div>
 <div class="line"><a id="l00280" name="l00280"></a><span class="lineno">  280</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keywordtype">size_t</span> N&gt;</div>
 <div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>[[nodiscard]] <span class="keyword">constexpr</span> DualVec&lt;T, N&gt; operator*(<span class="keyword">const</span> T&amp; lhs, <span class="keyword">const</span> DualVec&lt;T, N&gt;&amp; rhs) <span class="keyword">noexcept</span> {</div>
-<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>    <span class="keywordflow">return</span> rhs * lhs;  </div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>    <span class="keywordflow">return</span> rhs * lhs;</div>
 <div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span>}</div>
 <div class="line"><a id="l00284" name="l00284"></a><span class="lineno">  284</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keywordtype">size_t</span> N&gt;</div>
 <div class="line"><a id="l00285" name="l00285"></a><span class="lineno">  285</span>[[nodiscard]] <span class="keyword">constexpr</span> DualVec&lt;T, N&gt; operator/(<span class="keyword">const</span> T&amp; lhs, <span class="keyword">const</span> DualVec&lt;T, N&gt;&amp; rhs) <span class="keyword">noexcept</span> {</div>
@@ -402,13 +402,13 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00315" name="l00315"></a><span class="lineno">  315</span><span class="preprocessor">        return res;                                         \</span></div>
 <div class="line"><a id="l00316" name="l00316"></a><span class="lineno">  316</span><span class="preprocessor">    }</span></div>
 <div class="line"><a id="l00317" name="l00317"></a><span class="lineno">  317</span> </div>
-<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>DUAL_MATH_OVERLOAD(sin, std::cos(u.v))                            </div>
-<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>DUAL_MATH_OVERLOAD(cos, -std::sin(u.v))                           </div>
-<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>DUAL_MATH_OVERLOAD(exp, std::exp(u.v))                            </div>
-<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>DUAL_MATH_OVERLOAD(log, T(1.0) / u.v)                             </div>
-<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>DUAL_MATH_OVERLOAD(tanh, T(1.0) - std::pow(std::tanh(u.v), 2.0))  </div>
-<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>DUAL_MATH_OVERLOAD(tan, T(1.0) + std::pow(std::tan(u.v), 2.0))  </div>
-<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>DUAL_MATH_OVERLOAD(atan, T(1.0) / (T(1.0) + u.v * u.v))         </div>
+<div class="line"><a id="l00318" name="l00318"></a><span class="lineno">  318</span>DUAL_MATH_OVERLOAD(sin, std::cos(u.v))</div>
+<div class="line"><a id="l00319" name="l00319"></a><span class="lineno">  319</span>DUAL_MATH_OVERLOAD(cos, -std::sin(u.v))</div>
+<div class="line"><a id="l00320" name="l00320"></a><span class="lineno">  320</span>DUAL_MATH_OVERLOAD(exp, std::exp(u.v))</div>
+<div class="line"><a id="l00321" name="l00321"></a><span class="lineno">  321</span>DUAL_MATH_OVERLOAD(log, T(1.0) / u.v)</div>
+<div class="line"><a id="l00322" name="l00322"></a><span class="lineno">  322</span>DUAL_MATH_OVERLOAD(tanh, T(1.0) - std::pow(std::tanh(u.v), 2.0))</div>
+<div class="line"><a id="l00323" name="l00323"></a><span class="lineno">  323</span>DUAL_MATH_OVERLOAD(tan, T(1.0) + std::pow(std::tan(u.v), 2.0))</div>
+<div class="line"><a id="l00324" name="l00324"></a><span class="lineno">  324</span>DUAL_MATH_OVERLOAD(atan, T(1.0) / (T(1.0) + u.v * u.v))</div>
 <div class="line"><a id="l00325" name="l00325"></a><span class="lineno">  325</span> </div>
 <div class="line"><a id="l00326" name="l00326"></a><span class="lineno">  326</span>template &lt;typename T&gt;</div>
 <div class="line"><a id="l00327" name="l00327"></a><span class="lineno">  327</span>inline Dual&lt;T&gt; sqrt(const Dual&lt;T&gt;&amp; u) {</div>
@@ -455,7 +455,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00368" name="l00368"></a><span class="lineno">  368</span>    T res_v = atan2(y.v, x.v);</div>
 <div class="line"><a id="l00369" name="l00369"></a><span class="lineno">  369</span>    T den = x.v * x.v + y.v * y.v;</div>
 <div class="line"><a id="l00370" name="l00370"></a><span class="lineno">  370</span>    <span class="keywordflow">if</span> (den &lt;= T(1e-16)) {</div>
-<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>        <span class="keywordflow">return</span> {res_v, T(0.0)};  </div>
+<div class="line"><a id="l00371" name="l00371"></a><span class="lineno">  371</span>        <span class="keywordflow">return</span> {res_v, T(0.0)};</div>
 <div class="line"><a id="l00372" name="l00372"></a><span class="lineno">  372</span>    }</div>
 <div class="line"><a id="l00373" name="l00373"></a><span class="lineno">  373</span>    <span class="keywordflow">return</span> {res_v, (x.v * y.d - y.v * x.d) / den};</div>
 <div class="line"><a id="l00374" name="l00374"></a><span class="lineno">  374</span>}</div>
@@ -494,7 +494,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00407" name="l00407"></a><span class="lineno">  407</span>    <span class="keywordflow">return</span> res;</div>
 <div class="line"><a id="l00408" name="l00408"></a><span class="lineno">  408</span>}</div>
 <div class="line"><a id="l00409" name="l00409"></a><span class="lineno">  409</span> </div>
-<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span><span class="comment">// 스칼라 타입 오버로딩 </span></div>
+<div class="line"><a id="l00410" name="l00410"></a><span class="lineno">  410</span><span class="comment">// 스칼라 타입 오버로딩</span></div>
 <div class="line"><a id="l00411" name="l00411"></a><span class="lineno">  411</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a id="l00412" name="l00412"></a><span class="lineno">  412</span><span class="keyword">inline</span> T abs(<span class="keyword">const</span> T&amp; x) {</div>
 <div class="line"><a id="l00413" name="l00413"></a><span class="lineno">  413</span>    <span class="keywordflow">return</span> std::abs(x);</div>
@@ -544,13 +544,13 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00457" name="l00457"></a><span class="lineno">  457</span>        <span class="keywordflow">return</span> std::complex&lt;T&gt;(std::atan2(yr, xr), T(0.0));</div>
 <div class="line"><a id="l00458" name="l00458"></a><span class="lineno">  458</span>    }</div>
 <div class="line"><a id="l00459" name="l00459"></a><span class="lineno">  459</span>    T real_part = std::atan2(yr, xr);</div>
-<div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span>    T imag_part = std::atan2(xr * yi - yr * xi) / den;  </div>
+<div class="line"><a id="l00460" name="l00460"></a><span class="lineno">  460</span>    T imag_part = std::atan2(xr * yi - yr * xi) / den;</div>
 <div class="line"><a id="l00461" name="l00461"></a><span class="lineno">  461</span> </div>
 <div class="line"><a id="l00462" name="l00462"></a><span class="lineno">  462</span>    <span class="keywordflow">return</span> std::complex&lt;T&gt;(real_part, imag_part);</div>
 <div class="line"><a id="l00463" name="l00463"></a><span class="lineno">  463</span>}</div>
 <div class="line"><a id="l00464" name="l00464"></a><span class="lineno">  464</span> </div>
 <div class="line"><a id="l00465" name="l00465"></a><span class="lineno">  465</span><span class="comment">// =====================================================================</span></div>
-<div class="line"><a id="l00466" name="l00466"></a><span class="lineno">  466</span><span class="comment">// 5. Helper Function &amp; Output Stream </span></div>
+<div class="line"><a id="l00466" name="l00466"></a><span class="lineno">  466</span><span class="comment">// 5. Helper Function &amp; Output Stream</span></div>
 <div class="line"><a id="l00467" name="l00467"></a><span class="lineno">  467</span><span class="comment">// =====================================================================</span></div>
 <div class="line"><a id="l00468" name="l00468"></a><span class="lineno">  468</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
 <div class="line"><a id="l00469" name="l00469"></a><span class="lineno">  469</span><span class="keyword">inline</span> <span class="keyword">auto</span> get_value(<span class="keyword">const</span> T&amp; x) {</div>
@@ -577,7 +577,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00490" name="l00490"></a><span class="lineno">  490</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keywordtype">size_t</span> N&gt;</div>
 <div class="line"><a id="l00491" name="l00491"></a><span class="lineno">  491</span>std::ostream&amp; operator&lt;&lt;(std::ostream&amp; os, <span class="keyword">const</span> DualVec&lt;T, N&gt;&amp; x) {</div>
 <div class="line"><a id="l00492" name="l00492"></a><span class="lineno">  492</span>    os &lt;&lt; <span class="stringliteral">&quot;[&quot;</span> &lt;&lt; x.v &lt;&lt; <span class="stringliteral">&quot;, g:(&quot;</span>;</div>
-<div class="line"><a id="l00493" name="l00493"></a><span class="lineno">  493</span>    <span class="keywordflow">for</span>(<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
+<div class="line"><a id="l00493" name="l00493"></a><span class="lineno">  493</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
 <div class="line"><a id="l00494" name="l00494"></a><span class="lineno">  494</span>        os &lt;&lt; x.g[i] &lt;&lt; (i &lt; N - 1 ? <span class="stringliteral">&quot;, &quot;</span> : <span class="stringliteral">&quot;&quot;</span>);</div>
 <div class="line"><a id="l00495" name="l00495"></a><span class="lineno">  495</span>    }</div>
 <div class="line"><a id="l00496" name="l00496"></a><span class="lineno">  496</span>    os &lt;&lt; <span class="stringliteral">&quot;)]&quot;</span>;</div>

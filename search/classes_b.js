@@ -8,5 +8,6 @@ var searchData=
   ['nmpccontroller_5',['NMPCController',['../classOptimization_1_1NMPCController.html',1,'Optimization']]],
   ['nmpcstoragedata_6',['NMPCStorageData',['../structOptimization_1_1NMPCStorageData.html',1,'Optimization']]],
   ['noisydescent_7',['NoisyDescent',['../classOptimization_1_1NoisyDescent.html',1,'Optimization']]],
-  ['nondifferentiable2d_8',['NonDifferentiable2D',['../structOptimization_1_1Tests_1_1NonDifferentiable2D.html',1,'Optimization::Tests']]]
+  ['nondifferentiable2d_8',['NonDifferentiable2D',['../structOptimization_1_1Tests_1_1NonDifferentiable2D.html',1,'Optimization::Tests']]],
+  ['nonlinearsystem_9',['NonlinearSystem',['../structNonlinearSystem.html',1,'']]]
 ];

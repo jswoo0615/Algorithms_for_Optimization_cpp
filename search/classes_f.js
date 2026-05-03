@@ -7,7 +7,8 @@ var searchData=
   ['rosenbrock2d_4',['Rosenbrock2D',['../structOptimization_1_1Tests_1_1Rosenbrock2D.html',1,'Optimization::Tests']]],
   ['rosenbrockfunc_5',['RosenbrockFunc',['../structOptimization_1_1Test_1_1RosenbrockFunc.html',1,'Optimization::Test']]],
   ['rosenbrockfunction_6',['RosenbrockFunction',['../structOptimization_1_1Tests_1_1RosenbrockFunction.html',1,'Optimization::Tests']]],
-  ['rtinmpccontroller_7',['RTINMPCController',['../classOptimization_1_1RTINMPCController.html',1,'Optimization']]],
-  ['rtiobstacle_8',['RTIObstacle',['../structOptimization_1_1RTINMPCController_1_1RTIObstacle.html',1,'Optimization::RTINMPCController']]],
-  ['rtisolver_9',['RTISolver',['../classOptimization_1_1RTISolver.html',1,'Optimization']]]
+  ['rosenbrockresiduals_7',['RosenbrockResiduals',['../structRosenbrockResiduals.html',1,'']]],
+  ['rtinmpccontroller_8',['RTINMPCController',['../classOptimization_1_1RTINMPCController.html',1,'Optimization']]],
+  ['rtiobstacle_9',['RTIObstacle',['../structOptimization_1_1RTINMPCController_1_1RTIObstacle.html',1,'Optimization::RTINMPCController']]],
+  ['rtisolver_10',['RTISolver',['../classOptimization_1_1RTISolver.html',1,'Optimization']]]
 ];

@@ -14,6 +14,7 @@ digraph "include/Optimization"
   dir_a66bc7e01f4013e53ad389310fb0c51c [label="Matrix", fillcolor="#a2b4d6", color="grey25", style="filled", URL="dir_a66bc7e01f4013e53ad389310fb0c51c.html",tooltip=""];
   dir_7cd0d73341d495ff5d164ebc59a94c80 [label="Physics", fillcolor="#a2b4d6", color="grey25", style="filled", URL="dir_7cd0d73341d495ff5d164ebc59a94c80.html",tooltip=""];
   dir_a867165be1459a38b824a228c75e4073 [label="Simulation", fillcolor="#a2b4d6", color="grey25", style="filled", URL="dir_a867165be1459a38b824a228c75e4073.html",tooltip=""];
+  dir_344cbd1bd00ec6f2cef44081d8425e41 [label="Solver", fillcolor="#a2b4d6", color="grey25", style="filled", URL="dir_344cbd1bd00ec6f2cef44081d8425e41.html",tooltip=""];
   }
   }
 }
