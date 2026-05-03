@@ -5,5 +5,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
   node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
   rankdir="LR";
-  Node0 [id="Node000000",label="Optimization::BlockBanded\lSolver\< Nx, Nu, Np \>",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classOptimization_1_1BlockBandedSolver.html",tooltip="NMPC(Nonlinear Model Predictive Control) 최적화를 위한 블록 밴드형(Block-Banded) 리카티(Riccati) 솔버 클래스."];
+  Node0 [id="Node000000",label="Optimization::CMA_ES",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classOptimization_1_1CMA__ES.html",tooltip="CMA-ES (Covariance Matrix Adaptation Evolution Strategy) 최적화 알고리즘"];
 }

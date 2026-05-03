@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Optimization Library: Optimization::GradientDescent Class Reference</title>
+<title>Optimization Library: Optimization::utils::SE2Transform Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -76,72 +76,61 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>Optimization</b></li><li class="navelem"><a class="el" href="classOptimization_1_1GradientDescent.html">GradientDescent</a></li>  </ul>
+<li class="navelem"><b>Optimization</b></li><li class="navelem"><b>utils</b></li><li class="navelem"><a class="el" href="classOptimization_1_1utils_1_1SE2Transform.html">SE2Transform</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="classOptimization_1_1GradientDescent-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">Optimization::GradientDescent Class Reference</div></div>
+<a href="classOptimization_1_1utils_1_1SE2Transform-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">Optimization::utils::SE2Transform Class Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>Gradient Descent 알고리즘을 수행하는 정적 클래스  
- <a href="classOptimization_1_1GradientDescent.html#details">More...</a></p>
+<p>SE(2) 평면상의 동차 변환(Homogeneous Transform) 유틸리티  
+ <a href="classOptimization_1_1utils_1_1SE2Transform.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="GradientDescent_8hpp_source.html">GradientDescent.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="RigidTransform_8hpp_source.html">RigidTransform.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a5398817e8c6f63a2be666d6a232a9633" id="r_a5398817e8c6f63a2be666d6a232a9633"><td class="memTemplParams" colspan="2">template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:a5398817e8c6f63a2be666d6a232a9633"><td class="memTemplItemLeft" align="right" valign="top">static std::array&lt; double, N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1GradientDescent.html#a5398817e8c6f63a2be666d6a232a9633">optimize</a> (Func f, std::array&lt; double, N &gt; x, double tol=1e-6, int max_iter=1000, bool verbose=false)</td></tr>
-<tr class="memdesc:a5398817e8c6f63a2be666d6a232a9633"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gradient Descent 알고리즘을 사용하여 주어진 함수의 최솟값을 탐색합니다.  <br /></td></tr>
-<tr class="separator:a5398817e8c6f63a2be666d6a232a9633"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afd657d207c196127e0c181f87c2ab68d" id="r_afd657d207c196127e0c181f87c2ab68d"><td class="memItemLeft" align="right" valign="top">static <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; double, 3, 3 &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptimization_1_1utils_1_1SE2Transform.html#afd657d207c196127e0c181f87c2ab68d">get_global_to_local</a> (double tx, double ty, double psi)</td></tr>
+<tr class="memdesc:afd657d207c196127e0c181f87c2ab68d"><td class="mdescLeft">&#160;</td><td class="mdescRight">전역 좌표(X, Y)를 차량 기준 로컬 좌표(x, y)로 변환하는 행렬 생성  <br /></td></tr>
+<tr class="separator:afd657d207c196127e0c181f87c2ab68d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a13c4f186a1d7cda7d71860ca925a51b4" id="r_a13c4f186a1d7cda7d71860ca925a51b4"><td class="memItemLeft" align="right" valign="top"><a id="a13c4f186a1d7cda7d71860ca925a51b4" name="a13c4f186a1d7cda7d71860ca925a51b4"></a>
+static void&#160;</td><td class="memItemRight" valign="bottom"><b>transform_point</b> (const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; double, 3, 3 &gt; &amp;T, double global_x, double global_y, double &amp;local_x, double &amp;local_y)</td></tr>
+<tr class="memdesc:a13c4f186a1d7cda7d71860ca925a51b4"><td class="mdescLeft">&#160;</td><td class="mdescRight">포인트 변환 실행 (3x1 벡터 연산) <br /></td></tr>
+<tr class="separator:a13c4f186a1d7cda7d71860ca925a51b4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Gradient Descent 알고리즘을 수행하는 정적 클래스 </p>
+<div class="textblock"><p>SE(2) 평면상의 동차 변환(Homogeneous Transform) 유틸리티 </p>
 </div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a5398817e8c6f63a2be666d6a232a9633" name="a5398817e8c6f63a2be666d6a232a9633"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a5398817e8c6f63a2be666d6a232a9633">&#9670;&#160;</a></span>optimize()</h2>
+<a id="afd657d207c196127e0c181f87c2ab68d" name="afd657d207c196127e0c181f87c2ab68d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#afd657d207c196127e0c181f87c2ab68d">&#9670;&#160;</a></span>get_global_to_local()</h2>
 
 <div class="memitem">
 <div class="memproto">
-<div class="memtemplate">
-template&lt;size_t N, typename Func &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static std::array&lt; double, N &gt; Optimization::GradientDescent::optimize </td>
+          <td class="memname">static <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; double, 3, 3 &gt; Optimization::utils::SE2Transform::get_global_to_local </td>
           <td>(</td>
-          <td class="paramtype">Func&#160;</td>
-          <td class="paramname"><em>f</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">std::array&lt; double, N &gt;&#160;</td>
-          <td class="paramname"><em>x</em>, </td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>tx</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
           <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>tol</em> = <code>1e-6</code>, </td>
+          <td class="paramname"><em>ty</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
-          <td class="paramname"><em>max_iter</em> = <code>1000</code>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>verbose</em> = <code>false</code>&#160;</td>
+          <td class="paramtype">double&#160;</td>
+          <td class="paramname"><em>psi</em>&#160;</td>
         </tr>
         <tr>
           <td></td>
@@ -156,30 +145,20 @@ template&lt;size_t N, typename Func &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>Gradient Descent 알고리즘을 사용하여 주어진 함수의 최솟값을 탐색합니다. </p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">N</td><td>최적화할 변수의 차원 (크기) </td></tr>
-    <tr><td class="paramname">Func</td><td>목적 함수(Objective Function)의 타입. (AutoDiff 적용을 위해 템플릿 처리)</td></tr>
-  </table>
-  </dd>
-</dl>
+<p>전역 좌표(X, Y)를 차량 기준 로컬 좌표(x, y)로 변환하는 행렬 생성 </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">f</td><td>최적화하려는 목적 함수 (AutoDiff 호환 함수) </td></tr>
-    <tr><td class="paramname">x</td><td>초기 시작 위치 (Initial guess) </td></tr>
-    <tr><td class="paramname">tol</td><td>수렴 판정을 위한 허용 오차 (Gradient의 L2 Norm이 이 값보다 작아지면 종료). 기본값: 1e-6 </td></tr>
-    <tr><td class="paramname">max_iter</td><td>최대 반복 횟수. 이 횟수에 도달하면 알고리즘이 강제 종료됩니다. 기본값: 1000 </td></tr>
-    <tr><td class="paramname">verbose</td><td>진행 과정 출력 여부. true일 경우 매 반복마다 상태를 콘솔에 출력합니다. 기본값: false</td></tr>
+    <tr><td class="paramname">tx</td><td>차량의 현재 전역 X </td></tr>
+    <tr><td class="paramname">ty</td><td>차량의 현재 전역 Y </td></tr>
+    <tr><td class="paramname">psi</td><td>차량의 현재 헤딩(Yaw) </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>std::array&lt;double, N&gt; 최적화가 완료된 후의 변수 값 (최적해) </dd></dl>
 
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>include/Optimization/<a class="el" href="GradientDescent_8hpp_source.html">GradientDescent.hpp</a></li>
+<li>include/Optimization/Utils/<a class="el" href="RigidTransform_8hpp_source.html">RigidTransform.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

@@ -7,6 +7,5 @@ var searchData=
   ['adagradtest_4',['AdaGradTest',['../classOptimization_1_1Test_1_1AdaGradTest.html',1,'Optimization::Test']]],
   ['adam_5',['Adam',['../classOptimization_1_1Adam.html',1,'Optimization']]],
   ['adamtest_6',['AdamTest',['../classOptimization_1_1Test_1_1AdamTest.html',1,'Optimization::Test']]],
-  ['autodiff_7',['AutoDiff',['../classOptimization_1_1AutoDiff.html',1,'Optimization']]],
-  ['autodifftest_8',['AutoDiffTest',['../classAutoDiffTest.html',1,'']]]
+  ['autodifftest_7',['AutoDiffTest',['../classAutoDiffTest.html',1,'']]]
 ];

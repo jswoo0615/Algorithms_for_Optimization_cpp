@@ -17,6 +17,7 @@ digraph "include/Optimization"
   dir_7cd0d73341d495ff5d164ebc59a94c80 [label="Physics", fillcolor="#a2b4d6", color="grey25", style="filled", URL="dir_7cd0d73341d495ff5d164ebc59a94c80.html",tooltip=""];
   dir_a867165be1459a38b824a228c75e4073 [label="Simulation", fillcolor="#a2b4d6", color="grey25", style="filled", URL="dir_a867165be1459a38b824a228c75e4073.html",tooltip=""];
   dir_344cbd1bd00ec6f2cef44081d8425e41 [label="Solver", fillcolor="#a2b4d6", color="grey25", style="filled", URL="dir_344cbd1bd00ec6f2cef44081d8425e41.html",tooltip=""];
+  dir_013ce47b0317910e8c41901b85525900 [label="Utils", fillcolor="#a2b4d6", color="grey25", style="filled", URL="dir_013ce47b0317910e8c41901b85525900.html",tooltip=""];
   dir_8efc3cca00435a7f2971e9aa93900fda [label="VehicleModel", fillcolor="#a2b4d6", color="grey25", style="filled", URL="dir_8efc3cca00435a7f2971e9aa93900fda.html",tooltip=""];
   }
   }

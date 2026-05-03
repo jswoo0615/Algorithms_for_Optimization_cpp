@@ -7,8 +7,9 @@ var searchData=
   ['newtonmethod_4',['NewtonMethod',['../classOptimization_1_1NewtonMethod.html',1,'Optimization']]],
   ['nmpccontroller_5',['NMPCController',['../classOptimization_1_1NMPCController.html',1,'Optimization']]],
   ['nmpcresiduals_6',['NMPCResiduals',['../structOptimization_1_1controller_1_1NMPCResiduals.html',1,'Optimization::controller']]],
-  ['nmpcstoragedata_7',['NMPCStorageData',['../structOptimization_1_1NMPCStorageData.html',1,'Optimization']]],
-  ['noisydescent_8',['NoisyDescent',['../classOptimization_1_1NoisyDescent.html',1,'Optimization']]],
-  ['nondifferentiable2d_9',['NonDifferentiable2D',['../structOptimization_1_1Tests_1_1NonDifferentiable2D.html',1,'Optimization::Tests']]],
-  ['nonlinearsystem_10',['NonlinearSystem',['../structNonlinearSystem.html',1,'']]]
+  ['nmpcresult_7',['NMPCResult',['../structOptimization_1_1controller_1_1NMPCResult.html',1,'Optimization::controller']]],
+  ['nmpcstoragedata_8',['NMPCStorageData',['../structOptimization_1_1NMPCStorageData.html',1,'Optimization']]],
+  ['noisydescent_9',['NoisyDescent',['../classOptimization_1_1NoisyDescent.html',1,'Optimization']]],
+  ['nondifferentiable2d_10',['NonDifferentiable2D',['../structOptimization_1_1Tests_1_1NonDifferentiable2D.html',1,'Optimization::Tests']]],
+  ['nonlinearsystem_11',['NonlinearSystem',['../structNonlinearSystem.html',1,'']]]
 ];

@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['u_5fopt_0',['u_opt',['../classEQPSolver.html#a1587d9fb87f73bd41205ebe350383bdc',1,'EQPSolver']]]
+  ['v_0',['v',['../structOptimization_1_1Dual.html#ad0413bca82bdd0c139225b080313c442',1,'Optimization::Dual::v'],['../structOptimization_1_1DualVec.html#adb2e985496c58fe9c25cd8c4fa5640fc',1,'Optimization::DualVec::v']]],
+  ['vehicleparam_1',['VehicleParam',['../structOptimization_1_1VehicleParam.html',1,'Optimization']]]
 ];

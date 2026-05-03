@@ -95,16 +95,22 @@ Collaboration diagram for Optimization::controller::SparseNMPC&lt; H, Nx, Nu &gt
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:afbce53481e9ece84e3e7dff5468b289e" id="r_afbce53481e9ece84e3e7dff5468b289e"><td class="memTemplParams" colspan="2"><a id="afbce53481e9ece84e3e7dff5468b289e" name="afbce53481e9ece84e3e7dff5468b289e"></a>
+<tr class="memitem:a38fa04b4959d51d119c2b82c06b2aaf8" id="r_a38fa04b4959d51d119c2b82c06b2aaf8"><td class="memTemplParams" colspan="2"><a id="a38fa04b4959d51d119c2b82c06b2aaf8" name="a38fa04b4959d51d119c2b82c06b2aaf8"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:afbce53481e9ece84e3e7dff5468b289e"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; T, 24 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>eval_node_residuals</b> (const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; T, Nx &gt; &amp;x, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; T, Nu &gt; &amp;u, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; T, Nu &gt; &amp;u_prev, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;x_ref)</td></tr>
-<tr class="separator:afbce53481e9ece84e3e7dff5468b289e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a38fa04b4959d51d119c2b82c06b2aaf8"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; T, 25 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>eval_node_residuals</b> (const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; T, Nx &gt; &amp;x, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; T, Nu &gt; &amp;u, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; T, Nu &gt; &amp;u_prev, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;x_ref_local, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;x_curr_global, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;x_ref_global)</td></tr>
+<tr class="separator:a38fa04b4959d51d119c2b82c06b2aaf8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3f3cfced7ca4ed5cd72bc0e7e68e1801" id="r_a3f3cfced7ca4ed5cd72bc0e7e68e1801"><td class="memItemLeft" align="right" valign="top"><a id="a3f3cfced7ca4ed5cd72bc0e7e68e1801" name="a3f3cfced7ca4ed5cd72bc0e7e68e1801"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>update_dynamic_weights</b> (const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;x_curr)</td></tr>
 <tr class="separator:a3f3cfced7ca4ed5cd72bc0e7e68e1801"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9ce497b90a1ea6459f5237d0bdc74c9c" id="r_a9ce497b90a1ea6459f5237d0bdc74c9c"><td class="memItemLeft" align="right" valign="top"><a id="a9ce497b90a1ea6459f5237d0bdc74c9c" name="a9ce497b90a1ea6459f5237d0bdc74c9c"></a>
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>solve</b> (const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;x_curr, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;x_ref)</td></tr>
-<tr class="separator:a9ce497b90a1ea6459f5237d0bdc74c9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aeaa6105ab40ca6942aa03c710850cb9e" id="r_aeaa6105ab40ca6942aa03c710850cb9e"><td class="memItemLeft" align="right" valign="top"><a id="aeaa6105ab40ca6942aa03c710850cb9e" name="aeaa6105ab40ca6942aa03c710850cb9e"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>shift_sequence</b> ()</td></tr>
+<tr class="separator:aeaa6105ab40ca6942aa03c710850cb9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a89684e6a841f7262a58c23ce7f72816f" id="r_a89684e6a841f7262a58c23ce7f72816f"><td class="memItemLeft" align="right" valign="top"><a id="a89684e6a841f7262a58c23ce7f72816f" name="a89684e6a841f7262a58c23ce7f72816f"></a>
+<a class="el" href="structOptimization_1_1controller_1_1NMPCResult.html">NMPCResult</a>&#160;</td><td class="memItemRight" valign="bottom"><b>execute_fallback</b> (<a class="el" href="structOptimization_1_1controller_1_1NMPCResult.html">NMPCResult</a> &amp;res, const std::string &amp;reason)</td></tr>
+<tr class="separator:a89684e6a841f7262a58c23ce7f72816f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5dc5cf50c43ae8ed9f3638167800690b" id="r_a5dc5cf50c43ae8ed9f3638167800690b"><td class="memItemLeft" align="right" valign="top"><a id="a5dc5cf50c43ae8ed9f3638167800690b" name="a5dc5cf50c43ae8ed9f3638167800690b"></a>
+<a class="el" href="structOptimization_1_1controller_1_1NMPCResult.html">NMPCResult</a>&#160;</td><td class="memItemRight" valign="bottom"><b>solve</b> (const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;x_curr_global, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;x_ref_global, int max_sqp_iter=1)</td></tr>
+<tr class="separator:a5dc5cf50c43ae8ed9f3638167800690b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
@@ -132,9 +138,12 @@ std::array&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">Stati
 <tr class="memitem:a794a0e3c9868af4f16dbe55e9ab25223" id="r_a794a0e3c9868af4f16dbe55e9ab25223"><td class="memItemLeft" align="right" valign="top"><a id="a794a0e3c9868af4f16dbe55e9ab25223" name="a794a0e3c9868af4f16dbe55e9ab25223"></a>
 <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nu &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>u_last</b></td></tr>
 <tr class="separator:a794a0e3c9868af4f16dbe55e9ab25223"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae2bef9c874acf398f55e3d265aed4892" id="r_ae2bef9c874acf398f55e3d265aed4892"><td class="memItemLeft" align="right" valign="top"><a id="ae2bef9c874acf398f55e3d265aed4892" name="ae2bef9c874acf398f55e3d265aed4892"></a>
-std::array&lt; <a class="el" href="structOptimization_1_1Obstacle.html">Obstacle</a>, 10 &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>obstacles</b></td></tr>
-<tr class="separator:ae2bef9c874acf398f55e3d265aed4892"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aefb34019af87f7b777f8250a591d1cb5" id="r_aefb34019af87f7b777f8250a591d1cb5"><td class="memItemLeft" align="right" valign="top"><a id="aefb34019af87f7b777f8250a591d1cb5" name="aefb34019af87f7b777f8250a591d1cb5"></a>
+std::array&lt; <a class="el" href="structOptimization_1_1Obstacle.html">Obstacle</a>, 10 &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>global_obstacles</b></td></tr>
+<tr class="separator:aefb34019af87f7b777f8250a591d1cb5"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a181c896013b02ba6656272f500492078" id="r_a181c896013b02ba6656272f500492078"><td class="memItemLeft" align="right" valign="top"><a id="a181c896013b02ba6656272f500492078" name="a181c896013b02ba6656272f500492078"></a>
+std::array&lt; <a class="el" href="structOptimization_1_1Obstacle.html">Obstacle</a>, 10 &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>local_obstacles</b></td></tr>
+<tr class="separator:a181c896013b02ba6656272f500492078"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a41201aa2c043a117373ef9672efd231c" id="r_a41201aa2c043a117373ef9672efd231c"><td class="memItemLeft" align="right" valign="top"><a id="a41201aa2c043a117373ef9672efd231c" name="a41201aa2c043a117373ef9672efd231c"></a>
 <a class="el" href="structOptimization_1_1solver_1_1RiccatiSolver.html">solver::RiccatiSolver</a>&lt; H, Nx, Nu &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>riccati</b></td></tr>
 <tr class="separator:a41201aa2c043a117373ef9672efd231c"><td class="memSeparator" colspan="2">&#160;</td></tr>

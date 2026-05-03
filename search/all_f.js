@@ -1,11 +1,13 @@
 var searchData=
 [
-  ['p_0',['p',['../classActiveSetSolver.html#a2b11e6f0fdd682a9b2cb116e89bfc788',1,'ActiveSetSolver::P'],['../classEQPSolver.html#aa9bb24f54f2695f6f6fe0aac9c4ab734',1,'EQPSolver::P'],['../classOptimization_1_1IPMQPSolver.html#a36c341a42a012f5f7d4ef4755ed6cee5',1,'Optimization::IPMQPSolver::P'],['../structOptimization_1_1NMPCStorageData.html#a523022bca066c73f5d1e23d416198c3b',1,'Optimization::NMPCStorageData::P']]],
-  ['p_5fvec_1',['p_vec',['../structOptimization_1_1NMPCStorageData.html#aaef5665987f3dacfa161000b3fc3e623',1,'Optimization::NMPCStorageData']]],
-  ['pathplanner_2',['PathPlanner',['../classOptimization_1_1PathPlanner.html',1,'Optimization']]],
-  ['powellmethod_3',['PowellMethod',['../classOptimization_1_1PowellMethod.html',1,'Optimization']]],
-  ['primal_5ffeasibility_5ferror_4',['primal_feasibility_error',['../structOptimization_1_1KKTMonitor_1_1KKT__Metrics.html#ad3b7e5d5e9b6d4de9ea1e158786e1b85',1,'Optimization::KKTMonitor::KKT_Metrics']]],
-  ['print_5fmetrics_5',['print_metrics',['../classOptimization_1_1KKTMonitor.html#aa0145d7b10153b48d8a1bc709d585532',1,'Optimization::KKTMonitor']]],
-  ['profiledata_6',['ProfileData',['../structOptimization_1_1RTISolver_1_1ProfileData.html',1,'Optimization::RTISolver']]],
-  ['pt_7',['Pt',['../structOptimization_1_1Pt.html',1,'Optimization']]]
+  ['q_0',['q',['../classActiveSetSolver.html#aa18b25308442a24be70e5db4574d5e9b',1,'ActiveSetSolver::q'],['../classEQPSolver.html#afd87a45a0c824f4b15051b3568e2bd0f',1,'EQPSolver::q'],['../classOptimization_1_1IPMQPSolver.html#ae9bc78c1a234878445bd52d31889f189',1,'Optimization::IPMQPSolver::q'],['../structOptimization_1_1NMPCStorageData.html#a9965082fa06bda118f14303929453ec2',1,'Optimization::NMPCStorageData::q'],['../structOptimization_1_1NMPCStorageData.html#a81a6f3b1ce21eaaa4176df713668a85a',1,'Optimization::NMPCStorageData::Q']]],
+  ['qr_5fdecompose_5fhouseholder_1',['QR_decompose_Householder',['../classStaticMatrix.html#a530a7e2d1c3d1dcc77405a11e8ee3f12',1,'StaticMatrix']]],
+  ['qr_5fdecompose_5fmgs_2',['QR_decompose_MGS',['../classStaticMatrix.html#a445718eb583abde69a88b451bb7b2bf7',1,'StaticMatrix']]],
+  ['qr_5fsolve_3',['QR_solve',['../classStaticMatrix.html#adac1e1d96ae3d16b515df10090d6ec60',1,'StaticMatrix']]],
+  ['qr_5fsolve_5fhouseholder_4',['QR_solve_Householder',['../classStaticMatrix.html#a9829ffe5f0256a94000578740984f33b',1,'StaticMatrix']]],
+  ['quadratic1d_5',['Quadratic1D',['../structOptimization_1_1Tests_1_1Quadratic1D.html',1,'Optimization::Tests']]],
+  ['quadratic2d_6',['Quadratic2D',['../structOptimization_1_1Tests_1_1Quadratic2D.html',1,'Optimization::Tests']]],
+  ['quadratic_5ffit_5fsearch_7',['quadratic_fit_search',['../classOptimization_1_1LineSearch.html#a37b6fd2a9bd30400996626f69673fd57',1,'Optimization::LineSearch']]],
+  ['quadratic_5fmultiply_8',['quadratic_multiply',['../classStaticMatrix.html#a0b291cb8d1d7ac48954bdeae918ff5ef',1,'StaticMatrix']]],
+  ['quadraticfunc_9',['QuadraticFunc',['../structOptimization_1_1Test_1_1QuadraticFunc.html',1,'Optimization::Test']]]
 ];

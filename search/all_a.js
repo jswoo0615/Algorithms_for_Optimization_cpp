@@ -1,8 +1,10 @@
 var searchData=
 [
-  ['k_0',['K',['../structOptimization_1_1NMPCStorageData.html#a9a9554c37a1288ce1234a9cc9018ebe7',1,'Optimization::NMPCStorageData']]],
-  ['k_5fff_1',['k_ff',['../structOptimization_1_1NMPCStorageData.html#ae42839cdc146662a8945a9450b9e5c08',1,'Optimization::NMPCStorageData']]],
-  ['kkt_5fmetrics_2',['KKT_Metrics',['../structOptimization_1_1KKTMonitor_1_1KKT__Metrics.html',1,'Optimization::KKTMonitor']]],
-  ['kktmonitor_3',['KKTMonitor',['../classOptimization_1_1KKTMonitor.html',1,'Optimization']]],
-  ['kktmonitor_2ehpp_4',['KKTMonitor.hpp',['../KKTMonitor_8hpp.html',1,'']]]
+  ['lambda_5fopt_0',['lambda_opt',['../classEQPSolver.html#ab13cd98ec664a08e60325081cd7075fc',1,'EQPSolver']]],
+  ['ldlt_5fdecompose_1',['LDLT_decompose',['../classStaticMatrix.html#a41fe1aba4edb465f1543784b8a135225',1,'StaticMatrix']]],
+  ['ldlt_5fsolve_2',['LDLT_solve',['../classStaticMatrix.html#abcbd4cca0fb1a424482849cd598601f4',1,'StaticMatrix']]],
+  ['linesearch_3',['LineSearch',['../classOptimization_1_1LineSearch.html',1,'Optimization']]],
+  ['linesearchtest_4',['LineSearchTest',['../classLineSearchTest.html',1,'']]],
+  ['lu_5fdecompose_5',['LU_decompose',['../classStaticMatrix.html#a91cd13826279e32a6a73ac0408fdabd5',1,'StaticMatrix']]],
+  ['lu_5fsolve_6',['LU_solve',['../classStaticMatrix.html#a1d47cdeee8dcf860ac36b41fd6920320',1,'StaticMatrix']]]
 ];
