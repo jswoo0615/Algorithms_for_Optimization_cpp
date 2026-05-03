@@ -12,7 +12,7 @@ TEST(SparseNMPC_Test, ObstacleAvoidanceWithSlewRate) {
     SparseNMPC<H> nmpc;
     // 조향을 함부로 크게 꺾지 못하도록 제어 입력 페널티(R)를 대폭 강화합니다.
     nmpc.R(0) = 1.0;   // 가속도 페널티
-    nmpc.R(1) = 10.0; // 조향각 페널티 (기존 10.0에서 대폭 상승)
+    nmpc.R(1) = 10.0;  // 조향각 페널티 (기존 10.0에서 대폭 상승)
 
     // 조향 변화율 페널티도 유지
     nmpc.R_rate(0) = 10.0;
