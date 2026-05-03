@@ -171,3 +171,11 @@ gtest_discover_tests(test_RTINMPC DISCOVERY_TIMEOUT 120)
 add_executable(test_Riccati test/test_Riccati.cpp)
 target_link_libraries(test_Riccati PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_Riccati)
+
+add_executable(test_NewtonSolver test/test_NewtonSolver.cpp)
+target_link_libraries(test_NewtonSolver PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_NewtonSolver)
+
+add_executable(test_LevenbergMarquardt test/test_LevenbergMarquardt.cpp)
+target_link_libraries(test_LevenbergMarquardt PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_LevenbergMarquardt)
