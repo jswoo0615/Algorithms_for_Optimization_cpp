@@ -139,7 +139,8 @@ class StaticMatrix {
         StaticMatrix<T, Cols, Rows> res;
         for (size_t i = 0; i < Rows; ++i) {
             for (size_t j = 0; j < Cols; ++j) {
-                res(static_cast<int>(j), static_cast<int>(i)) = (*this)(static_cast<int>(i), static_cast<int>(j));
+                res(static_cast<int>(j), static_cast<int>(i)) =
+                    (*this)(static_cast<int>(i), static_cast<int>(j));
             }
         }
         return res;
