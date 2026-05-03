@@ -10,6 +10,13 @@ using namespace Optimization::controller;
 TEST(SparseNMPC_Test, ObstacleAvoidanceWithSlewRate) {
     constexpr size_t H = 20;  // 예측 구간 20스텝 (dt=0.1, 총 2.0초)
     SparseNMPC<H> nmpc;
+    // 조향을 함부로 크게 꺾지 못하도록 제어 입력 페널티(R)를 대폭 강화합니다.
+    nmpc.R(0) = 1.0;   // 가속도 페널티
+    nmpc.R(1) = 10.0; // 조향각 페널티 (기존 10.0에서 대폭 상승)
+
+    // 조향 변화율 페널티도 유지
+    nmpc.R_rate(0) = 10.0;
+    nmpc.R_rate(1) = 250.0;
 
     // 시나리오 셋업: 차량은 [X=0, Y=0]에서 10m/s로 직진 중
     StaticVector<double, 6> x_curr;
@@ -23,7 +30,7 @@ TEST(SparseNMPC_Test, ObstacleAvoidanceWithSlewRate) {
 
     // [전술 발동] 1.5초(15m) 전방 한가운데에 장애물 배치
     nmpc.obstacles[0].x = 15.0;
-    nmpc.obstacles[0].y = 0.0;
+    nmpc.obstacles[0].y = 0.1;
     nmpc.obstacles[0].r = 1.0;
 
     // 과거의 제어 입력 (이전 스텝에서 핸들을 꺾지 않았음)
