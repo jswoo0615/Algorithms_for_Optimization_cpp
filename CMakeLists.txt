@@ -187,3 +187,7 @@ gtest_discover_tests(test_VehicleIntegrator)
 add_executable(test_MultipleShooting test/test_MultipleShooting.cpp)
 target_link_libraries(test_MultipleShooting PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_MultipleShooting)
+
+add_executable(test_RiccatiSolver test/test_RiccatiSolver.cpp)
+target_link_libraries(test_RiccatiSolver PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_RiccatiSolver)
