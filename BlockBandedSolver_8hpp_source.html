@@ -147,7 +147,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            <span class="comment">// H_ux = B_k^T * P_{k+1} * A_k (상태와 제어 입력 간의 교차 2차 미분)</span></div>
 <div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">StaticMatrix&lt;double, Nx, Nx&gt;</a> P_A = P_next * s.A;</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">StaticMatrix&lt;double, Nu, Nx&gt;</a> H_ux = s.B.transpose() * P_A;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>            <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">StaticMatrix&lt;double, Nu, Nx&gt;</a> H_ux = s.B.<a class="code hl_function" href="classOptimization_1_1StaticMatrix.html#a4a2346cf5b909ce13ec2eb95524d6644">transpose</a>() * P_A;</div>
 <div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span> </div>
 <div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>            <span class="comment">// [Step 2-2] Q 함수 (State-Action Value Function) 근사를 위한 1차 Gradient 벡터 계산</span></div>
 <div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>            <span class="comment">// 보조 벡터: P_{k+1} * d_k + p_{k+1}</span></div>
@@ -190,10 +190,10 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>            <span class="comment">// 원래 식: P_k = H_xx + K_k^T * H_uu * K_k + K_k^T * H_ux + H_ux^T * K_k</span></div>
 <div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>            <span class="comment">// 위 식은 K_k = -H_uu^{-1} * H_ux 를 대입하면 구조적으로 아래와 같이 단순화됩니다:</span></div>
 <div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>            <span class="comment">// P_k = H_xx + H_ux^T * K_k</span></div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>            s.P = H_xx + (H_ux.transpose() * s.K);</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>            s.P = H_xx + (H_ux.<a class="code hl_function" href="classOptimization_1_1StaticMatrix.html#a4a2346cf5b909ce13ec2eb95524d6644">transpose</a>() * s.K);</div>
 <div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span> </div>
 <div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>            <span class="comment">// p_k = g_x + H_ux^T * k_ff_k</span></div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>            s.p_vec = g_x + (H_ux.transpose() * s.k_ff);</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>            s.p_vec = g_x + (H_ux.<a class="code hl_function" href="classOptimization_1_1StaticMatrix.html#a4a2346cf5b909ce13ec2eb95524d6644">transpose</a>() * s.k_ff);</div>
 <div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
 <div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>            <span class="comment">// 다음 시간 스텝(더 과거의 시간, k-1)의 계산을 위해 P_next와 p_next를 갱신합니다.</span></div>
 <div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>            P_next = s.P;</div>
@@ -252,6 +252,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="aclassOptimization_1_1BlockBandedSolver_html_aeb2d146f03403af1d3f49c80c2687019"><div class="ttname"><a href="classOptimization_1_1BlockBandedSolver.html#aeb2d146f03403af1d3f49c80c2687019">Optimization::BlockBandedSolver::BlockBandedSolver</a></div><div class="ttdeci">BlockBandedSolver()</div><div class="ttdoc">생성자. 종단 비용을 나타내는 행렬 P_N과 벡터 p_N_vec를 0으로 초기화합니다.</div><div class="ttdef"><b>Definition</b> BlockBandedSolver.hpp:61</div></div>
 <div class="ttc" id="aclassOptimization_1_1StaticMatrix_html"><div class="ttname"><a href="classOptimization_1_1StaticMatrix.html">Optimization::StaticMatrix</a></div><div class="ttdoc">전방 선언 (Forward Declaration)</div><div class="ttdef"><b>Definition</b> StaticMatrix.hpp:41</div></div>
 <div class="ttc" id="aclassOptimization_1_1StaticMatrix_html_a36566e18729fe2003e1f0078bd9113cf"><div class="ttname"><a href="classOptimization_1_1StaticMatrix.html#a36566e18729fe2003e1f0078bd9113cf">Optimization::StaticMatrix::set_zero</a></div><div class="ttdeci">void set_zero()</div><div class="ttdoc">영행렬 초기화 (Zero Initialization)</div><div class="ttdef"><b>Definition</b> StaticMatrix.hpp:98</div></div>
+<div class="ttc" id="aclassOptimization_1_1StaticMatrix_html_a4a2346cf5b909ce13ec2eb95524d6644"><div class="ttname"><a href="classOptimization_1_1StaticMatrix.html#a4a2346cf5b909ce13ec2eb95524d6644">Optimization::StaticMatrix::transpose</a></div><div class="ttdeci">StaticMatrix&lt; T, Cols, Rows &gt; transpose() const</div><div class="ttdoc">전치 행렬(Transpose) 반환</div><div class="ttdef"><b>Definition</b> StaticMatrix.hpp:138</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

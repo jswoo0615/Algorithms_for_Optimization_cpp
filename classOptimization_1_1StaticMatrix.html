@@ -123,6 +123,9 @@ template&lt;size_t SubRows, size_t SubCols&gt; </td></tr>
 template&lt;size_t SubRows, size_t SubCols&gt; </td></tr>
 <tr class="memitem:a3aec2e092a9d38b998af7c8b9415a7ce"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>insert_transposed_block</b> (size_t start_row, size_t start_col, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; T, SubRows, SubCols &gt; &amp;block)</td></tr>
 <tr class="separator:a3aec2e092a9d38b998af7c8b9415a7ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4a2346cf5b909ce13ec2eb95524d6644" id="r_a4a2346cf5b909ce13ec2eb95524d6644"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; T, Cols, Rows &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptimization_1_1StaticMatrix.html#a4a2346cf5b909ce13ec2eb95524d6644">transpose</a> () const</td></tr>
+<tr class="memdesc:a4a2346cf5b909ce13ec2eb95524d6644"><td class="mdescLeft">&#160;</td><td class="mdescRight">전치 행렬(Transpose) 반환  <br /></td></tr>
+<tr class="separator:a4a2346cf5b909ce13ec2eb95524d6644"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac8cd4666a5ddd9592ad7b10bd6aa5bde" id="r_ac8cd4666a5ddd9592ad7b10bd6aa5bde"><td class="memTemplParams" colspan="2"><a id="ac8cd4666a5ddd9592ad7b10bd6aa5bde" name="ac8cd4666a5ddd9592ad7b10bd6aa5bde"></a>
 template&lt;size_t SubRows, size_t SubCols&gt; </td></tr>
 <tr class="memitem:ac8cd4666a5ddd9592ad7b10bd6aa5bde"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; T, SubRows, SubCols &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>extract_block</b> (size_t start_row, size_t start_col) const</td></tr>
@@ -165,6 +168,36 @@ template&lt;typename T , size_t Rows, size_t Cols&gt; </div>
 
 <p>영행렬 초기화 (Zero Initialization) </p>
 <p>매 제어 주기 (Control Loop, ex: 10ms 마다 1회)가 시작될 때, 이전 주기의 KKT 행렬 데이터 (찌꺼기)를 깨끗하게 0으로 비워야 새로운 최적화 계산을 꼬임 없이 시작할 수 있습니다. 이중 루릎 (for i, for j)를 돌며 0을 개별 할당하는 것보다 <code>std::fill</code>을 1차원적으로 적용하면, 최신 C++ 최적화 컴파일러가 이를 감지하고 단일 어셈블리 명령어인 고속 <code>memset</code> (메모리 블록 채우기) 수준으로 치환 (Intrinsic)하여 연산 사이클을 극한으로 단축합니다. </p>
+
+</div>
+</div>
+<a id="a4a2346cf5b909ce13ec2eb95524d6644" name="a4a2346cf5b909ce13ec2eb95524d6644"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4a2346cf5b909ce13ec2eb95524d6644">&#9670;&#160;</a></span>transpose()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;typename T , size_t Rows, size_t Cols&gt; </div>
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; T, Cols, Rows &gt; <a class="el" href="classOptimization_1_1StaticMatrix.html">Optimization::StaticMatrix</a>&lt; T, Rows, Cols &gt;::transpose </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td> const</td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>전치 행렬(Transpose) 반환 </p>
+<p>Rows x Cols 행렬을 Cols x Rows 행렬로 변환하여 반환합니다. </p>
 
 </div>
 </div>
