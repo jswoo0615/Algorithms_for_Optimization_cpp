@@ -179,3 +179,7 @@ gtest_discover_tests(test_NewtonSolver)
 add_executable(test_LevenbergMarquardt test/test_LevenbergMarquardt.cpp)
 target_link_libraries(test_LevenbergMarquardt PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_LevenbergMarquardt)
+
+add_executable(test_VehicleIntegrator test/test_VehicleIntegrator.cpp)
+target_link_libraries(test_VehicleIntegrator PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_VehicleIntegrator)
