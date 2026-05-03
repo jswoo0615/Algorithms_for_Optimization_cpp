@@ -5,7 +5,7 @@
 #include <array>
 #include <cmath>
 #include <complex>
-#include <iostream> // GTest 출력 포맷을 위해 추가됨
+#include <iostream>  // GTest 출력 포맷을 위해 추가됨
 
 namespace Optimization {
 
@@ -65,12 +65,12 @@ struct Dual {
         return *this;
     }
     constexpr Dual& operator*=(const Dual& rhs) noexcept {
-        d = d * rhs.v + v * rhs.d;  
+        d = d * rhs.v + v * rhs.d;
         v *= rhs.v;
         return *this;
     }
     constexpr Dual& operator/=(const Dual& rhs) noexcept {
-        d = (d * rhs.v - v * rhs.d) / (rhs.v * rhs.v);  
+        d = (d * rhs.v - v * rhs.d) / (rhs.v * rhs.v);
         v /= rhs.v;
         return *this;
     }
@@ -98,23 +98,23 @@ struct Dual {
 // --- 좌측 스칼라(상수) 연산 (Scalar + Dual 등) ---
 template <typename T>
 [[nodiscard]] constexpr Dual<T> operator+(const T& lhs, const Dual<T>& rhs) noexcept {
-    return {lhs + rhs.v, rhs.d};  
+    return {lhs + rhs.v, rhs.d};
 }
 
 template <typename T>
 [[nodiscard]] constexpr Dual<T> operator-(const T& lhs, const Dual<T>& rhs) noexcept {
-    return {lhs - rhs.v, -rhs.d};  
+    return {lhs - rhs.v, -rhs.d};
 }
 
 template <typename T>
 [[nodiscard]] constexpr Dual<T> operator*(const T& lhs, const Dual<T>& rhs) noexcept {
-    return {lhs * rhs.v, lhs * rhs.d};  
+    return {lhs * rhs.v, lhs * rhs.d};
 }
 
 template <typename T>
 [[nodiscard]] constexpr Dual<T> operator/(const T& lhs, const Dual<T>& rhs) noexcept {
     T den = rhs.v * rhs.v;
-    return {lhs / rhs.v, (-lhs * rhs.d) / den};  
+    return {lhs / rhs.v, (-lhs * rhs.d) / den};
 }
 
 /**
@@ -133,7 +133,7 @@ struct DualVec {
     [[nodiscard]] static constexpr DualVec make_variable(T value, size_t index) noexcept {
         DualVec res(value);
         if (index < N) {
-            res.g[index] = T(1);  
+            res.g[index] = T(1);
         }
         return res;
     }
@@ -186,7 +186,7 @@ struct DualVec {
 
     // --- 우측 스칼라 (DualVec + Scalar 등) ---
     [[nodiscard]] constexpr DualVec operator+(const T& rhs) const noexcept {
-        return *this + DualVec(rhs);  
+        return *this + DualVec(rhs);
     }
     [[nodiscard]] constexpr DualVec operator-(const T& rhs) const noexcept {
         return *this - DualVec(rhs);
@@ -267,7 +267,7 @@ struct DualVec {
 // --- 좌측 스칼라 (Scalar + DualVec 등) ---
 template <typename T, size_t N>
 [[nodiscard]] constexpr DualVec<T, N> operator+(const T& lhs, const DualVec<T, N>& rhs) noexcept {
-    return rhs + lhs;  
+    return rhs + lhs;
 }
 template <typename T, size_t N>
 [[nodiscard]] constexpr DualVec<T, N> operator-(const T& lhs, const DualVec<T, N>& rhs) noexcept {
@@ -279,7 +279,7 @@ template <typename T, size_t N>
 }
 template <typename T, size_t N>
 [[nodiscard]] constexpr DualVec<T, N> operator*(const T& lhs, const DualVec<T, N>& rhs) noexcept {
-    return rhs * lhs;  
+    return rhs * lhs;
 }
 template <typename T, size_t N>
 [[nodiscard]] constexpr DualVec<T, N> operator/(const T& lhs, const DualVec<T, N>& rhs) noexcept {
@@ -315,13 +315,13 @@ namespace ad {
         return res;                                         \
     }
 
-DUAL_MATH_OVERLOAD(sin, std::cos(u.v))                            
-DUAL_MATH_OVERLOAD(cos, -std::sin(u.v))                           
-DUAL_MATH_OVERLOAD(exp, std::exp(u.v))                            
-DUAL_MATH_OVERLOAD(log, T(1.0) / u.v)                             
-DUAL_MATH_OVERLOAD(tanh, T(1.0) - std::pow(std::tanh(u.v), 2.0))  
-DUAL_MATH_OVERLOAD(tan, T(1.0) + std::pow(std::tan(u.v), 2.0))  
-DUAL_MATH_OVERLOAD(atan, T(1.0) / (T(1.0) + u.v * u.v))         
+DUAL_MATH_OVERLOAD(sin, std::cos(u.v))
+DUAL_MATH_OVERLOAD(cos, -std::sin(u.v))
+DUAL_MATH_OVERLOAD(exp, std::exp(u.v))
+DUAL_MATH_OVERLOAD(log, T(1.0) / u.v)
+DUAL_MATH_OVERLOAD(tanh, T(1.0) - std::pow(std::tanh(u.v), 2.0))
+DUAL_MATH_OVERLOAD(tan, T(1.0) + std::pow(std::tan(u.v), 2.0))
+DUAL_MATH_OVERLOAD(atan, T(1.0) / (T(1.0) + u.v * u.v))
 
 template <typename T>
 inline Dual<T> sqrt(const Dual<T>& u) {
@@ -368,7 +368,7 @@ inline Dual<T> atan2(const Dual<T>& y, const Dual<T>& x) {
     T res_v = atan2(y.v, x.v);
     T den = x.v * x.v + y.v * y.v;
     if (den <= T(1e-16)) {
-        return {res_v, T(0.0)};  
+        return {res_v, T(0.0)};
     }
     return {res_v, (x.v * y.d - y.v * x.d) / den};
 }
@@ -407,7 +407,7 @@ inline DualVec<T, N> abs(const DualVec<T, N>& u) {
     return res;
 }
 
-// 스칼라 타입 오버로딩 
+// 스칼라 타입 오버로딩
 template <typename T>
 inline T abs(const T& x) {
     return std::abs(x);
@@ -457,13 +457,13 @@ inline std::complex<T> atan2(const std::complex<T>& y, const std::complex<T>& x)
         return std::complex<T>(std::atan2(yr, xr), T(0.0));
     }
     T real_part = std::atan2(yr, xr);
-    T imag_part = std::atan2(xr * yi - yr * xi) / den;  
+    T imag_part = std::atan2(xr * yi - yr * xi) / den;
 
     return std::complex<T>(real_part, imag_part);
 }
 
 // =====================================================================
-// 5. Helper Function & Output Stream 
+// 5. Helper Function & Output Stream
 // =====================================================================
 template <typename T>
 inline auto get_value(const T& x) {
@@ -490,7 +490,7 @@ std::ostream& operator<<(std::ostream& os, const Dual<T>& x) {
 template <typename T, size_t N>
 std::ostream& operator<<(std::ostream& os, const DualVec<T, N>& x) {
     os << "[" << x.v << ", g:(";
-    for(size_t i = 0; i < N; ++i) {
+    for (size_t i = 0; i < N; ++i) {
         os << x.g[i] << (i < N - 1 ? ", " : "");
     }
     os << ")]";
