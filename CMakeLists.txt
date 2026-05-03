@@ -183,3 +183,7 @@ gtest_discover_tests(test_LevenbergMarquardt)
 add_executable(test_VehicleIntegrator test/test_VehicleIntegrator.cpp)
 target_link_libraries(test_VehicleIntegrator PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_VehicleIntegrator)
+
+add_executable(test_MultipleShooting test/test_MultipleShooting.cpp)
+target_link_libraries(test_MultipleShooting PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_MultipleShooting)
