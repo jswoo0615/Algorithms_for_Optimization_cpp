@@ -25,39 +25,51 @@ struct DynamicBicycleModel {
     // Functor 오버로딩 (T는 double 또는 DualVec이 들어옴)
     template <typename T>
     StaticVector<T, 6> operator()(const StaticVector<T, 6>& x, const StaticVector<T, 2>& u) const {
-        using namespace ad;  // ad::sin, ad::cos, ad::atan2 등을 사용하기 위함
+        // [Architect's Math Router] ADL 충돌을 원천 차단하는 컴파일 타임 분기
+        auto math_sin = [](const T& v) -> T {
+            if constexpr (std::is_same_v<T, double>) return std::sin(v);
+            else { using namespace ad; return sin(v); }
+        };
+        auto math_cos = [](const T& v) -> T {
+            if constexpr (std::is_same_v<T, double>) return std::cos(v);
+            else { using namespace ad; return cos(v); }
+        };
+        auto math_atan2 = [](const T& y, const T& x_val) -> T {
+            if constexpr (std::is_same_v<T, double>) return std::atan2(y, x_val);
+            else { using namespace ad; return atan2(y, x_val); }
+        };
 
         // State 추출
         T psi = x(2);
-        T vx = x(3);
-        T vy = x(4);
-        T r = x(5);
+        T vx  = x(3);
+        T vy  = x(4);
+        T r   = x(5);
 
         // Control 추출
         T delta = u(0);
-        T a = u(1);
+        T a     = u(1);
 
         // 특이점 방어 (속도가 0에 가까울 때 Slip angle 발산 방지)
-        double vx_val = get_value(vx);  // T가 double 이든 DualVec이든 순수 값만 추출
+        double vx_val = get_value(vx); // T가 double이든 DualVec이든 순수 값만 추출
         T vx_safe = (vx_val >= 0.1) ? vx : ((vx_val <= -0.1) ? vx : T(0.1));
 
-        // 타이어 슬립각 (Slip Angle) 계산
-        T alpha_f = delta - atan2(vy + T(Lf) * r, vx_safe);
-        T alpha_r = -atan2(vy - T(Lr) * r, vx_safe);
+        // 타이어 슬립각 (Slip Angle) 계산 - math_atan2 라우터 사용
+        T alpha_f = delta - math_atan2(vy + T(Lf) * r, vx_safe);
+        T alpha_r = -math_atan2(vy - T(Lr) * r, vx_safe);
 
         // 선형 타이어 모델 기반 횡력 (Lateral Force)
         T Fyf = T(Cf) * alpha_f;
         T Fyr = T(Cr) * alpha_r;
 
-        // 상태 변화율 (State Derivatives) dx/dt = f(x, u)
+        // 상태 변화율 (State Derivatives) dx/dt = f(x, u) - math_sin, math_cos 라우터 사용
         StaticVector<T, 6> x_dot;
-
-        x_dot(0) = vx * cos(psi) - vy * sin(psi);                     // X_dot
-        x_dot(1) = vx * sin(psi) + vy * cos(psi);                     // Y_dot
-        x_dot(2) = r;                                                 // psi_dot
-        x_dot(3) = a + r * vy;                                        // vx_dot
-        x_dot(4) = (Fyf * cos(delta) + Fyr) / T(m) - r * vx;          // vy_dot
-        x_dot(5) = (T(Lf) * Fyf * cos(delta) - T(Lr) * Fyr) / T(Iz);  // r_dot
+        
+        x_dot(0) = vx * math_cos(psi) - vy * math_sin(psi);                       // X_dot
+        x_dot(1) = vx * math_sin(psi) + vy * math_cos(psi);                       // Y_dot
+        x_dot(2) = r;                                                             // psi_dot
+        x_dot(3) = a + r * vy;                                                    // vx_dot
+        x_dot(4) = (Fyf * math_cos(delta) + Fyr) / T(m) - r * vx;                 // vy_dot
+        x_dot(5) = (T(Lf) * Fyf * math_cos(delta) - T(Lr) * Fyr) / T(Iz);         // r_dot
 
         return x_dot;
     }
