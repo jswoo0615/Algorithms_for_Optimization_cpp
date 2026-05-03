@@ -98,27 +98,21 @@ $(function() {
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a2459de720ef357df5f8567618781b9ca" id="r_a2459de720ef357df5f8567618781b9ca"><td class="memItemLeft" align="right" valign="top"><a id="a2459de720ef357df5f8567618781b9ca" name="a2459de720ef357df5f8567618781b9ca"></a>
 constexpr&#160;</td><td class="memItemRight" valign="bottom"><b>DualVec</b> (const T &amp;value=T(0)) noexcept</td></tr>
-<tr class="memdesc:a2459de720ef357df5f8567618781b9ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">초기값을 지정하여 DualVec을 생성합니다. Gradient는 모두 0으로 초기화됩니다. <br /></td></tr>
 <tr class="separator:a2459de720ef357df5f8567618781b9ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a57a336c9ad25bb16abc85f2eda69d8d1" id="r_a57a336c9ad25bb16abc85f2eda69d8d1"><td class="memItemLeft" align="right" valign="top"><a id="a57a336c9ad25bb16abc85f2eda69d8d1" name="a57a336c9ad25bb16abc85f2eda69d8d1"></a>
 constexpr <a class="el" href="structOptimization_1_1DualVec.html">DualVec</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> () const noexcept</td></tr>
-<tr class="memdesc:a57a336c9ad25bb16abc85f2eda69d8d1"><td class="mdescLeft">&#160;</td><td class="mdescRight">단항 음수 연산자 (모든 기울기도 음수화) <br /></td></tr>
 <tr class="separator:a57a336c9ad25bb16abc85f2eda69d8d1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a273f9ad64bc840426ec7b07be34794cd" id="r_a273f9ad64bc840426ec7b07be34794cd"><td class="memItemLeft" align="right" valign="top"><a id="a273f9ad64bc840426ec7b07be34794cd" name="a273f9ad64bc840426ec7b07be34794cd"></a>
 constexpr <a class="el" href="structOptimization_1_1DualVec.html">DualVec</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (const <a class="el" href="structOptimization_1_1DualVec.html">DualVec</a> &amp;rhs) const noexcept</td></tr>
-<tr class="memdesc:a273f9ad64bc840426ec7b07be34794cd"><td class="mdescLeft">&#160;</td><td class="mdescRight">덧셈 연산자 <br /></td></tr>
 <tr class="separator:a273f9ad64bc840426ec7b07be34794cd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab012822c5009af7381537eed1ce3f037" id="r_ab012822c5009af7381537eed1ce3f037"><td class="memItemLeft" align="right" valign="top"><a id="ab012822c5009af7381537eed1ce3f037" name="ab012822c5009af7381537eed1ce3f037"></a>
 constexpr <a class="el" href="structOptimization_1_1DualVec.html">DualVec</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator-</b> (const <a class="el" href="structOptimization_1_1DualVec.html">DualVec</a> &amp;rhs) const noexcept</td></tr>
-<tr class="memdesc:ab012822c5009af7381537eed1ce3f037"><td class="mdescLeft">&#160;</td><td class="mdescRight">뺄셈 연산자 <br /></td></tr>
 <tr class="separator:ab012822c5009af7381537eed1ce3f037"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af7a13847cbb924718d940e53505150f9" id="r_af7a13847cbb924718d940e53505150f9"><td class="memItemLeft" align="right" valign="top"><a id="af7a13847cbb924718d940e53505150f9" name="af7a13847cbb924718d940e53505150f9"></a>
 constexpr <a class="el" href="structOptimization_1_1DualVec.html">DualVec</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator*</b> (const <a class="el" href="structOptimization_1_1DualVec.html">DualVec</a> &amp;rhs) const noexcept</td></tr>
-<tr class="memdesc:af7a13847cbb924718d940e53505150f9"><td class="mdescLeft">&#160;</td><td class="mdescRight">곱셈 연산자 (편미분에 대해 각각 곱의 미분법 적용) <br /></td></tr>
 <tr class="separator:af7a13847cbb924718d940e53505150f9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6424bd2d6c20d9f417d18b752422665c" id="r_a6424bd2d6c20d9f417d18b752422665c"><td class="memItemLeft" align="right" valign="top"><a id="a6424bd2d6c20d9f417d18b752422665c" name="a6424bd2d6c20d9f417d18b752422665c"></a>
 constexpr <a class="el" href="structOptimization_1_1DualVec.html">DualVec</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator/</b> (const <a class="el" href="structOptimization_1_1DualVec.html">DualVec</a> &amp;rhs) const noexcept</td></tr>
-<tr class="memdesc:a6424bd2d6c20d9f417d18b752422665c"><td class="mdescLeft">&#160;</td><td class="mdescRight">나눗셈 연산자 (편미분에 대해 각각 몫의 미분법 적용) <br /></td></tr>
 <tr class="separator:a6424bd2d6c20d9f417d18b752422665c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7e8ed64d657b8fccf19117301579c27a" id="r_a7e8ed64d657b8fccf19117301579c27a"><td class="memItemLeft" align="right" valign="top"><a id="a7e8ed64d657b8fccf19117301579c27a" name="a7e8ed64d657b8fccf19117301579c27a"></a>
 constexpr <a class="el" href="structOptimization_1_1DualVec.html">DualVec</a>&#160;</td><td class="memItemRight" valign="bottom"><b>operator+</b> (const T &amp;rhs) const noexcept</td></tr>
@@ -159,8 +153,8 @@ constexpr <a class="el" href="structOptimization_1_1DualVec.html">DualVec</a> &a
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a51327b4266d1014f2718e02c15693194" id="r_a51327b4266d1014f2718e02c15693194"><td class="memItemLeft" align="right" valign="top">static constexpr <a class="el" href="structOptimization_1_1DualVec.html">DualVec</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOptimization_1_1DualVec.html#a51327b4266d1014f2718e02c15693194">make_variable</a> (T value, size_t index) noexcept</td></tr>
-<tr class="memdesc:a51327b4266d1014f2718e02c15693194"><td class="mdescLeft">&#160;</td><td class="mdescRight">독립 변수 초기화 함수  <br /></td></tr>
+<tr class="memitem:a51327b4266d1014f2718e02c15693194" id="r_a51327b4266d1014f2718e02c15693194"><td class="memItemLeft" align="right" valign="top"><a id="a51327b4266d1014f2718e02c15693194" name="a51327b4266d1014f2718e02c15693194"></a>
+static constexpr <a class="el" href="structOptimization_1_1DualVec.html">DualVec</a>&#160;</td><td class="memItemRight" valign="bottom"><b>make_variable</b> (T value, size_t index) noexcept</td></tr>
 <tr class="separator:a51327b4266d1014f2718e02c15693194"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -177,64 +171,7 @@ std::array&lt; T, N &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>g
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T, size_t N&gt;<br />
 struct Optimization::DualVec&lt; T, N &gt;</div><p>N차원 다변수 함수 자동 미분을 위한 벡터 듀얼 구조체 (Gradient Vector 계산) </p>
-<p>다변수 함수 f(x1, x2, ..., xn)에 대하여 함수 값과 N차원 기울기 벡터(Gradient)를 동시에 추적합니다. 스택 할당(std::array)을 사용하여 힙 메모리 할당으로 인한 오버헤드가 없습니다.</p>
-<dl class="tparams"><dt>Template Parameters</dt><dd>
-  <table class="tparams">
-    <tr><td class="paramname">T</td><td>데이터 타입 </td></tr>
-    <tr><td class="paramname">N</td><td>변수의 차원 (개수) </td></tr>
-  </table>
-  </dd>
-</dl>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a51327b4266d1014f2718e02c15693194" name="a51327b4266d1014f2718e02c15693194"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a51327b4266d1014f2718e02c15693194">&#9670;&#160;</a></span>make_variable()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , size_t N&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">static constexpr <a class="el" href="structOptimization_1_1DualVec.html">DualVec</a> <a class="el" href="structOptimization_1_1DualVec.html">Optimization::DualVec</a>&lt; T, N &gt;::make_variable </td>
-          <td>(</td>
-          <td class="paramtype">T&#160;</td>
-          <td class="paramname"><em>value</em>, </td>
-        </tr>
-        <tr>
-          <td class="paramkey"></td>
-          <td></td>
-          <td class="paramtype">size_t&#160;</td>
-          <td class="paramname"><em>index</em>&#160;</td>
-        </tr>
-        <tr>
-          <td></td>
-          <td>)</td>
-          <td></td><td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span><span class="mlabel">static</span><span class="mlabel">constexpr</span><span class="mlabel">noexcept</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>독립 변수 초기화 함수 </p>
-<p>특정 차원(index)의 독립 변수임을 나타내기 위해 해당 차원의 미분값만 1로 설정합니다. </p><dl class="params"><dt>Parameters</dt><dd>
-  <table class="params">
-    <tr><td class="paramname">value</td><td>해당 변수의 평가 위치(값) </td></tr>
-    <tr><td class="paramname">index</td><td>해당 변수의 차원 인덱스 </td></tr>
-  </table>
-  </dd>
-</dl>
-<dl class="section return"><dt>Returns</dt><dd>초기화된 독립 변수 <a class="el" href="structOptimization_1_1DualVec.html" title="N차원 다변수 함수 자동 미분을 위한 벡터 듀얼 구조체 (Gradient Vector 계산)">DualVec</a> 객체 </dd></dl>
-
-</div>
-</div>
-<hr/>The documentation for this struct was generated from the following file:<ul>
+</div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li>include/Optimization/<a class="el" href="Dual_8hpp_source.html">Dual.hpp</a></li>
 </ul>
 </div><!-- contents -->

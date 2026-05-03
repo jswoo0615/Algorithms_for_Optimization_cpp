@@ -1,6 +1,6 @@
 var searchData=
 [
-  ['generate_5fslalom_5freference_0',['generate_slalom_reference',['../classOptimization_1_1PathPlanner.html#a0c66fa4bdc1e5657bfa939dd48c47db0',1,'Optimization::PathPlanner']]],
-  ['golden_5fsection_5fsearch_1',['golden_section_search',['../classOptimization_1_1LineSearch.html#ae0f16aea51b36b664bfe865a57267e8a',1,'Optimization::LineSearch']]],
-  ['gradient_2',['gradient',['../classOptimization_1_1AutoDiff.html#a58e4c087ad635622012694e6851455b1',1,'Optimization::AutoDiff']]]
+  ['insert_5fblock_0',['insert_block',['../classStaticMatrix.html#a7b00b0d5d9d322cfebdeef89bda1ddf6',1,'StaticMatrix']]],
+  ['insert_5ftransposed_5fblock_1',['insert_transposed_block',['../classStaticMatrix.html#a1a8e7a70a9910ddcf2dbd09fc295d247',1,'StaticMatrix']]],
+  ['ipmqpsolver_2',['IPMQPSolver',['../classOptimization_1_1IPMQPSolver.html#a54006480c164bf79e127d49c785b94fa',1,'Optimization::IPMQPSolver']]]
 ];
