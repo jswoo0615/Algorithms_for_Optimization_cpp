@@ -16,7 +16,11 @@
 namespace Optimization {
 
 struct Obstacle {
-    double x = 0.0; double y = 0.0; double r = 0.5;
+    double x = 0.0; 
+    double y = 0.0; 
+    double r = 0.5;
+    double vx = 0.0; // [Architect's Add] 장애물의 X축 속도
+    double vy = 0.0; // [Architect's Add] 장애물의 Y축 속도
 };
 
 namespace controller {
@@ -85,7 +89,8 @@ namespace controller {
                                                 const StaticVector<double, Nx>& x_ref_local,
                                                 const StaticVector<double, Nx>& x_curr_global,
                                                 const StaticVector<double, Nx>& x_ref_global,
-                                                const NMPCTuningConfig& config) 
+                                                const NMPCTuningConfig& config,
+                                                int k) // [Architect's Add] 현재 호라이즌 인덱스 주입
         {
             using std::abs; using std::sqrt;
 
@@ -100,32 +105,31 @@ namespace controller {
             
             T y_err = x(0) * sin_t + x(1) * cos_t + y_c - y_target;
 
-            // 상태 페널티
             res(idx++) = T(0.0); 
             res(idx++) = T(sqrt(config.Q_Y)) * y_err;
             res(idx++) = T(sqrt(config.Q_Yaw)) * (x(2) - T(x_ref_local(2)));
             res(idx++) = T(sqrt(config.Q_Vx)) * (x(3) - T(10.0)); 
 
-            // [Architect's Fix: 절대 제어 페널티 복원]
-            // IPM은 경계를 막을 뿐, 중앙으로 당겨주지 않습니다. 반드시 필요합니다.
             res(idx++) = T(sqrt(config.R_Accel)) * u(0);
             res(idx++) = T(sqrt(config.R_Steer)) * u(1);
-
-            // 제어 변화량 페널티
             res(idx++) = T(sqrt(config.R_Accel_Rate)) * (u(0) - u_prev(0));
             res(idx++) = T(sqrt(config.R_Steer_Rate)) * (u(1) - u_prev(1));
 
-            // 장애물 회피
+            // [Architect's Masterpiece: Dynamic Obstacle Prediction]
+            double time_future = k * dt; // k번째 스텝의 미래 시간
             for (size_t i = 0; i < 10; ++i) {
-                T dx = x(0) - T(local_obstacles[i].x);
-                T dy = x(1) - T(local_obstacles[i].y);
+                // 미래 시간의 장애물 로컬 예상 위치 계산
+                T obs_pred_x = T(local_obstacles[i].x + local_obstacles[i].vx * time_future);
+                T obs_pred_y = T(local_obstacles[i].y + local_obstacles[i].vy * time_future);
+
+                T dx = x(0) - obs_pred_x;
+                T dy = x(1) - obs_pred_y;
                 T dist_sq = dx * dx + dy * dy;
                 T r_safe = T(local_obstacles[i].r + config.Obstacle_Margin);
                 T viol = r_safe * r_safe - dist_sq;
                 res(idx++) = (Optimization::get_value(viol) > 0.0) ? T(sqrt(config.Obstacle_Penalty)) * viol : T(0.0);
             }
 
-            // 역주행 방지 가드
             T v_min_viol = T(5.0) - x(3);
             res(idx++) = (Optimization::get_value(v_min_viol) > 0.0) ? T(1000.0) * v_min_viol : T(0.0);
 
@@ -151,9 +155,19 @@ namespace controller {
             result.sqp_iterations = 1;
 
             auto T_g2l = utils::SE2Transform::get_global_to_local(x_curr_global(0), x_curr_global(1), x_curr_global(2));
+            
+            // 속도 변환을 위한 회전 행렬 성분 추출
+            double cos_yaw = std::cos(-x_curr_global(2));
+            double sin_yaw = std::sin(-x_curr_global(2));
             for (size_t i = 0; i < 10; ++i) {
                 local_obstacles[i].r = global_obstacles[i].r;
+                
+                // 1. 위치 변환 (병진 + 회전)
                 utils::SE2Transform::transform_point(T_g2l, global_obstacles[i].x, global_obstacles[i].y, local_obstacles[i].x, local_obstacles[i].y);
+                
+                // 2. 속도 변환 (순수 회전만 적용)
+                local_obstacles[i].vx = global_obstacles[i].vx * cos_yaw - global_obstacles[i].vy * sin_yaw;
+                local_obstacles[i].vy = global_obstacles[i].vx * sin_yaw + global_obstacles[i].vy * cos_yaw;
             }
 
             StaticVector<double, Nx> x_curr_local; x_curr_local.set_zero();
@@ -186,7 +200,7 @@ namespace controller {
                     for (size_t j = 0; j < Nu; ++j) riccati.B[k](i, j) = x_next_dual(i).g[Nx + j];
                     riccati.d[k](i) = 0.0; 
                 }
-                StaticVector<ADVar, 25> res_dual = eval_node_residuals(x_dual, u_dual, u_prev_dual, x_ref_local, x_curr_global, x_ref_global, config);
+                StaticVector<ADVar, 25> res_dual = eval_node_residuals(x_dual, u_dual, u_prev_dual, x_ref_local, x_curr_global, x_ref_global, config, k); // k 전달
                 riccati.Q[k].set_zero(); riccati.R[k].set_zero(); riccati.q[k].set_zero(); riccati.r[k].set_zero();
                 
                 for (size_t res_idx = 0; res_idx < 25; ++res_idx) {
