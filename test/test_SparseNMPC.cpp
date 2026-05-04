@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
+
 #include <chrono>
+#include <cmath>
 #include <fstream>
 #include <iomanip>
 #include <iostream>
@@ -8,7 +10,6 @@
 #include <random> // 노이즈 생성용
 
 #include "Optimization/Controller/SparseNMPC.hpp"
-#include "Optimization/VehicleModel/DynamicBicycleModel.hpp"
 #include "Optimization/Integrator/RK4.hpp"
 #include "Optimization/Estimator/EKF.hpp" // EKF 헤더 포함
 
