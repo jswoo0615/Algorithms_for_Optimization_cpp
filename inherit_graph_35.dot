@@ -5,5 +5,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
   node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
   rankdir="LR";
-  Node0 [id="Node000000",label="Optimization::KKTMonitor\l\< N_vars, N_cons \>::KKT\l_Metrics",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$structOptimization_1_1KKTMonitor_1_1KKT__Metrics.html",tooltip="KKT 검증 과정에서 측정된 오차 지표들을 저장하는 구조체"];
+  Node0 [id="Node000000",label="Optimization::MathTraits\< T \>",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$structOptimization_1_1MathTraits.html",tooltip=" "];
 }
