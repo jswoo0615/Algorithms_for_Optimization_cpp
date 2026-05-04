@@ -5,5 +5,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
   node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
   rankdir="LR";
-  Node0 [id="Node000000",label="Optimization::NestrovMomentum",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classOptimization_1_1NestrovMomentum.html",tooltip="네스테로프 가속 경사(Nesterov Accelerated Gradient, NAG) 최적화 알고리즘"];
+  Node0 [id="Node000000",label="Optimization::NaturalEvolution\lStrategies",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classOptimization_1_1NaturalEvolutionStrategies.html",tooltip="자연 진화 전략 (Natural Evolution Strategies, NES) 알고리즘 정적 클래스"];
 }

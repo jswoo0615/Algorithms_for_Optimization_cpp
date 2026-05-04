@@ -91,47 +91,55 @@ $(document).ready(function() { init_codefold(0); });
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef OPTIMIZATION_RIGID_TRANSFORM_HPP_</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define OPTIMIZATION_RIGID_TRANSFORM_HPP_</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;Optimization/Matrix/StaticMatrix.hpp&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;cmath&gt;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="keyword">namespace </span>Optimization {</div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span>utils {</div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
-<div class="foldopen" id="foldopen00013" data-start="{" data-end="};">
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno"><a class="line" href="classOptimization_1_1utils_1_1SE2Transform.html">   13</a></span><span class="keyword">class </span><a class="code hl_class" href="classOptimization_1_1utils_1_1SE2Transform.html">SE2Transform</a> {</div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="keyword">public</span>:</div>
-<div class="foldopen" id="foldopen00021" data-start="{" data-end="}">
-<div class="line"><a id="l00021" name="l00021"></a><span class="lineno"><a class="line" href="classOptimization_1_1utils_1_1SE2Transform.html#afd657d207c196127e0c181f87c2ab68d">   21</a></span>    <span class="keyword">static</span> <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">StaticMatrix&lt;double, 3, 3&gt;</a> <a class="code hl_function" href="classOptimization_1_1utils_1_1SE2Transform.html#afd657d207c196127e0c181f87c2ab68d">get_global_to_local</a>(<span class="keywordtype">double</span> tx, <span class="keywordtype">double</span> ty, <span class="keywordtype">double</span> psi) {</div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>        <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">StaticMatrix&lt;double, 3, 3&gt;</a> T;</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <span class="keywordtype">double</span> cos_p = std::cos(psi);</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <span class="keywordtype">double</span> sin_p = std::sin(psi);</div>
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span> </div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        <span class="comment">// Inverse Transform Matrix (R^T and -R^T * t)</span></div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        T(0, 0) = cos_p;  T(0, 1) = sin_p; T(0, 2) = -(cos_p * tx + sin_p * ty);</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        T(1, 0) = -sin_p; T(1, 1) = cos_p; T(1, 2) = -(-sin_p * tx + cos_p * ty);</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        T(2, 0) = 0.0;    T(2, 1) = 0.0;   T(2, 2) = 1.0;</div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        <span class="keywordflow">return</span> T;</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    }</div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;cmath&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;Optimization/Matrix/StaticMatrix.hpp&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="keyword">namespace </span>Optimization {</div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span>utils {</div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="foldopen" id="foldopen00014" data-start="{" data-end="};">
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno"><a class="line" href="classOptimization_1_1utils_1_1SE2Transform.html">   14</a></span><span class="keyword">class </span><a class="code hl_class" href="classOptimization_1_1utils_1_1SE2Transform.html">SE2Transform</a> {</div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>   <span class="keyword">public</span>:</div>
+<div class="foldopen" id="foldopen00022" data-start="{" data-end="}">
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="classOptimization_1_1utils_1_1SE2Transform.html#afd657d207c196127e0c181f87c2ab68d">   22</a></span>    <span class="keyword">static</span> <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">StaticMatrix&lt;double, 3, 3&gt;</a> <a class="code hl_function" href="classOptimization_1_1utils_1_1SE2Transform.html#afd657d207c196127e0c181f87c2ab68d">get_global_to_local</a>(<span class="keywordtype">double</span> tx, <span class="keywordtype">double</span> ty, <span class="keywordtype">double</span> psi) {</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">StaticMatrix&lt;double, 3, 3&gt;</a> T;</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <span class="keywordtype">double</span> cos_p = std::cos(psi);</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>        <span class="keywordtype">double</span> sin_p = std::sin(psi);</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="comment">// Inverse Transform Matrix (R^T and -R^T * t)</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        T(0, 0) = cos_p;</div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        T(0, 1) = sin_p;</div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        T(0, 2) = -(cos_p * tx + sin_p * ty);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>        T(1, 0) = -sin_p;</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>        T(1, 1) = cos_p;</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        T(1, 2) = -(-sin_p * tx + cos_p * ty);</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>        T(2, 0) = 0.0;</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>        T(2, 1) = 0.0;</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        T(2, 2) = 1.0;</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        <span class="keywordflow">return</span> T;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    }</div>
 </div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="foldopen" id="foldopen00037" data-start="{" data-end="}">
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno"><a class="line" href="classOptimization_1_1utils_1_1SE2Transform.html#a13c4f186a1d7cda7d71860ca925a51b4">   37</a></span>    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classOptimization_1_1utils_1_1SE2Transform.html#a13c4f186a1d7cda7d71860ca925a51b4">transform_point</a>(<span class="keyword">const</span> <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">StaticMatrix&lt;double, 3, 3&gt;</a>&amp; T, <span class="keywordtype">double</span> global_x, <span class="keywordtype">double</span> global_y, <span class="keywordtype">double</span>&amp; local_x, <span class="keywordtype">double</span>&amp; local_y) {</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>        local_x = T(0, 0) * global_x + T(0, 1) * global_y + T(0, 2);</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>        local_y = T(1, 0) * global_x + T(1, 1) * global_y + T(1, 2);</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    }</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="foldopen" id="foldopen00044" data-start="{" data-end="}">
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="classOptimization_1_1utils_1_1SE2Transform.html#a13c4f186a1d7cda7d71860ca925a51b4">   44</a></span>    <span class="keyword">static</span> <span class="keywordtype">void</span> <a class="code hl_function" href="classOptimization_1_1utils_1_1SE2Transform.html#a13c4f186a1d7cda7d71860ca925a51b4">transform_point</a>(<span class="keyword">const</span> <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">StaticMatrix&lt;double, 3, 3&gt;</a>&amp; T, <span class="keywordtype">double</span> global_x,</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>                                <span class="keywordtype">double</span> global_y, <span class="keywordtype">double</span>&amp; local_x, <span class="keywordtype">double</span>&amp; local_y) {</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        local_x = T(0, 0) * global_x + T(0, 1) * global_y + T(0, 2);</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        local_y = T(1, 0) * global_x + T(1, 1) * global_y + T(1, 2);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    }</div>
 </div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>};</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>};</div>
 </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span> </div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>} <span class="comment">// namespace utils</span></div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>} <span class="comment">// namespace Optimization</span></div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span><span class="preprocessor">#endif </span><span class="comment">// OPTIMIZATION_RIGID_TRANSFORM_HPP_</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>}  <span class="comment">// namespace utils</span></div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>}  <span class="comment">// namespace Optimization</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span> </div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_RIGID_TRANSFORM_HPP_</span></div>
 <div class="ttc" id="aclassOptimization_1_1StaticMatrix_html"><div class="ttname"><a href="classOptimization_1_1StaticMatrix.html">Optimization::StaticMatrix</a></div><div class="ttdoc">전방 선언 (Forward Declaration)</div><div class="ttdef"><b>Definition</b> StaticMatrix.hpp:41</div></div>
-<div class="ttc" id="aclassOptimization_1_1utils_1_1SE2Transform_html"><div class="ttname"><a href="classOptimization_1_1utils_1_1SE2Transform.html">Optimization::utils::SE2Transform</a></div><div class="ttdoc">SE(2) 평면상의 동차 변환(Homogeneous Transform) 유틸리티</div><div class="ttdef"><b>Definition</b> RigidTransform.hpp:13</div></div>
-<div class="ttc" id="aclassOptimization_1_1utils_1_1SE2Transform_html_a13c4f186a1d7cda7d71860ca925a51b4"><div class="ttname"><a href="classOptimization_1_1utils_1_1SE2Transform.html#a13c4f186a1d7cda7d71860ca925a51b4">Optimization::utils::SE2Transform::transform_point</a></div><div class="ttdeci">static void transform_point(const StaticMatrix&lt; double, 3, 3 &gt; &amp;T, double global_x, double global_y, double &amp;local_x, double &amp;local_y)</div><div class="ttdoc">포인트 변환 실행 (3x1 벡터 연산)</div><div class="ttdef"><b>Definition</b> RigidTransform.hpp:37</div></div>
-<div class="ttc" id="aclassOptimization_1_1utils_1_1SE2Transform_html_afd657d207c196127e0c181f87c2ab68d"><div class="ttname"><a href="classOptimization_1_1utils_1_1SE2Transform.html#afd657d207c196127e0c181f87c2ab68d">Optimization::utils::SE2Transform::get_global_to_local</a></div><div class="ttdeci">static StaticMatrix&lt; double, 3, 3 &gt; get_global_to_local(double tx, double ty, double psi)</div><div class="ttdoc">전역 좌표(X, Y)를 차량 기준 로컬 좌표(x, y)로 변환하는 행렬 생성</div><div class="ttdef"><b>Definition</b> RigidTransform.hpp:21</div></div>
+<div class="ttc" id="aclassOptimization_1_1utils_1_1SE2Transform_html"><div class="ttname"><a href="classOptimization_1_1utils_1_1SE2Transform.html">Optimization::utils::SE2Transform</a></div><div class="ttdoc">SE(2) 평면상의 동차 변환(Homogeneous Transform) 유틸리티</div><div class="ttdef"><b>Definition</b> RigidTransform.hpp:14</div></div>
+<div class="ttc" id="aclassOptimization_1_1utils_1_1SE2Transform_html_a13c4f186a1d7cda7d71860ca925a51b4"><div class="ttname"><a href="classOptimization_1_1utils_1_1SE2Transform.html#a13c4f186a1d7cda7d71860ca925a51b4">Optimization::utils::SE2Transform::transform_point</a></div><div class="ttdeci">static void transform_point(const StaticMatrix&lt; double, 3, 3 &gt; &amp;T, double global_x, double global_y, double &amp;local_x, double &amp;local_y)</div><div class="ttdoc">포인트 변환 실행 (3x1 벡터 연산)</div><div class="ttdef"><b>Definition</b> RigidTransform.hpp:44</div></div>
+<div class="ttc" id="aclassOptimization_1_1utils_1_1SE2Transform_html_afd657d207c196127e0c181f87c2ab68d"><div class="ttname"><a href="classOptimization_1_1utils_1_1SE2Transform.html#afd657d207c196127e0c181f87c2ab68d">Optimization::utils::SE2Transform::get_global_to_local</a></div><div class="ttdeci">static StaticMatrix&lt; double, 3, 3 &gt; get_global_to_local(double tx, double ty, double psi)</div><div class="ttdoc">전역 좌표(X, Y)를 차량 기준 로컬 좌표(x, y)로 변환하는 행렬 생성</div><div class="ttdef"><b>Definition</b> RigidTransform.hpp:22</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
