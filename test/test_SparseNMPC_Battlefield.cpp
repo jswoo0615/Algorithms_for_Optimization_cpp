@@ -1,12 +1,14 @@
 #include <gtest/gtest.h>
-#include <iostream>
-#include <vector>
+
 #include <fstream>
-#include <string>
 #include <iomanip>
+#include <iostream>
+#include <string>
+#include <vector>
+
 #include "Optimization/Controller/SparseNMPC.hpp"
-#include "Optimization/VehicleModel/DynamicBicycleModel.hpp"
 #include "Optimization/Integrator/RK4.hpp"
+#include "Optimization/VehicleModel/DynamicBicycleModel.hpp"
 
 using namespace Optimization;
 using namespace Optimization::controller;
@@ -16,10 +18,14 @@ enum class Scenario { PARALLEL, SUDDEN_STOP, ZIGZAG };
 // 시나리오 이름을 문자열로 변환하는 헬퍼 함수
 std::string get_scenario_name(Scenario type) {
     switch (type) {
-        case Scenario::PARALLEL:    return "parallel";
-        case Scenario::SUDDEN_STOP: return "sudden_stop";
-        case Scenario::ZIGZAG:      return "zigzag";
-        default:                    return "unknown";
+        case Scenario::PARALLEL:
+            return "parallel";
+        case Scenario::SUDDEN_STOP:
+            return "sudden_stop";
+        case Scenario::ZIGZAG:
+            return "zigzag";
+        default:
+            return "unknown";
     }
 }
 
@@ -33,8 +39,8 @@ void setup_scenario(Scenario type, SparseNMPC<30>& nmpc) {
     switch (type) {
         case Scenario::PARALLEL:
             // 1. 병렬 저속 주행: 추월 불가 구간
-            nmpc.obstacles[0] = {35.0,  1.75, 1.0, 5.0, 0.0}; 
-            nmpc.obstacles[1] = {35.0, -1.75, 1.0, 5.0, 0.0}; 
+            nmpc.obstacles[0] = {35.0, 1.75, 1.0, 5.0, 0.0};
+            nmpc.obstacles[1] = {35.0, -1.75, 1.0, 5.0, 0.0};
             break;
 
         case Scenario::SUDDEN_STOP:
@@ -61,25 +67,25 @@ TEST(SparseNMPC_Battlefield, MultiObstacleLoggingTest) {
     double dt = 0.1;
 
     // [Architect's Choice] 시나리오 선택
-    Scenario current_sim = Scenario::PARALLEL; 
+    Scenario current_sim = Scenario::PARALLEL;
     setup_scenario(current_sim, nmpc);
 
     // CSV 파일 준비
     std::string filename = "battlefield_" + get_scenario_name(current_sim) + ".csv";
     std::ofstream csv_file(filename);
-    
+
     // CSV 헤더 작성
     if (csv_file.is_open()) {
         csv_file << "Step,S,D,mu,Vx,Vy,r,Steer_deg,Accel,KKT_Err\n";
     }
 
-    StaticVector<double, 6> x_true; 
+    StaticVector<double, 6> x_true;
     x_true.set_zero();
-    x_true(3) = 10.0; // 초기 속도 10m/s
+    x_true(3) = 10.0;  // 초기 속도 10m/s
 
     NMPCTuningConfig config;
     config.target_vx = 10.0;
-    config.kappa = 0.0; 
+    config.kappa = 0.0;
 
     std::cout << "\n--- Scenario: " << get_scenario_name(current_sim) << " ---\n";
     std::cout << "Step | S | D | Vx | Steer(deg) | Accel | KKT\n";
@@ -99,31 +105,29 @@ TEST(SparseNMPC_Battlefield, MultiObstacleLoggingTest) {
 
         // NMPC 솔버 타격
         NMPCResult res = nmpc.solve_rt_qp(x_true, config);
-        
+
         double steer_rad = nmpc.U_guess[0](0);
         double accel = nmpc.U_guess[0](1);
         double steer_deg = steer_rad * 180.0 / M_PI;
 
         // 터미널 출력
-        if (step % 5 == 0) { // 출력이 너무 많지 않게 5스텝마다
-            std::cout << std::fixed << std::setprecision(2)
-                      << step << " | " << x_true(0) << " | " << x_true(1) << " | " 
-                      << x_true(3) << " | " << steer_deg << " | " 
-                      << accel << " | " << std::scientific << res.max_kkt_error << "\n";
+        if (step % 5 == 0) {  // 출력이 너무 많지 않게 5스텝마다
+            std::cout << std::fixed << std::setprecision(2) << step << " | " << x_true(0) << " | "
+                      << x_true(1) << " | " << x_true(3) << " | " << steer_deg << " | " << accel
+                      << " | " << std::scientific << res.max_kkt_error << "\n";
         }
 
         // CSV 데이터 기록
         if (csv_file.is_open()) {
-            csv_file << step << "," 
-                     << x_true(0) << "," << x_true(1) << "," << x_true(2) << ","
-                     << x_true(3) << "," << x_true(4) << "," << x_true(5) << ","
-                     << steer_deg << "," << accel << "," << res.max_kkt_error << "\n";
+            csv_file << step << "," << x_true(0) << "," << x_true(1) << "," << x_true(2) << ","
+                     << x_true(3) << "," << x_true(4) << "," << x_true(5) << "," << steer_deg << ","
+                     << accel << "," << res.max_kkt_error << "\n";
         }
 
         // 실제 물리 엔진 반영
         x_true = integrator::step_rk4<6, 2>(plant, x_true, nmpc.U_guess[0], dt);
         nmpc.shift_sequence();
-        
+
         // 120m 이상 주행 시 종료
         if (x_true(0) > 120.0) break;
     }

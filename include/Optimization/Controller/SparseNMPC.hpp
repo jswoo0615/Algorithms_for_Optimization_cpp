@@ -35,14 +35,14 @@ struct NMPCResult {
 };
 
 struct NMPCTuningConfig {
-    double Q_D = 200.0;   
-    double Q_mu = 500.0;  
+    double Q_D = 200.0;
+    double Q_mu = 500.0;
     double Q_Vx = 50.0;
 
-    double R_Steer = 5000.0; // u(0)
-    double R_Accel = 10.0;   // u(1)
+    double R_Steer = 5000.0;  // u(0)
+    double R_Accel = 10.0;    // u(1)
 
-    double R_Steer_Rate = 50000.0; // Jitter 방지를 위해 대폭 상향
+    double R_Steer_Rate = 50000.0;  // Jitter 방지를 위해 대폭 상향
     double R_Accel_Rate = 100.0;
 
     double Obstacle_Penalty = 20000.0;
@@ -52,13 +52,13 @@ struct NMPCTuningConfig {
     double damping_R = 500.0;
 
     double barrier_mu = 0.05;
-    double u_min[2] = {-0.26, -5.0}; // [Steer_min, Accel_min]
-    double u_max[2] = {0.26, 3.0};   // [Steer_max, Accel_max]
+    double u_min[2] = {-0.26, -5.0};  // [Steer_min, Accel_min]
+    double u_max[2] = {0.26, 3.0};    // [Steer_max, Accel_max]
     double safety_fraction = 0.95;
     double step_alpha = 0.5;
 
-    double kappa = 0.0;       
-    double target_vx = 10.0;  
+    double kappa = 0.0;
+    double target_vx = 10.0;
 };
 
 // [Architect's Decision: 잔차 벡터 크기 정의]
@@ -92,15 +92,15 @@ class SparseNMPC {
     }
 
     template <typename T>
-    StaticVector<T, NUM_RESIDALS> eval_node_residuals(const StaticVector<T, Nx>& x, 
-                                                     const StaticVector<T, Nu>& u, 
-                                                     const StaticVector<T, Nu>& u_prev,
-                                                     const NMPCTuningConfig& config,
-                                                     int k) {
+    StaticVector<T, NUM_RESIDALS> eval_node_residuals(const StaticVector<T, Nx>& x,
+                                                      const StaticVector<T, Nu>& u,
+                                                      const StaticVector<T, Nu>& u_prev,
+                                                      const NMPCTuningConfig& config, int k) {
         using std::abs;
         using std::sqrt;
 
-        StaticVector<T, NUM_RESIDALS> res; res.set_zero();
+        StaticVector<T, NUM_RESIDALS> res;
+        res.set_zero();
         int idx = 0;
 
         T s = x(0);
@@ -129,7 +129,7 @@ class SparseNMPC {
             T ds = s - obs_pred_s;
             T dd = d - obs_pred_d;
             T dist_sq = ds * ds + dd * dd;
-            
+
             T safety_margin = T(obstacles[i].r + config.Obstacle_Margin);
             T violation = safety_margin * safety_margin - dist_sq;
 
@@ -142,7 +142,7 @@ class SparseNMPC {
         }
 
         // 4. 최소 속도 보장 (특이점 방어)
-        T v_min_viol = T(1.0) - vx; // 1.0m/s 이하로 떨어지지 않도록
+        T v_min_viol = T(1.0) - vx;  // 1.0m/s 이하로 떨어지지 않도록
         res(idx++) = (Optimization::get_value(v_min_viol) > 0.0) ? T(1000.0) * v_min_viol : T(0.0);
 
         return res;
@@ -156,8 +156,8 @@ class SparseNMPC {
 
     NMPCResult execute_fallback(NMPCResult& res, const std::string& reason) {
         for (size_t k = 0; k < H; ++k) {
-            U_guess[k](0) = 0.0;  // 핸들 중립
-            U_guess[k](1) = -4.0; // 강한 제동
+            U_guess[k](0) = 0.0;   // 핸들 중립
+            U_guess[k](1) = -4.0;  // 강한 제동
         }
         u_last = U_guess[0];
         res.success = false;
@@ -175,7 +175,7 @@ class SparseNMPC {
         model.kappa = config.kappa;
 
         X_pred[0] = x_curr_frenet;
-        X_pred[0](3) = std::max(0.1, x_curr_frenet(3)); 
+        X_pred[0](3) = std::max(0.1, x_curr_frenet(3));
 
         for (size_t k = 0; k < H; ++k) {
             X_pred[k + 1] = integrator::step_rk4<Nx, Nu>(model, X_pred[k], U_guess[k], dt);
@@ -194,7 +194,8 @@ class SparseNMPC {
                 u_prev_dual(i) = ADVar(u_prev(i));
             }
 
-            StaticVector<ADVar, Nx> x_next_dual = integrator::step_rk4<Nx, Nu>(model, x_dual, u_dual, dt);
+            StaticVector<ADVar, Nx> x_next_dual =
+                integrator::step_rk4<Nx, Nu>(model, x_dual, u_dual, dt);
 
             for (size_t i = 0; i < Nx; ++i) {
                 for (size_t j = 0; j < Nx; ++j) riccati.A[k](i, j) = x_next_dual(i).g[j];
@@ -203,7 +204,8 @@ class SparseNMPC {
             }
 
             // [CRITICAL FIX: NUM_RESIDALS로 크기 동기화]
-            StaticVector<ADVar, NUM_RESIDALS> res_dual = eval_node_residuals(x_dual, u_dual, u_prev_dual, config, k);
+            StaticVector<ADVar, NUM_RESIDALS> res_dual =
+                eval_node_residuals(x_dual, u_dual, u_prev_dual, config, k);
 
             riccati.Q[k].set_zero();
             riccati.R[k].set_zero();
@@ -236,7 +238,8 @@ class SparseNMPC {
                 s_lower = std::max(s_lower, 1e-3);
 
                 double grad_barrier = config.barrier_mu * (1.0 / s_upper - 1.0 / s_lower);
-                double hess_barrier = config.barrier_mu * (1.0 / (s_upper * s_upper) + 1.0 / (s_lower * s_lower));
+                double hess_barrier =
+                    config.barrier_mu * (1.0 / (s_upper * s_upper) + 1.0 / (s_lower * s_lower));
 
                 grad_barrier = std::clamp(grad_barrier, -100.0, 100.0);
                 hess_barrier = std::min(hess_barrier, 500.0);
@@ -290,7 +293,8 @@ class SparseNMPC {
         for (size_t k = 0; k < H; ++k) {
             for (size_t i = 0; i < Nu; ++i) {
                 U_guess[k](i) += alpha * riccati.du[k](i);
-                U_guess[k](i) = std::clamp(U_guess[k](i), config.u_min[i] + 1e-3, config.u_max[i] - 1e-3);
+                U_guess[k](i) =
+                    std::clamp(U_guess[k](i), config.u_min[i] + 1e-3, config.u_max[i] - 1e-3);
                 max_kkt = std::max(max_kkt, std::abs(riccati.du[k](i)));
             }
         }
