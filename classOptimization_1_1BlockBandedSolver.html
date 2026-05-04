@@ -104,39 +104,39 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>BlockBandedSolver</b> ()</td></tr>
 <tr class="memdesc:aeb2d146f03403af1d3f49c80c2687019"><td class="mdescLeft">&#160;</td><td class="mdescRight">생성자. 종단 비용을 나타내는 행렬 P_N과 벡터 p_N_vec를 0으로 초기화합니다. <br /></td></tr>
 <tr class="separator:aeb2d146f03403af1d3f49c80c2687019"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a65900cc41cbd835a5b683124b4f735bd" id="r_a65900cc41cbd835a5b683124b4f735bd"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptimization_1_1BlockBandedSolver.html#a65900cc41cbd835a5b683124b4f735bd">backward_pass</a> ()</td></tr>
+<tr class="memitem:a65900cc41cbd835a5b683124b4f735bd" id="r_a65900cc41cbd835a5b683124b4f735bd"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOptimization_1_1StaticMatrix.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptimization_1_1BlockBandedSolver.html#a65900cc41cbd835a5b683124b4f735bd">backward_pass</a> ()</td></tr>
 <tr class="memdesc:a65900cc41cbd835a5b683124b4f735bd"><td class="mdescLeft">&#160;</td><td class="mdescRight">역방향 탐색 (Backward Pass / Riccati Recursion)  <br /></td></tr>
 <tr class="separator:a65900cc41cbd835a5b683124b4f735bd"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ac6475a6e1cc5218f43a1e0702b66b751" id="r_ac6475a6e1cc5218f43a1e0702b66b751"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptimization_1_1BlockBandedSolver.html#ac6475a6e1cc5218f43a1e0702b66b751">forward_pass</a> (const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;dx_0)</td></tr>
+<tr class="memitem:ac6475a6e1cc5218f43a1e0702b66b751" id="r_ac6475a6e1cc5218f43a1e0702b66b751"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOptimization_1_1StaticMatrix.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptimization_1_1BlockBandedSolver.html#ac6475a6e1cc5218f43a1e0702b66b751">forward_pass</a> (<a class="el" href="classOptimization_1_1StaticMatrix.html">const</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, Nx &gt; &amp;<a class="el" href="classOptimization_1_1StaticMatrix.html">dx_0</a>)</td></tr>
 <tr class="memdesc:ac6475a6e1cc5218f43a1e0702b66b751"><td class="mdescLeft">&#160;</td><td class="mdescRight">순방향 탐색 (Forward Pass)  <br /></td></tr>
 <tr class="separator:ac6475a6e1cc5218f43a1e0702b66b751"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7a52243645fff61f13c35384ee9480c7" id="r_a7a52243645fff61f13c35384ee9480c7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptimization_1_1BlockBandedSolver.html#a7a52243645fff61f13c35384ee9480c7">solve</a> (const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;dx_0)</td></tr>
+<tr class="memitem:a7a52243645fff61f13c35384ee9480c7" id="r_a7a52243645fff61f13c35384ee9480c7"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOptimization_1_1StaticMatrix.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptimization_1_1BlockBandedSolver.html#a7a52243645fff61f13c35384ee9480c7">solve</a> (<a class="el" href="classOptimization_1_1StaticMatrix.html">const</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, Nx &gt; &amp;<a class="el" href="classOptimization_1_1StaticMatrix.html">dx_0</a>)</td></tr>
 <tr class="memdesc:a7a52243645fff61f13c35384ee9480c7"><td class="mdescLeft">&#160;</td><td class="mdescRight">전체 해법 실행 (Solve)  <br /></td></tr>
 <tr class="separator:a7a52243645fff61f13c35384ee9480c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a2fa8f13d83b60608546165b4832fec72" id="r_a2fa8f13d83b60608546165b4832fec72"><td class="memItemLeft" align="right" valign="top"><a id="a2fa8f13d83b60608546165b4832fec72" name="a2fa8f13d83b60608546165b4832fec72"></a>
-std::array&lt; <a class="el" href="structOptimization_1_1NMPCStorageData.html">NMPCStorageData</a>&lt; Nx, Nu &gt;, Np &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>stages</b></td></tr>
+std::array&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">NMPCStorageData</a>&lt; Nx, Nu &gt;, <a class="el" href="classOptimization_1_1StaticMatrix.html">Np</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>stages</b></td></tr>
 <tr class="memdesc:a2fa8f13d83b60608546165b4832fec72"><td class="mdescLeft">&#160;</td><td class="mdescRight">호라이즌 전체의 시점(t = 0 ~ Np-1)마다 필요한 선형화 모델 및 비용 함수 데이터를 담는 배열. 동적 할당 없이 std::array를 사용하여 스택(또는 BSS 섹션)에 할당됩니다. <br /></td></tr>
 <tr class="separator:a2fa8f13d83b60608546165b4832fec72"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a84a32c8489400c2aa86dc0ebf2961afc" id="r_a84a32c8489400c2aa86dc0ebf2961afc"><td class="memItemLeft" align="right" valign="top"><a id="a84a32c8489400c2aa86dc0ebf2961afc" name="a84a32c8489400c2aa86dc0ebf2961afc"></a>
-<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; double, Nx, Nx &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>P_N</b></td></tr>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, Nx, Nx &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>P_N</b></td></tr>
 <tr class="separator:a84a32c8489400c2aa86dc0ebf2961afc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a40ce8ac586765d8115ae6cacba1b67c7" id="r_a40ce8ac586765d8115ae6cacba1b67c7"><td class="memItemLeft" align="right" valign="top"><a id="a40ce8ac586765d8115ae6cacba1b67c7" name="a40ce8ac586765d8115ae6cacba1b67c7"></a>
-<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nx &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>p_N_vec</b></td></tr>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, Nx &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>p_N_vec</b></td></tr>
 <tr class="separator:a40ce8ac586765d8115ae6cacba1b67c7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6d494c8f49c5ac3748e39f332040c71d" id="r_a6d494c8f49c5ac3748e39f332040c71d"><td class="memItemLeft" align="right" valign="top"><a id="a6d494c8f49c5ac3748e39f332040c71d" name="a6d494c8f49c5ac3748e39f332040c71d"></a>
-std::array&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nx &gt;, Np+1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>dx</b></td></tr>
+std::array&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, Nx &gt;, <a class="el" href="classOptimization_1_1StaticMatrix.html">Np</a>+1 &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>dx</b></td></tr>
 <tr class="memdesc:a6d494c8f49c5ac3748e39f332040c71d"><td class="mdescLeft">&#160;</td><td class="mdescRight">0부터 Np까지 각 시점의 상태 궤적 오차(State trajectory error, Delta x). 크기는 Np + 1 입니다. <br /></td></tr>
 <tr class="separator:a6d494c8f49c5ac3748e39f332040c71d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a60c154f014006d9b5d07b3b7607bda84" id="r_a60c154f014006d9b5d07b3b7607bda84"><td class="memItemLeft" align="right" valign="top"><a id="a60c154f014006d9b5d07b3b7607bda84" name="a60c154f014006d9b5d07b3b7607bda84"></a>
-std::array&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nu &gt;, Np &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>du</b></td></tr>
+std::array&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, Nu &gt;, <a class="el" href="classOptimization_1_1StaticMatrix.html">Np</a> &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>du</b></td></tr>
 <tr class="memdesc:a60c154f014006d9b5d07b3b7607bda84"><td class="mdescLeft">&#160;</td><td class="mdescRight">0부터 Np-1까지 각 시점의 최적 제어 입력 오차(Control input error, Delta u). 크기는 Np 입니다. <br /></td></tr>
 <tr class="separator:a60c154f014006d9b5d07b3b7607bda84"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;size_t Nx, size_t Nu, size_t Np&gt;<br />
+<div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> Nx, <a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> Nu, <a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> Np&gt;<br />
 class Optimization::BlockBandedSolver&lt; Nx, Nu, Np &gt;</div><p>NMPC(Nonlinear Model Predictive Control) 최적화를 위한 블록 밴드형(Block-Banded) 리카티(Riccati) 솔버 클래스. </p>
 <p>LQR(Linear Quadratic Regulator) 문제의 KKT(Karush-Kuhn-Tucker) 시스템 행렬은 시간이 지남에 따라 상태와 제어 입력이 엮여있는 "블록 밴드(Block-Banded)" 구조를 가집니다. 이 클래스는 시간 역순으로 진행하는 Backward Pass(리카티 재귀 연산)와 시간 순서대로 진행하는 Forward Pass(상태 및 제어 입력 업데이트)를 통해 O(Np)의 선형 시간 복잡도로 최적 제어 문제를 해결합니다. (여기서 Np는 예측 호라이즌 길이입니다.)</p>
 <p>이 솔버는 동적 메모리 할당(힙 할당)을 배제하여, 임베디드 실시간 제어(Hard Real-Time Control)에 적합합니다.</p>
@@ -155,13 +155,13 @@ class Optimization::BlockBandedSolver&lt; Nx, Nu, Np &gt;</div><p>NMPC(Nonlinear
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;size_t Nx, size_t Nu, size_t Np&gt; </div>
+template&lt;<a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> Nx, <a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> Nu, <a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> Np&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classOptimization_1_1BlockBandedSolver.html">Optimization::BlockBandedSolver</a>&lt; Nx, Nu, Np &gt;::backward_pass </td>
+          <td class="memname"><a class="el" href="classOptimization_1_1StaticMatrix.html">bool</a> <a class="el" href="classOptimization_1_1BlockBandedSolver.html">Optimization::BlockBandedSolver</a>&lt; Nx, Nu, <a class="el" href="classOptimization_1_1StaticMatrix.html">Np</a> &gt;::backward_pass </td>
           <td>(</td>
           <td class="paramname"></td><td>)</td>
           <td></td>
@@ -187,15 +187,15 @@ Function)의 2차 미분(Hessian) 행렬인 <code>P</code>와 1차 미분(Gradie
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;size_t Nx, size_t Nu, size_t Np&gt; </div>
+template&lt;<a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> Nx, <a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> Nu, <a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> Np&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="classOptimization_1_1BlockBandedSolver.html">Optimization::BlockBandedSolver</a>&lt; Nx, Nu, Np &gt;::forward_pass </td>
+          <td class="memname"><a class="el" href="classOptimization_1_1StaticMatrix.html">void</a> <a class="el" href="classOptimization_1_1BlockBandedSolver.html">Optimization::BlockBandedSolver</a>&lt; Nx, Nu, <a class="el" href="classOptimization_1_1StaticMatrix.html">Np</a> &gt;::forward_pass </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOptimization_1_1StaticMatrix.html">const</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, Nx &gt; &amp;&#160;</td>
           <td class="paramname"><em>dx_0</em></td><td>)</td>
           <td></td>
         </tr>
@@ -224,15 +224,15 @@ template&lt;size_t Nx, size_t Nu, size_t Np&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;size_t Nx, size_t Nu, size_t Np&gt; </div>
+template&lt;<a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> Nx, <a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> Nu, <a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> Np&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classOptimization_1_1BlockBandedSolver.html">Optimization::BlockBandedSolver</a>&lt; Nx, Nu, Np &gt;::solve </td>
+          <td class="memname"><a class="el" href="classOptimization_1_1StaticMatrix.html">bool</a> <a class="el" href="classOptimization_1_1BlockBandedSolver.html">Optimization::BlockBandedSolver</a>&lt; Nx, Nu, <a class="el" href="classOptimization_1_1StaticMatrix.html">Np</a> &gt;::solve </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOptimization_1_1StaticMatrix.html">const</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, Nx &gt; &amp;&#160;</td>
           <td class="paramname"><em>dx_0</em></td><td>)</td>
           <td></td>
         </tr>

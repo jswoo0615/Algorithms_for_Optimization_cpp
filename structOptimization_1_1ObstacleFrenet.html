@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Optimization Library: Optimization::OptimizationResult1D Struct Reference</title>
+<title>Optimization Library: Optimization::ObstacleFrenet Struct Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -76,41 +76,37 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>Optimization</b></li><li class="navelem"><a class="el" href="structOptimization_1_1OptimizationResult1D.html">OptimizationResult1D</a></li>  </ul>
+<li class="navelem"><b>Optimization</b></li><li class="navelem"><a class="el" href="structOptimization_1_1ObstacleFrenet.html">ObstacleFrenet</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-attribs">Public Attributes</a> &#124;
-<a href="structOptimization_1_1OptimizationResult1D-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">Optimization::OptimizationResult1D Struct Reference</div></div>
+<a href="structOptimization_1_1ObstacleFrenet-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">Optimization::ObstacleFrenet Struct Reference</div></div>
 </div><!--header-->
 <div class="contents">
-
-<p>1차원 최적화 결과를 담는 구조체  
- <a href="structOptimization_1_1OptimizationResult1D.html#details">More...</a></p>
-
-<p><code>#include &lt;<a class="el" href="SecantMethod_8hpp_source.html">SecantMethod.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
-<tr class="memitem:a922054e14f655bbff710a79b84f6fe2b" id="r_a922054e14f655bbff710a79b84f6fe2b"><td class="memItemLeft" align="right" valign="top"><a id="a922054e14f655bbff710a79b84f6fe2b" name="a922054e14f655bbff710a79b84f6fe2b"></a>
-<a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>&#160;</td><td class="memItemRight" valign="bottom"><b>x_opt</b></td></tr>
-<tr class="separator:a922054e14f655bbff710a79b84f6fe2b"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a04467b17733247770ba8d89d7eb4c07e" id="r_a04467b17733247770ba8d89d7eb4c07e"><td class="memItemLeft" align="right" valign="top"><a id="a04467b17733247770ba8d89d7eb4c07e" name="a04467b17733247770ba8d89d7eb4c07e"></a>
-<a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>&#160;</td><td class="memItemRight" valign="bottom"><b>f_opt</b></td></tr>
-<tr class="separator:a04467b17733247770ba8d89d7eb4c07e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4c57ed493ffb65860028aec499c37812" id="r_a4c57ed493ffb65860028aec499c37812"><td class="memItemLeft" align="right" valign="top"><a id="a4c57ed493ffb65860028aec499c37812" name="a4c57ed493ffb65860028aec499c37812"></a>
-<a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a>&#160;</td><td class="memItemRight" valign="bottom"><b>iterations</b></td></tr>
-<tr class="separator:a4c57ed493ffb65860028aec499c37812"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ae62032bae3d528e4d892c7a69780d9c8" id="r_ae62032bae3d528e4d892c7a69780d9c8"><td class="memItemLeft" align="right" valign="top"><a id="ae62032bae3d528e4d892c7a69780d9c8" name="ae62032bae3d528e4d892c7a69780d9c8"></a>
-<a class="el" href="classOptimization_1_1StaticMatrix.html">long</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">long</a>&#160;</td><td class="memItemRight" valign="bottom"><b>elapsed_ns</b></td></tr>
-<tr class="separator:ae62032bae3d528e4d892c7a69780d9c8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afa90a4169c17f9c88077c950970dc608" id="r_afa90a4169c17f9c88077c950970dc608"><td class="memItemLeft" align="right" valign="top"><a id="afa90a4169c17f9c88077c950970dc608" name="afa90a4169c17f9c88077c950970dc608"></a>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>&#160;</td><td class="memItemRight" valign="bottom"><b>s</b> = 0.0</td></tr>
+<tr class="separator:afa90a4169c17f9c88077c950970dc608"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae17e5bcca067f190b9400bf87bf8e1db" id="r_ae17e5bcca067f190b9400bf87bf8e1db"><td class="memItemLeft" align="right" valign="top"><a id="ae17e5bcca067f190b9400bf87bf8e1db" name="ae17e5bcca067f190b9400bf87bf8e1db"></a>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>&#160;</td><td class="memItemRight" valign="bottom"><b>d</b> = 0.0</td></tr>
+<tr class="separator:ae17e5bcca067f190b9400bf87bf8e1db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a1c1838d98f87ff46fdf18d355e9a583e" id="r_a1c1838d98f87ff46fdf18d355e9a583e"><td class="memItemLeft" align="right" valign="top"><a id="a1c1838d98f87ff46fdf18d355e9a583e" name="a1c1838d98f87ff46fdf18d355e9a583e"></a>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>&#160;</td><td class="memItemRight" valign="bottom"><b>r</b> = 0.5</td></tr>
+<tr class="separator:a1c1838d98f87ff46fdf18d355e9a583e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:acfa35687c02945e28b64cfcdd0f55948" id="r_acfa35687c02945e28b64cfcdd0f55948"><td class="memItemLeft" align="right" valign="top"><a id="acfa35687c02945e28b64cfcdd0f55948" name="acfa35687c02945e28b64cfcdd0f55948"></a>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>&#160;</td><td class="memItemRight" valign="bottom"><b>vs</b> = 0.0</td></tr>
+<tr class="separator:acfa35687c02945e28b64cfcdd0f55948"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9457d57690a4b2297b4a8385893cdde7" id="r_a9457d57690a4b2297b4a8385893cdde7"><td class="memItemLeft" align="right" valign="top"><a id="a9457d57690a4b2297b4a8385893cdde7" name="a9457d57690a4b2297b4a8385893cdde7"></a>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>&#160;</td><td class="memItemRight" valign="bottom"><b>vd</b> = 0.0</td></tr>
+<tr class="separator:a9457d57690a4b2297b4a8385893cdde7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
-<a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>1차원 최적화 결과를 담는 구조체 </p>
-</div><hr/>The documentation for this struct was generated from the following file:<ul>
-<li>include/Optimization/<a class="el" href="SecantMethod_8hpp_source.html">SecantMethod.hpp</a></li>
+<hr/>The documentation for this struct was generated from the following file:<ul>
+<li>include/Optimization/Controller/<a class="el" href="SparseNMPC_8hpp_source.html">SparseNMPC.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

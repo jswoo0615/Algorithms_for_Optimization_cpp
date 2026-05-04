@@ -104,35 +104,35 @@ Public Member Functions</h2></td></tr>
 &#160;</td><td class="memItemRight" valign="bottom"><b>IPMQPSolver</b> ()</td></tr>
 <tr class="memdesc:a54006480c164bf79e127d49c785b94fa"><td class="mdescLeft">&#160;</td><td class="mdescRight">기본 생성자. 모든 행렬과 벡터를 0으로 초기화합니다. <br /></td></tr>
 <tr class="separator:a54006480c164bf79e127d49c785b94fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a32b08db5afa31f27dadb584bb7c28113" id="r_a32b08db5afa31f27dadb584bb7c28113"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptimization_1_1IPMQPSolver.html#a32b08db5afa31f27dadb584bb7c28113">solve</a> (<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N_vars &gt; &amp;x, int max_iter=50, double tol=1e-3)</td></tr>
+<tr class="memitem:a32b08db5afa31f27dadb584bb7c28113" id="r_a32b08db5afa31f27dadb584bb7c28113"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOptimization_1_1StaticMatrix.html">bool</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptimization_1_1IPMQPSolver.html#a32b08db5afa31f27dadb584bb7c28113">solve</a> (<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, N_vars &gt; &amp;x, <a class="el" href="classOptimization_1_1StaticMatrix.html">int</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">max_iter</a>=50, <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">tol</a>=1<a class="el" href="classOptimization_1_1StaticMatrix.html">e</a>-3)</td></tr>
 <tr class="memdesc:a32b08db5afa31f27dadb584bb7c28113"><td class="mdescLeft">&#160;</td><td class="mdescRight">설정된 QP 문제를 해결합니다.  <br /></td></tr>
 <tr class="separator:a32b08db5afa31f27dadb584bb7c28113"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a36c341a42a012f5f7d4ef4755ed6cee5" id="r_a36c341a42a012f5f7d4ef4755ed6cee5"><td class="memItemLeft" align="right" valign="top"><a id="a36c341a42a012f5f7d4ef4755ed6cee5" name="a36c341a42a012f5f7d4ef4755ed6cee5"></a>
-<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; double, N_vars, N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>P</b></td></tr>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, N_vars, N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>P</b></td></tr>
 <tr class="memdesc:a36c341a42a012f5f7d4ef4755ed6cee5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Hessian 행렬 (반드시 양의 준정부호 Positive Semi-Definite 이어야 함) <br /></td></tr>
 <tr class="separator:a36c341a42a012f5f7d4ef4755ed6cee5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ae9bc78c1a234878445bd52d31889f189" id="r_ae9bc78c1a234878445bd52d31889f189"><td class="memItemLeft" align="right" valign="top"><a id="ae9bc78c1a234878445bd52d31889f189" name="ae9bc78c1a234878445bd52d31889f189"></a>
-<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>q</b></td></tr>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>q</b></td></tr>
 <tr class="memdesc:ae9bc78c1a234878445bd52d31889f189"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gradient 벡터 <br /></td></tr>
 <tr class="separator:ae9bc78c1a234878445bd52d31889f189"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a0550b83ea6040215744d1ba332818ef3" id="r_a0550b83ea6040215744d1ba332818ef3"><td class="memItemLeft" align="right" valign="top"><a id="a0550b83ea6040215744d1ba332818ef3" name="a0550b83ea6040215744d1ba332818ef3"></a>
-<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; double,(N_eq &gt; 0 ? N_eq :1), N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>A_eq</b></td></tr>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>,(N_eq &gt; 0 ? N_eq :1), N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>A_eq</b></td></tr>
 <tr class="separator:a0550b83ea6040215744d1ba332818ef3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a69b222239d6af6366ac6c1bd4a57ea60" id="r_a69b222239d6af6366ac6c1bd4a57ea60"><td class="memItemLeft" align="right" valign="top"><a id="a69b222239d6af6366ac6c1bd4a57ea60" name="a69b222239d6af6366ac6c1bd4a57ea60"></a>
-<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double,(N_eq &gt; 0 ? N_eq :1)&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>b_eq</b></td></tr>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>,(N_eq &gt; 0 ? N_eq :1)&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>b_eq</b></td></tr>
 <tr class="separator:a69b222239d6af6366ac6c1bd4a57ea60"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a24c41cf02cec003e7f743c4ec0103f55" id="r_a24c41cf02cec003e7f743c4ec0103f55"><td class="memItemLeft" align="right" valign="top"><a id="a24c41cf02cec003e7f743c4ec0103f55" name="a24c41cf02cec003e7f743c4ec0103f55"></a>
-<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; double,(N_ineq &gt; 0 ? N_ineq :1), N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>A_ineq</b></td></tr>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>,(N_ineq &gt; 0 ? N_ineq :1), N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>A_ineq</b></td></tr>
 <tr class="separator:a24c41cf02cec003e7f743c4ec0103f55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a17813c21b4b97d3c394187b84433fb55" id="r_a17813c21b4b97d3c394187b84433fb55"><td class="memItemLeft" align="right" valign="top"><a id="a17813c21b4b97d3c394187b84433fb55" name="a17813c21b4b97d3c394187b84433fb55"></a>
-<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double,(N_ineq &gt; 0 ? N_ineq :1)&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>b_ineq</b></td></tr>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>,(N_ineq &gt; 0 ? N_ineq :1)&gt;&#160;</td><td class="memItemRight" valign="bottom"><b>b_ineq</b></td></tr>
 <tr class="separator:a17813c21b4b97d3c394187b84433fb55"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;size_t N_vars, size_t N_eq, size_t N_ineq&gt;<br />
+<div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> N_vars, <a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> N_eq, <a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> N_ineq&gt;<br />
 class Optimization::IPMQPSolver&lt; N_vars, N_eq, N_ineq &gt;</div><p>정적 메모리 할당을 사용하는 IPM QP Solver 클래스 </p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
@@ -149,28 +149,28 @@ class Optimization::IPMQPSolver&lt; N_vars, N_eq, N_ineq &gt;</div><p>정적 메
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;size_t N_vars, size_t N_eq, size_t N_ineq&gt; </div>
+template&lt;<a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> N_vars, <a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> N_eq, <a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> N_ineq&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classOptimization_1_1IPMQPSolver.html">Optimization::IPMQPSolver</a>&lt; N_vars, N_eq, N_ineq &gt;::solve </td>
+          <td class="memname"><a class="el" href="classOptimization_1_1StaticMatrix.html">bool</a> <a class="el" href="classOptimization_1_1IPMQPSolver.html">Optimization::IPMQPSolver</a>&lt; N_vars, N_eq, N_ineq &gt;::solve </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N_vars &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, N_vars &gt; &amp;&#160;</td>
           <td class="paramname"><em>x</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype"><a class="el" href="classOptimization_1_1StaticMatrix.html">int</a>&#160;</td>
           <td class="paramname"><em>max_iter</em> = <code>50</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>tol</em> = <code>1e-3</code>&#160;</td>
+          <td class="paramtype"><a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>&#160;</td>
+          <td class="paramname"><em>tol</em> = <code>1<a class="el" href="classOptimization_1_1StaticMatrix.html">e</a>-3</code>&#160;</td>
         </tr>
         <tr>
           <td></td>

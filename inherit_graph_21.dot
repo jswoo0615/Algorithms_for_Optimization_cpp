@@ -5,5 +5,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
   node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
   rankdir="LR";
-  Node0 [id="Node000000",label="Optimization::CyclicCoordinate\lSearch",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classOptimization_1_1CyclicCoordinateSearch.html",tooltip="Cyclic Coordinate Search (순환 좌표 탐색) 알고리즘 클래스"];
+  Node0 [id="Node000000",label="Optimization::Dual\< T \>",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$structOptimization_1_1Dual.html",tooltip="전진 모드 자동 미분(Forward-mode Automatic Differentiation)을 위한 스칼라 듀얼(Dual) 수 구조체"];
 }

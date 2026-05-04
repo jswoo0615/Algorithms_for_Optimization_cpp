@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['working_5fset_0',['working_set',['../classActiveSetSolver.html#aa020fbb2c733983b1985c9c084cd92eb',1,'ActiveSetSolver']]]
+  ['y_0',['y',['../structOptimization_1_1Pt.html#a497ea00e2c987994afed7f95ef585ec9',1,'Optimization::Pt']]]
 ];

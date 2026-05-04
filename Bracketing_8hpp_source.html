@@ -108,19 +108,19 @@ $(document).ready(function() { init_codefold(0); });
 </div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Func&gt;</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keyword">inline</span> <a class="code hl_struct" href="structOptimization_1_1Range.html">Range</a> bracket_minimum(Func f, <span class="keywordtype">double</span> x, <span class="keywordtype">double</span> s = 0.01, <span class="keywordtype">double</span> k = 2.0) {</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span><span class="keyword">inline</span> <a class="code hl_struct" href="structOptimization_1_1Range.html">Range</a> bracket_minimum(<a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">Func</a> <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">f</a>, <span class="keywordtype">double</span> x, <span class="keywordtype">double</span> s = 0.01, <span class="keywordtype">double</span> <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">k</a> = 2.0) {</div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keywordtype">double</span> a = x;</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keywordtype">double</span> ya = f(a);</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keywordtype">double</span> <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">ya</a> = <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">f</a>(a);</div>
 <div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    <span class="keywordtype">double</span> b = a + s;</div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordtype">double</span> yb = f(b);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordtype">double</span> <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">yb</a> = <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">f</a>(b);</div>
 <div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
 <div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="comment">// [Step 1] 탐색 방향 결정</span></div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="comment">// 현재 스텝 방향(오른쪽)으로 이동했을 때 함수값이 커진다면(yb &gt; ya),</span></div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="comment">// 이는 하강 방향(Descent Direction)이 아니라는 의미입니다.</span></div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    <span class="comment">// 따라서 탐색 방향을 반대(왼쪽)로 바꾸기 위해 a와 b를 스왑하고 스텝(s)의 부호를 뒤집습니다.</span></div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordflow">if</span> (yb &gt; ya) {</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    <span class="keywordflow">if</span> (<a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">yb</a> &gt; <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">ya</a>) {</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>        std::swap(a, b);</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        std::swap(ya, yb);</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        std::swap(<a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">ya</a>, <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">yb</a>);</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        s = -s;</div>
 <div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    }</div>
 <div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span> </div>
@@ -225,10 +225,10 @@ $(document).ready(function() { init_codefold(0); });
 </div>
 <div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span> </div>
 <div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> Func&gt;</div>
-<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span><span class="keyword">inline</span> <span class="keywordtype">double</span> shubert_piyavskii(Func f, <a class="code hl_struct" href="structOptimization_1_1Range.html">Range</a> r, <span class="keywordtype">double</span> l, <span class="keywordtype">double</span> eps, <span class="keywordtype">int</span> max_iter) {</div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span><span class="keyword">inline</span> <span class="keywordtype">double</span> shubert_piyavskii(<a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">Func</a> <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">f</a>, <a class="code hl_struct" href="structOptimization_1_1Range.html">Range</a> r, <span class="keywordtype">double</span> <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">l</a>, <span class="keywordtype">double</span> <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">eps</a>, <span class="keywordtype">int</span> <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">max_iter</a>) {</div>
 <div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span>    <span class="comment">// 초기화: 구간의 양 끝점(a, b)을 평가하여 톱날의 시작점으로 리스트에 저장합니다.</span></div>
 <div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span>    <span class="comment">// X 좌표를 기준으로 항상 오름차순 정렬 상태를 유지해야 합니다.</span></div>
-<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    std::vector&lt;Pt&gt; pts = {{r.a, f(r.a)}, {r.b, f(r.b)}};</div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>    std::vector&lt;Pt&gt; <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">pts</a> = {{r.a, <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">f</a>(r.a)}, {r.b, <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">f</a>(r.b)}};</div>
 <div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span> </div>
 <div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    <span class="comment">// 지금까지 발견된 가장 작은 실제 함수값 추적</span></div>
 <div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span>    <span class="keywordtype">double</span> min_f = std::min(pts[0].y, pts[1].y);</div>
@@ -275,6 +275,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>}  <span class="comment">// namespace Optimization</span></div>
 <div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span> </div>
 <div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_BRACKETING_HPP_</span></div>
+<div class="ttc" id="aclassOptimization_1_1StaticMatrix_html"><div class="ttname"><a href="classOptimization_1_1StaticMatrix.html">Optimization::StaticMatrix</a></div><div class="ttdoc">전방 선언 (Forward Declaration)</div><div class="ttdef"><b>Definition</b> StaticMatrix.hpp:41</div></div>
 <div class="ttc" id="astructOptimization_1_1Pt_html"><div class="ttname"><a href="structOptimization_1_1Pt.html">Optimization::Pt</a></div><div class="ttdoc">Algorithm 3.5: Shubert-Piyavskii Method (전역 최적화 알고리즘)</div><div class="ttdef"><b>Definition</b> Bracketing.hpp:187</div></div>
 <div class="ttc" id="astructOptimization_1_1Pt_html_a497ea00e2c987994afed7f95ef585ec9"><div class="ttname"><a href="structOptimization_1_1Pt.html#a497ea00e2c987994afed7f95ef585ec9">Optimization::Pt::y</a></div><div class="ttdeci">double y</div><div class="ttdoc">Y 좌표 (해당 위치에서의 함수값)</div><div class="ttdef"><b>Definition</b> Bracketing.hpp:189</div></div>
 <div class="ttc" id="astructOptimization_1_1Pt_html_ae6ecde03f10c3a88de620221095c0926"><div class="ttname"><a href="structOptimization_1_1Pt.html#ae6ecde03f10c3a88de620221095c0926">Optimization::Pt::x</a></div><div class="ttdeci">double x</div><div class="ttdoc">X 좌표 (위치)</div><div class="ttdef"><b>Definition</b> Bracketing.hpp:188</div></div>

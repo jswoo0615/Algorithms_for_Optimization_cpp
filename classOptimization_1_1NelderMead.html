@@ -95,8 +95,8 @@ $(function() {
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a2b2fa7e185389fb3712079c7d8d1ec45" id="r_a2b2fa7e185389fb3712079c7d8d1ec45"><td class="memTemplParams" colspan="2">template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:a2b2fa7e185389fb3712079c7d8d1ec45"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="structOptimization_1_1OptimizationResultND.html">OptimizationResultND</a>&lt; N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1NelderMead.html#a2b2fa7e185389fb3712079c7d8d1ec45">optimize</a> (Func f, std::array&lt; double, N &gt; x_start, double step=1.0, double tol=1e-6, size_t max_iter=2000, bool verbose=false) noexcept</td></tr>
+<tr class="memitem:a2b2fa7e185389fb3712079c7d8d1ec45" id="r_a2b2fa7e185389fb3712079c7d8d1ec45"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> N, <a class="el" href="classOptimization_1_1StaticMatrix.html">typename</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">Func</a> &gt; </td></tr>
+<tr class="memitem:a2b2fa7e185389fb3712079c7d8d1ec45"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classOptimization_1_1StaticMatrix.html">static</a> <a class="el" href="structOptimization_1_1OptimizationResultND.html">OptimizationResultND</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">N</a> &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1NelderMead.html#a2b2fa7e185389fb3712079c7d8d1ec45">optimize</a> (<a class="el" href="classOptimization_1_1StaticMatrix.html">Func</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">f</a>, std::array&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, <a class="el" href="classOptimization_1_1StaticMatrix.html">N</a> &gt; x_start, <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">step</a>=1.0, <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">tol</a>=1<a class="el" href="classOptimization_1_1StaticMatrix.html">e</a>-6, <a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">max_iter</a>=2000, <a class="el" href="classOptimization_1_1StaticMatrix.html">bool</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">verbose</a>=<a class="el" href="classOptimization_1_1StaticMatrix.html">false</a>) <a class="el" href="classOptimization_1_1StaticMatrix.html">noexcept</a></td></tr>
 <tr class="memdesc:a2b2fa7e185389fb3712079c7d8d1ec45"><td class="mdescLeft">&#160;</td><td class="mdescRight">Nelder-Mead 알고리즘을 수행하여 최적해를 찾는 함수  <br /></td></tr>
 <tr class="separator:a2b2fa7e185389fb3712079c7d8d1ec45"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
@@ -111,7 +111,7 @@ Static Public Member Functions</h2></td></tr>
 </ol>
 <dl class="section note"><dt>Note</dt><dd>본 구현체는 다음과 같은 성능 최적화를 포함합니다:<ol type="1">
 <li><b>MISRA C++ 준수 및 O(1) 동적 할당 제로</b>: std::vector 대신 std::array를 사용하여 힙(Heap) 메모리 할당 오버헤드 제거</li>
-<li><b>SIMD / FMA 가속</b>: #pragma omp simd 및 std::fma를 적극 활용하여 벡터 연산 및 분산 계산 속도 극대화 </li>
+<li><b>SIMD / FMA 가속</b>: pragma omp simd 및 std::fma를 적극 활용하여 벡터 연산 및 분산 계산 속도 극대화 </li>
 </ol>
 </dd></dl>
 </div><h2 class="groupheader">Member Function Documentation</h2>
@@ -121,46 +121,46 @@ Static Public Member Functions</h2></td></tr>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;size_t N, typename Func &gt; </div>
+template&lt;<a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> N, <a class="el" href="classOptimization_1_1StaticMatrix.html">typename</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">Func</a> &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">static <a class="el" href="structOptimization_1_1OptimizationResultND.html">OptimizationResultND</a>&lt; N &gt; Optimization::NelderMead::optimize </td>
+          <td class="memname"><a class="el" href="classOptimization_1_1StaticMatrix.html">static</a> <a class="el" href="structOptimization_1_1OptimizationResultND.html">OptimizationResultND</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">N</a> &gt; Optimization::NelderMead::optimize </td>
           <td>(</td>
-          <td class="paramtype">Func&#160;</td>
+          <td class="paramtype"><a class="el" href="classOptimization_1_1StaticMatrix.html">Func</a>&#160;</td>
           <td class="paramname"><em>f</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">std::array&lt; double, N &gt;&#160;</td>
+          <td class="paramtype">std::array&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, <a class="el" href="classOptimization_1_1StaticMatrix.html">N</a> &gt;&#160;</td>
           <td class="paramname"><em>x_start</em>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
+          <td class="paramtype"><a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>&#160;</td>
           <td class="paramname"><em>step</em> = <code>1.0</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">double&#160;</td>
-          <td class="paramname"><em>tol</em> = <code>1e-6</code>, </td>
+          <td class="paramtype"><a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>&#160;</td>
+          <td class="paramname"><em>tol</em> = <code>1<a class="el" href="classOptimization_1_1StaticMatrix.html">e</a>-6</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">size_t&#160;</td>
+          <td class="paramtype"><a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a>&#160;</td>
           <td class="paramname"><em>max_iter</em> = <code>2000</code>, </td>
         </tr>
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">bool&#160;</td>
-          <td class="paramname"><em>verbose</em> = <code>false</code>&#160;</td>
+          <td class="paramtype"><a class="el" href="classOptimization_1_1StaticMatrix.html">bool</a>&#160;</td>
+          <td class="paramname"><em>verbose</em> = <code><a class="el" href="classOptimization_1_1StaticMatrix.html">false</a></code>&#160;</td>
         </tr>
         <tr>
           <td></td>

@@ -88,45 +88,40 @@ $(function() {
  <a href="classActiveSetSolver.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="ActiveSetSolver_8hpp_source.html">ActiveSetSolver.hpp</a>&gt;</code></p>
-<div class="dynheader">
-Collaboration diagram for ActiveSetSolver&lt; N_vars, N_eq, N_ineq &gt;:</div>
-<div class="dyncontent">
-<div class="center"><img src="classActiveSetSolver__coll__graph.png" border="0" usemap="#aActiveSetSolver_3_01N__vars_00_01N__eq_00_01N__ineq_01_4_coll__map" alt="Collaboration graph"/></div>
-<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:afcfcb45e2fb87f732e2b89079dc5ca8c" id="r_afcfcb45e2fb87f732e2b89079dc5ca8c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classActiveSetSolver.html#afcfcb45e2fb87f732e2b89079dc5ca8c">build_masked_KKT</a> (const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N_vars &gt; &amp;u_k)</td></tr>
+<tr class="memitem:afcfcb45e2fb87f732e2b89079dc5ca8c" id="r_afcfcb45e2fb87f732e2b89079dc5ca8c"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classActiveSetSolver.html#afcfcb45e2fb87f732e2b89079dc5ca8c">build_masked_KKT</a> (const StaticVector&lt; double, N_vars &gt; &amp;u_k)</td></tr>
 <tr class="memdesc:afcfcb45e2fb87f732e2b89079dc5ca8c"><td class="mdescLeft">&#160;</td><td class="mdescRight">현재 Working Set의 상태를 반영하여 KKT 시스템을 동적으로 조립 (Masking 기법)  <br /></td></tr>
 <tr class="separator:afcfcb45e2fb87f732e2b89079dc5ca8c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a5dc682fe44d18715ca28087939e42c0b" id="r_a5dc682fe44d18715ca28087939e42c0b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classActiveSetSolver.html#a5dc682fe44d18715ca28087939e42c0b">solve</a> (<a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N_vars &gt; &amp;u, int max_iter=100)</td></tr>
+<tr class="memitem:a5dc682fe44d18715ca28087939e42c0b" id="r_a5dc682fe44d18715ca28087939e42c0b"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classActiveSetSolver.html#a5dc682fe44d18715ca28087939e42c0b">solve</a> (StaticVector&lt; double, N_vars &gt; &amp;u, int max_iter=100)</td></tr>
 <tr class="memdesc:a5dc682fe44d18715ca28087939e42c0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Primal Active-Set QP 최적화 메인 루프  <br /></td></tr>
 <tr class="separator:a5dc682fe44d18715ca28087939e42c0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a2b11e6f0fdd682a9b2cb116e89bfc788" id="r_a2b11e6f0fdd682a9b2cb116e89bfc788"><td class="memItemLeft" align="right" valign="top"><a id="a2b11e6f0fdd682a9b2cb116e89bfc788" name="a2b11e6f0fdd682a9b2cb116e89bfc788"></a>
-<a class="el" href="classStaticMatrix.html">StaticMatrix</a>&lt; double, N_vars, N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>P</b></td></tr>
+StaticMatrix&lt; double, N_vars, N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>P</b></td></tr>
 <tr class="memdesc:a2b11e6f0fdd682a9b2cb116e89bfc788"><td class="mdescLeft">&#160;</td><td class="mdescRight">목적 함수의 2차항 계수 행렬 (Hessian). 양의 정부호(Positive Definite)여야 함. <br /></td></tr>
 <tr class="separator:a2b11e6f0fdd682a9b2cb116e89bfc788"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa18b25308442a24be70e5db4574d5e9b" id="r_aa18b25308442a24be70e5db4574d5e9b"><td class="memItemLeft" align="right" valign="top"><a id="aa18b25308442a24be70e5db4574d5e9b" name="aa18b25308442a24be70e5db4574d5e9b"></a>
-<a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>q</b></td></tr>
+StaticVector&lt; double, N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>q</b></td></tr>
 <tr class="memdesc:aa18b25308442a24be70e5db4574d5e9b"><td class="mdescLeft">&#160;</td><td class="mdescRight">목적 함수의 1차항 계수 벡터 (Gradient). <br /></td></tr>
 <tr class="separator:aa18b25308442a24be70e5db4574d5e9b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aee111248b158a5176823fd83006ae2ed" id="r_aee111248b158a5176823fd83006ae2ed"><td class="memItemLeft" align="right" valign="top"><a id="aee111248b158a5176823fd83006ae2ed" name="aee111248b158a5176823fd83006ae2ed"></a>
-<a class="el" href="classStaticMatrix.html">StaticMatrix</a>&lt; double, N_eq, N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>A_eq</b></td></tr>
+StaticMatrix&lt; double, N_eq, N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>A_eq</b></td></tr>
 <tr class="memdesc:aee111248b158a5176823fd83006ae2ed"><td class="mdescLeft">&#160;</td><td class="mdescRight">등식 제약 조건의 계수 행렬 <br /></td></tr>
 <tr class="separator:aee111248b158a5176823fd83006ae2ed"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1e01930e593f8a9f6187b1086845fd76" id="r_a1e01930e593f8a9f6187b1086845fd76"><td class="memItemLeft" align="right" valign="top"><a id="a1e01930e593f8a9f6187b1086845fd76" name="a1e01930e593f8a9f6187b1086845fd76"></a>
-<a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N_eq &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>b_eq</b></td></tr>
+StaticVector&lt; double, N_eq &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>b_eq</b></td></tr>
 <tr class="memdesc:a1e01930e593f8a9f6187b1086845fd76"><td class="mdescLeft">&#160;</td><td class="mdescRight">등식 제약 조건의 상수 벡터 <br /></td></tr>
 <tr class="separator:a1e01930e593f8a9f6187b1086845fd76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:add9d53c4ad26d887d22a3f2d77639f26" id="r_add9d53c4ad26d887d22a3f2d77639f26"><td class="memItemLeft" align="right" valign="top"><a id="add9d53c4ad26d887d22a3f2d77639f26" name="add9d53c4ad26d887d22a3f2d77639f26"></a>
-<a class="el" href="classStaticMatrix.html">StaticMatrix</a>&lt; double, N_ineq, N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>A_ineq</b></td></tr>
+StaticMatrix&lt; double, N_ineq, N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>A_ineq</b></td></tr>
 <tr class="memdesc:add9d53c4ad26d887d22a3f2d77639f26"><td class="mdescLeft">&#160;</td><td class="mdescRight">부등식 제약 조건의 계수 행렬 <br /></td></tr>
 <tr class="separator:add9d53c4ad26d887d22a3f2d77639f26"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3aeb158e94915adb7c3faad273fdaedd" id="r_a3aeb158e94915adb7c3faad273fdaedd"><td class="memItemLeft" align="right" valign="top"><a id="a3aeb158e94915adb7c3faad273fdaedd" name="a3aeb158e94915adb7c3faad273fdaedd"></a>
-<a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N_ineq &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>b_ineq</b></td></tr>
+StaticVector&lt; double, N_ineq &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>b_ineq</b></td></tr>
 <tr class="memdesc:a3aeb158e94915adb7c3faad273fdaedd"><td class="mdescLeft">&#160;</td><td class="mdescRight">부등식 제약 조건의 상수 벡터 <br /></td></tr>
 <tr class="separator:a3aeb158e94915adb7c3faad273fdaedd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa020fbb2c733983b1985c9c084cd92eb" id="r_aa020fbb2c733983b1985c9c084cd92eb"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classActiveSetSolver.html#aa020fbb2c733983b1985c9c084cd92eb">working_set</a> [N_ineq &gt; 0 ? N_ineq :1] = {false}</td></tr>
@@ -164,7 +159,7 @@ template&lt;size_t N_vars, size_t N_eq, size_t N_ineq&gt; </div>
         <tr>
           <td class="memname">void <a class="el" href="classActiveSetSolver.html">ActiveSetSolver</a>&lt; N_vars, N_eq, N_ineq &gt;::build_masked_KKT </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N_vars &gt; &amp;&#160;</td>
+          <td class="paramtype">const StaticVector&lt; double, N_vars &gt; &amp;&#160;</td>
           <td class="paramname"><em>u_k</em></td><td>)</td>
           <td></td>
         </tr>
@@ -201,7 +196,7 @@ template&lt;size_t N_vars, size_t N_eq, size_t N_ineq&gt; </div>
         <tr>
           <td class="memname">bool <a class="el" href="classActiveSetSolver.html">ActiveSetSolver</a>&lt; N_vars, N_eq, N_ineq &gt;::solve </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classStaticMatrix.html">StaticVector</a>&lt; double, N_vars &gt; &amp;&#160;</td>
+          <td class="paramtype">StaticVector&lt; double, N_vars &gt; &amp;&#160;</td>
           <td class="paramname"><em>u</em>, </td>
         </tr>
         <tr>

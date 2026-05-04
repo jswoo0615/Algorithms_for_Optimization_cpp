@@ -88,7 +88,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>Dynamic Bicycle Model (6-State, 2-Control)  
+<p>Frenet Dynamic Bicycle Model (6-State, 2-Control)  
  <a href="structOptimization_1_1vehicle_1_1DynamicBicycleModel.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="DynamicBicycleModel_8hpp_source.html">DynamicBicycleModel.hpp</a>&gt;</code></p>
@@ -96,34 +96,37 @@ $(function() {
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:adfac7c77f58b893b4cac3309d5dcf237" id="r_adfac7c77f58b893b4cac3309d5dcf237"><td class="memTemplParams" colspan="2"><a id="adfac7c77f58b893b4cac3309d5dcf237" name="adfac7c77f58b893b4cac3309d5dcf237"></a>
-template&lt;typename T &gt; </td></tr>
-<tr class="memitem:adfac7c77f58b893b4cac3309d5dcf237"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; T, 6 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator()</b> (const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; T, 6 &gt; &amp;x, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; T, 2 &gt; &amp;u) const</td></tr>
+template&lt;<a class="el" href="classOptimization_1_1StaticMatrix.html">typename</a> T &gt; </td></tr>
+<tr class="memitem:adfac7c77f58b893b4cac3309d5dcf237"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; T, 6 &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>operator()</b> (<a class="el" href="classOptimization_1_1StaticMatrix.html">const</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; T, 6 &gt; &amp;x, <a class="el" href="classOptimization_1_1StaticMatrix.html">const</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; T, 2 &gt; &amp;<a class="el" href="classOptimization_1_1StaticMatrix.html">u</a>) <a class="el" href="classOptimization_1_1StaticMatrix.html">const</a></td></tr>
 <tr class="separator:adfac7c77f58b893b4cac3309d5dcf237"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:a13a2a855d53a4c4352b4e43303dcb2f0" id="r_a13a2a855d53a4c4352b4e43303dcb2f0"><td class="memItemLeft" align="right" valign="top"><a id="a13a2a855d53a4c4352b4e43303dcb2f0" name="a13a2a855d53a4c4352b4e43303dcb2f0"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>m</b> = 1500.0</td></tr>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>&#160;</td><td class="memItemRight" valign="bottom"><b>m</b> = 1500.0</td></tr>
 <tr class="separator:a13a2a855d53a4c4352b4e43303dcb2f0"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a80ce2829cb5a8ac44d90925bcca987ac" id="r_a80ce2829cb5a8ac44d90925bcca987ac"><td class="memItemLeft" align="right" valign="top"><a id="a80ce2829cb5a8ac44d90925bcca987ac" name="a80ce2829cb5a8ac44d90925bcca987ac"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>Iz</b> = 3000.0</td></tr>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Iz</b> = 3000.0</td></tr>
 <tr class="separator:a80ce2829cb5a8ac44d90925bcca987ac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a10c2c44893356d5f44b08948623c0ba4" id="r_a10c2c44893356d5f44b08948623c0ba4"><td class="memItemLeft" align="right" valign="top"><a id="a10c2c44893356d5f44b08948623c0ba4" name="a10c2c44893356d5f44b08948623c0ba4"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>Lf</b> = 1.2</td></tr>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Lf</b> = 1.2</td></tr>
 <tr class="separator:a10c2c44893356d5f44b08948623c0ba4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:acbd0a3b1e9878f1300006a7e673f9de4" id="r_acbd0a3b1e9878f1300006a7e673f9de4"><td class="memItemLeft" align="right" valign="top"><a id="acbd0a3b1e9878f1300006a7e673f9de4" name="acbd0a3b1e9878f1300006a7e673f9de4"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>Lr</b> = 1.6</td></tr>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Lr</b> = 1.6</td></tr>
 <tr class="separator:acbd0a3b1e9878f1300006a7e673f9de4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a20c64706112ece1ac2bfd7d95a4c0609" id="r_a20c64706112ece1ac2bfd7d95a4c0609"><td class="memItemLeft" align="right" valign="top"><a id="a20c64706112ece1ac2bfd7d95a4c0609" name="a20c64706112ece1ac2bfd7d95a4c0609"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>Cf</b> = 100000.0</td></tr>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Cf</b> = 100000.0</td></tr>
 <tr class="separator:a20c64706112ece1ac2bfd7d95a4c0609"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3c47cbf00fd13986d1d222eea4791b05" id="r_a3c47cbf00fd13986d1d222eea4791b05"><td class="memItemLeft" align="right" valign="top"><a id="a3c47cbf00fd13986d1d222eea4791b05" name="a3c47cbf00fd13986d1d222eea4791b05"></a>
-double&#160;</td><td class="memItemRight" valign="bottom"><b>Cr</b> = 100000.0</td></tr>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>&#160;</td><td class="memItemRight" valign="bottom"><b>Cr</b> = 100000.0</td></tr>
 <tr class="separator:a3c47cbf00fd13986d1d222eea4791b05"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a39a0f91b631ede3d144173dee9d7b786" id="r_a39a0f91b631ede3d144173dee9d7b786"><td class="memItemLeft" align="right" valign="top"><a id="a39a0f91b631ede3d144173dee9d7b786" name="a39a0f91b631ede3d144173dee9d7b786"></a>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>&#160;</td><td class="memItemRight" valign="bottom"><b>kappa</b> = 0.0</td></tr>
+<tr class="separator:a39a0f91b631ede3d144173dee9d7b786"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>Dynamic Bicycle Model (6-State, 2-Control) </p>
-<p>State x: [X, Y, psi(요각), v_x(종방향 속도), v_y(횡방향 속도), r(요레이트)]^T Control u: [delta(조향각), a(가속도)]^T </p>
+<div class="textblock"><p>Frenet Dynamic Bicycle Model (6-State, 2-Control) </p>
+<p>곡률(kappa)이 반영된 S-D 좌표계 기반의 차량 동역학 모델. State x: [S(종방향 거리), D(횡방향 오차), mu(헤딩 오차), v_x(종방향 속도), v_y(횡방향 속도), r(요레이트)]^T Control u: [delta(조향각), a(가속도)]^T </p>
 </div><hr/>The documentation for this struct was generated from the following file:<ul>
 <li>include/Optimization/VehicleModel/<a class="el" href="DynamicBicycleModel_8hpp_source.html">DynamicBicycleModel.hpp</a></li>
 </ul>

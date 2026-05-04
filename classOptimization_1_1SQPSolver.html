@@ -92,14 +92,19 @@ $(function() {
  <a href="classOptimization_1_1SQPSolver.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="SQPSolver_8hpp_source.html">SQPSolver.hpp</a>&gt;</code></p>
+<div class="dynheader">
+Collaboration diagram for Optimization::SQPSolver&lt; N_vars, N_eq, N_ineq &gt;:</div>
+<div class="dyncontent">
+<div class="center"><img src="classOptimization_1_1SQPSolver__coll__graph.png" border="0" usemap="#aOptimization_1_1SQPSolver_3_01N__vars_00_01N__eq_00_01N__ineq_01_4_coll__map" alt="Collaboration graph"/></div>
+<center><span class="legend">[<a href="graph_legend.html">legend</a>]</span></center></div>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a2d5f83cc3bb4e5725d328b45b3ebd650" id="r_a2d5f83cc3bb4e5725d328b45b3ebd650"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptimization_1_1SQPSolver.html#a2d5f83cc3bb4e5725d328b45b3ebd650">SQPSolver</a> ()</td></tr>
 <tr class="memdesc:a2d5f83cc3bb4e5725d328b45b3ebd650"><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="classOptimization_1_1SQPSolver.html" title="SQPSolver 클래스">SQPSolver</a> 생성자  <br /></td></tr>
 <tr class="separator:a2d5f83cc3bb4e5725d328b45b3ebd650"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a9039a9df5fcf29713eaaea809057d20f" id="r_a9039a9df5fcf29713eaaea809057d20f"><td class="memTemplParams" colspan="2">template&lt;typename <a class="el" href="structCostFunc.html">CostFunc</a> , typename EqFunc , typename <a class="el" href="structIneqFunc.html">IneqFunc</a> &gt; </td></tr>
-<tr class="memitem:a9039a9df5fcf29713eaaea809057d20f"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1SQPSolver.html#a9039a9df5fcf29713eaaea809057d20f">solve</a> (<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N_vars &gt; &amp;u, <a class="el" href="structCostFunc.html">CostFunc</a> cost_f, EqFunc eq_f, <a class="el" href="structIneqFunc.html">IneqFunc</a> ineq_f, int max_iter=50)</td></tr>
+<tr class="memitem:a9039a9df5fcf29713eaaea809057d20f" id="r_a9039a9df5fcf29713eaaea809057d20f"><td class="memTemplParams" colspan="2">template&lt;<a class="el" href="classOptimization_1_1StaticMatrix.html">typename</a> <a class="el" href="structCostFunc.html">CostFunc</a> , <a class="el" href="classOptimization_1_1StaticMatrix.html">typename</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">EqFunc</a> , <a class="el" href="classOptimization_1_1StaticMatrix.html">typename</a> <a class="el" href="structIneqFunc.html">IneqFunc</a> &gt; </td></tr>
+<tr class="memitem:a9039a9df5fcf29713eaaea809057d20f"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classOptimization_1_1StaticMatrix.html">bool</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="classOptimization_1_1SQPSolver.html#a9039a9df5fcf29713eaaea809057d20f">solve</a> (<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, N_vars &gt; &amp;<a class="el" href="classOptimization_1_1StaticMatrix.html">u</a>, <a class="el" href="structCostFunc.html">CostFunc</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">cost_f</a>, <a class="el" href="classOptimization_1_1StaticMatrix.html">EqFunc</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">eq_f</a>, <a class="el" href="structIneqFunc.html">IneqFunc</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">ineq_f</a>, <a class="el" href="classOptimization_1_1StaticMatrix.html">int</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">max_iter</a>=50)</td></tr>
 <tr class="memdesc:a9039a9df5fcf29713eaaea809057d20f"><td class="mdescLeft">&#160;</td><td class="mdescRight">최적화 문제를 푸는 메인 함수  <br /></td></tr>
 <tr class="separator:a9039a9df5fcf29713eaaea809057d20f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
@@ -109,11 +114,11 @@ Public Attributes</h2></td></tr>
 <a class="el" href="classOptimization_1_1IPMQPSolver.html">IPMQPSolver</a>&lt; N_vars, N_eq, N_ineq &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>qp_solver</b></td></tr>
 <tr class="separator:afa9127c3be514c4d1cd15677687e577f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeda6d1947c6b4937dac7f16077123690" id="r_aeda6d1947c6b4937dac7f16077123690"><td class="memItemLeft" align="right" valign="top"><a id="aeda6d1947c6b4937dac7f16077123690" name="aeda6d1947c6b4937dac7f16077123690"></a>
-<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; double, N_vars, N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>H</b></td></tr>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, N_vars, N_vars &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>H</b></td></tr>
 <tr class="separator:aeda6d1947c6b4937dac7f16077123690"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><div class="compoundTemplParams">template&lt;size_t N_vars, size_t N_eq, size_t N_ineq&gt;<br />
+<div class="textblock"><div class="compoundTemplParams">template&lt;<a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> N_vars, <a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> N_eq, <a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> N_ineq&gt;<br />
 class Optimization::SQPSolver&lt; N_vars, N_eq, N_ineq &gt;</div><p><a class="el" href="classOptimization_1_1SQPSolver.html" title="SQPSolver 클래스">SQPSolver</a> 클래스 </p>
 <p>순차적 이차 계획법(Sequential Quadratic Programming)을 구현한 비선형 최적화 솔버입니다. 비선형 목적 함수와 비선형 제약 조건(등식 및 부등식)을 가진 문제를 해결하는 데 사용됩니다. 목적 함수는 2차 근사(Hessian 근사)를 수행하고, 제약 조건은 1차 근사(Jacobian)를 수행하여 매 반복마다 2차 계획법(QP) 하위 문제를 생성하고 IPM(Interior Point Method) 솔버를 통해 해를 찾습니다.</p>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
@@ -131,7 +136,7 @@ class Optimization::SQPSolver&lt; N_vars, N_eq, N_ineq &gt;</div><p><a class="el
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;size_t N_vars, size_t N_eq, size_t N_ineq&gt; </div>
+template&lt;<a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> N_vars, <a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> N_eq, <a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> N_ineq&gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
@@ -162,17 +167,17 @@ template&lt;size_t N_vars, size_t N_eq, size_t N_ineq&gt; </div>
 <div class="memitem">
 <div class="memproto">
 <div class="memtemplate">
-template&lt;size_t N_vars, size_t N_eq, size_t N_ineq&gt; </div>
+template&lt;<a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> N_vars, <a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> N_eq, <a class="el" href="classOptimization_1_1StaticMatrix.html">size_t</a> N_ineq&gt; </div>
 <div class="memtemplate">
-template&lt;typename <a class="el" href="structCostFunc.html">CostFunc</a> , typename EqFunc , typename <a class="el" href="structIneqFunc.html">IneqFunc</a> &gt; </div>
+template&lt;<a class="el" href="classOptimization_1_1StaticMatrix.html">typename</a> <a class="el" href="structCostFunc.html">CostFunc</a> , <a class="el" href="classOptimization_1_1StaticMatrix.html">typename</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">EqFunc</a> , <a class="el" href="classOptimization_1_1StaticMatrix.html">typename</a> <a class="el" href="structIneqFunc.html">IneqFunc</a> &gt; </div>
 <table class="mlabels">
   <tr>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">bool <a class="el" href="classOptimization_1_1SQPSolver.html">Optimization::SQPSolver</a>&lt; N_vars, N_eq, N_ineq &gt;::solve </td>
+          <td class="memname"><a class="el" href="classOptimization_1_1StaticMatrix.html">bool</a> <a class="el" href="classOptimization_1_1SQPSolver.html">Optimization::SQPSolver</a>&lt; N_vars, N_eq, N_ineq &gt;::solve </td>
           <td>(</td>
-          <td class="paramtype"><a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N_vars &gt; &amp;&#160;</td>
+          <td class="paramtype"><a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, N_vars &gt; &amp;&#160;</td>
           <td class="paramname"><em>u</em>, </td>
         </tr>
         <tr>
@@ -184,7 +189,7 @@ template&lt;typename <a class="el" href="structCostFunc.html">CostFunc</a> , typ
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">EqFunc&#160;</td>
+          <td class="paramtype"><a class="el" href="classOptimization_1_1StaticMatrix.html">EqFunc</a>&#160;</td>
           <td class="paramname"><em>eq_f</em>, </td>
         </tr>
         <tr>
@@ -196,7 +201,7 @@ template&lt;typename <a class="el" href="structCostFunc.html">CostFunc</a> , typ
         <tr>
           <td class="paramkey"></td>
           <td></td>
-          <td class="paramtype">int&#160;</td>
+          <td class="paramtype"><a class="el" href="classOptimization_1_1StaticMatrix.html">int</a>&#160;</td>
           <td class="paramname"><em>max_iter</em> = <code>50</code>&#160;</td>
         </tr>
         <tr>

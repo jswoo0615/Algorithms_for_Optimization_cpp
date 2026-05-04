@@ -1,9 +1,9 @@
 var searchData=
 [
   ['obstacle_0',['Obstacle',['../structOptimization_1_1Obstacle.html',1,'Optimization']]],
-  ['obstacleinfo_1',['ObstacleInfo',['../structOptimization_1_1PathPlanner_1_1ObstacleInfo.html',1,'Optimization::PathPlanner']]],
-  ['operator_28_29_2',['operator()',['../structOptimization_1_1GoldenSectionStrategy.html#a6d408aef71c5aefed47c02985d2caa65',1,'Optimization::GoldenSectionStrategy']]],
-  ['operator_2a_3',['operator*',['../classStaticMatrix.html#a53794cb9755606a6e37d24119c5b3bbb',1,'StaticMatrix']]],
+  ['obstaclefrenet_1',['ObstacleFrenet',['../structOptimization_1_1ObstacleFrenet.html',1,'Optimization']]],
+  ['obstacleinfo_2',['ObstacleInfo',['../structOptimization_1_1PathPlanner_1_1ObstacleInfo.html',1,'Optimization::PathPlanner']]],
+  ['operator_28_29_3',['operator()',['../structOptimization_1_1GoldenSectionStrategy.html#a6d408aef71c5aefed47c02985d2caa65',1,'Optimization::GoldenSectionStrategy']]],
   ['optimizationresult_4',['OptimizationResult',['../structOptimization_1_1OptimizationResult.html',1,'Optimization']]],
   ['optimizationresult1d_5',['OptimizationResult1D',['../structOptimization_1_1OptimizationResult1D.html',1,'Optimization']]],
   ['optimizationresultnd_6',['OptimizationResultND',['../structOptimization_1_1OptimizationResultND.html',1,'Optimization']]],
