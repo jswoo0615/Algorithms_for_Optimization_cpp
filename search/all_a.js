@@ -1,6 +1,7 @@
 var searchData=
 [
-  ['lambda_5fopt_0',['lambda_opt',['../classEQPSolver.html#ab13cd98ec664a08e60325081cd7075fc',1,'EQPSolver']]],
-  ['linesearch_1',['LineSearch',['../classOptimization_1_1LineSearch.html',1,'Optimization']]],
-  ['linesearchtest_2',['LineSearchTest',['../classLineSearchTest.html',1,'']]]
+  ['obstacle_0',['Obstacle',['../structOptimization_1_1Obstacle.html',1,'Optimization']]],
+  ['obstaclefrenet_1',['ObstacleFrenet',['../structOptimization_1_1ObstacleFrenet.html',1,'Optimization']]],
+  ['optimizationresult_2',['OptimizationResult',['../structOptimization_1_1OptimizationResult.html',1,'Optimization']]],
+  ['optimize_3',['optimize',['../classOptimization_1_1NewtonMethod.html#a86e91981e24e45b04dd40aaba6901ee8',1,'Optimization::NewtonMethod']]]
 ];

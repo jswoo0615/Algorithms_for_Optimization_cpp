@@ -1,10 +1,7 @@
 var searchData=
 [
-  ['cma_5fes_0',['CMA_ES',['../classOptimization_1_1CMA__ES.html',1,'Optimization']]],
-  ['conjugategradient_1',['ConjugateGradient',['../classOptimization_1_1ConjugateGradient.html',1,'Optimization']]],
-  ['conjugategradienttest_2',['ConjugateGradientTest',['../classConjugateGradientTest.html',1,'']]],
-  ['convexquadratic2d_3',['ConvexQuadratic2D',['../structOptimization_1_1Tests_1_1ConvexQuadratic2D.html',1,'Optimization::Tests']]],
-  ['costfunc_4',['costfunc',['../structCostFunc.html',1,'CostFunc'],['../structOptimization_1_1NMPCController_1_1CostFunc.html',1,'Optimization::NMPCController&lt; Np &gt;::CostFunc']]],
-  ['crossentropy_5',['CrossEntropy',['../classOptimization_1_1CrossEntropy.html',1,'Optimization']]],
-  ['cycliccoordinatesearch_6',['CyclicCoordinateSearch',['../classOptimization_1_1CyclicCoordinateSearch.html',1,'Optimization']]]
+  ['dual_0',['Dual',['../structOptimization_1_1Dual.html',1,'Optimization']]],
+  ['dualvec_1',['DualVec',['../structOptimization_1_1DualVec.html',1,'Optimization']]],
+  ['dummyeq_2',['DummyEq',['../structOptimization_1_1NMPCController_1_1DummyEq.html',1,'Optimization::NMPCController']]],
+  ['dynamicbicyclemodel_3',['dynamicbicyclemodel',['../classOptimization_1_1DynamicBicycleModel.html',1,'Optimization::DynamicBicycleModel'],['../structOptimization_1_1vehicle_1_1DynamicBicycleModel.html',1,'Optimization::vehicle::DynamicBicycleModel']]]
 ];

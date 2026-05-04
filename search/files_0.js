@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['gradientdescent_2ehpp_0',['GradientDescent.hpp',['../GradientDescent_8hpp.html',1,'']]]
+  ['kktmonitor_2ehpp_0',['KKTMonitor.hpp',['../KKTMonitor_8hpp.html',1,'']]]
 ];

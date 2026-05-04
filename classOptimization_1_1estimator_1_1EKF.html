@@ -96,29 +96,29 @@ Collaboration diagram for Optimization::estimator::EKF&lt; Nx, Nu &gt;:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
 <tr class="memitem:aea14d232f04939c8220f0c026b7b9a9a" id="r_aea14d232f04939c8220f0c026b7b9a9a"><td class="memItemLeft" align="right" valign="top"><a id="aea14d232f04939c8220f0c026b7b9a9a" name="aea14d232f04939c8220f0c026b7b9a9a"></a>
-<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, Nx, Nx &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>invert</b> (<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, Nx, Nx &gt; <a class="el" href="classOptimization_1_1StaticMatrix.html">mat</a>)</td></tr>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; double, Nx, Nx &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>invert</b> (<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; double, Nx, Nx &gt; mat)</td></tr>
 <tr class="separator:aea14d232f04939c8220f0c026b7b9a9a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a9215ca8f6c5f3670b8e1cf46a46b4ac7" id="r_a9215ca8f6c5f3670b8e1cf46a46b4ac7"><td class="memTemplParams" colspan="2"><a id="a9215ca8f6c5f3670b8e1cf46a46b4ac7" name="a9215ca8f6c5f3670b8e1cf46a46b4ac7"></a>
-template&lt;<a class="el" href="classOptimization_1_1StaticMatrix.html">typename</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">Model</a> &gt; </td></tr>
-<tr class="memitem:a9215ca8f6c5f3670b8e1cf46a46b4ac7"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classOptimization_1_1StaticMatrix.html">void</a>&#160;</td><td class="memTemplItemRight" valign="bottom"><b>predict</b> (<a class="el" href="classOptimization_1_1StaticMatrix.html">Model</a> &amp;model, <a class="el" href="classOptimization_1_1StaticMatrix.html">const</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, Nu &gt; &amp;<a class="el" href="classOptimization_1_1StaticMatrix.html">u</a>, <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a> dt)</td></tr>
+template&lt;typename Model &gt; </td></tr>
+<tr class="memitem:a9215ca8f6c5f3670b8e1cf46a46b4ac7"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>predict</b> (Model &amp;model, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nu &gt; &amp;u, double dt)</td></tr>
 <tr class="separator:a9215ca8f6c5f3670b8e1cf46a46b4ac7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad58f10212bc1db8de20fd3084532e6f4" id="r_ad58f10212bc1db8de20fd3084532e6f4"><td class="memItemLeft" align="right" valign="top"><a id="ad58f10212bc1db8de20fd3084532e6f4" name="ad58f10212bc1db8de20fd3084532e6f4"></a>
-<a class="el" href="classOptimization_1_1StaticMatrix.html">void</a>&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> (<a class="el" href="classOptimization_1_1StaticMatrix.html">const</a> <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, Nx &gt; &amp;z)</td></tr>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>update</b> (const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;z)</td></tr>
 <tr class="separator:ad58f10212bc1db8de20fd3084532e6f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
 Public Attributes</h2></td></tr>
 <tr class="memitem:ae531b21b95a0c273feb07ae79d5fb508" id="r_ae531b21b95a0c273feb07ae79d5fb508"><td class="memItemLeft" align="right" valign="top"><a id="ae531b21b95a0c273feb07ae79d5fb508" name="ae531b21b95a0c273feb07ae79d5fb508"></a>
-<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, Nx &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>x_est</b></td></tr>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nx &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>x_est</b></td></tr>
 <tr class="separator:ae531b21b95a0c273feb07ae79d5fb508"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a6a48b22d9920110a7c80fdf769eb643f" id="r_a6a48b22d9920110a7c80fdf769eb643f"><td class="memItemLeft" align="right" valign="top"><a id="a6a48b22d9920110a7c80fdf769eb643f" name="a6a48b22d9920110a7c80fdf769eb643f"></a>
-<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, Nx, Nx &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>P</b></td></tr>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; double, Nx, Nx &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>P</b></td></tr>
 <tr class="separator:a6a48b22d9920110a7c80fdf769eb643f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af10121e3ab622393102c8ce6116a3121" id="r_af10121e3ab622393102c8ce6116a3121"><td class="memItemLeft" align="right" valign="top"><a id="af10121e3ab622393102c8ce6116a3121" name="af10121e3ab622393102c8ce6116a3121"></a>
-<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, Nx, Nx &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Q</b></td></tr>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; double, Nx, Nx &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>Q</b></td></tr>
 <tr class="separator:af10121e3ab622393102c8ce6116a3121"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a4bf0f09925ea25950148f06896eecb43" id="r_a4bf0f09925ea25950148f06896eecb43"><td class="memItemLeft" align="right" valign="top"><a id="a4bf0f09925ea25950148f06896eecb43" name="a4bf0f09925ea25950148f06896eecb43"></a>
-<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; <a class="el" href="classOptimization_1_1StaticMatrix.html">double</a>, Nx, Nx &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>R</b></td></tr>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; double, Nx, Nx &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>R</b></td></tr>
 <tr class="separator:a4bf0f09925ea25950148f06896eecb43"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following file:<ul>

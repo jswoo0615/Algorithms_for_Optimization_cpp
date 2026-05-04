@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['highdimquadraticfunc_0',['HighDimQuadraticFunc',['../structOptimization_1_1Test_1_1HighDimQuadraticFunc.html',1,'Optimization::Test']]],
-  ['hookejeeves_1',['HookeJeeves',['../classOptimization_1_1HookeJeeves.html',1,'Optimization']]],
-  ['hypergradientdescent_2',['HyperGradientDescent',['../classOptimization_1_1HyperGradientDescent.html',1,'Optimization']]]
+  ['mathtraits_0',['MathTraits',['../structOptimization_1_1MathTraits.html',1,'Optimization']]],
+  ['mathtraits_3c_20optimization_3a_3adual_3c_20t_20_3e_20_3e_1',['MathTraits&lt; Optimization::Dual&lt; T &gt; &gt;',['../structOptimization_1_1MathTraits_3_01Optimization_1_1Dual_3_01T_01_4_01_4.html',1,'Optimization']]]
 ];

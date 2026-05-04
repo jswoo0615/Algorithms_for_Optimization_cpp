@@ -1,5 +1,5 @@
 var searchData=
 [
-  ['f_5fopt_0',['f_opt',['../structOptimization_1_1OptimizationResultND.html#aeebc928723f3605b914941109afff683',1,'Optimization::OptimizationResultND::f_opt'],['../structOptimization_1_1OptimizationResult.html#a71d98261a5a75d6c06fbc2de2a0ae03a',1,'Optimization::OptimizationResult::f_opt']]],
-  ['forward_5fpass_1',['forward_pass',['../classOptimization_1_1BlockBandedSolver.html#ac6475a6e1cc5218f43a1e0702b66b751',1,'Optimization::BlockBandedSolver']]]
+  ['g_0',['g',['../structOptimization_1_1DualVec.html#a262844a26e409eb1f25a06e4c8764774',1,'Optimization::DualVec']]],
+  ['get_5fglobal_5fto_5flocal_1',['get_global_to_local',['../classOptimization_1_1utils_1_1SE2Transform.html#afd657d207c196127e0c181f87c2ab68d',1,'Optimization::utils::SE2Transform']]]
 ];

@@ -1,6 +1,5 @@
 var searchData=
 [
-  ['generalizedpatternsearch_0',['GeneralizedPatternSearch',['../classOptimization_1_1GeneralizedPatternSearch.html',1,'Optimization']]],
-  ['goldensectionstrategy_1',['GoldenSectionStrategy',['../structOptimization_1_1GoldenSectionStrategy.html',1,'Optimization']]],
-  ['gradientdescent_2',['GradientDescent',['../classOptimization_1_1GradientDescent.html',1,'Optimization']]]
+  ['kkt_5fmetrics_0',['KKT_Metrics',['../structOptimization_1_1KKTMonitor_1_1KKT__Metrics.html',1,'Optimization::KKTMonitor']]],
+  ['kktmonitor_1',['KKTMonitor',['../classOptimization_1_1KKTMonitor.html',1,'Optimization']]]
 ];

@@ -1,8 +1,6 @@
 var searchData=
 [
-  ['highdimquadraticfunc_0',['HighDimQuadraticFunc',['../structOptimization_1_1Test_1_1HighDimQuadraticFunc.html',1,'Optimization::Test']]],
-  ['hookejeeves_1',['HookeJeeves',['../classOptimization_1_1HookeJeeves.html',1,'Optimization']]],
-  ['hookejeeves_2ehpp_2',['HookeJeeves.hpp',['../HookeJeeves_8hpp.html',1,'']]],
-  ['hypergradientdescent_3',['HyperGradientDescent',['../classOptimization_1_1HyperGradientDescent.html',1,'Optimization']]],
-  ['hypergradientdescent_2ehpp_4',['HyperGradientDescent.hpp',['../HyperGradientDescent_8hpp.html',1,'']]]
+  ['kkt_5fmetrics_0',['KKT_Metrics',['../structOptimization_1_1KKTMonitor_1_1KKT__Metrics.html',1,'Optimization::KKTMonitor']]],
+  ['kktmonitor_1',['KKTMonitor',['../classOptimization_1_1KKTMonitor.html',1,'Optimization']]],
+  ['kktmonitor_2ehpp_2',['KKTMonitor.hpp',['../KKTMonitor_8hpp.html',1,'']]]
 ];

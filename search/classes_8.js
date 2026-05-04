@@ -1,5 +1,6 @@
 var searchData=
 [
-  ['kkt_5fmetrics_0',['KKT_Metrics',['../structOptimization_1_1KKTMonitor_1_1KKT__Metrics.html',1,'Optimization::KKTMonitor']]],
-  ['kktmonitor_1',['KKTMonitor',['../classOptimization_1_1KKTMonitor.html',1,'Optimization']]]
+  ['obstacle_0',['Obstacle',['../structOptimization_1_1Obstacle.html',1,'Optimization']]],
+  ['obstaclefrenet_1',['ObstacleFrenet',['../structOptimization_1_1ObstacleFrenet.html',1,'Optimization']]],
+  ['optimizationresult_2',['OptimizationResult',['../structOptimization_1_1OptimizationResult.html',1,'Optimization']]]
 ];

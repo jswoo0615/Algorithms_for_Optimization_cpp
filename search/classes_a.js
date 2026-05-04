@@ -1,8 +1,11 @@
 var searchData=
 [
-  ['mathtraits_0',['MathTraits',['../structOptimization_1_1MathTraits.html',1,'Optimization']]],
-  ['mathtraits_3c_20optimization_3a_3adual_3c_20t_20_3e_20_3e_1',['MathTraits&lt; Optimization::Dual&lt; T &gt; &gt;',['../structOptimization_1_1MathTraits_3_01Optimization_1_1Dual_3_01T_01_4_01_4.html',1,'Optimization']]],
-  ['meshadaptivedirectsearch_2',['MeshAdaptiveDirectSearch',['../classOptimization_1_1MeshAdaptiveDirectSearch.html',1,'Optimization']]],
-  ['momentum_3',['Momentum',['../classOptimization_1_1Momentum.html',1,'Optimization']]],
-  ['momentumoptimizertest_4',['MomentumOptimizerTest',['../classOptimization_1_1Test_1_1MomentumOptimizerTest.html',1,'Optimization::Test']]]
+  ['se2transform_0',['SE2Transform',['../classOptimization_1_1utils_1_1SE2Transform.html',1,'Optimization::utils']]],
+  ['sparsenmpc_1',['SparseNMPC',['../classOptimization_1_1controller_1_1SparseNMPC.html',1,'Optimization::controller']]],
+  ['staticmatrix_2',['StaticMatrix',['../classOptimization_1_1StaticMatrix.html',1,'Optimization']]],
+  ['staticmatrix_3c_20double_2c_202_20_3e_3',['StaticMatrix&lt; double, 2 &gt;',['../classOptimization_1_1StaticMatrix.html',1,'Optimization']]],
+  ['staticmatrix_3c_20double_2c_206_20_3e_4',['StaticMatrix&lt; double, 6 &gt;',['../classOptimization_1_1StaticMatrix.html',1,'Optimization']]],
+  ['staticmatrix_3c_20double_2c_206_2c_206_20_3e_5',['StaticMatrix&lt; double, 6, 6 &gt;',['../classOptimization_1_1StaticMatrix.html',1,'Optimization']]],
+  ['staticmatrix_3c_20double_2c_20nu_20_3e_6',['StaticMatrix&lt; double, Nu &gt;',['../classOptimization_1_1StaticMatrix.html',1,'Optimization']]],
+  ['staticmatrix_3c_20double_2c_20nx_20_3e_7',['StaticMatrix&lt; double, Nx &gt;',['../classOptimization_1_1StaticMatrix.html',1,'Optimization']]]
 ];

@@ -1,9 +1,0 @@
-digraph "Graphical Class Hierarchy"
-{
- // LATEX_PDF_SIZE
-  bgcolor="transparent";
-  edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
-  node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
-  rankdir="LR";
-  Node0 [id="Node000000",label="EQPSolver\< N_vars,\l N_cons \>",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classEQPSolver.html",tooltip="등식 제약 조건이 있는 이차 계획법(Equality-Constrained Quadratic Programming, EQP) 솔버 클래스"];
-}

@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['lambda_5fopt_0',['lambda_opt',['../classEQPSolver.html#ab13cd98ec664a08e60325081cd7075fc',1,'EQPSolver']]]
+  ['tolerance_0',['TOLERANCE',['../classOptimization_1_1KKTMonitor.html#adad78863d3ac9e2e24ea212393da04e8',1,'Optimization::KKTMonitor']]]
 ];

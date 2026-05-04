@@ -1,6 +1,8 @@
 var searchData=
 [
-  ['ineqfunc_0',['IneqFunc',['../structIneqFunc.html',1,'']]],
-  ['integrator_1',['Integrator',['../classOptimization_1_1Integrator.html',1,'Optimization']]],
-  ['ipmqpsolver_2',['IPMQPSolver',['../classOptimization_1_1IPMQPSolver.html',1,'Optimization']]]
+  ['newtonmethod_0',['NewtonMethod',['../classOptimization_1_1NewtonMethod.html',1,'Optimization']]],
+  ['nmpccontroller_1',['NMPCController',['../classOptimization_1_1NMPCController.html',1,'Optimization']]],
+  ['nmpcresiduals_2',['NMPCResiduals',['../structOptimization_1_1controller_1_1NMPCResiduals.html',1,'Optimization::controller']]],
+  ['nmpcresult_3',['NMPCResult',['../structOptimization_1_1controller_1_1NMPCResult.html',1,'Optimization::controller']]],
+  ['nmpctuningconfig_4',['NMPCTuningConfig',['../structOptimization_1_1controller_1_1NMPCTuningConfig.html',1,'Optimization::controller']]]
 ];
