@@ -11,7 +11,6 @@
 #include "Optimization/Matrix/LinearAlgebra_Core.hpp"
 #include "Optimization/Matrix/LinearAlgebra_LDLT.hpp"
 #include "Optimization/Matrix/LinearAlgebra_LU.hpp"
-#include "Optimization/Matrix/LinearAlgebra_NMPC.hpp"
 #include "Optimization/Matrix/LinearAlgebra_QR.hpp"
 #include "Optimization/Matrix/MathTraits.hpp"
 

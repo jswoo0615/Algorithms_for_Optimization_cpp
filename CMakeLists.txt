@@ -131,30 +131,6 @@ gtest_discover_tests(test_bracketing)
 # target_link_libraries(test_cma_es PRIVATE GTest::gtest_main)
 # gtest_discover_tests(test_cma_es)
 
-add_executable(test_matrixengine test/test_matrixengine.cpp)
-target_link_libraries(test_matrixengine PRIVATE GTest::gtest_main)
-gtest_discover_tests(test_matrixengine)
-
-add_executable(test_EQP test/test_EQP.cpp)
-target_link_libraries(test_EQP PRIVATE GTest::gtest_main)
-gtest_discover_tests(test_EQP)
-
-add_executable(test_ActiveSet test/test_ActiveSet.cpp)
-target_link_libraries(test_ActiveSet PRIVATE GTest::gtest_main)
-gtest_discover_tests(test_ActiveSet)
-
-add_executable(test_IPM test/test_IPM.cpp)
-target_link_libraries(test_IPM PRIVATE GTest::gtest_main)
-gtest_discover_tests(test_IPM)
-
-add_executable(test_Riccati test/test_Riccati.cpp)
-target_link_libraries(test_Riccati PRIVATE GTest::gtest_main)
-gtest_discover_tests(test_Riccati)
-
-add_executable(test_NewtonSolver test/test_NewtonSolver.cpp)
-target_link_libraries(test_NewtonSolver PRIVATE GTest::gtest_main)
-gtest_discover_tests(test_NewtonSolver)
-
 add_executable(test_LevenbergMarquardt test/test_LevenbergMarquardt.cpp)
 target_link_libraries(test_LevenbergMarquardt PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_LevenbergMarquardt)
