@@ -17,9 +17,11 @@
 namespace Optimization {
 
 struct Obstacle {
-    double x = 0.0;
-    double y = 0.0;
+    double x = 0.0; 
+    double y = 0.0; 
     double r = 0.5;
+    double vx = 0.0; // [Architect's Add] 장애물의 X축 속도
+    double vy = 0.0; // [Architect's Add] 장애물의 Y축 속도
 };
 
 namespace controller {
@@ -37,11 +39,56 @@ struct NMPCTuningConfig {
     double Q_Yaw = 500.0;
     double Q_Vx = 50.0;
 
-    double R_Accel = 10.0;
-    double R_Steer = 5000.0;
+        template <typename T>
+        StaticVector<T, 25> eval_node_residuals(const StaticVector<T, Nx>& x, 
+                                                const StaticVector<T, Nu>& u, 
+                                                const StaticVector<T, Nu>& u_prev,
+                                                const StaticVector<double, Nx>& x_ref_local,
+                                                const StaticVector<double, Nx>& x_curr_global,
+                                                const StaticVector<double, Nx>& x_ref_global,
+                                                const NMPCTuningConfig& config,
+                                                int k) // [Architect's Add] 현재 호라이즌 인덱스 주입
+        {
+            using std::abs; using std::sqrt;
 
-    double R_Accel_Rate = 100.0;
-    double R_Steer_Rate = 5000.0;
+            StaticVector<T, 25> res; res.set_zero();
+            int idx = 0;
+
+            T theta_c = T(x_curr_global(2));
+            T sin_t = T(std::sin(x_curr_global(2)));
+            T cos_t = T(std::cos(x_curr_global(2)));
+            T y_c = T(x_curr_global(1));
+            T y_target = T(x_ref_global(1));
+            
+            T y_err = x(0) * sin_t + x(1) * cos_t + y_c - y_target;
+
+            res(idx++) = T(0.0); 
+            res(idx++) = T(sqrt(config.Q_Y)) * y_err;
+            res(idx++) = T(sqrt(config.Q_Yaw)) * (x(2) - T(x_ref_local(2)));
+            res(idx++) = T(sqrt(config.Q_Vx)) * (x(3) - T(10.0)); 
+
+            res(idx++) = T(sqrt(config.R_Accel)) * u(0);
+            res(idx++) = T(sqrt(config.R_Steer)) * u(1);
+            res(idx++) = T(sqrt(config.R_Accel_Rate)) * (u(0) - u_prev(0));
+            res(idx++) = T(sqrt(config.R_Steer_Rate)) * (u(1) - u_prev(1));
+
+            // [Architect's Masterpiece: Dynamic Obstacle Prediction]
+            double time_future = k * dt; // k번째 스텝의 미래 시간
+            for (size_t i = 0; i < 10; ++i) {
+                // 미래 시간의 장애물 로컬 예상 위치 계산
+                T obs_pred_x = T(local_obstacles[i].x + local_obstacles[i].vx * time_future);
+                T obs_pred_y = T(local_obstacles[i].y + local_obstacles[i].vy * time_future);
+
+                T dx = x(0) - obs_pred_x;
+                T dy = x(1) - obs_pred_y;
+                T dist_sq = dx * dx + dy * dy;
+                T r_safe = T(local_obstacles[i].r + config.Obstacle_Margin);
+                T viol = r_safe * r_safe - dist_sq;
+                res(idx++) = (Optimization::get_value(viol) > 0.0) ? T(sqrt(config.Obstacle_Penalty)) * viol : T(0.0);
+            }
+
+            T v_min_viol = T(5.0) - x(3);
+            res(idx++) = (Optimization::get_value(v_min_viol) > 0.0) ? T(1000.0) * v_min_viol : T(0.0);
 
     double Obstacle_Penalty = 20000.0;
     double Obstacle_Margin = 1.5;
@@ -136,9 +183,28 @@ class SparseNMPC {
                              : T(0.0);
         }
 
-        // 역주행 방지 가드
-        T v_min_viol = T(5.0) - x(3);
-        res(idx++) = (Optimization::get_value(v_min_viol) > 0.0) ? T(1000.0) * v_min_viol : T(0.0);
+        NMPCResult solve_rt_qp(const StaticVector<double, Nx>& x_curr_global, 
+                               const StaticVector<double, Nx>& x_ref_global,
+                               const NMPCTuningConfig& config) 
+        {
+            NMPCResult result;
+            result.sqp_iterations = 1;
+
+            auto T_g2l = utils::SE2Transform::get_global_to_local(x_curr_global(0), x_curr_global(1), x_curr_global(2));
+            
+            // 속도 변환을 위한 회전 행렬 성분 추출
+            double cos_yaw = std::cos(-x_curr_global(2));
+            double sin_yaw = std::sin(-x_curr_global(2));
+            for (size_t i = 0; i < 10; ++i) {
+                local_obstacles[i].r = global_obstacles[i].r;
+                
+                // 1. 위치 변환 (병진 + 회전)
+                utils::SE2Transform::transform_point(T_g2l, global_obstacles[i].x, global_obstacles[i].y, local_obstacles[i].x, local_obstacles[i].y);
+                
+                // 2. 속도 변환 (순수 회전만 적용)
+                local_obstacles[i].vx = global_obstacles[i].vx * cos_yaw - global_obstacles[i].vy * sin_yaw;
+                local_obstacles[i].vy = global_obstacles[i].vx * sin_yaw + global_obstacles[i].vy * cos_yaw;
+            }
 
         return res;
     }
@@ -225,10 +291,23 @@ class SparseNMPC {
             for (size_t res_idx = 0; res_idx < 25; ++res_idx) {
                 double r_val = res_dual(res_idx).v;
                 for (size_t i = 0; i < Nx; ++i) {
-                    double J_xi = res_dual(res_idx).g[i];
-                    riccati.q[k](i) += J_xi * r_val;
-                    for (size_t j = 0; j < Nx; ++j)
-                        riccati.Q[k](i, j) += J_xi * res_dual(res_idx).g[j];
+                    for (size_t j = 0; j < Nx; ++j) riccati.A[k](i, j) = x_next_dual(i).g[j];
+                    for (size_t j = 0; j < Nu; ++j) riccati.B[k](i, j) = x_next_dual(i).g[Nx + j];
+                    riccati.d[k](i) = 0.0; 
+                }
+                StaticVector<ADVar, 25> res_dual = eval_node_residuals(x_dual, u_dual, u_prev_dual, x_ref_local, x_curr_global, x_ref_global, config, k); // k 전달
+                riccati.Q[k].set_zero(); riccati.R[k].set_zero(); riccati.q[k].set_zero(); riccati.r[k].set_zero();
+                
+                for (size_t res_idx = 0; res_idx < 25; ++res_idx) {
+                    double r_val = res_dual(res_idx).v;
+                    for (size_t i = 0; i < Nx; ++i) {
+                        double J_xi = res_dual(res_idx).g[i]; riccati.q[k](i) += J_xi * r_val;
+                        for (size_t j = 0; j < Nx; ++j) riccati.Q[k](i, j) += J_xi * res_dual(res_idx).g[j];
+                    }
+                    for (size_t i = 0; i < Nu; ++i) {
+                        double J_ui = res_dual(res_idx).g[Nx + i]; riccati.r[k](i) += J_ui * r_val;
+                        for (size_t j = 0; j < Nu; ++j) riccati.R[k](i, j) += J_ui * res_dual(res_idx).g[Nx + j];
+                    }
                 }
                 for (size_t i = 0; i < Nu; ++i) {
                     double J_ui = res_dual(res_idx).g[Nx + i];
