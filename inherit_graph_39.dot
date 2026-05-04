@@ -5,5 +5,5 @@ digraph "Graphical Class Hierarchy"
   edge [fontname=Helvetica,fontsize=10,labelfontname=Helvetica,labelfontsize=10];
   node [fontname=Helvetica,fontsize=10,shape=box,height=0.2,width=0.4];
   rankdir="LR";
-  Node0 [id="Node000000",label="Optimization::NelderMead",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classOptimization_1_1NelderMead.html",tooltip="Nelder-Mead Simplex Method (넬더-미드 심플렉스 방법) 정적 클래스"];
+  Node0 [id="Node000000",label="Optimization::MeshAdaptive\lDirectSearch",height=0.2,width=0.4,color="grey40", fillcolor="white", style="filled",URL="$classOptimization_1_1MeshAdaptiveDirectSearch.html",tooltip="MADS (Mesh Adaptive Direct Search) 알고리즘 정적 클래스"];
 }
