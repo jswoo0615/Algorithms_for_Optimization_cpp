@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>Optimization Library: Optimization::NewtonMethod Class Reference</title>
+<title>Optimization Library: Optimization::solver::SQPSolver&lt; Nx, Nc, CostFunctor, IneqFunctor &gt; Class Template Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -76,33 +76,43 @@ $(function() {
 
 <div id="nav-path" class="navpath">
   <ul>
-<li class="navelem"><b>Optimization</b></li><li class="navelem"><a class="el" href="classOptimization_1_1NewtonMethod.html">NewtonMethod</a></li>  </ul>
+<li class="navelem"><b>Optimization</b></li><li class="navelem"><b>solver</b></li><li class="navelem"><a class="el" href="classOptimization_1_1solver_1_1SQPSolver.html">SQPSolver</a></li>  </ul>
 </div>
 </div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-static-methods">Static Public Member Functions</a> &#124;
-<a href="classOptimization_1_1NewtonMethod-members.html">List of all members</a>  </div>
-  <div class="headertitle"><div class="title">Optimization::NewtonMethod Class Reference</div></div>
+<a href="classOptimization_1_1solver_1_1SQPSolver-members.html">List of all members</a>  </div>
+  <div class="headertitle"><div class="title">Optimization::solver::SQPSolver&lt; Nx, Nc, CostFunctor, IneqFunctor &gt; Class Template Reference</div></div>
 </div><!--header-->
 <div class="contents">
 
-<p>SIMD 및 Zero-Allocation 기반 뉴턴 최적화 알고리즘 (Unconstrained Optimizer)  
- <a href="classOptimization_1_1NewtonMethod.html#details">More...</a></p>
+<p>고속 순차적 이차 계획법 (SQP) 솔버  
+ <a href="classOptimization_1_1solver_1_1SQPSolver.html#details">More...</a></p>
 
-<p><code>#include &lt;<a class="el" href="NewtonMethod_8hpp_source.html">NewtonMethod.hpp</a>&gt;</code></p>
+<p><code>#include &lt;<a class="el" href="SQPSolver_8hpp_source.html">SQPSolver.hpp</a>&gt;</code></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-static-methods" name="pub-static-methods"></a>
 Static Public Member Functions</h2></td></tr>
-<tr class="memitem:a20992f842491d6d1b44a5922b53b7a2e" id="r_a20992f842491d6d1b44a5922b53b7a2e"><td class="memTemplParams" colspan="2"><a id="a20992f842491d6d1b44a5922b53b7a2e" name="a20992f842491d6d1b44a5922b53b7a2e"></a>
-template&lt;size_t N, typename Func &gt; </td></tr>
-<tr class="memitem:a20992f842491d6d1b44a5922b53b7a2e"><td class="memTemplItemLeft" align="right" valign="top">static <a class="el" href="structOptimization_1_1OptimizationResult.html">OptimizationResult</a>&lt; N &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>optimize</b> (const Func &amp;f, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, N &gt; &amp;x_init, double tol=1e-6, size_t max_iter=50) noexcept</td></tr>
-<tr class="separator:a20992f842491d6d1b44a5922b53b7a2e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a5bc91ab44cd7601b26c1b5e9876a813d" id="r_a5bc91ab44cd7601b26c1b5e9876a813d"><td class="memItemLeft" align="right" valign="top"><a id="a5bc91ab44cd7601b26c1b5e9876a813d" name="a5bc91ab44cd7601b26c1b5e9876a813d"></a>
+<a class="el" href="classOptimization_1_1solver_1_1SQPSolver.html">static</a> SolverStatus&#160;</td><td class="memItemRight" valign="bottom"><b>solve</b> (<a class="el" href="classOptimization_1_1solver_1_1SQPSolver.html">const</a> <a class="el" href="classOptimization_1_1solver_1_1SQPSolver.html">CostFunctor</a> &amp;<a class="el" href="classOptimization_1_1solver_1_1SQPSolver.html">cost_func</a>, <a class="el" href="classOptimization_1_1solver_1_1SQPSolver.html">const</a> <a class="el" href="classOptimization_1_1solver_1_1SQPSolver.html">IneqFunctor</a> &amp;<a class="el" href="classOptimization_1_1solver_1_1SQPSolver.html">ineq_func</a>, <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; <a class="el" href="classOptimization_1_1solver_1_1SQPSolver.html">double</a>, Nx &gt; &amp;x_opt, <a class="el" href="classOptimization_1_1solver_1_1SQPSolver.html">int</a> <a class="el" href="classOptimization_1_1solver_1_1SQPSolver.html">sqp_max_iter</a>=15, <a class="el" href="classOptimization_1_1solver_1_1SQPSolver.html">double</a> <a class="el" href="classOptimization_1_1solver_1_1SQPSolver.html">tol</a>=1<a class="el" href="classOptimization_1_1solver_1_1SQPSolver.html">e</a>-5)</td></tr>
+<tr class="separator:a5bc91ab44cd7601b26c1b5e9876a813d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>SIMD 및 Zero-Allocation 기반 뉴턴 최적화 알고리즘 (Unconstrained Optimizer) </p>
+<div class="textblock"><div class="compoundTemplParams">template&lt;size_t Nx, size_t Nc, typename CostFunctor, typename IneqFunctor&gt;<br />
+class Optimization::solver::SQPSolver&lt; Nx, Nc, CostFunctor, IneqFunctor &gt;</div><p>고속 순차적 이차 계획법 (SQP) 솔버 </p>
+<p>비선형 최적화 문제를 매 스텝 선형 QP 서브프라블럼으로 변환하여 풉니다.</p>
+<dl class="tparams"><dt>Template Parameters</dt><dd>
+  <table class="tparams">
+    <tr><td class="paramname">Nx</td><td>최적화 변수의 개수 </td></tr>
+    <tr><td class="paramname">Nc</td><td>부등식 제약조건의 개수 </td></tr>
+    <tr><td class="paramname">CostFunctor</td><td>비용 함수 객체 타입 </td></tr>
+    <tr><td class="paramname">IneqFunctor</td><td>부등식 제약 함수 객체 타입 (h(x) &lt;= 0 형태) </td></tr>
+  </table>
+  </dd>
+</dl>
 </div><hr/>The documentation for this class was generated from the following file:<ul>
-<li>include/Optimization/<a class="el" href="NewtonMethod_8hpp_source.html">NewtonMethod.hpp</a></li>
+<li>include/Optimization/Solver/<a class="el" href="SQPSolver_8hpp_source.html">SQPSolver.hpp</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

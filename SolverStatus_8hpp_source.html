@@ -92,20 +92,32 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define OPTIMIZATION_SOLVER_STATUS_HPP_</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="keyword">namespace </span>Optimization {</div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="comment">// =========================================================================================</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="comment">// Layer 4 : 최적화 솔버 상태 코드 (Solver Status)</span></div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="comment">// 수학적 연산 (Layer 2)의 성공 여부 및 &#39;수렴성 (Convergence)&#39;와 &#39;제약조건 (Feasibility)&#39;을</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="comment">// 진단합니다</span></div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="comment">// =========================================================================================</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="keyword">enum class</span> SolverStatus {</div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span>    SUCCESS = 1,                 <span class="comment">// 허용 오차 (Tolerance) 내에 수렴</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span>    MAX_ITERATION_REACHED = -1,  <span class="comment">// 최대 반복 횟수를 초과함 (해를 찾지 못함)</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    MATH_ERROR = -2,  <span class="comment">// 내부 선형대수 엔진에서 수치적 붕괴 발생 (Singular 등)</span></div>
-<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    INFEASIBLE = -3  <span class="comment">// 제약 조건을 만족하는 해 영역이 존재하지 않음 (향후 QP/SQP용)</span></div>
-<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>};</div>
-<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>}  <span class="comment">// namespace Optimization</span></div>
-<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span> </div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_SOLVER_STATUS_HPP_</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span> </div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="keyword">enum class</span> SolverStatus {</div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span>    <span class="comment">// ========================================================================</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span>    <span class="comment">// 🟢 사용 가능 상태 (Safe to Control)</span></div>
+<div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>    <span class="comment">// ========================================================================</span></div>
+<div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>    SUCCESS = 1,          <span class="comment">// [완전 수렴] KKT 허용 오차(Tolerance) 내에 완벽히 도달함.</span></div>
+<div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>    SUBOPTIMAL = 2,       <span class="comment">// [부분 수렴] 완벽하진 않으나, 제어 입력으로 쓰기에 무리가 없는 해. </span></div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>                          <span class="comment">// (RTI 기법이나 제한 시간 초과 시 이전 해를 바탕으로 제어할 때 발생)</span></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span> </div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>    <span class="comment">// ========================================================================</span></div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    <span class="comment">// 🟡 경고 및 성능 저하 (Warning / Degraded - 이전 제어값 유지 권장)</span></div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    <span class="comment">// ========================================================================</span></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    MAX_ITERATION_REACHED = -1, <span class="comment">// [반복 초과] 최대 반복 횟수 내에 KKT 조건을 만족하지 못함.</span></div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    TIME_LIMIT_REACHED = -2,    <span class="comment">// [데드라인 초과] 10ms 등 실시간 제약 시간을 초과하여 연산 강제 종료.</span></div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    STEP_SIZE_TOO_SMALL = -3,   <span class="comment">// [탐색 불가] Line Search 등에서 더 이상 해를 개선할 수 없는 Local Minima 도달.</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="comment">// ========================================================================</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="comment">// 🔴 치명적 오류 (Emergency / Fallback Trigger)</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>    <span class="comment">// ========================================================================</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>    MATH_ERROR = -10,     <span class="comment">// [수치 붕괴] LDLT/LU 등 내부 엔진에서 역행렬 불가(Singular) 및 NaN 발생.</span></div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    INFEASIBLE = -11      <span class="comment">// [실현 불가] 물리적 제약 조건(장애물, 조향 한계)을 회피할 공간이 아예 없음.</span></div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>};</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>}  <span class="comment">// namespace Optimization</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span> </div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_SOLVER_STATUS_HPP_</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

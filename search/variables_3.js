@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['g_0',['g',['../structOptimization_1_1DualVec.html#a262844a26e409eb1f25a06e4c8764774',1,'Optimization::DualVec']]]
+  ['status_0',['status',['../structOptimization_1_1OptimizationResult.html#afd9dc8a710f554eeaffeca15ecb74190',1,'Optimization::OptimizationResult']]]
 ];

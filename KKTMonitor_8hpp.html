@@ -86,12 +86,13 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>KKT(Karush-Kuhn-Tucker) 조건 감시 및 최적해 검증 모니터 구현  
+<p>KKT 조건 감시 및 최적해 검증 모니터 구현 (Zero-Allocation Optimized)  
 <a href="#details">More...</a></p>
 <div class="textblock"><code>#include &lt;algorithm&gt;</code><br />
-<code>#include &lt;cmath&gt;</code><br />
 <code>#include &lt;iostream&gt;</code><br />
-<code>#include &quot;Optimization/Matrix/MatrixEngine.hpp&quot;</code><br />
+<code>#include &quot;Optimization/Matrix/MathTraits.hpp&quot;</code><br />
+<code>#include &quot;Optimization/Matrix/LinearAlgebra.hpp&quot;</code><br />
+<code>#include &quot;Optimization/Matrix/StaticMatrix.hpp&quot;</code><br />
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for KKTMonitor.hpp:</div>
 <div class="dyncontent">
@@ -103,15 +104,12 @@ Include dependency graph for KKTMonitor.hpp:</div>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="nested-classes" name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptimization_1_1KKTMonitor.html">Optimization::KKTMonitor&lt; N_vars, N_cons &gt;</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">제약 최적화 문제의 해가 KKT 조건을 만족하는지 검증하는 모니터 클래스  <a href="classOptimization_1_1KKTMonitor.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structOptimization_1_1KKTMonitor_1_1KKT__Metrics.html">Optimization::KKTMonitor&lt; N_vars, N_cons &gt;::KKT_Metrics</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">KKT 검증 과정에서 측정된 오차 지표들을 저장하는 구조체  <a href="structOptimization_1_1KKTMonitor_1_1KKT__Metrics.html#details">More...</a><br /></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<div class="textblock"><p>KKT(Karush-Kuhn-Tucker) 조건 감시 및 최적해 검증 모니터 구현 </p>
-<p>제약 조건이 있는 최적화 문제에서 찾아낸 해가 수학적으로 올바른 최적해(Optimal Solution)인지 검증하기 위해 KKT 조건을 모니터링하고 평가하는 유틸리티 클래스입니다. 주로 EQP(Equality Constrained Quadratic Programming) 솔버 등에서 도출된 결과의 최적성(Optimality)과 실현 가능성(Feasibility)을 점검하는 데 사용됩니다. </p>
+<div class="textblock"><p>KKT 조건 감시 및 최적해 검증 모니터 구현 (Zero-Allocation Optimized) </p>
 </div></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

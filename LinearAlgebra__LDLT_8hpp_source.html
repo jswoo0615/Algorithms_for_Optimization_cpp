@@ -95,9 +95,9 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;Optimization/Matrix/MathTraits.hpp&quot;</span></div>
 <div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#if defined(__ARM_NEON) || defined(__ARM_NEON__)</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">    #include &lt;arm_neon.h&gt;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;arm_neon.h&gt;</span></div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#elif defined(__AVX2__)</span></div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">    #include &lt;immintrin.h&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;immintrin.h&gt;</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span> </div>
 <div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="keyword">namespace </span>Optimization {</div>
@@ -109,14 +109,14 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="comment">// 1. Column j 업데이트 (k &lt; j 인 이전 열들을 이용)</span></div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> k = 0; k &lt; j; ++k) {</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>            <span class="comment">// temp = L_{j,k} * D_{kk}</span></div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>            T temp = mat(j, k) * mat(k, k); </div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>            </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>            T temp = mat(j, k) * mat(k, k);</div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
 <div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>            <span class="keywordtype">size_t</span> i = j;</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>            </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>            <span class="comment">// --- SIMD 가속 구간: col_j -= temp * col_k ---</span></div>
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">            #if defined(__ARM_NEON) || defined(__ARM_NEON__)</span></div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="comment">// --- SIMD 가속 구간: col_j -= temp * col_k ---</span></div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span><span class="preprocessor">#if defined(__ARM_NEON) || defined(__ARM_NEON__)</span></div>
 <div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;T, float&gt;) {</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>                float32x4_t v_temp = vdupq_n_f32(-temp); <span class="comment">// 빼기를 위해 음수화</span></div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>                float32x4_t v_temp = vdupq_n_f32(-temp);  <span class="comment">// 빼기를 위해 음수화</span></div>
 <div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>                <span class="keywordflow">for</span> (; i + 3 &lt; N; i += 4) {</div>
 <div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>                    float32x4_t v_a_ik = vld1q_f32(&amp;mat(i, k));</div>
 <div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>                    float32x4_t v_a_ij = vld1q_f32(&amp;mat(i, j));</div>
@@ -130,7 +130,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>                    vst1q_f64(&amp;mat(i, j), vfmaq_f64(v_a_ij, v_a_ik, v_temp));</div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>                }</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>            }</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">            #elif defined(__AVX2__)</span></div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span><span class="preprocessor">#elif defined(__AVX2__)</span></div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>            <span class="keywordflow">if</span> <span class="keyword">constexpr</span> (std::is_same_v&lt;T, float&gt;) {</div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>                __m256 v_temp = _mm256_set1_ps(-temp);</div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>                <span class="keywordflow">for</span> (; i + 7 &lt; N; i += 8) {</div>
@@ -147,7 +147,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>                    _mm256_storeu_pd(&amp;mat(i, j), _mm256_fmadd_pd(v_a_ik, v_temp, v_a_ij));</div>
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>                }</div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>            }</div>
-<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="preprocessor">            #endif</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span><span class="preprocessor">#endif</span></div>
 <div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>            <span class="comment">// --- Scalar Fallback ---</span></div>
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            <span class="keywordflow">for</span> (; i &lt; N; ++i) {</div>
@@ -157,7 +157,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        <span class="comment">// 2. 대각 원소 D_{jj} 추출 및 특이성(Singularity) 검사</span></div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        T D_jj = mat(j, j);</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="keywordflow">if</span> (<a class="code hl_struct" href="structMathTraits.html">MathTraits&lt;T&gt;::near_zero</a>(D_jj)) {</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="keywordflow">if</span> (MathTraits&lt;T&gt;::near_zero(D_jj)) {</div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>            <span class="keywordflow">return</span> MathStatus::SINGULAR;</div>
 <div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        }</div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
@@ -171,51 +171,48 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>}</div>
 <div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span> </div>
 <div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keywordtype">size_t</span> N&gt;</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="keyword">inline</span> <span class="keywordtype">void</span> LDLT_solve(<span class="keyword">const</span> StaticMatrix&lt;T, N, N&gt;&amp; mat,</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>                       <span class="keyword">const</span> StaticVector&lt;T, N&gt;&amp; b,</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>                       StaticVector&lt;T, N&gt;&amp; x) {</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>    </div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    x = b; <span class="comment">// 초기화</span></div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <span class="comment">// 1. Forward substitution (L * z = b) -&gt; x에 in-place 수행</span></div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    <span class="comment">// 열 기반(Column-oriented) 순회로 L1 캐시 효율 극대화</span></div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> k = 0; k &lt; N; ++k) {</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>        T x_k = x(k);</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = k + 1; i &lt; N; ++i) {</div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            x(i) -= mat(i, k) * x_k;</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>        }</div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    }</div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="comment">// 2. Diagonal scaling (D * y = z)</span></div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>        x(i) /= mat(i, i);</div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    }</div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <span class="comment">// 3. Backward substitution (L^T * x = y)</span></div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    <span class="comment">// L의 전치행렬이므로 내적(Dot-product) 구조가 Column-major에 완벽히 부합함</span></div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(N) - 1; i &gt;= 0; --i) {</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>        T sum = <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(0);</div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> k = i + 1; k &lt; N; ++k) {</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>            sum += mat(k, i) * x(k);</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>        }</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>        x(i) -= sum;</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    }</div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>}</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="comment">// 편의성 래퍼: 테스트 코드 등에서 기존처럼 return 값으로 받을 수 있게 지원 (RVO 최적화)</span></div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keywordtype">size_t</span> N&gt;</div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span><span class="keyword">inline</span> StaticVector&lt;T, N&gt; LDLT_solve(<span class="keyword">const</span> StaticMatrix&lt;T, N, N&gt;&amp; mat,</div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>                                     <span class="keyword">const</span> StaticVector&lt;T, N&gt;&amp; b) {</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    StaticVector&lt;T, N&gt; x;</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    LDLT_solve(mat, b, x);</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    <span class="keywordflow">return</span> x;</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>}</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>}  <span class="comment">// namespace linalg</span></div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>}  <span class="comment">// namespace Optimization</span></div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_LINEAR_ALGEBRA_LDLT_HPP_</span></div>
-<div class="ttc" id="astructMathTraits_html"><div class="ttname"><a href="structMathTraits.html">MathTraits</a></div><div class="ttdef"><b>Definition</b> MathTraits.hpp:26</div></div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="keyword">inline</span> <span class="keywordtype">void</span> LDLT_solve(<span class="keyword">const</span> StaticMatrix&lt;T, N, N&gt;&amp; mat, <span class="keyword">const</span> StaticVector&lt;T, N&gt;&amp; b,</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>                       StaticVector&lt;T, N&gt;&amp; x) {</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    x = b;  <span class="comment">// 초기화</span></div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    <span class="comment">// 1. Forward substitution (L * z = b) -&gt; x에 in-place 수행</span></div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    <span class="comment">// 열 기반(Column-oriented) 순회로 L1 캐시 효율 극대화</span></div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> k = 0; k &lt; N; ++k) {</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        T x_k = x(k);</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = k + 1; i &lt; N; ++i) {</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>            x(i) -= mat(i, k) * x_k;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        }</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    }</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    <span class="comment">// 2. Diagonal scaling (D * y = z)</span></div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        x(i) /= mat(i, i);</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    }</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    <span class="comment">// 3. Backward substitution (L^T * x = y)</span></div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <span class="comment">// L의 전치행렬이므로 내적(Dot-product) 구조가 Column-major에 완벽히 부합함</span></div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <span class="keywordflow">for</span> (<span class="keywordtype">int</span> i = <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(N) - 1; i &gt;= 0; --i) {</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>        T sum = <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(0);</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> k = i + 1; k &lt; N; ++k) {</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            sum += mat(k, i) * x(k);</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>        }</div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>        x(i) -= sum;</div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    }</div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>}</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span><span class="comment">// 편의성 래퍼: 테스트 코드 등에서 기존처럼 return 값으로 받을 수 있게 지원 (RVO 최적화)</span></div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T, <span class="keywordtype">size_t</span> N&gt;</div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span><span class="keyword">inline</span> StaticVector&lt;T, N&gt; LDLT_solve(<span class="keyword">const</span> StaticMatrix&lt;T, N, N&gt;&amp; mat,</div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>                                     <span class="keyword">const</span> StaticVector&lt;T, N&gt;&amp; b) {</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    StaticVector&lt;T, N&gt; x;</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    LDLT_solve(mat, b, x);</div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>    <span class="keywordflow">return</span> x;</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>}</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span> </div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>}  <span class="comment">// namespace linalg</span></div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>}  <span class="comment">// namespace Optimization</span></div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span> </div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_LINEAR_ALGEBRA_LDLT_HPP_</span></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

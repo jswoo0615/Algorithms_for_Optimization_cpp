@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['elapsed_5fns_0',['elapsed_ns',['../structOptimization_1_1OptimizationResult.html#ae8a31cb0134cd0e355a9f989461b1a41',1,'Optimization::OptimizationResult']]]
+  ['f_5fopt_0',['f_opt',['../structOptimization_1_1OptimizationResult.html#a71d98261a5a75d6c06fbc2de2a0ae03a',1,'Optimization::OptimizationResult']]]
 ];
