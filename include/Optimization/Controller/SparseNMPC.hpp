@@ -43,8 +43,8 @@ struct NMPCTuningConfig {
     double Q_mu = 500.0;
     double Q_Vx = 50.0;
 
-    double R_Steer = 5000.0;        
-    double R_Accel = 10.0;          
+    double R_Steer = 5000.0;
+    double R_Accel = 10.0;
 
     double R_Steer_Rate = 50000.0;  // Jitter 방지 (고주파 진동 억제)
     double R_Accel_Rate = 100.0;
@@ -52,17 +52,17 @@ struct NMPCTuningConfig {
     double Obstacle_Penalty = 20000.0;
     double Obstacle_Margin = 1.5;
 
-    double damping_Q = 5.0;         // Hessian Regularization
+    double damping_Q = 5.0;  // Hessian Regularization
     double damping_R = 500.0;
 
-    double barrier_mu = 0.05;       // Primal Barrier Parameter
-    double u_min[2] = {-0.26, -5.0};  
-    double u_max[2] = {0.26, 3.0};    
+    double barrier_mu = 0.05;  // Primal Barrier Parameter
+    double u_min[2] = {-0.26, -5.0};
+    double u_max[2] = {0.26, 3.0};
     double safety_fraction = 0.95;  // Line Search Margin
     double step_alpha = 0.5;        // Base Step Size
 
-    double kappa = 0.0;             // 도로 곡률
-    double target_vx = 10.0;        // 목표 속도
+    double kappa = 0.0;       // 도로 곡률
+    double target_vx = 10.0;  // 목표 속도
 };
 
 constexpr size_t NUM_RESIDUALS = 30;
@@ -103,7 +103,8 @@ class SparseNMPC {
     inline StaticVector<T, NUM_RESIDUALS> eval_node_residuals(const StaticVector<T, Nx>& x,
                                                               const StaticVector<T, Nu>& u,
                                                               const StaticVector<T, Nu>& u_prev,
-                                                              const NMPCTuningConfig& config, int k) {
+                                                              const NMPCTuningConfig& config,
+                                                              int k) {
         StaticVector<T, NUM_RESIDUALS> res;
         res.set_zero();
         int idx = 0;
@@ -147,7 +148,7 @@ class SparseNMPC {
         }
 
         // 4. Minimum Velocity Shield (특이점 붕괴 방어)
-        T v_min_viol = T(1.0) - vx; 
+        T v_min_viol = T(1.0) - vx;
         res(idx++) = (Optimization::get_value(v_min_viol) > 0.0) ? T(1000.0) * v_min_viol : T(0.0);
 
         return res;
@@ -184,7 +185,7 @@ class SparseNMPC {
     NMPCResult solve_rt_qp(const StaticVector<double, Nx>& x_curr_frenet,
                            const NMPCTuningConfig& config) {
         NMPCResult result;
-        result.sqp_iterations = 1; // RTI는 매 사이클 단 1번의 QP만 풉니다.
+        result.sqp_iterations = 1;  // RTI는 매 사이클 단 1번의 QP만 풉니다.
 
         vehicle::DynamicBicycleModel model;
         model.kappa = config.kappa;
@@ -200,10 +201,10 @@ class SparseNMPC {
 
         // 2. Backward Assembly (KKT 시스템 조립)
         using ADVar = DualVec<double, Nx + Nu>;
-        
+
         for (size_t k = 0; k < H; ++k) {
             StaticVector<double, Nu> u_prev = (k == 0) ? u_last : U_guess[k - 1];
-            
+
             StaticVector<ADVar, Nx> x_dual;
             StaticVector<ADVar, Nu> u_dual;
             StaticVector<ADVar, Nu> u_prev_dual;
@@ -212,19 +213,22 @@ class SparseNMPC {
             for (size_t i = 0; i < Nx; ++i) x_dual(i) = ADVar::make_variable(X_pred[k](i), i);
             for (size_t i = 0; i < Nu; ++i) {
                 u_dual(i) = ADVar::make_variable(U_guess[k](i), Nx + i);
-                u_prev_dual(i) = ADVar(u_prev(i)); // Gradient 0 (Constant Parameter)
+                u_prev_dual(i) = ADVar(u_prev(i));  // Gradient 0 (Constant Parameter)
             }
 
             // A_k, B_k 추출
-            StaticVector<ADVar, Nx> x_next_dual = integrator::step_rk4<Nx, Nu>(model, x_dual, u_dual, dt);
+            StaticVector<ADVar, Nx> x_next_dual =
+                integrator::step_rk4<Nx, Nu>(model, x_dual, u_dual, dt);
             for (size_t i = 0; i < Nx; ++i) {
                 for (size_t j = 0; j < Nx; ++j) riccati.A[k](i, j) = x_next_dual(i).g[j];
                 for (size_t j = 0; j < Nu; ++j) riccati.B[k](i, j) = x_next_dual(i).g[Nx + j];
-                riccati.d[k](i) = 0.0; // Multiple Shooting의 Defect는 여기선 0 (단일 명목 궤적 기반)
+                riccati.d[k](i) =
+                    0.0;  // Multiple Shooting의 Defect는 여기선 0 (단일 명목 궤적 기반)
             }
 
             // Gauss-Newton Hessian (Q, R) 및 Gradient (q, r) 조립
-            StaticVector<ADVar, NUM_RESIDUALS> res_dual = eval_node_residuals(x_dual, u_dual, u_prev_dual, config, k);
+            StaticVector<ADVar, NUM_RESIDUALS> res_dual =
+                eval_node_residuals(x_dual, u_dual, u_prev_dual, config, k);
 
             riccati.Q[k].set_zero();
             riccati.R[k].set_zero();
@@ -233,7 +237,7 @@ class SparseNMPC {
 
             for (size_t res_idx = 0; res_idx < NUM_RESIDUALS; ++res_idx) {
                 double r_val = res_dual(res_idx).v;
-                
+
                 // J_x 추출 및 Q, q 누적
                 for (size_t i = 0; i < Nx; ++i) {
                     double J_xi = res_dual(res_idx).g[i];
@@ -242,7 +246,7 @@ class SparseNMPC {
                         riccati.Q[k](i, j) += J_xi * res_dual(res_idx).g[j];
                     }
                 }
-                
+
                 // J_u 추출 및 R, r 누적
                 for (size_t i = 0; i < Nu; ++i) {
                     double J_ui = res_dual(res_idx).g[Nx + i];
@@ -260,7 +264,8 @@ class SparseNMPC {
                 double s_lower = MathTraits<double>::max(u_val - config.u_min[i], 1e-3);
 
                 double grad_barrier = config.barrier_mu * (1.0 / s_upper - 1.0 / s_lower);
-                double hess_barrier = config.barrier_mu * (1.0 / (s_upper * s_upper) + 1.0 / (s_lower * s_lower));
+                double hess_barrier =
+                    config.barrier_mu * (1.0 / (s_upper * s_upper) + 1.0 / (s_lower * s_lower));
 
                 // 수치 붕괴 방지용 클램핑
                 grad_barrier = std::clamp(grad_barrier, -100.0, 100.0);
@@ -282,9 +287,9 @@ class SparseNMPC {
         for (size_t i = 0; i < Nx; ++i) {
             if (i == 1 || i == 2 || i == 3) {
                 double err = (i == 3) ? (X_pred[H](i) - config.target_vx) : X_pred[H](i);
-                double qf_i = (i == 1) ? config.Q_D * 5.0 : 
-                              (i == 2) ? config.Q_mu * 5.0 : 
-                                         config.Q_Vx * 5.0;
+                double qf_i = (i == 1)   ? config.Q_D * 5.0
+                              : (i == 2) ? config.Q_mu * 5.0
+                                         : config.Q_Vx * 5.0;
                 riccati.Q[H](i, i) += qf_i;
                 riccati.q[H](i) += qf_i * err;
             }
@@ -302,10 +307,12 @@ class SparseNMPC {
                 double du = riccati.du[k](i);
                 if (du > 1e-4) {
                     double max_alpha = (config.u_max[i] - U_guess[k](i)) / du;
-                    if (max_alpha > 0.0) alpha = MathTraits<double>::min(alpha, config.safety_fraction * max_alpha);
+                    if (max_alpha > 0.0)
+                        alpha = MathTraits<double>::min(alpha, config.safety_fraction * max_alpha);
                 } else if (du < -1e-4) {
                     double max_alpha = (config.u_min[i] - U_guess[k](i)) / du;
-                    if (max_alpha > 0.0) alpha = MathTraits<double>::min(alpha, config.safety_fraction * max_alpha);
+                    if (max_alpha > 0.0)
+                        alpha = MathTraits<double>::min(alpha, config.safety_fraction * max_alpha);
                 }
             }
         }
@@ -317,8 +324,10 @@ class SparseNMPC {
         for (size_t k = 0; k < H; ++k) {
             for (size_t i = 0; i < Nu; ++i) {
                 U_guess[k](i) += alpha * riccati.du[k](i);
-                U_guess[k](i) = std::clamp(U_guess[k](i), config.u_min[i] + 1e-3, config.u_max[i] - 1e-3);
-                max_kkt = MathTraits<double>::max(max_kkt, MathTraits<double>::abs(riccati.du[k](i)));
+                U_guess[k](i) =
+                    std::clamp(U_guess[k](i), config.u_min[i] + 1e-3, config.u_max[i] - 1e-3);
+                max_kkt =
+                    MathTraits<double>::max(max_kkt, MathTraits<double>::abs(riccati.du[k](i)));
             }
         }
 
@@ -327,7 +336,7 @@ class SparseNMPC {
             return execute_fallback(result, "Divergence Detected (KKT Exploded)");
         }
 
-        u_last = U_guess[0]; // 다음 스텝의 Rate Penalty 연산을 위해 저장
+        u_last = U_guess[0];  // 다음 스텝의 Rate Penalty 연산을 위해 저장
         result.success = true;
         return result;
     }

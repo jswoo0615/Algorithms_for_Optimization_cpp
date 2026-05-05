@@ -7,13 +7,13 @@
 #include <iostream>
 #include <string>
 
+#include "Optimization/Controller/SparseNMPC.hpp"
 #include "Optimization/Dual.hpp"
 #include "Optimization/Integrator/RK4.hpp"
 #include "Optimization/Matrix/MathTraits.hpp"
 #include "Optimization/Matrix/StaticMatrix.hpp"
 #include "Optimization/Solver/RiccatiSolver.hpp"
 #include "Optimization/VehicleModel/DynamicBicycleModel.hpp"
-#include "Optimization/Controller/SparseNMPC.hpp"
 
 namespace Optimization {
 namespace controller {
@@ -22,9 +22,9 @@ template <size_t H, size_t Nx = 6, size_t Nu = 2>
 class MultipleShootingNMPC {
    public:
     double dt;
-    
+
     std::array<StaticVector<double, Nu>, H> U_guess;
-    std::array<StaticVector<double, Nx>, H + 1> X_guess; 
+    std::array<StaticVector<double, Nx>, H + 1> X_guess;
     StaticVector<double, Nu> u_last;
 
     std::array<ObstacleFrenet, MAX_OBS> obstacles;
@@ -35,7 +35,7 @@ class MultipleShootingNMPC {
         dt = 0.1;
         for (size_t k = 0; k < H; ++k) U_guess[k].set_zero();
         for (size_t k = 0; k <= H; ++k) X_guess[k].set_zero();
-        
+
         for (size_t i = 0; i < MAX_OBS; ++i) {
             obstacles[i].s = 10000.0;
             obstacles[i].d = 10000.0;
@@ -78,7 +78,7 @@ class MultipleShootingNMPC {
 
         // 1. 초기 상태 구속
         X_guess[0] = x_curr_frenet;
-        X_guess[0](3) = MathTraits<double>::max(0.1, x_curr_frenet(3)); 
+        X_guess[0](3) = MathTraits<double>::max(0.1, x_curr_frenet(3));
 
         // =========================================================================
         // [Architect's Shield: Cold Start Ignition]
@@ -99,7 +99,7 @@ class MultipleShootingNMPC {
 
         for (size_t k = 0; k < H; ++k) {
             StaticVector<double, Nu> u_prev = (k == 0) ? u_last : U_guess[k - 1];
-            
+
             StaticVector<ADVar, Nx> x_dual;
             StaticVector<ADVar, Nu> u_dual;
             StaticVector<ADVar, Nu> u_prev_dual;
@@ -107,11 +107,12 @@ class MultipleShootingNMPC {
             for (size_t i = 0; i < Nx; ++i) x_dual(i) = ADVar::make_variable(X_guess[k](i), i);
             for (size_t i = 0; i < Nu; ++i) {
                 u_dual(i) = ADVar::make_variable(U_guess[k](i), Nx + i);
-                u_prev_dual(i) = ADVar(u_prev(i)); 
+                u_prev_dual(i) = ADVar(u_prev(i));
             }
 
-            StaticVector<ADVar, Nx> x_next_dual = integrator::step_rk4<Nx, Nu>(model, x_dual, u_dual, dt);
-            
+            StaticVector<ADVar, Nx> x_next_dual =
+                integrator::step_rk4<Nx, Nu>(model, x_dual, u_dual, dt);
+
             StaticVector<double, Nx> x_pred_val;
             for (size_t i = 0; i < Nx; ++i) {
                 x_pred_val(i) = x_next_dual(i).v;
@@ -122,7 +123,7 @@ class MultipleShootingNMPC {
             // Defect Constraint (마법의 열쇠)
             riccati.d[k] = x_pred_val - X_guess[k + 1];
 
-            StaticVector<ADVar, NUM_RESIDUALS> res_dual = 
+            StaticVector<ADVar, NUM_RESIDUALS> res_dual =
                 cost_evaluator.eval_node_residuals(x_dual, u_dual, u_prev_dual, config, k);
 
             riccati.Q[k].set_zero();
@@ -135,12 +136,14 @@ class MultipleShootingNMPC {
                 for (size_t i = 0; i < Nx; ++i) {
                     double J_xi = res_dual(res_idx).g[i];
                     riccati.q[k](i) += J_xi * r_val;
-                    for (size_t j = 0; j < Nx; ++j) riccati.Q[k](i, j) += J_xi * res_dual(res_idx).g[j];
+                    for (size_t j = 0; j < Nx; ++j)
+                        riccati.Q[k](i, j) += J_xi * res_dual(res_idx).g[j];
                 }
                 for (size_t i = 0; i < Nu; ++i) {
                     double J_ui = res_dual(res_idx).g[Nx + i];
                     riccati.r[k](i) += J_ui * r_val;
-                    for (size_t j = 0; j < Nu; ++j) riccati.R[k](i, j) += J_ui * res_dual(res_idx).g[Nx + j];
+                    for (size_t j = 0; j < Nu; ++j)
+                        riccati.R[k](i, j) += J_ui * res_dual(res_idx).g[Nx + j];
                 }
             }
 
@@ -150,7 +153,8 @@ class MultipleShootingNMPC {
                 double s_lower = MathTraits<double>::max(u_val - config.u_min[i], 1e-3);
 
                 double grad_barrier = config.barrier_mu * (1.0 / s_upper - 1.0 / s_lower);
-                double hess_barrier = config.barrier_mu * (1.0 / (s_upper * s_upper) + 1.0 / (s_lower * s_lower));
+                double hess_barrier =
+                    config.barrier_mu * (1.0 / (s_upper * s_upper) + 1.0 / (s_lower * s_lower));
 
                 riccati.r[k](i) += std::clamp(grad_barrier, -100.0, 100.0);
                 riccati.R[k](i, i) += MathTraits<double>::min(hess_barrier, 500.0);
@@ -166,9 +170,9 @@ class MultipleShootingNMPC {
         for (size_t i = 0; i < Nx; ++i) {
             if (i == 1 || i == 2 || i == 3) {
                 double err = (i == 3) ? (X_guess[H](i) - config.target_vx) : X_guess[H](i);
-                double qf_i = (i == 1) ? config.Q_D * 5.0 : 
-                              (i == 2) ? config.Q_mu * 5.0 : 
-                                         config.Q_Vx * 5.0;
+                double qf_i = (i == 1)   ? config.Q_D * 5.0
+                              : (i == 2) ? config.Q_mu * 5.0
+                                         : config.Q_Vx * 5.0;
                 riccati.Q[H](i, i) += qf_i;
                 riccati.q[H](i) += qf_i * err;
             }
@@ -184,10 +188,12 @@ class MultipleShootingNMPC {
                 double du = riccati.du[k](i);
                 if (du > 1e-4) {
                     double max_alpha = (config.u_max[i] - U_guess[k](i)) / du;
-                    if (max_alpha > 0.0) alpha = MathTraits<double>::min(alpha, config.safety_fraction * max_alpha);
+                    if (max_alpha > 0.0)
+                        alpha = MathTraits<double>::min(alpha, config.safety_fraction * max_alpha);
                 } else if (du < -1e-4) {
                     double max_alpha = (config.u_min[i] - U_guess[k](i)) / du;
-                    if (max_alpha > 0.0) alpha = MathTraits<double>::min(alpha, config.safety_fraction * max_alpha);
+                    if (max_alpha > 0.0)
+                        alpha = MathTraits<double>::min(alpha, config.safety_fraction * max_alpha);
                 }
             }
         }
@@ -197,8 +203,10 @@ class MultipleShootingNMPC {
         for (size_t k = 0; k < H; ++k) {
             for (size_t i = 0; i < Nu; ++i) {
                 U_guess[k](i) += alpha * riccati.du[k](i);
-                U_guess[k](i) = std::clamp(U_guess[k](i), config.u_min[i] + 1e-3, config.u_max[i] - 1e-3);
-                max_kkt = MathTraits<double>::max(max_kkt, MathTraits<double>::abs(riccati.du[k](i)));
+                U_guess[k](i) =
+                    std::clamp(U_guess[k](i), config.u_min[i] + 1e-3, config.u_max[i] - 1e-3);
+                max_kkt =
+                    MathTraits<double>::max(max_kkt, MathTraits<double>::abs(riccati.du[k](i)));
             }
             for (size_t i = 0; i < Nx; ++i) {
                 X_guess[k + 1](i) += alpha * riccati.dx[k + 1](i);

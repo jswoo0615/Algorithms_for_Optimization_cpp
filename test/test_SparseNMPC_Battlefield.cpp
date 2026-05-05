@@ -18,10 +18,14 @@ enum class Scenario { PARALLEL, SUDDEN_STOP, ZIGZAG };
 
 std::string get_scenario_name(Scenario type) {
     switch (type) {
-        case Scenario::PARALLEL: return "parallel";
-        case Scenario::SUDDEN_STOP: return "sudden_stop";
-        case Scenario::ZIGZAG: return "zigzag";
-        default: return "unknown";
+        case Scenario::PARALLEL:
+            return "parallel";
+        case Scenario::SUDDEN_STOP:
+            return "sudden_stop";
+        case Scenario::ZIGZAG:
+            return "zigzag";
+        default:
+            return "unknown";
     }
 }
 
@@ -60,12 +64,12 @@ void setup_scenario(Scenario type, NMPC_Type& nmpc) {
 TEST(SparseNMPC_Battlefield, MultiObstacleLoggingTest) {
     constexpr size_t H = 30;
     // [Architect's Update] MultipleShootingNMPC로 교체하여 극한의 안정성 테스트도 가능합니다.
-    SparseNMPC<H> nmpc; 
+    SparseNMPC<H> nmpc;
     vehicle::DynamicBicycleModel plant;
     double dt = 0.1;
 
     // 시나리오 선택 (ZIGZAG로 극한의 슬라럼 성능 테스트)
-    Scenario current_sim = Scenario::SUDDEN_STOP; 
+    Scenario current_sim = Scenario::SUDDEN_STOP;
     setup_scenario(current_sim, nmpc);
 
     std::string filename = "battlefield_" + get_scenario_name(current_sim) + ".csv";
@@ -88,7 +92,7 @@ TEST(SparseNMPC_Battlefield, MultiObstacleLoggingTest) {
     std::cout << "Step |   S   |   D   |  Vx  | Steer(deg) | Accel |  KKT  | MinDist\n";
     std::cout << "------------------------------------------------------------\n";
 
-    double absolute_min_dist = 1000.0; // 시뮬레이션 전체 최소 안전거리
+    double absolute_min_dist = 1000.0;  // 시뮬레이션 전체 최소 안전거리
 
     for (int step = 0; step < 120; ++step) {
         // [특수 이벤트 Trigger]
@@ -99,7 +103,7 @@ TEST(SparseNMPC_Battlefield, MultiObstacleLoggingTest) {
 
         // 장애물 물리적 위치 업데이트 (등속 운동)
         for (int i = 0; i < 10; ++i) {
-            if (nmpc.obstacles[i].s < 500.0) { // 활성화된 장애물만
+            if (nmpc.obstacles[i].s < 500.0) {  // 활성화된 장애물만
                 nmpc.obstacles[i].s += nmpc.obstacles[i].vs * dt;
                 nmpc.obstacles[i].d += nmpc.obstacles[i].vd * dt;
             }
@@ -109,7 +113,7 @@ TEST(SparseNMPC_Battlefield, MultiObstacleLoggingTest) {
         NMPCResult res = nmpc.solve_rt_qp(x_true, config);
 
         // [Architect's Assertion 1] 솔버 붕괴 감시 (수렴 실패 시 테스트 즉시 종료)
-        EXPECT_TRUE(res.success || res.fallback_triggered) 
+        EXPECT_TRUE(res.success || res.fallback_triggered)
             << "Solver mathematically crashed at step " << step;
 
         double steer_rad = nmpc.U_guess[0](0);
@@ -119,25 +123,21 @@ TEST(SparseNMPC_Battlefield, MultiObstacleLoggingTest) {
         // [Architect's Collision Monitor] 실제 차량과 장애물 간의 최소 거리 측정
         double current_min_dist = 1000.0;
         for (int i = 0; i < 10; ++i) {
-            if (nmpc.obstacles[i].s > 500.0) continue; 
+            if (nmpc.obstacles[i].s > 500.0) continue;
             double ds = x_true(0) - nmpc.obstacles[i].s;
             double dd = x_true(1) - nmpc.obstacles[i].d;
-            double dist = std::sqrt(ds * ds + dd * dd) - nmpc.obstacles[i].r; // 표면 간 거리
+            double dist = std::sqrt(ds * ds + dd * dd) - nmpc.obstacles[i].r;  // 표면 간 거리
             if (dist < current_min_dist) current_min_dist = dist;
         }
         if (current_min_dist < absolute_min_dist) absolute_min_dist = current_min_dist;
 
         // 콘솔 출력 (5스텝 단위 및 긴급 제동 시 출력)
-        if (step % 5 == 0 || res.fallback_triggered) {  
-            std::cout << std::fixed << std::setprecision(2) 
-                      << std::setw(4) << step << " | " 
-                      << std::setw(5) << x_true(0) << " | "
-                      << std::setw(5) << x_true(1) << " | " 
-                      << std::setw(4) << x_true(3) << " | " 
-                      << std::setw(10) << steer_deg << " | " 
-                      << std::setw(5) << accel << " | " 
-                      << std::setprecision(3) << res.max_kkt_error << " | "
-                      << current_min_dist << "\n";
+        if (step % 5 == 0 || res.fallback_triggered) {
+            std::cout << std::fixed << std::setprecision(2) << std::setw(4) << step << " | "
+                      << std::setw(5) << x_true(0) << " | " << std::setw(5) << x_true(1) << " | "
+                      << std::setw(4) << x_true(3) << " | " << std::setw(10) << steer_deg << " | "
+                      << std::setw(5) << accel << " | " << std::setprecision(3) << res.max_kkt_error
+                      << " | " << current_min_dist << "\n";
         }
 
         if (csv_file.is_open()) {
@@ -153,7 +153,7 @@ TEST(SparseNMPC_Battlefield, MultiObstacleLoggingTest) {
         // [Architect's Assertion 2] 충돌 여부 하드 체크 (마진 0.0 미만 시 실패)
         EXPECT_GT(current_min_dist, 0.0) << "COLLISION DETECTED at step " << step;
 
-        if (x_true(0) > 130.0) break; // 시나리오 종점 통과
+        if (x_true(0) > 130.0) break;  // 시나리오 종점 통과
     }
 
     if (csv_file.is_open()) {

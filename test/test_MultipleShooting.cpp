@@ -1,11 +1,12 @@
 #include <gtest/gtest.h>
-#include <iostream>
-#include <iomanip>
+
 #include <cmath>
+#include <iomanip>
+#include <iostream>
 
 #include "Optimization/Controller/MultipleShootingNMPC.hpp"
-#include "Optimization/Matrix/StaticMatrix.hpp"
 #include "Optimization/Integrator/RK4.hpp"
+#include "Optimization/Matrix/StaticMatrix.hpp"
 #include "Optimization/VehicleModel/DynamicBicycleModel.hpp"
 
 using namespace Optimization;
@@ -21,7 +22,7 @@ TEST(MultipleShootingTest, O_H_Riccati_Formulation) {
 
     MultipleShootingNMPC<H, Nx, Nu> nmpc;
     NMPCTuningConfig config;
-    
+
     StaticVector<double, Nx> x_curr;
     x_curr.set_zero();
     x_curr(0) = 0.0;   // s
@@ -39,9 +40,8 @@ TEST(MultipleShootingTest, O_H_Riccati_Formulation) {
 
         EXPECT_TRUE(res.success) << "MS-NMPC Solver failed at step " << step;
 
-        std::cout << std::setw(4) << step << " | "
-                  << std::fixed << std::setprecision(2) << std::setw(6) << x_curr(1) << " | "
-                  << std::setw(6) << x_curr(2) << " | "
+        std::cout << std::setw(4) << step << " | " << std::fixed << std::setprecision(2)
+                  << std::setw(6) << x_curr(1) << " | " << std::setw(6) << x_curr(2) << " | "
                   << std::setw(10) << nmpc.U_guess[0](0) * 180.0 / M_PI << " | "
                   << std::setprecision(4) << res.max_kkt_error << "\n";
 
@@ -50,8 +50,8 @@ TEST(MultipleShootingTest, O_H_Riccati_Formulation) {
 
         nmpc.shift_sequence();
     }
-    
+
     // 3초 후에는 완벽하게 차선 중앙을 유지하고 있어야 함
-    EXPECT_NEAR(x_curr(1), 0.0, 0.05); 
-    EXPECT_NEAR(x_curr(2), 0.0, 0.05);  
+    EXPECT_NEAR(x_curr(1), 0.0, 0.05);
+    EXPECT_NEAR(x_curr(2), 0.0, 0.05);
 }
