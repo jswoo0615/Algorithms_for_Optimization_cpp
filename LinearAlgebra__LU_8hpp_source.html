@@ -105,13 +105,13 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span>        T max_val = <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(0);</div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span>        <span class="keywordtype">size_t</span> pivot_row = i;</div>
 <div class="line"><a id="l00017" name="l00017"></a><span class="lineno">   17</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> j = i; j &lt; Rows; ++j) {</div>
-<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>            T abs_val = MathTraits&lt;T&gt;::abs(mat(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(j), <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(i)));</div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno">   18</span>            T abs_val = <a class="code hl_struct" href="structMathTraits.html">MathTraits&lt;T&gt;::abs</a>(mat(<span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(j), <span class="keyword">static_cast&lt;</span><span class="keywordtype">int</span><span class="keyword">&gt;</span>(i)));</div>
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>            <span class="keywordflow">if</span> (abs_val &gt; max_val) {</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>                max_val = abs_val;</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>                pivot_row = j;</div>
 <div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>            }</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>        }</div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <span class="keywordflow">if</span> (MathTraits&lt;T&gt;::near_zero(max_val)) {</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>        <span class="keywordflow">if</span> (<a class="code hl_struct" href="structMathTraits.html">MathTraits&lt;T&gt;::near_zero</a>(max_val)) {</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>            <span class="keywordflow">return</span> MathStatus::SINGULAR;</div>
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>        }</div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>        <span class="keywordflow">if</span> (pivot_row != i) {</div>
@@ -163,6 +163,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>}  <span class="comment">// namespace Optimization</span></div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_LINEAR_ALGEBRA_LU_HPP_</span></div>
+<div class="ttc" id="astructMathTraits_html"><div class="ttname"><a href="structMathTraits.html">MathTraits</a></div><div class="ttdef"><b>Definition</b> MathTraits.hpp:31</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

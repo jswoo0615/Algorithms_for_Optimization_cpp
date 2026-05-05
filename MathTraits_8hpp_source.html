@@ -91,52 +91,94 @@ $(document).ready(function() { init_codefold(0); });
 <div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef OPTIMIZATION_MATH_TRAITS_HPP_</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define OPTIMIZATION_MATH_TRAITS_HPP_</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
-<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;cmath&gt;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;limits&gt;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span> </div>
-<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;Optimization/Dual.hpp&quot;</span></div>
-<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
-<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span>Optimization {</div>
-<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment">// =============================================</span></div>
-<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment">// AD (Auto Differentiation) 호환 Traits 구조체</span></div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment">// =============================================</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">enum class</span> MathStatus { SUCCESS = 1, SINGULAR = -1, ILL_CONDITIONED = -2, NUMERICAL_ERROR = -5 };</div>
-<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
-<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="foldopen" id="foldopen00025" data-start="{" data-end="};">
-<div class="line"><a id="l00025" name="l00025"></a><span class="lineno"><a class="line" href="structOptimization_1_1MathTraits.html">   25</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structOptimization_1_1MathTraits.html">MathTraits</a> {</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    <span class="keyword">static</span> T abs(<span class="keyword">const</span> T&amp; x) { <span class="keywordflow">return</span> std::abs(x); }</div>
-<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keyword">static</span> T sqrt(<span class="keyword">const</span> T&amp; x) { <span class="keywordflow">return</span> std::sqrt(x); }</div>
-<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keyword">static</span> <span class="keywordtype">bool</span> near_zero(<span class="keyword">const</span> T&amp; x) {</div>
-<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span>        <span class="comment">// 하드웨어 머신 입실론을 기준으로 수치적 0을 판단</span></div>
-<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span>        <span class="keywordflow">return</span> std::abs(x) &lt;= std::numeric_limits&lt;T&gt;::epsilon();</div>
-<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span>    }</div>
-<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>};</div>
-</div>
-<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
-<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
-<div class="foldopen" id="foldopen00035" data-start="{" data-end="};">
-<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="structOptimization_1_1MathTraits_3_01Optimization_1_1Dual_3_01T_01_4_01_4.html">   35</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structOptimization_1_1MathTraits.html">MathTraits</a>&lt;Optimization::<a class="code hl_struct" href="structOptimization_1_1Dual.html">Dual</a>&lt;T&gt;&gt; {</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <span class="keyword">static</span> <a class="code hl_struct" href="structOptimization_1_1Dual.html">Optimization::Dual&lt;T&gt;</a> abs(<span class="keyword">const</span> <a class="code hl_struct" href="structOptimization_1_1Dual.html">Optimization::Dual&lt;T&gt;</a>&amp; x) {</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>        <span class="keywordflow">return</span> Optimization::ad::abs(x);</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    }</div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keyword">static</span> <a class="code hl_struct" href="structOptimization_1_1Dual.html">Optimization::Dual&lt;T&gt;</a> sqrt(<span class="keyword">const</span> <a class="code hl_struct" href="structOptimization_1_1Dual.html">Optimization::Dual&lt;T&gt;</a>&amp; x) {</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>        <span class="keywordflow">return</span> Optimization::ad::sqrt(x);</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    }</div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keyword">static</span> <span class="keywordtype">bool</span> near_zero(<span class="keyword">const</span> <a class="code hl_struct" href="structOptimization_1_1Dual.html">Optimization::Dual&lt;T&gt;</a>&amp; x) {</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="comment">// Dual 타입은 실수부(v)의 값으로 특이성을 판단</span></div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="keywordflow">return</span> std::abs(x.<a class="code hl_variable" href="structOptimization_1_1Dual.html#ad0413bca82bdd0c139225b080313c442">v</a>) &lt;= std::numeric_limits&lt;T&gt;::epsilon();</div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;algorithm&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;cmath&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;limits&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span> </div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &quot;Optimization/Dual.hpp&quot;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span> </div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="comment">// ======================================</span></div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment">// Layer 2 : 수학 연산 상태 코드 (Math Status)</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment">// ======================================</span></div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span><span class="keyword">enum class</span> MathStatus {</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span>    SUCCESS = 1,</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    SINGULAR = -1,</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    ILL_CONDITIONED = -2,</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    NUMERICAL_ERROR = -5</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>};</div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span><span class="comment">// ============================================</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span><span class="comment">// AD (Auto Differentitation) 호환 Traits 구조체</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span><span class="comment">// ============================================</span></div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="foldopen" id="foldopen00031" data-start="{" data-end="};">
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno"><a class="line" href="structMathTraits.html">   31</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structMathTraits.html">MathTraits</a> {</div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span>    <span class="keyword">static</span> T abs(<span class="keyword">const</span> T&amp; x) {</div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>        <span class="keywordflow">return</span> std::abs(x);</div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    }</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    <span class="keyword">static</span> T sqrt(<span class="keyword">const</span> T&amp; x) {</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>        <span class="keywordflow">return</span> std::sqrt(x);</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    }</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="comment">// IPM 장벽 계산용 Min / Max 추가</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="keyword">static</span> T max(<span class="keyword">const</span> T&amp; x, <span class="keyword">const</span> T&amp; y) {</div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="keywordflow">return</span> std::max(x, y);</div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    }</div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    <span class="keyword">static</span> T min(<span class="keyword">const</span> T&amp; x, <span class="keyword">const</span> T&amp; y) {</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        <span class="keywordflow">return</span> std::min(x, y);</div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    }</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>};</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span> </div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    <span class="comment">// FMA 연산 오차를 고려한 Tolerance (기본값 : Epsilon * 10)</span></div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    <span class="keyword">static</span> <span class="keywordtype">bool</span> near_zero(<span class="keyword">const</span> T&amp; x, T tol = std::numeric_limits&lt;T&gt;::epsilon() * <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(10.0)) {</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        <span class="keywordflow">return</span> std::abs(x) &lt;= tol;</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    }</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="comment">// 값 추출기 : 일반 타입은 자기 자신을 반환</span></div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    <span class="keyword">static</span> T get_value(<span class="keyword">const</span> T&amp; x) {</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        <span class="keywordflow">return</span> x;</div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    }</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>};</div>
 </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>}  <span class="comment">// namespace Optimization</span></div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span><span class="preprocessor">#endif  </span><span class="comment">// OPTIMIZATION_MATH_TRAITS_HPP_</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="foldopen" id="foldopen00059" data-start="{" data-end="};">
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno"><a class="line" href="structMathTraits_3_01Optimization_1_1Dual_3_01T_01_4_01_4.html">   59</a></span><span class="keyword">struct </span><a class="code hl_struct" href="structMathTraits.html">MathTraits</a>&lt;Optimization::Dual&lt;T&gt;&gt; {</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    <span class="keyword">static</span> <a class="code hl_struct" href="structOptimization_1_1Dual.html">Optimization::Dual&lt;T&gt;</a> abs(<span class="keyword">const</span> <a class="code hl_struct" href="structOptimization_1_1Dual.html">Optimization::Dual&lt;T&gt;</a>&amp; x) {</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        <span class="keywordflow">return</span> Optimization::ad::abs(x);</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    }</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>    <span class="keyword">static</span> <a class="code hl_struct" href="structOptimization_1_1Dual.html">Optimization::Dual&lt;T&gt;</a> sqrt(<span class="keyword">const</span> <a class="code hl_struct" href="structOptimization_1_1Dual.html">Optimization::Dual&lt;T&gt;</a>&amp; x) {</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        <span class="keywordflow">return</span> Optimization::ad::sqrt(x);</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>    }</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="comment">// Dual 타입의 비교는 오직 실제 수치 (v)를 기준으로 판단합니다.</span></div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>    <span class="keyword">static</span> <a class="code hl_struct" href="structOptimization_1_1Dual.html">Optimization::Dual&lt;T&gt;</a> max(<span class="keyword">const</span> <a class="code hl_struct" href="structOptimization_1_1Dual.html">Optimization::Dual&lt;T&gt;</a>&amp; x, <span class="keyword">const</span> <a class="code hl_struct" href="structOptimization_1_1Dual.html">Optimization::Dual&lt;T&gt;</a>&amp; y) {</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        <span class="keywordflow">return</span> (x.<a class="code hl_variable" href="structOptimization_1_1Dual.html#ad0413bca82bdd0c139225b080313c442">v</a> &gt; y.<a class="code hl_variable" href="structOptimization_1_1Dual.html#ad0413bca82bdd0c139225b080313c442">v</a>) ? x : y;</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    }</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="keyword">static</span> <a class="code hl_struct" href="structOptimization_1_1Dual.html">Optimization::Dual&lt;T&gt;</a> min(<span class="keyword">const</span> <a class="code hl_struct" href="structOptimization_1_1Dual.html">Optimization::Dual&lt;T&gt;</a>&amp; x, <span class="keyword">const</span> <a class="code hl_struct" href="structOptimization_1_1Dual.html">Optimization::Dual&lt;T&gt;</a>&amp; y) {</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        <span class="keywordflow">return</span> (x.<a class="code hl_variable" href="structOptimization_1_1Dual.html#ad0413bca82bdd0c139225b080313c442">v</a> &lt; y.<a class="code hl_variable" href="structOptimization_1_1Dual.html#ad0413bca82bdd0c139225b080313c442">v</a>) ? x : y;</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    }</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>    <span class="keyword">static</span> <span class="keywordtype">bool</span> near_zero(<span class="keyword">const</span> <a class="code hl_struct" href="structOptimization_1_1Dual.html">Optimization::Dual&lt;T&gt;</a>&amp; x, T tol = std::numeric_limits&lt;T&gt;::epsilon() * <span class="keyword">static_cast&lt;</span>T<span class="keyword">&gt;</span>(10.0)) {</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        <span class="keywordflow">return</span> std::abs(x.<a class="code hl_variable" href="structOptimization_1_1Dual.html#ad0413bca82bdd0c139225b080313c442">v</a>) &lt;= tol;</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    }</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    <span class="comment">// 값 추출기 : Dual 객체에서 수치값 (v)만 추출</span></div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    <span class="keyword">static</span> T get_value(<span class="keyword">const</span> <a class="code hl_struct" href="structOptimization_1_1Dual.html">Optimization::Dual&lt;T&gt;</a>&amp; x) {</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="keywordflow">return</span> x.<a class="code hl_variable" href="structOptimization_1_1Dual.html#ad0413bca82bdd0c139225b080313c442">v</a>;</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    }</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>};</div>
+</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span><span class="comment">// ====================================================</span></div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span><span class="comment">// 편의성 유틸리티 함수 (Global Accessors)</span></div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span><span class="comment">// ====================================================</span></div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span><span class="keyword">template</span> &lt;<span class="keyword">typename</span> T&gt;</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span><span class="keyword">inline</span> <span class="keyword">auto</span> get_value(<span class="keyword">const</span> T&amp; x) {</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <span class="keywordflow">return</span> <a class="code hl_struct" href="structMathTraits.html">MathTraits&lt;T&gt;::get_value</a>(x);</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>}</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span><span class="preprocessor">#endif </span><span class="comment">// OPTIMIZATION_MATH_TRAITS_HPP_</span></div>
+<div class="ttc" id="astructMathTraits_html"><div class="ttname"><a href="structMathTraits.html">MathTraits</a></div><div class="ttdef"><b>Definition</b> MathTraits.hpp:31</div></div>
 <div class="ttc" id="astructOptimization_1_1Dual_html"><div class="ttname"><a href="structOptimization_1_1Dual.html">Optimization::Dual</a></div><div class="ttdoc">전진 모드 자동 미분(Forward-mode Automatic Differentiation)을 위한 스칼라 듀얼(Dual) 수 구조체</div><div class="ttdef"><b>Definition</b> Dual.hpp:20</div></div>
 <div class="ttc" id="astructOptimization_1_1Dual_html_ad0413bca82bdd0c139225b080313c442"><div class="ttname"><a href="structOptimization_1_1Dual.html#ad0413bca82bdd0c139225b080313c442">Optimization::Dual::v</a></div><div class="ttdeci">T v</div><div class="ttdoc">원본 함수의 평가된 값 (Value)</div><div class="ttdef"><b>Definition</b> Dual.hpp:21</div></div>
-<div class="ttc" id="astructOptimization_1_1MathTraits_html"><div class="ttname"><a href="structOptimization_1_1MathTraits.html">Optimization::MathTraits</a></div><div class="ttdef"><b>Definition</b> MathTraits.hpp:25</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>

@@ -87,7 +87,7 @@ $(function() {
 </div><!--header-->
 <div class="contents">
 
-<p>전방 선언 (Forward Declaration)  
+<p>Layer 1 : SIMD/NEON Optimized Static Matrix Engine.  
  <a href="classOptimization_1_1StaticMatrix.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="StaticMatrix_8hpp_source.html">StaticMatrix.hpp</a>&gt;</code></p>
@@ -112,9 +112,17 @@ T *&#160;</td><td class="memItemRight" valign="bottom"><b>data_ptr</b> ()</td></
 <tr class="memitem:a4e3912f7a7982c2e2444434603213487" id="r_a4e3912f7a7982c2e2444434603213487"><td class="memItemLeft" align="right" valign="top"><a id="a4e3912f7a7982c2e2444434603213487" name="a4e3912f7a7982c2e2444434603213487"></a>
 const T *&#160;</td><td class="memItemRight" valign="bottom"><b>data_ptr</b> () const</td></tr>
 <tr class="separator:a4e3912f7a7982c2e2444434603213487"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a36566e18729fe2003e1f0078bd9113cf" id="r_a36566e18729fe2003e1f0078bd9113cf"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptimization_1_1StaticMatrix.html#a36566e18729fe2003e1f0078bd9113cf">set_zero</a> ()</td></tr>
-<tr class="memdesc:a36566e18729fe2003e1f0078bd9113cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">영행렬 초기화 (Zero Initialization)  <br /></td></tr>
+<tr class="memitem:a36566e18729fe2003e1f0078bd9113cf" id="r_a36566e18729fe2003e1f0078bd9113cf"><td class="memItemLeft" align="right" valign="top"><a id="a36566e18729fe2003e1f0078bd9113cf" name="a36566e18729fe2003e1f0078bd9113cf"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>set_zero</b> ()</td></tr>
 <tr class="separator:a36566e18729fe2003e1f0078bd9113cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:aef135eecaefb33a3f94b0470b6161af8" id="r_aef135eecaefb33a3f94b0470b6161af8"><td class="memItemLeft" align="right" valign="top"><a id="aef135eecaefb33a3f94b0470b6161af8" name="aef135eecaefb33a3f94b0470b6161af8"></a>
+void&#160;</td><td class="memItemRight" valign="bottom"><b>saxpy</b> (T scalar, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a> &amp;rhs)</td></tr>
+<tr class="memdesc:aef135eecaefb33a3f94b0470b6161af8"><td class="mdescLeft">&#160;</td><td class="mdescRight">SAXPY 연산 (this = scalar * rhs + this) FMA(Fused Multiply-Add)를 사용하여 단일 명령어로 정밀도와 속도를 동시에 확보합니다. <br /></td></tr>
+<tr class="separator:aef135eecaefb33a3f94b0470b6161af8"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4bb84ce640b1f162621f4ec1d887dfcb" id="r_a4bb84ce640b1f162621f4ec1d887dfcb"><td class="memItemLeft" align="right" valign="top"><a id="a4bb84ce640b1f162621f4ec1d887dfcb" name="a4bb84ce640b1f162621f4ec1d887dfcb"></a>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a> &amp;&#160;</td><td class="memItemRight" valign="bottom"><b>operator+=</b> (const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a> &amp;rhs)</td></tr>
+<tr class="memdesc:a4bb84ce640b1f162621f4ec1d887dfcb"><td class="mdescLeft">&#160;</td><td class="mdescRight">행렬 요소별 가산 (operator +=) <br /></td></tr>
+<tr class="separator:a4bb84ce640b1f162621f4ec1d887dfcb"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1fd359e9efdd8c29c7d00555a1d1cb0d" id="r_a1fd359e9efdd8c29c7d00555a1d1cb0d"><td class="memTemplParams" colspan="2"><a id="a1fd359e9efdd8c29c7d00555a1d1cb0d" name="a1fd359e9efdd8c29c7d00555a1d1cb0d"></a>
 template&lt;size_t SubRows, size_t SubCols&gt; </td></tr>
 <tr class="memitem:a1fd359e9efdd8c29c7d00555a1d1cb0d"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>insert_block</b> (size_t start_row, size_t start_col, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; T, SubRows, SubCols &gt; &amp;block)</td></tr>
@@ -123,8 +131,8 @@ template&lt;size_t SubRows, size_t SubCols&gt; </td></tr>
 template&lt;size_t SubRows, size_t SubCols&gt; </td></tr>
 <tr class="memitem:a3aec2e092a9d38b998af7c8b9415a7ce"><td class="memTemplItemLeft" align="right" valign="top">void&#160;</td><td class="memTemplItemRight" valign="bottom"><b>insert_transposed_block</b> (size_t start_row, size_t start_col, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; T, SubRows, SubCols &gt; &amp;block)</td></tr>
 <tr class="separator:a3aec2e092a9d38b998af7c8b9415a7ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a4a2346cf5b909ce13ec2eb95524d6644" id="r_a4a2346cf5b909ce13ec2eb95524d6644"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; T, Cols, Rows &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classOptimization_1_1StaticMatrix.html#a4a2346cf5b909ce13ec2eb95524d6644">transpose</a> () const</td></tr>
-<tr class="memdesc:a4a2346cf5b909ce13ec2eb95524d6644"><td class="mdescLeft">&#160;</td><td class="mdescRight">전치 행렬(Transpose) 반환  <br /></td></tr>
+<tr class="memitem:a4a2346cf5b909ce13ec2eb95524d6644" id="r_a4a2346cf5b909ce13ec2eb95524d6644"><td class="memItemLeft" align="right" valign="top"><a id="a4a2346cf5b909ce13ec2eb95524d6644" name="a4a2346cf5b909ce13ec2eb95524d6644"></a>
+<a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; T, Cols, Rows &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>transpose</b> () const</td></tr>
 <tr class="separator:a4a2346cf5b909ce13ec2eb95524d6644"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ac8cd4666a5ddd9592ad7b10bd6aa5bde" id="r_ac8cd4666a5ddd9592ad7b10bd6aa5bde"><td class="memTemplParams" colspan="2"><a id="ac8cd4666a5ddd9592ad7b10bd6aa5bde" name="ac8cd4666a5ddd9592ad7b10bd6aa5bde"></a>
 template&lt;size_t SubRows, size_t SubCols&gt; </td></tr>
@@ -136,72 +144,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>print</b> (const char
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;typename T, size_t Rows, size_t Cols&gt;<br />
-class Optimization::StaticMatrix&lt; T, Rows, Cols &gt;</div><p>전방 선언 (Forward Declaration) </p>
-<p>Layer 1 : Static Matrix Engine (Column-major 레이아웃 기반 정적 메모리 버퍼)</p>
-<p>컴파일러에게 <code><a class="el" href="classOptimization_1_1StaticMatrix.html" title="전방 선언 (Forward Declaration)">StaticMatrix</a></code> 템플릿 클래스의 존재를 미리 알려줍니다. 이를 통해 클래스 본문이 정의되기 전에도, 자기 자신을 참조하는 멤버 함수나 <code>StaticVector</code>와 같은 연관된 별칭 (Alias) 타입에서 해당 이르믕ㄹ 자유롭게 사용할 수 있습니다.</p>
-<p>[핵심 설계 철학 : Static Memory Allocation] 수학 연산은 Layer 2 (LinearAlgebra)로 분리되었으며, 이 클래스는 오직 SIMD와 CUDA를 대비한 64바이트 정렬 선형 메모리의 I/O만을 담당합니다. </p>
-</div><h2 class="groupheader">Member Function Documentation</h2>
-<a id="a36566e18729fe2003e1f0078bd9113cf" name="a36566e18729fe2003e1f0078bd9113cf"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a36566e18729fe2003e1f0078bd9113cf">&#9670;&#160;</a></span>set_zero()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , size_t Rows, size_t Cols&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname">void <a class="el" href="classOptimization_1_1StaticMatrix.html">Optimization::StaticMatrix</a>&lt; T, Rows, Cols &gt;::set_zero </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td></td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>영행렬 초기화 (Zero Initialization) </p>
-<p>매 제어 주기 (Control Loop, ex: 10ms 마다 1회)가 시작될 때, 이전 주기의 KKT 행렬 데이터 (찌꺼기)를 깨끗하게 0으로 비워야 새로운 최적화 계산을 꼬임 없이 시작할 수 있습니다. 이중 루릎 (for i, for j)를 돌며 0을 개별 할당하는 것보다 <code>std::fill</code>을 1차원적으로 적용하면, 최신 C++ 최적화 컴파일러가 이를 감지하고 단일 어셈블리 명령어인 고속 <code>memset</code> (메모리 블록 채우기) 수준으로 치환 (Intrinsic)하여 연산 사이클을 극한으로 단축합니다. </p>
-
-</div>
-</div>
-<a id="a4a2346cf5b909ce13ec2eb95524d6644" name="a4a2346cf5b909ce13ec2eb95524d6644"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a4a2346cf5b909ce13ec2eb95524d6644">&#9670;&#160;</a></span>transpose()</h2>
-
-<div class="memitem">
-<div class="memproto">
-<div class="memtemplate">
-template&lt;typename T , size_t Rows, size_t Cols&gt; </div>
-<table class="mlabels">
-  <tr>
-  <td class="mlabels-left">
-      <table class="memname">
-        <tr>
-          <td class="memname"><a class="el" href="classOptimization_1_1StaticMatrix.html">StaticMatrix</a>&lt; T, Cols, Rows &gt; <a class="el" href="classOptimization_1_1StaticMatrix.html">Optimization::StaticMatrix</a>&lt; T, Rows, Cols &gt;::transpose </td>
-          <td>(</td>
-          <td class="paramname"></td><td>)</td>
-          <td> const</td>
-        </tr>
-      </table>
-  </td>
-  <td class="mlabels-right">
-<span class="mlabels"><span class="mlabel">inline</span></span>  </td>
-  </tr>
-</table>
-</div><div class="memdoc">
-
-<p>전치 행렬(Transpose) 반환 </p>
-<p>Rows x Cols 행렬을 Cols x Rows 행렬로 변환하여 반환합니다. </p>
-
-</div>
-</div>
-<hr/>The documentation for this class was generated from the following file:<ul>
+class Optimization::StaticMatrix&lt; T, Rows, Cols &gt;</div><p>Layer 1 : SIMD/NEON Optimized Static Matrix Engine. </p>
+<p>[설계 지침]</p><ol type="1">
+<li>64바이트 정렬: 캐시 라인 패널티 방지 및 SIMD 가속 호환성 확보</li>
+<li>Column-major 레이아웃: 수치 해석 표준 라이브러리와의 호환성 유지</li>
+<li>Zero-Allocation: 모든 메모리는 스택 혹은 정적 영역에 할당됨</li>
+<li>Multi-Precision: float 및 double 타입에 대한 완벽한 하드웨어 가속 분기 </li>
+</ol>
+</div><hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/Optimization/Matrix/<a class="el" href="StaticMatrix_8hpp_source.html">StaticMatrix.hpp</a></li>
 </ul>
 </div><!-- contents -->
