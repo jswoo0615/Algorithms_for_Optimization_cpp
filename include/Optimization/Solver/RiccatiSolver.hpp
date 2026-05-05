@@ -11,101 +11,130 @@ namespace Optimization {
 namespace solver {
 
 /**
- * @brief Discrete-time Riccati Recursion Solver (LQR / KKT Block Solver)
+ * @brief 고속 이산시간 리카티 재귀 솔버 (Zero-Allocation & Cache-Friendly)
  * @details
- * O(H) 선형 시간 복잡도로 블록-희소(Block-Sparse) NMPC 선형 시스템의 해를 구합니다.
- * 166x166 Dense 역행렬 대신, 2x2 역행렬을 H번 수행하여 압도적인 속도를 달성합니다.
+ * 블록-희소(Block-Sparse) 구조를 파괴하지 않고 O(H) 시간 복잡도로 역행렬을 계산합니다.
+ * LU 대신 SPD(대칭 양의 정치) 행렬 전용 LDLT 분해를 사용하여 연산 속도를 극대화했습니다.
  */
 template <size_t H, size_t Nx, size_t Nu>
 struct RiccatiSolver {
-    // [입력 데이터] 각 스텝 k에서의 선형화된 행렬들
-    std::array<StaticMatrix<double, Nx, Nx>, H> A;  // 상태 자코비안
-    std::array<StaticMatrix<double, Nx, Nu>, H> B;  // 입력 자코비안
+    std::array<StaticMatrix<double, Nx, Nx>, H> A;
+    std::array<StaticMatrix<double, Nx, Nu>, H> B;
 
-    std::array<StaticMatrix<double, Nx, Nx>, H + 1> Q;  // 상태 비용 (Hessian)
-    std::array<StaticMatrix<double, Nu, Nu>, H> R;      // 입력 비용 (Hessian)
+    std::array<StaticMatrix<double, Nx, Nx>, H + 1> Q;
+    std::array<StaticMatrix<double, Nu, Nu>, H> R;
 
-    std::array<StaticVector<double, Nx>, H + 1> q;  // 상태 그래디언트 (Residual)
-    std::array<StaticVector<double, Nu>, H> r;      // 입력 그래디언트 (Residual)
+    std::array<StaticVector<double, Nx>, H + 1> q;
+    std::array<StaticVector<double, Nu>, H> r;
 
-    std::array<StaticVector<double, Nx>, H> d;  // 동역학 오차 (Dynamics Gap: x_{next} - f(x,u))
+    std::array<StaticVector<double, Nx>, H> d;
 
-    // [출력 데이터] 계산된 최적 스텝 (탐색 방향)
+    // [출력 데이터]
     std::array<StaticVector<double, Nx>, H + 1> dx;
     std::array<StaticVector<double, Nu>, H> du;
 
-    /**
-     * @brief Backward Pass & Forward Pass를 통해 최적의 dx, du를 계산합니다.
-     */
     SolverStatus solve() {
-        // Value Function P (Cost-to-go Hessian) 및 p (Cost-to-go Gradient)
         std::array<StaticMatrix<double, Nx, Nx>, H + 1> P;
         std::array<StaticVector<double, Nx>, H + 1> p;
 
-        // Feedback Gain K 및 Feedforward term k
         std::array<StaticMatrix<double, Nu, Nx>, H> K;
         std::array<StaticVector<double, Nu>, H> k_ff;
 
         // --- 1. Backward Pass (꼬리에서 머리로) ---
-        // Terminal 조건 초기화
         P[H] = Q[H];
         p[H] = q[H];
 
+        // 루프 내부의 스택 생성/소멸 오버헤드를 막기 위한 캐시 변수 사전 선언
+        StaticMatrix<double, Nx, Nu> PB;
+        StaticMatrix<double, Nx, Nx> PA;
+        StaticMatrix<double, Nu, Nu> Bt_PB;
+        StaticMatrix<double, Nu, Nx> Qux;
+        StaticMatrix<double, Nx, Nx> At_PA;
+        StaticVector<double, Nx> Pd;
+        StaticVector<double, Nx> p_next_mod;
+        StaticVector<double, Nu> Bt_p;
+        StaticVector<double, Nx> At_p;
+
         for (int k = H - 1; k >= 0; --k) {
-            // Quu = R_k + B_k^T * P_{k+1} * B_k
-            StaticMatrix<double, Nu, Nu> Quu = R[k] + B[k].transpose() * P[k + 1] * B[k];
-            // Qux = B_k^T * P_{k+1} * A_k
-            StaticMatrix<double, Nu, Nx> Qux = B[k].transpose() * P[k + 1] * A[k];
-            // Qxx = Q_k + A_k^T * P_{k+1} * A_k
-            StaticMatrix<double, Nx, Nx> Qxx = Q[k] + A[k].transpose() * P[k + 1] * A[k];
+            // [결합 법칙 최적화] P_{k+1} * B_k 와 P_{k+1} * A_k 를 미리 계산 (재사용)
+            linalg::multiply(P[k + 1], B[k], PB);
+            linalg::multiply(P[k + 1], A[k], PA);
 
-            // qu = r_k + B_k^T * p_{k+1} + B_k^T * P_{k+1} * d_k
-            StaticVector<double, Nu> qu =
-                r[k] + B[k].transpose() * p[k + 1] + B[k].transpose() * (P[k + 1] * d[k]);
-            // qx = q_k + A_k^T * p_{k+1} + A_k^T * P_{k+1} * d_k
-            StaticVector<double, Nx> qx =
-                q[k] + A[k].transpose() * p[k + 1] + A[k].transpose() * (P[k + 1] * d[k]);
+            // Quu = R_k + B_k^T * (P_{k+1} * B_k)
+            StaticMatrix<double, Nu, Nu> Quu = R[k];
+            linalg::multiply_AT_B(B[k], PB, Bt_PB); // 가상 전치(Virtual Transpose) 타격
+            Quu += Bt_PB;
 
-            // Quu의 역행렬을 구하여 Gain 계산 (Nu가 2이므로 초고속 연산 가능)
-            // -Quu * K = Qux  =>  K = -Quu^{-1} * Qux
-            // -Quu * k_ff = qu => k_ff = -Quu^{-1} * qu
-            StaticMatrix<double, Nu, Nu> neg_Quu;
-            for (size_t i = 0; i < Nu; ++i)
-                for (size_t j = 0; j < Nu; ++j) neg_Quu(i, j) = -Quu(i, j);
+            // Qux = B_k^T * (P_{k+1} * A_k)
+            linalg::multiply_AT_B(B[k], PA, Qux);
 
-            // Nu 크기(2x2)의 LU 분해 (혹은 LDLT)
-            StaticVector<int, Nu> pivot;
-            if (linalg::LU_decompose(neg_Quu, pivot) != MathStatus::SUCCESS) {
-                return SolverStatus::MATH_ERROR;  // 제어 불가능한 특이 지점
+            // Qxx = Q_k + A_k^T * (P_{k+1} * A_k)
+            StaticMatrix<double, Nx, Nx> Qxx = Q[k];
+            linalg::multiply_AT_B(A[k], PA, At_PA);
+            Qxx += At_PA;
+
+            // p_next_mod = p_{k+1} + P_{k+1} * d_k
+            linalg::multiply(P[k + 1], d[k], Pd);
+            p_next_mod = p[k + 1] + Pd;
+
+            // qu = r_k + B_k^T * p_next_mod
+            StaticVector<double, Nu> qu = r[k];
+            linalg::multiply_AT_B(B[k], p_next_mod, Bt_p);
+            qu += Bt_p;
+
+            // qx = q_k + A_k^T * p_next_mod
+            StaticVector<double, Nx> qx = q[k];
+            linalg::multiply_AT_B(A[k], p_next_mod, At_p);
+            qx += At_p;
+
+            // --- 고속 LDLT 분해 (Quu는 항상 SPD) ---
+            StaticMatrix<double, Nu, Nu> Quu_factored = Quu;
+            if (linalg::LDLT_decompose(Quu_factored) != MathStatus::SUCCESS) {
+                return SolverStatus::MATH_ERROR; // 제어 불가능 지점
             }
 
-            // 열벡터 단위로 해를 구하여 K 행렬 조립
+            // K = -Quu^{-1} * Qux 계산 (Column by Column in-place solve)
             for (size_t j = 0; j < Nx; ++j) {
-                StaticVector<double, Nu> Qux_col;
-                for (size_t i = 0; i < Nu; ++i) Qux_col(i) = Qux(i, j);
-                StaticVector<double, Nu> K_col = linalg::LU_solve(neg_Quu, pivot, Qux_col);
+                StaticVector<double, Nu> neg_Qux_col;
+                for (size_t i = 0; i < Nu; ++i) neg_Qux_col(i) = -Qux(i, j); // 부호 반전
+                
+                StaticVector<double, Nu> K_col;
+                linalg::LDLT_solve(Quu_factored, neg_Qux_col, K_col); // Zero-Allocation Solve
                 for (size_t i = 0; i < Nu; ++i) K[k](i, j) = K_col(i);
             }
 
-            // k_ff 계산
-            k_ff[k] = linalg::LU_solve(neg_Quu, pivot, qu);
+            // k_ff = -Quu^{-1} * qu 계산
+            StaticVector<double, Nu> neg_qu;
+            for (size_t i = 0; i < Nu; ++i) neg_qu(i) = -qu(i);
+            linalg::LDLT_solve(Quu_factored, neg_qu, k_ff[k]);
 
-            // P_k = Qxx + Qux^T * K
-            P[k] = Qxx + Qux.transpose() * K[k];
-            // p_k = qx + Qux^T * k_ff
-            p[k] = qx + Qux.transpose() * k_ff[k];
+            // P_k = Qxx + Qux^T * K_k
+            P[k] = Qxx;
+            StaticMatrix<double, Nx, Nx> QuxT_K;
+            linalg::multiply_AT_B(Qux, K[k], QuxT_K);
+            P[k] += QuxT_K;
+
+            // p_k = qx + Qux^T * k_ff_k
+            p[k] = qx;
+            StaticVector<double, Nx> QuxT_kff;
+            linalg::multiply_AT_B(Qux, k_ff[k], QuxT_kff);
+            p[k] += QuxT_kff;
         }
 
         // --- 2. Forward Pass (머리에서 꼬리로) ---
-        // 초기 상태는 고정되어 있으므로 변화량(dx_0)은 0
-        for (size_t i = 0; i < Nx; ++i) dx[0](i) = 0.0;
+        dx[0].set_zero(); // 초기 상태 섭동은 0
 
         for (size_t k = 0; k < H; ++k) {
             // du_k = K_k * dx_k + k_ff_k
-            du[k] = K[k] * dx[k] + k_ff[k];
+            StaticVector<double, Nu> K_dx;
+            linalg::multiply(K[k], dx[k], K_dx);
+            du[k] = K_dx + k_ff[k];
 
             // dx_{k+1} = A_k * dx_k + B_k * du_k + d_k
-            dx[k + 1] = A[k] * dx[k] + B[k] * du[k] + d[k];
+            StaticVector<double, Nx> A_dx, B_du;
+            linalg::multiply(A[k], dx[k], A_dx);
+            linalg::multiply(B[k], du[k], B_du);
+            dx[k + 1] = A_dx + B_du + d[k];
         }
 
         return SolverStatus::SUCCESS;
