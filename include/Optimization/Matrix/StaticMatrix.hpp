@@ -2,9 +2,9 @@
 #define STATIC_MATRIX_HPP_
 
 #if defined(__ARM_NEON) || defined(__ARM_NEON__)
-    #include <arm_neon.h>  // Jetson Nano (ARMv8 Cortex-A57)
+#include <arm_neon.h>  // Jetson Nano (ARMv8 Cortex-A57)
 #elif defined(__AVX2__)
-    #include <immintrin.h> // PC (x86_64 AVX2/FMA)
+#include <immintrin.h>  // PC (x86_64 AVX2/FMA)
 #endif
 
 #include <algorithm>
@@ -24,7 +24,7 @@ using StaticVector = StaticMatrix<T, N, 1>;
 
 /**
  * @brief Layer 1 : SIMD/NEON Optimized Static Matrix Engine
- * 
+ *
  * [설계 지침]
  * 1. 64바이트 정렬: 캐시 라인 패널티 방지 및 SIMD 가속 호환성 확보
  * 2. Column-major 레이아웃: 수치 해석 표준 라이브러리와의 호환성 유지
@@ -78,7 +78,7 @@ class StaticMatrix {
         constexpr size_t size = Rows * Cols;
         size_t i = 0;
 
-        #if defined(__ARM_NEON) || defined(__ARM_NEON__)
+#if defined(__ARM_NEON) || defined(__ARM_NEON__)
         if constexpr (std::is_same_v<T, float>) {
             float32x4_t v_scalar = vdupq_n_f32(scalar);
             for (; i + 3 < size; i += 4) {
@@ -97,7 +97,7 @@ class StaticMatrix {
                 vst1q_f64(&data[i], v_res);
             }
         }
-        #elif defined(__AVX2__)
+#elif defined(__AVX2__)
         if constexpr (std::is_same_v<T, float>) {
             __m256 v_scalar = _mm256_set1_ps(scalar);
             for (; i + 7 < size; i += 8) {
@@ -114,7 +114,7 @@ class StaticMatrix {
                 _mm256_store_pd(&data[i], _mm256_fmadd_pd(v_rhs, v_scalar, v_res));
             }
         }
-        #endif
+#endif
 
         // SIMD로 처리하지 못한 잔여 데이터 처리 (Scalar Fallback)
         for (; i < size; ++i) data[i] += scalar * rhs.data[i];
@@ -127,7 +127,7 @@ class StaticMatrix {
         constexpr size_t size = Rows * Cols;
         size_t i = 0;
 
-        #if defined(__ARM_NEON) || defined(__ARM_NEON__)
+#if defined(__ARM_NEON) || defined(__ARM_NEON__)
         if constexpr (std::is_same_v<T, float>) {
             for (; i + 3 < size; i += 4) {
                 float32x4_t v1 = vld1q_f32(&data[i]);
@@ -141,7 +141,7 @@ class StaticMatrix {
                 vst1q_f64(&data[i], vaddq_f64(v1, v2));
             }
         }
-        #elif defined(__AVX2__)
+#elif defined(__AVX2__)
         if constexpr (std::is_same_v<T, float>) {
             for (; i + 7 < size; i += 8) {
                 __m256 v1 = _mm256_load_ps(&data[i]);
@@ -155,7 +155,7 @@ class StaticMatrix {
                 _mm256_store_pd(&data[i], _mm256_add_pd(v1, v2));
             }
         }
-        #endif
+#endif
 
         for (; i < size; ++i) data[i] += rhs.data[i];
         return *this;
@@ -215,7 +215,8 @@ class StaticMatrix {
     }
 
     void print(const char* name) const {
-        std::cout << "Matrix [" << name << "] (Col-major, SIMD-aligned, " << Rows << "x" << Cols << "):\n";
+        std::cout << "Matrix [" << name << "] (Col-major, SIMD-aligned, " << Rows << "x" << Cols
+                  << "):\n";
         for (size_t i = 0; i < Rows; ++i) {
             for (size_t j = 0; j < Cols; ++j) {
                 std::cout << std::fixed << std::setw(10) << std::setprecision(4)
@@ -229,4 +230,4 @@ class StaticMatrix {
 
 }  // namespace Optimization
 
-#endif // STATIC_MATRIX_HPP_
+#endif  // STATIC_MATRIX_HPP_
