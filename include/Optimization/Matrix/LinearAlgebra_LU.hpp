@@ -5,9 +5,9 @@
 #include "Optimization/Matrix/MathTraits.hpp"
 
 #if defined(__ARM_NEON) || defined(__ARM_NEON__)
-    #include <arm_neon.h>
+#include <arm_neon.h>
 #elif defined(__AVX2__)
-    #include <immintrin.h>
+#include <immintrin.h>
 #endif
 
 namespace Optimization {
@@ -15,7 +15,7 @@ namespace linalg {
 
 /**
  * @brief 고속 LUP 분해 (In-place, Column-Oriented Rank-1 Update)
- * @details 
+ * @details
  * 부분 피벗팅(Partial Pivoting)을 포함한 LU 분해입니다.
  * 내부 Schur Complement 업데이트를 Column-major에 최적화된 SAXPY 루프로 변환하여
  * L1 캐시 히트율을 극대화하고 하드웨어 SIMD 가속을 적용했습니다.
@@ -63,11 +63,11 @@ inline MathStatus LU_decompose(StaticMatrix<T, N, N>& mat, StaticVector<int, N>&
 
         // 4. Rank-1 Update (Schur Complement) -> Column-oriented SAXPY
         for (size_t j = i + 1; j < N; ++j) {
-            T temp = mat(i, j); 
+            T temp = mat(i, j);
             size_t k = i + 1;
 
-            // --- SIMD 가속 구간: col_j[k...] -= temp * col_i[k...] ---
-            #if defined(__ARM_NEON) || defined(__ARM_NEON__)
+// --- SIMD 가속 구간: col_j[k...] -= temp * col_i[k...] ---
+#if defined(__ARM_NEON) || defined(__ARM_NEON__)
             if constexpr (std::is_same_v<T, float>) {
                 float32x4_t v_temp = vdupq_n_f32(-temp);
                 for (; k + 3 < N; k += 4) {
@@ -83,7 +83,7 @@ inline MathStatus LU_decompose(StaticMatrix<T, N, N>& mat, StaticVector<int, N>&
                     vst1q_f64(&mat(k, j), vfmaq_f64(v_col_j, v_col_i, v_temp));
                 }
             }
-            #elif defined(__AVX2__)
+#elif defined(__AVX2__)
             if constexpr (std::is_same_v<T, float>) {
                 __m256 v_temp = _mm256_set1_ps(-temp);
                 for (; k + 7 < N; k += 8) {
@@ -99,7 +99,7 @@ inline MathStatus LU_decompose(StaticMatrix<T, N, N>& mat, StaticVector<int, N>&
                     _mm256_storeu_pd(&mat(k, j), _mm256_fmadd_pd(v_col_i, v_temp, v_col_j));
                 }
             }
-            #endif
+#endif
 
             // --- Scalar Fallback ---
             for (; k < N; ++k) {
@@ -115,11 +115,8 @@ inline MathStatus LU_decompose(StaticMatrix<T, N, N>& mat, StaticVector<int, N>&
  * @details 임시 메모리를 할당하지 않고, Column-oriented 방식으로 캐시 미스를 억제합니다.
  */
 template <typename T, size_t N>
-inline void LU_solve(const StaticMatrix<T, N, N>& mat,
-                     const StaticVector<int, N>& P, 
-                     const StaticVector<T, N>& b,
-                     StaticVector<T, N>& x) {
-    
+inline void LU_solve(const StaticMatrix<T, N, N>& mat, const StaticVector<int, N>& P,
+                     const StaticVector<T, N>& b, StaticVector<T, N>& x) {
     // 1. Apply Permutation
     for (size_t i = 0; i < N; ++i) {
         x(i) = b(P(i));
@@ -138,7 +135,7 @@ inline void LU_solve(const StaticMatrix<T, N, N>& mat,
     // 3. Backward substitution (U * x = y) -> x에 in-place 수행
     // [Architect's Note] 통상적인 Row-oriented 내적이 아닌, Column-oriented 소거법 적용
     for (int k = static_cast<int>(N) - 1; k >= 0; --k) {
-        x(k) /= mat(k, k); // 대각 원소로 나누어 x(k) 확정
+        x(k) /= mat(k, k);  // 대각 원소로 나누어 x(k) 확정
         T x_k = x(k);
         // 확정된 x(k)를 이용하여 그 위에 있는 모든 행의 값을 미리 빼줍니다 (Column 순회)
         for (int i = 0; i < k; ++i) {
@@ -149,8 +146,7 @@ inline void LU_solve(const StaticMatrix<T, N, N>& mat,
 
 // 편의성 래퍼 (RVO 지원)
 template <typename T, size_t N>
-inline StaticVector<T, N> LU_solve(const StaticMatrix<T, N, N>& mat,
-                                   const StaticVector<int, N>& P, 
+inline StaticVector<T, N> LU_solve(const StaticMatrix<T, N, N>& mat, const StaticVector<int, N>& P,
                                    const StaticVector<T, N>& b) {
     StaticVector<T, N> x;
     LU_solve(mat, P, b, x);

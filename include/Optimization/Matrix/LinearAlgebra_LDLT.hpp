@@ -5,9 +5,9 @@
 #include "Optimization/Matrix/MathTraits.hpp"
 
 #if defined(__ARM_NEON) || defined(__ARM_NEON__)
-    #include <arm_neon.h>
+#include <arm_neon.h>
 #elif defined(__AVX2__)
-    #include <immintrin.h>
+#include <immintrin.h>
 #endif
 
 namespace Optimization {
@@ -15,9 +15,9 @@ namespace linalg {
 
 /**
  * @brief 고속 LDLT 분해 (In-place, Column-Oriented)
- * @details 
+ * @details
  * [Architect's Update]
- * 기존의 Row-major 순회 방식을 폐기하고, A의 k번째 열(Column)을 참조하여 
+ * 기존의 Row-major 순회 방식을 폐기하고, A의 k번째 열(Column)을 참조하여
  * j번째 열을 업데이트하는 SAXPY(외적) 형태로 재설계했습니다.
  * 이 구조는 메모리를 일렬로 긁어내므로 캐시 미스가 사실상 제로(0)에 수렴합니다.
  */
@@ -27,14 +27,14 @@ inline MathStatus LDLT_decompose(StaticMatrix<T, N, N>& mat) {
         // 1. Column j 업데이트 (k < j 인 이전 열들을 이용)
         for (size_t k = 0; k < j; ++k) {
             // temp = L_{j,k} * D_{kk}
-            T temp = mat(j, k) * mat(k, k); 
-            
+            T temp = mat(j, k) * mat(k, k);
+
             size_t i = j;
-            
-            // --- SIMD 가속 구간: col_j -= temp * col_k ---
-            #if defined(__ARM_NEON) || defined(__ARM_NEON__)
+
+// --- SIMD 가속 구간: col_j -= temp * col_k ---
+#if defined(__ARM_NEON) || defined(__ARM_NEON__)
             if constexpr (std::is_same_v<T, float>) {
-                float32x4_t v_temp = vdupq_n_f32(-temp); // 빼기를 위해 음수화
+                float32x4_t v_temp = vdupq_n_f32(-temp);  // 빼기를 위해 음수화
                 for (; i + 3 < N; i += 4) {
                     float32x4_t v_a_ik = vld1q_f32(&mat(i, k));
                     float32x4_t v_a_ij = vld1q_f32(&mat(i, j));
@@ -48,7 +48,7 @@ inline MathStatus LDLT_decompose(StaticMatrix<T, N, N>& mat) {
                     vst1q_f64(&mat(i, j), vfmaq_f64(v_a_ij, v_a_ik, v_temp));
                 }
             }
-            #elif defined(__AVX2__)
+#elif defined(__AVX2__)
             if constexpr (std::is_same_v<T, float>) {
                 __m256 v_temp = _mm256_set1_ps(-temp);
                 for (; i + 7 < N; i += 8) {
@@ -65,7 +65,7 @@ inline MathStatus LDLT_decompose(StaticMatrix<T, N, N>& mat) {
                     _mm256_storeu_pd(&mat(i, j), _mm256_fmadd_pd(v_a_ik, v_temp, v_a_ij));
                 }
             }
-            #endif
+#endif
 
             // --- Scalar Fallback ---
             for (; i < N; ++i) {
@@ -93,11 +93,9 @@ inline MathStatus LDLT_decompose(StaticMatrix<T, N, N>& mat) {
  * @details 임시 벡터(y, z)를 완전히 제거하고 결과 벡터 x 공간에서 in-place 연산을 수행합니다.
  */
 template <typename T, size_t N>
-inline void LDLT_solve(const StaticMatrix<T, N, N>& mat,
-                       const StaticVector<T, N>& b,
+inline void LDLT_solve(const StaticMatrix<T, N, N>& mat, const StaticVector<T, N>& b,
                        StaticVector<T, N>& x) {
-    
-    x = b; // 초기화
+    x = b;  // 초기화
 
     // 1. Forward substitution (L * z = b) -> x에 in-place 수행
     // 열 기반(Column-oriented) 순회로 L1 캐시 효율 극대화
