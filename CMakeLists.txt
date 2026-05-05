@@ -37,3 +37,11 @@ gtest_discover_tests(test_RiccatiSolver)
 add_executable(test_SparseNMPC_Battlefield test/test_SparseNMPC_Battlefield.cpp)
 target_link_libraries(test_SparseNMPC_Battlefield PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_SparseNMPC_Battlefield)
+
+add_executable(test_QPSolver_IPM test/test_QPSolver_IPM.cpp)
+target_link_libraries(test_QPSolver_IPM PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_QPSolver_IPM)
+
+add_executable(test_SQPSolver test/test_SQPSolver.cpp)
+target_link_libraries(test_SQPSolver PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_SQPSolver)
