@@ -1,70 +1,48 @@
 #ifndef STATIC_MATRIX_HPP_
 #define STATIC_MATRIX_HPP_
 
-#include <algorithm>  // std::copy, std::fill (연속 메모리 블록 단위의 고속 복사 및 초기화 기능 제공)
-#include <cassert>  // 런타임 인덱스 경계 검사 (디버깅 용도로 쓰이며, 릴리즈 시 NDEBUG 매크로로 오버헤드 없이 비활성화 가능)
+#if defined(__ARM_NEON) || defined(__ARM_NEON__)
+    #include <arm_neon.h>  // Jetson Nano (ARMv8 Cortex-A57)
+#elif defined(__AVX2__)
+    #include <immintrin.h> // PC (x86_64 AVX2/FMA)
+#endif
+
+#include <algorithm>
+#include <cassert>
 #include <cstddef>
-#include <iomanip>  // 콘솔 출력 시 열을 맞추기 위한 포맷팅 조절용 (디버깅 목적)
-#include <iostream>  // 행렬 상태를 확인하기 위한 디버깅 콘솔 입출력
+#include <iomanip>
+#include <iostream>
+#include <type_traits>
 
 namespace Optimization {
-/**
- * @brief 전방 선언 (Forward Declaration)
- *
- * 컴파일러에게 `StaticMatrix` 템플릿 클래스의 존재를 미리 알려줍니다.
- * 이를 통해 클래스 본문이 정의되기 전에도, 자기 자신을 참조하는 멤버 함수나
- * `StaticVector`와 같은 연관된 별칭 (Alias) 타입에서 해당 이르믕ㄹ 자유롭게 사용할 수 있습니다.
- */
+
 template <typename T, size_t Rows, size_t Cols>
 class StaticMatrix;
 
-/**
- * @brief Alias Template (상태 벡터를 위한 별칭)
- *
- * 선형 대수학에서 수학적 벡터 (Column Vector, 열 벡터)는 본질적으로 N행 1열 (N x 1) 형태의
- * 행렬입니다. 따라서 벡터를 위한 별도의 클래스를 구현하지 않고, `StaticMatrix<T, N, 1>`을
- * `StaticVector<T, N>`으로 이름 붙여 (Alias) 재사용합니다.
- * 이를 통해 메모리 구조상 행렬과 완벽히 동일하게 동작하며, 행렬-벡터 연산 간의 코드 일관성을 100%
- * 유지합니다.
- */
 template <typename T, size_t N>
 using StaticVector = StaticMatrix<T, N, 1>;
 
 /**
- * @brief Layer 1 : Static Matrix Engine (Column-major 레이아웃 기반 정적 메모리 버퍼)
- *
- * [핵심 설계 철학 : Static Memory Allocation]
- * 수학 연산은 Layer 2 (LinearAlgebra)로 분리되었으며,
- * 이 클래스는 오직 SIMD와 CUDA를 대비한 64바이트 정렬 선형 메모리의 I/O만을 담당합니다.
+ * @brief Layer 1 : SIMD/NEON Optimized Static Matrix Engine
+ * 
+ * [설계 지침]
+ * 1. 64바이트 정렬: 캐시 라인 패널티 방지 및 SIMD 가속 호환성 확보
+ * 2. Column-major 레이아웃: 수치 해석 표준 라이브러리와의 호환성 유지
+ * 3. Zero-Allocation: 모든 메모리는 스택 혹은 정적 영역에 할당됨
+ * 4. Multi-Precision: float 및 double 타입에 대한 완벽한 하드웨어 가속 분기
  */
 template <typename T, size_t Rows, size_t Cols>
 class StaticMatrix {
    private:
-    // =======================================================================================
-    // [메모리 최적화 : 정렬 (Alignment) 및 공간 지역성 (Spartial Locallity)]
-    // alignas(64) : 최신 CPU (x86_64, ARM 등)의 L1 캐시 라인 (Cache Line) 크기인 64바이트 단위로
-    // 메모리 시작 주소를 정렬합니다.
-    //      - 캐시 히트율 (Cache Hit Rate) 극대화 : 프로세서가 메모리를 읽을 때 64바이트 덩어리
-    //      (정크) 단위로 가져오므로, 정렬이 어긋나서 캐시 라인을 두 번 읽는 패널티 (False Sharing
-    //      등)를 방지합니다.
-    //      - SIMD 가속 호환 : AVX-512 등의 벡터화 (Vectorization) 명령어는 메모리가 정렬되어 있지
-    //      않으면 심각한 성능 저하나 하드웨어 예외를 발생시킵니다.
-    //      - 이 배열은 Column-major (열 우선) 방식으로, `data` 배열 전체가 메모리 상에 완벽하게
-    //      일렬로 연속된 (Contiguous) 하나의 1차원 블록을 형성합니다.
-    // =======================================================================================
+    // SIMD(AVX2/NEON) 및 캐시 최적화를 위한 64바이트 메모리 정렬
     alignas(64) T data[Rows * Cols]{};
 
    public:
+    StaticMatrix() { set_zero(); }
+
     // =======================================================================================
     // 메모리 접근자 (Accessor - Column-major 방식)
-    //
-    // [Column-major (열 우선) 레이아웃의 이유]
-    // Fortran, BLAS, LAPACK, Eigen 등 세계적인 표준 수치해석 라이브러리들은 모두 Column-major를
-    // 사용합니다 메모리 주소 계산 공식 : `data[col * Rows + row]` 즉, 같은 열 (Column)에 있는
-    // 원소들이 메모리 상에 연속적으로 배치되어 있습니다. 열 단위 연산 (예 : 행렬 곱셈, 블록
-    // 삽입/추출) 시 공간 지역성을 극대화하여 캐시 미스 (Cache Miss)를 획기적으로 줄입니다.
     // =======================================================================================
-    StaticMatrix() { set_zero(); }
     T& operator()(int r, int c) {
         assert(r >= 0 && r < static_cast<int>(Rows) && c >= 0 && c < static_cast<int>(Cols));
         return data[c * Rows + r];
@@ -86,27 +64,111 @@ class StaticMatrix {
     T* data_ptr() { return data; }
     const T* data_ptr() const { return data; }
 
-    /**
-     * @brief 영행렬 초기화 (Zero Initialization)
-     *
-     * 매 제어 주기 (Control Loop, ex: 10ms 마다 1회)가 시작될 때, 이전 주기의 KKT 행렬 데이터
-     * (찌꺼기)를 깨끗하게 0으로 비워야 새로운 최적화 계산을 꼬임 없이 시작할 수 있습니다. 이중 루릎
-     * (for i, for j)를 돌며 0을 개별 할당하는 것보다 `std::fill`을 1차원적으로 적용하면, 최신 C++
-     * 최적화 컴파일러가 이를 감지하고 단일 어셈블리 명령어인 고속 `memset` (메모리 블록 채우기)
-     * 수준으로 치환 (Intrinsic)하여 연산 사이클을 극한으로 단축합니다.
-     */
     void set_zero() { std::fill(data, data + (Rows * Cols), static_cast<T>(0)); }
 
     // =======================================================================================
-    // 블록 연산 모듈 (Block Operations & Assembly Utilities)
+    // 하드웨어 가속 연산 모듈 (SAXPY & ADD)
+    // =======================================================================================
+
+    /**
+     * @brief SAXPY 연산 (this = scalar * rhs + this)
+     * FMA(Fused Multiply-Add)를 사용하여 단일 명령어로 정밀도와 속도를 동시에 확보합니다.
+     */
+    void saxpy(T scalar, const StaticMatrix& rhs) {
+        constexpr size_t size = Rows * Cols;
+        size_t i = 0;
+
+        #if defined(__ARM_NEON) || defined(__ARM_NEON__)
+        if constexpr (std::is_same_v<T, float>) {
+            float32x4_t v_scalar = vdupq_n_f32(scalar);
+            for (; i + 3 < size; i += 4) {
+                float32x4_t v_rhs = vld1q_f32(&rhs.data[i]);
+                float32x4_t v_res = vld1q_f32(&data[i]);
+                v_res = vfmaq_f32(v_res, v_rhs, v_scalar);
+                vst1q_f32(&data[i], v_res);
+            }
+        } else if constexpr (std::is_same_v<T, double>) {
+            // ARMv8 NEON 64-bit 부동소수점 (double) 가속
+            float64x2_t v_scalar = vdupq_n_f64(scalar);
+            for (; i + 1 < size; i += 2) {
+                float64x2_t v_rhs = vld1q_f64(&rhs.data[i]);
+                float64x2_t v_res = vld1q_f64(&data[i]);
+                v_res = vfmaq_f64(v_res, v_rhs, v_scalar);
+                vst1q_f64(&data[i], v_res);
+            }
+        }
+        #elif defined(__AVX2__)
+        if constexpr (std::is_same_v<T, float>) {
+            __m256 v_scalar = _mm256_set1_ps(scalar);
+            for (; i + 7 < size; i += 8) {
+                __m256 v_rhs = _mm256_load_ps(&rhs.data[i]);
+                __m256 v_res = _mm256_load_ps(&data[i]);
+                _mm256_store_ps(&data[i], _mm256_fmadd_ps(v_rhs, v_scalar, v_res));
+            }
+        } else if constexpr (std::is_same_v<T, double>) {
+            // AVX2 256-bit 부동소수점 (double) 가속
+            __m256d v_scalar = _mm256_set1_pd(scalar);
+            for (; i + 3 < size; i += 4) {
+                __m256d v_rhs = _mm256_load_pd(&rhs.data[i]);
+                __m256d v_res = _mm256_load_pd(&data[i]);
+                _mm256_store_pd(&data[i], _mm256_fmadd_pd(v_rhs, v_scalar, v_res));
+            }
+        }
+        #endif
+
+        // SIMD로 처리하지 못한 잔여 데이터 처리 (Scalar Fallback)
+        for (; i < size; ++i) data[i] += scalar * rhs.data[i];
+    }
+
+    /**
+     * @brief 행렬 요소별 가산 (operator +=)
+     */
+    StaticMatrix& operator+=(const StaticMatrix& rhs) {
+        constexpr size_t size = Rows * Cols;
+        size_t i = 0;
+
+        #if defined(__ARM_NEON) || defined(__ARM_NEON__)
+        if constexpr (std::is_same_v<T, float>) {
+            for (; i + 3 < size; i += 4) {
+                float32x4_t v1 = vld1q_f32(&data[i]);
+                float32x4_t v2 = vld1q_f32(&rhs.data[i]);
+                vst1q_f32(&data[i], vaddq_f32(v1, v2));
+            }
+        } else if constexpr (std::is_same_v<T, double>) {
+            for (; i + 1 < size; i += 2) {
+                float64x2_t v1 = vld1q_f64(&data[i]);
+                float64x2_t v2 = vld1q_f64(&rhs.data[i]);
+                vst1q_f64(&data[i], vaddq_f64(v1, v2));
+            }
+        }
+        #elif defined(__AVX2__)
+        if constexpr (std::is_same_v<T, float>) {
+            for (; i + 7 < size; i += 8) {
+                __m256 v1 = _mm256_load_ps(&data[i]);
+                __m256 v2 = _mm256_load_ps(&rhs.data[i]);
+                _mm256_store_ps(&data[i], _mm256_add_ps(v1, v2));
+            }
+        } else if constexpr (std::is_same_v<T, double>) {
+            for (; i + 3 < size; i += 4) {
+                __m256d v1 = _mm256_load_pd(&data[i]);
+                __m256d v2 = _mm256_load_pd(&rhs.data[i]);
+                _mm256_store_pd(&data[i], _mm256_add_pd(v1, v2));
+            }
+        }
+        #endif
+
+        for (; i < size; ++i) data[i] += rhs.data[i];
+        return *this;
+    }
+
+    // =======================================================================================
+    // 블록 연산 모듈 (Block Operations)
     // =======================================================================================
     template <size_t SubRows, size_t SubCols>
     void insert_block(size_t start_row, size_t start_col,
                       const StaticMatrix<T, SubRows, SubCols>& block) {
-        static_assert(SubRows <= Rows, "SubMatrix rows exceed target");
-        static_assert(SubCols <= Cols, "SubMatrix cols exceed target");
-        assert(start_row + SubRows <= Rows && "Row index out of bounds");
-        assert(start_col + SubCols <= Cols && "Col index out of bounds");
+        static_assert(SubRows <= Rows && SubCols <= Cols, "SubMatrix size mismatch");
+        assert(start_row + SubRows <= Rows && start_col + SubCols <= Cols);
 
         for (size_t j = 0; j < SubCols; ++j) {
             const T* src = block.data_ptr() + (j * SubRows);
@@ -118,10 +180,8 @@ class StaticMatrix {
     template <size_t SubRows, size_t SubCols>
     void insert_transposed_block(size_t start_row, size_t start_col,
                                  const StaticMatrix<T, SubRows, SubCols>& block) {
-        static_assert(SubCols <= Rows, "Trnasposed block rows exceed target");
-        static_assert(SubRows <= Cols, "Transposed block cols exceed target");
-        assert(start_col + SubRows <= Cols && "Col index out of bounds");
-        assert(start_row + SubCols <= Rows && "Row index out of bounds");
+        static_assert(SubCols <= Rows && SubRows <= Cols, "Transposed block size mismatch");
+        assert(start_col + SubRows <= Cols && start_row + SubCols <= Rows);
 
         for (size_t j = 0; j < SubCols; ++j) {
             for (size_t i = 0; i < SubRows; ++i) {
@@ -131,10 +191,6 @@ class StaticMatrix {
         }
     }
 
-    /**
-     * @brief 전치 행렬(Transpose) 반환
-     * @details Rows x Cols 행렬을 Cols x Rows 행렬로 변환하여 반환합니다.
-     */
     StaticMatrix<T, Cols, Rows> transpose() const {
         StaticMatrix<T, Cols, Rows> res;
         for (size_t i = 0; i < Rows; ++i) {
@@ -148,9 +204,7 @@ class StaticMatrix {
 
     template <size_t SubRows, size_t SubCols>
     StaticMatrix<T, SubRows, SubCols> extract_block(size_t start_row, size_t start_col) const {
-        assert(start_row + SubRows <= Rows && "Row index out of bounds");
-        assert(start_col + SubCols <= Cols && "Col index out of bounds");
-
+        assert(start_row + SubRows <= Rows && start_col + SubCols <= Cols);
         StaticMatrix<T, SubRows, SubCols> result;
         for (size_t j = 0; j < SubCols; ++j) {
             const T* src = this->data_ptr() + ((start_col + j) * Rows) + start_row;
@@ -161,7 +215,7 @@ class StaticMatrix {
     }
 
     void print(const char* name) const {
-        std::cout << "Matrix [" << name << "] (Col-major, " << Rows << "x" << Cols << "):\n";
+        std::cout << "Matrix [" << name << "] (Col-major, SIMD-aligned, " << Rows << "x" << Cols << "):\n";
         for (size_t i = 0; i < Rows; ++i) {
             for (size_t j = 0; j < Cols; ++j) {
                 std::cout << std::fixed << std::setw(10) << std::setprecision(4)
@@ -172,5 +226,7 @@ class StaticMatrix {
         std::cout << std::endl;
     }
 };
+
 }  // namespace Optimization
-#endif  // STATIC_MATRIX_HPP_
+
+#endif // STATIC_MATRIX_HPP_

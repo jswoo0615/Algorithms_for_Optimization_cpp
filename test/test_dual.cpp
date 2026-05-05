@@ -67,3 +67,60 @@ TEST(AutoDiffTest, MultiVariableJacobian) {
     EXPECT_DOUBLE_EQ(y(1).g[0], 3.0);
     EXPECT_DOUBLE_EQ(y(1).g[1], 6.0);
 }
+
+// =====================================================================================
+// [Test Suite 3] StaticMatrix<double> Basic Operations Test
+// =====================================================================================
+TEST(StaticMatrixTest, DoubleBasicOperations) {
+    // 2x2 행렬 A와 B 정의
+    StaticMatrix<double, 2, 2> A;
+    A(0, 0) = 1.0; A(0, 1) = 2.0;
+    A(1, 0) = 3.0; A(1, 1) = 4.0;
+
+    StaticMatrix<double, 2, 2> B;
+    B(0, 0) = 0.5; B(0, 1) = 1.0;
+    B(1, 0) = 2.0; B(1, 1) = 0.5;
+
+    // 1. Addition Test (A + B)
+    StaticMatrix<double, 2, 2> C_add = A + B;
+    EXPECT_DOUBLE_EQ(C_add(0, 0), 1.5);
+    EXPECT_DOUBLE_EQ(C_add(1, 1), 4.5);
+
+    // 2. Multiplication Test (A * B)
+    StaticMatrix<double, 2, 2> C_mul = A * B;
+    
+    // [Architect's Fix: 산술 오류 교정]
+    // C_mul(0, 0) = (1.0 * 0.5) + (2.0 * 2.0) = 0.5 + 4.0 = 4.5
+    EXPECT_DOUBLE_EQ(C_mul(0, 0), 4.5); 
+    
+    // C_mul(1, 1) = (3.0 * 1.0) + (4.0 * 0.5) = 3.0 + 2.0 = 5.0
+    EXPECT_DOUBLE_EQ(C_mul(1, 1), 5.0);
+}
+
+// =====================================================================================
+// [Test Suite 4] StaticMatrix<double> SAXPY Test (Corrected)
+// =====================================================================================
+TEST(StaticMatrixTest, DoubleSaxpy) {
+    // y = alpha * x + y
+    StaticMatrix<double, 2, 2> x;
+    x(0, 0) = 1.0; x(0, 1) = 2.0;
+    x(1, 0) = 3.0; x(1, 1) = 4.0;
+
+    StaticMatrix<double, 2, 2> y;
+    y(0, 0) = 10.0; y(0, 1) = 20.0;
+    y(1, 0) = 30.0; y(1, 1) = 40.0;
+
+    double alpha = 2.0;
+
+    // [Architect's Fix]
+    // saxpy는 in-place 연산이므로 반환값이 없습니다 (void).
+    // y 행렬에 직접 적용하여 y 객체 자체를 업데이트합니다.
+    y.saxpy(alpha, x);
+
+    // Expected:
+    // y(0, 0) = 2.0 * x(0,0) + y_old(0,0) = 2.0 * 1.0 + 10.0 = 12.0
+    EXPECT_DOUBLE_EQ(y(0, 0), 12.0);
+    
+    // y(1, 1) = 2.0 * x(1,1) + y_old(1,1) = 2.0 * 4.0 + 40.0 = 48.0
+    EXPECT_DOUBLE_EQ(y(1, 1), 48.0);
+}
