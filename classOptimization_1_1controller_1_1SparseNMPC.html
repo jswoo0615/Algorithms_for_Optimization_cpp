@@ -95,18 +95,22 @@ Collaboration diagram for Optimization::controller::SparseNMPC&lt; H, Nx, Nu &gt
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr class="memitem:a2746d076df0b13df28e4efe78defe58a" id="r_a2746d076df0b13df28e4efe78defe58a"><td class="memTemplParams" colspan="2"><a id="a2746d076df0b13df28e4efe78defe58a" name="a2746d076df0b13df28e4efe78defe58a"></a>
+<tr class="memitem:afdef11270c207044cc1520cbd03817fd" id="r_afdef11270c207044cc1520cbd03817fd"><td class="memTemplParams" colspan="2"><a id="afdef11270c207044cc1520cbd03817fd" name="afdef11270c207044cc1520cbd03817fd"></a>
 template&lt;typename T &gt; </td></tr>
-<tr class="memitem:a2746d076df0b13df28e4efe78defe58a"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; T, NUM_RESIDALS &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>eval_node_residuals</b> (const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; T, Nx &gt; &amp;x, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; T, Nu &gt; &amp;u, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; T, Nu &gt; &amp;u_prev, const <a class="el" href="structOptimization_1_1controller_1_1NMPCTuningConfig.html">NMPCTuningConfig</a> &amp;config, int k)</td></tr>
-<tr class="separator:a2746d076df0b13df28e4efe78defe58a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:afdef11270c207044cc1520cbd03817fd"><td class="memTemplItemLeft" align="right" valign="top"><a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; T, NUM_RESIDUALS &gt;&#160;</td><td class="memTemplItemRight" valign="bottom"><b>eval_node_residuals</b> (const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; T, Nx &gt; &amp;x, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; T, Nu &gt; &amp;u, const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; T, Nu &gt; &amp;u_prev, const <a class="el" href="structOptimization_1_1controller_1_1NMPCTuningConfig.html">NMPCTuningConfig</a> &amp;config, int k)</td></tr>
+<tr class="memdesc:afdef11270c207044cc1520cbd03817fd"><td class="mdescLeft">&#160;</td><td class="mdescRight">KKT 잔차 노드 평가 (Zero-Allocation AD Engine) <br /></td></tr>
+<tr class="separator:afdef11270c207044cc1520cbd03817fd"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aeaa6105ab40ca6942aa03c710850cb9e" id="r_aeaa6105ab40ca6942aa03c710850cb9e"><td class="memItemLeft" align="right" valign="top"><a id="aeaa6105ab40ca6942aa03c710850cb9e" name="aeaa6105ab40ca6942aa03c710850cb9e"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>shift_sequence</b> ()</td></tr>
+<tr class="memdesc:aeaa6105ab40ca6942aa03c710850cb9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Receding Horizon: 이전 해를 당겨와 웜스타트(Warm-start) 구성 <br /></td></tr>
 <tr class="separator:aeaa6105ab40ca6942aa03c710850cb9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a89684e6a841f7262a58c23ce7f72816f" id="r_a89684e6a841f7262a58c23ce7f72816f"><td class="memItemLeft" align="right" valign="top"><a id="a89684e6a841f7262a58c23ce7f72816f" name="a89684e6a841f7262a58c23ce7f72816f"></a>
 <a class="el" href="structOptimization_1_1controller_1_1NMPCResult.html">NMPCResult</a>&#160;</td><td class="memItemRight" valign="bottom"><b>execute_fallback</b> (<a class="el" href="structOptimization_1_1controller_1_1NMPCResult.html">NMPCResult</a> &amp;res, const std::string &amp;reason)</td></tr>
+<tr class="memdesc:a89684e6a841f7262a58c23ce7f72816f"><td class="mdescLeft">&#160;</td><td class="mdescRight">긴급 제동 로직 (Fallback Strategy) <br /></td></tr>
 <tr class="separator:a89684e6a841f7262a58c23ce7f72816f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a3e2dbed3b4ae261dda9e13ec15976632" id="r_a3e2dbed3b4ae261dda9e13ec15976632"><td class="memItemLeft" align="right" valign="top"><a id="a3e2dbed3b4ae261dda9e13ec15976632" name="a3e2dbed3b4ae261dda9e13ec15976632"></a>
 <a class="el" href="structOptimization_1_1controller_1_1NMPCResult.html">NMPCResult</a>&#160;</td><td class="memItemRight" valign="bottom"><b>solve_rt_qp</b> (const <a class="el" href="classOptimization_1_1StaticMatrix.html">StaticVector</a>&lt; double, Nx &gt; &amp;x_curr_frenet, const <a class="el" href="structOptimization_1_1controller_1_1NMPCTuningConfig.html">NMPCTuningConfig</a> &amp;config)</td></tr>
+<tr class="memdesc:a3e2dbed3b4ae261dda9e13ec15976632"><td class="mdescLeft">&#160;</td><td class="mdescRight">Real-Time QP Formulation &amp; Solve (10ms Deadline Engine) <br /></td></tr>
 <tr class="separator:a3e2dbed3b4ae261dda9e13ec15976632"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>

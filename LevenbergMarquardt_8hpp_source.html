@@ -92,8 +92,8 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define OPTIMIZATION_LEVENBERG_MARQUARDT_HPP_</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &quot;Optimization/Dual.hpp&quot;</span></div>
-<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;Optimization/Matrix/MathTraits.hpp&quot;</span></div>
-<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;Optimization/Matrix/LinearAlgebra.hpp&quot;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;Optimization/Matrix/LinearAlgebra.hpp&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;Optimization/Matrix/MathTraits.hpp&quot;</span></div>
 <div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;Optimization/Solver/SolverStatus.hpp&quot;</span></div>
 <div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="keyword">namespace </span>Optimization {</div>
@@ -103,7 +103,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span><span class="keyword">inline</span> SolverStatus solve_LM(StaticVector&lt;double, N&gt;&amp; x_opt, <span class="keyword">const</span> Functor&amp; calc_residuals,</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>                             <span class="keywordtype">int</span> max_iter = 50, <span class="keywordtype">double</span> tol = 1e-6, <span class="keywordtype">double</span> initial_lambda = 1e-3) {</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>    <span class="keyword">static_assert</span>(M &gt;= N, <span class="stringliteral">&quot;Residuals M must be greater than or equal to variables N&quot;</span>);</div>
-<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    </div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>    <span class="keyword">using </span>ADVar = DualVec&lt;double, N&gt;;</div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>    <span class="keywordtype">double</span> lambda = initial_lambda;</div>
 <div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
@@ -151,19 +151,19 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>            <span class="keywordflow">if</span> (abs_g &gt; max_grad) max_grad = abs_g;</div>
 <div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        }</div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="keywordflow">if</span> (max_grad &lt; tol) {</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            <span class="keywordflow">return</span> SolverStatus::SUCCESS; <span class="comment">// 성공적 수렴</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>            <span class="keywordflow">return</span> SolverStatus::SUCCESS;  <span class="comment">// 성공적 수렴</span></div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        }</div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="comment">// 6. [Architect&#39;s Update] Inner Retry Loop (자코비안 재계산 방어)</span></div>
 <div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>        <span class="keywordtype">bool</span> step_accepted = <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>        <span class="keywordtype">int</span> inner_retry = 0;</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        </div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
 <div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        <span class="keywordflow">while</span> (!step_accepted &amp;&amp; inner_retry &lt; 10) {</div>
 <div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>            <span class="comment">// LM Damping 추가 : H_lm = H + lambda * diag(H)</span></div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            H_lm = H; <span class="comment">// 복사</span></div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>            H_lm = H;  <span class="comment">// 복사</span></div>
 <div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
 <div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>                H_lm(i, i) += lambda * (H(i, i) + 1e-6);</div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>                neg_g(i) = -g(i); <span class="comment">// 우변 벡터 부호 반전</span></div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>                neg_g(i) = -g(i);  <span class="comment">// 우변 벡터 부호 반전</span></div>
 <div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>            }</div>
 <div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
 <div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>            <span class="comment">// H_lm은 대칭 양의 정부호(SPD) 보장 -&gt; LDLT 분해</span></div>
@@ -185,7 +185,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>                <span class="keywordflow">if</span> (abs_dx &gt; max_dx) max_dx = abs_dx;</div>
 <div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>            }</div>
 <div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>            <span class="keywordflow">if</span> (max_dx &lt; std::numeric_limits&lt;double&gt;::epsilon() * 10.0) {</div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>                <span class="keywordflow">return</span> SolverStatus::STEP_SIZE_TOO_SMALL; <span class="comment">// 탐색 불가</span></div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span>                <span class="keywordflow">return</span> SolverStatus::STEP_SIZE_TOO_SMALL;  <span class="comment">// 탐색 불가</span></div>
 <div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>            }</div>
 <div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span> </div>
 <div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>            <span class="comment">// x_new = x_opt + dx (SIMD 가속)</span></div>
@@ -194,9 +194,9 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
 <div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>            <span class="comment">// 7. 새로운 위치의 Cost 평가 (Gradient는 필요 없으므로 상수 듀얼 값 주입)</span></div>
 <div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N; ++i) {</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>                x_new_dual(i) = ADVar(x_new(i)); </div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>                x_new_dual(i) = ADVar(x_new(i));</div>
 <div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>            }</div>
-<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>            </div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
 <div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>            StaticVector&lt;ADVar, M&gt; new_residuals = calc_residuals(x_new_dual);</div>
 <div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>            <span class="keywordtype">double</span> new_cost = 0.0;</div>
 <div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>            <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> k = 0; k &lt; M; ++k) {</div>
@@ -209,11 +209,11 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>                <span class="comment">// 성공적인 스텝 : x 업데이트 및 Damping 감소 (가우스-뉴턴에 근접)</span></div>
 <div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>                x_opt = x_new;</div>
 <div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span>                lambda = MathTraits&lt;double&gt;::max(1e-7, lambda / 10.0);</div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>                step_accepted = <span class="keyword">true</span>; <span class="comment">// 내부 루프 탈출</span></div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>                step_accepted = <span class="keyword">true</span>;  <span class="comment">// 내부 루프 탈출</span></div>
 <div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>            } <span class="keywordflow">else</span> {</div>
 <div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>                <span class="comment">// 실패한 스텝 : 위치는 유지하되 Damping 증가 (경사하강법에 근접)</span></div>
 <div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>                lambda *= 10.0;</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>                inner_retry++; <span class="comment">// J를 다시 구하지 않고 while문 재진입</span></div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>                inner_retry++;  <span class="comment">// J를 다시 구하지 않고 while문 재진입</span></div>
 <div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>            }</div>
 <div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>        }</div>
 <div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
@@ -222,7 +222,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>            <span class="keywordflow">return</span> SolverStatus::STEP_SIZE_TOO_SMALL;</div>
 <div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>        }</div>
 <div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    }</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    </div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span> </div>
 <div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    <span class="keywordflow">return</span> SolverStatus::MAX_ITERATION_REACHED;</div>
 <div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>}</div>
 <div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span> </div>

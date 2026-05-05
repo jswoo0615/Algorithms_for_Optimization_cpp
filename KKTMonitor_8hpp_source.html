@@ -94,8 +94,8 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;algorithm&gt;</span></div>
 <div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span><span class="preprocessor">#include &lt;iostream&gt;</span></div>
 <div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span> </div>
-<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;Optimization/Matrix/MathTraits.hpp&quot;</span></div>
-<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;Optimization/Matrix/LinearAlgebra.hpp&quot;</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="preprocessor">#include &quot;Optimization/Matrix/LinearAlgebra.hpp&quot;</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="preprocessor">#include &quot;Optimization/Matrix/MathTraits.hpp&quot;</span></div>
 <div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span><span class="preprocessor">#include &quot;Optimization/Matrix/StaticMatrix.hpp&quot;</span></div>
 <div class="line"><a id="l00015" name="l00015"></a><span class="lineno">   15</span> </div>
 <div class="line"><a id="l00016" name="l00016"></a><span class="lineno">   16</span><span class="keyword">namespace </span>Optimization {</div>
@@ -127,19 +127,19 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>        <span class="comment">// 1. Stationarity (정류성) 검사</span></div>
 <div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>        <span class="comment">// ∇_u L = P*u + q + A^T*λ = 0</span></div>
 <div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>        <span class="comment">// =========================================================================</span></div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>        </div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
 <div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>        <span class="comment">// q로 초기화 (Zero-allocation 복사)</span></div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">StaticVector&lt;double, N_vars&gt;</a> grad_L = q; </div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>        </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>        <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">StaticVector&lt;double, N_vars&gt;</a> grad_L = q;</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
 <div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>        <span class="comment">// P * u 계산 후 grad_L에 가산 (SIMD In-place 연산)</span></div>
 <div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">StaticVector&lt;double, N_vars&gt;</a> Pu;</div>
 <div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>        linalg::multiply(P, u_opt, Pu);</div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        grad_L += Pu; </div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>        grad_L += Pu;</div>
 <div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
 <div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        <span class="comment">// [Architect&#39;s Update] 물리적 Transpose 없이 가상 전치 내적 수행</span></div>
 <div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">StaticVector&lt;double, N_vars&gt;</a> AT_lambda;</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        linalg::multiply_AT_B(A, lambda_opt, AT_lambda); </div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        grad_L += AT_lambda; <span class="comment">// SIMD In-place 연산</span></div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        linalg::multiply_AT_B(A, lambda_opt, AT_lambda);</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        grad_L += AT_lambda;  <span class="comment">// SIMD In-place 연산</span></div>
 <div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span> </div>
 <div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        <span class="keywordtype">double</span> stat_err = 0.0;</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N_vars; ++i) {</div>
@@ -152,12 +152,12 @@ $(document).ready(function() { init_codefold(0); });
 <div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <span class="comment">// 2. Primal Feasibility (원문제 실현가능성) 검사</span></div>
 <div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        <span class="comment">// A*u - b = 0</span></div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        <span class="comment">// =========================================================================</span></div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>        </div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
 <div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        <a class="code hl_class" href="classOptimization_1_1StaticMatrix.html">StaticVector&lt;double, N_cons&gt;</a> eq_res;</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        linalg::multiply(A, u_opt, eq_res); <span class="comment">// eq_res = A * u</span></div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        </div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        linalg::multiply(A, u_opt, eq_res);  <span class="comment">// eq_res = A * u</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        <span class="comment">// [Architect&#39;s Update] 임시 객체 없는 SIMD 뺄셈 연산</span></div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        eq_res.<a class="code hl_function" href="classOptimization_1_1StaticMatrix.html#aef135eecaefb33a3f94b0470b6161af8">saxpy</a>(-1.0, b); <span class="comment">// eq_res = -1.0 * b + eq_res</span></div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        eq_res.<a class="code hl_function" href="classOptimization_1_1StaticMatrix.html#aef135eecaefb33a3f94b0470b6161af8">saxpy</a>(-1.0, b);  <span class="comment">// eq_res = -1.0 * b + eq_res</span></div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
 <div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>        <span class="keywordtype">double</span> prim_err = 0.0;</div>
 <div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        <span class="keywordflow">for</span> (<span class="keywordtype">size_t</span> i = 0; i &lt; N_cons; ++i) {</div>
@@ -195,7 +195,7 @@ $(document).ready(function() { init_codefold(0); });
 <div class="ttc" id="aclassOptimization_1_1StaticMatrix_html"><div class="ttname"><a href="classOptimization_1_1StaticMatrix.html">Optimization::StaticMatrix</a></div><div class="ttdoc">Layer 1 : SIMD/NEON Optimized Static Matrix Engine.</div><div class="ttdef"><b>Definition</b> StaticMatrix.hpp:35</div></div>
 <div class="ttc" id="aclassOptimization_1_1StaticMatrix_html_aef135eecaefb33a3f94b0470b6161af8"><div class="ttname"><a href="classOptimization_1_1StaticMatrix.html#aef135eecaefb33a3f94b0470b6161af8">Optimization::StaticMatrix::saxpy</a></div><div class="ttdeci">void saxpy(T scalar, const StaticMatrix &amp;rhs)</div><div class="ttdoc">SAXPY 연산 (this = scalar * rhs + this) FMA(Fused Multiply-Add)를 사용하여 단일 명령어로 정밀도와 속도를 동시에 확보합니다.</div><div class="ttdef"><b>Definition</b> StaticMatrix.hpp:77</div></div>
 <div class="ttc" id="astructOptimization_1_1KKTMonitor_1_1KKT__Metrics_html"><div class="ttname"><a href="structOptimization_1_1KKTMonitor_1_1KKT__Metrics.html">Optimization::KKTMonitor::KKT_Metrics</a></div><div class="ttdef"><b>Definition</b> KKTMonitor.hpp:23</div></div>
-<div class="ttc" id="astructOptimization_1_1MathTraits_html"><div class="ttname"><a href="structOptimization_1_1MathTraits.html">Optimization::MathTraits</a></div><div class="ttdef"><b>Definition</b> MathTraits.hpp:27</div></div>
+<div class="ttc" id="astructOptimization_1_1MathTraits_html"><div class="ttname"><a href="structOptimization_1_1MathTraits.html">Optimization::MathTraits</a></div><div class="ttdef"><b>Definition</b> MathTraits.hpp:22</div></div>
 </div><!-- fragment --></div><!-- contents -->
 <!-- start footer part -->
 <hr class="footer"/><address class="footer"><small>
