@@ -2,8 +2,8 @@
 #define OPTIMIZATION_SQP_SOLVER_HPP_
 
 #include "Optimization/Dual.hpp"
-#include "Optimization/Matrix/MathTraits.hpp"
 #include "Optimization/Matrix/LinearAlgebra.hpp"
+#include "Optimization/Matrix/MathTraits.hpp"
 #include "Optimization/Matrix/StaticMatrix.hpp"
 #include "Optimization/Solver/QPSolver_IPM.hpp"
 #include "Optimization/Solver/SolverStatus.hpp"
@@ -14,7 +14,7 @@ namespace solver {
 /**
  * @brief 고속 순차적 이차 계획법 (SQP) 솔버
  * @details 비선형 최적화 문제를 매 스텝 선형 QP 서브프라블럼으로 변환하여 풉니다.
- * 
+ *
  * @tparam Nx 최적화 변수의 개수
  * @tparam Nc 부등식 제약조건의 개수
  * @tparam CostFunctor 비용 함수 객체 타입
@@ -27,24 +27,27 @@ class SQPSolver {
      * @brief 하이브리드 헤시안/그래디언트 계산 엔진
      */
     static void compute_cost_derivatives(const CostFunctor& f, const StaticVector<double, Nx>& x,
-                                         StaticVector<double, Nx>& g, StaticMatrix<double, Nx, Nx>& H) {
+                                         StaticVector<double, Nx>& g,
+                                         StaticMatrix<double, Nx, Nx>& H) {
         using ADVar = DualVec<double, Nx>;
         constexpr double h = 1e-5;
         constexpr double inv_2h = 1.0 / (2.0 * h);
 
         StaticVector<ADVar, Nx> x_dual;
         for (size_t i = 0; i < Nx; ++i) x_dual(i) = ADVar::make_variable(x(i), i);
-        
+
         ADVar f_dual = f(x_dual);
         for (size_t i = 0; i < Nx; ++i) g(i) = f_dual.g[i];
 
         // Central Difference for Exact Hessian
         StaticVector<ADVar, Nx> x_plus, x_minus;
         for (size_t i = 0; i < Nx; ++i) {
-            for (size_t k = 0; k < Nx; ++k) x_plus(k) = ADVar::make_variable(x(k) + (k == i ? h : 0.0), k);
+            for (size_t k = 0; k < Nx; ++k)
+                x_plus(k) = ADVar::make_variable(x(k) + (k == i ? h : 0.0), k);
             ADVar f_plus = f(x_plus);
-            
-            for (size_t k = 0; k < Nx; ++k) x_minus(k) = ADVar::make_variable(x(k) - (k == i ? h : 0.0), k);
+
+            for (size_t k = 0; k < Nx; ++k)
+                x_minus(k) = ADVar::make_variable(x(k) - (k == i ? h : 0.0), k);
             ADVar f_minus = f(x_minus);
 
             for (size_t j = 0; j < Nx; ++j) {
@@ -60,16 +63,14 @@ class SQPSolver {
                 H(i, j) = sym;
                 H(j, i) = sym;
             }
-            H(i, i) += 1e-4; // Regularization Shield
+            H(i, i) += 1e-4;  // Regularization Shield
         }
     }
 
    public:
-    static SolverStatus solve(const CostFunctor& cost_func,
-                              const IneqFunctor& ineq_func,
-                              StaticVector<double, Nx>& x_opt,
-                              int sqp_max_iter = 15, double tol = 1e-5) {
-        
+    static SolverStatus solve(const CostFunctor& cost_func, const IneqFunctor& ineq_func,
+                              StaticVector<double, Nx>& x_opt, int sqp_max_iter = 15,
+                              double tol = 1e-5) {
         using ADVar = DualVec<double, Nx>;
         StaticVector<ADVar, Nx> x_dual;
         StaticMatrix<double, Nx, Nx> H;
@@ -88,9 +89,9 @@ class SQPSolver {
             StaticVector<ADVar, Nc> h_dual = ineq_func(x_dual);
 
             for (size_t i = 0; i < Nc; ++i) {
-                d(i) = -Optimization::get_value(h_dual(i)); // d = -h(x)
+                d(i) = -Optimization::get_value(h_dual(i));  // d = -h(x)
                 for (size_t j = 0; j < Nx; ++j) {
-                    C(i, j) = h_dual(i).g[j];               // C = J_h
+                    C(i, j) = h_dual(i).g[j];  // C = J_h
                 }
             }
 

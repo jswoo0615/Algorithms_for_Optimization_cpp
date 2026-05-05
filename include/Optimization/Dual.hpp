@@ -17,16 +17,22 @@ namespace Optimization {
 // =====================================================================
 template <typename T>
 struct Dual {
-    T v;  
-    T d;  
+    T v;
+    T d;
 
     constexpr Dual(const T& value = T(0), const T& deriv = T(0)) noexcept : v(value), d(deriv) {}
 
     [[nodiscard]] constexpr Dual operator-() const noexcept { return {-v, -d}; }
 
-    [[nodiscard]] constexpr Dual operator+(const Dual& rhs) const noexcept { return {v + rhs.v, d + rhs.d}; }
-    [[nodiscard]] constexpr Dual operator-(const Dual& rhs) const noexcept { return {v - rhs.v, d - rhs.d}; }
-    [[nodiscard]] constexpr Dual operator*(const Dual& rhs) const noexcept { return {v * rhs.v, (d * rhs.v + v * rhs.d)}; }
+    [[nodiscard]] constexpr Dual operator+(const Dual& rhs) const noexcept {
+        return {v + rhs.v, d + rhs.d};
+    }
+    [[nodiscard]] constexpr Dual operator-(const Dual& rhs) const noexcept {
+        return {v - rhs.v, d - rhs.d};
+    }
+    [[nodiscard]] constexpr Dual operator*(const Dual& rhs) const noexcept {
+        return {v * rhs.v, (d * rhs.v + v * rhs.d)};
+    }
     [[nodiscard]] constexpr Dual operator/(const Dual& rhs) const noexcept {
         T den = rhs.v * rhs.v;
         return {v / rhs.v, (d * rhs.v - v * rhs.d) / den};
@@ -35,25 +41,69 @@ struct Dual {
     // 우측 스칼라
     [[nodiscard]] constexpr Dual operator+(const T& rhs) const noexcept { return {v + rhs, d}; }
     [[nodiscard]] constexpr Dual operator-(const T& rhs) const noexcept { return {v - rhs, d}; }
-    [[nodiscard]] constexpr Dual operator*(const T& rhs) const noexcept { return {v * rhs, d * rhs}; }
-    [[nodiscard]] constexpr Dual operator/(const T& rhs) const noexcept { return {v / rhs, d / rhs}; }
+    [[nodiscard]] constexpr Dual operator*(const T& rhs) const noexcept {
+        return {v * rhs, d * rhs};
+    }
+    [[nodiscard]] constexpr Dual operator/(const T& rhs) const noexcept {
+        return {v / rhs, d / rhs};
+    }
 
     // 제자리(In-place) 연산자
-    constexpr Dual& operator+=(const Dual& rhs) noexcept { v += rhs.v; d += rhs.d; return *this; }
-    constexpr Dual& operator-=(const Dual& rhs) noexcept { v -= rhs.v; d -= rhs.d; return *this; }
-    constexpr Dual& operator*=(const Dual& rhs) noexcept { d = d * rhs.v + v * rhs.d; v *= rhs.v; return *this; }
-    constexpr Dual& operator/=(const Dual& rhs) noexcept { d = (d * rhs.v - v * rhs.d) / (rhs.v * rhs.v); v /= rhs.v; return *this; }
+    constexpr Dual& operator+=(const Dual& rhs) noexcept {
+        v += rhs.v;
+        d += rhs.d;
+        return *this;
+    }
+    constexpr Dual& operator-=(const Dual& rhs) noexcept {
+        v -= rhs.v;
+        d -= rhs.d;
+        return *this;
+    }
+    constexpr Dual& operator*=(const Dual& rhs) noexcept {
+        d = d * rhs.v + v * rhs.d;
+        v *= rhs.v;
+        return *this;
+    }
+    constexpr Dual& operator/=(const Dual& rhs) noexcept {
+        d = (d * rhs.v - v * rhs.d) / (rhs.v * rhs.v);
+        v /= rhs.v;
+        return *this;
+    }
 
-    constexpr Dual& operator+=(const T& rhs) noexcept { v += rhs; return *this; }
-    constexpr Dual& operator-=(const T& rhs) noexcept { v -= rhs; return *this; }
-    constexpr Dual& operator*=(const T& rhs) noexcept { v *= rhs; d *= rhs; return *this; }
-    constexpr Dual& operator/=(const T& rhs) noexcept { v /= rhs; d /= rhs; return *this; }
+    constexpr Dual& operator+=(const T& rhs) noexcept {
+        v += rhs;
+        return *this;
+    }
+    constexpr Dual& operator-=(const T& rhs) noexcept {
+        v -= rhs;
+        return *this;
+    }
+    constexpr Dual& operator*=(const T& rhs) noexcept {
+        v *= rhs;
+        d *= rhs;
+        return *this;
+    }
+    constexpr Dual& operator/=(const T& rhs) noexcept {
+        v /= rhs;
+        d /= rhs;
+        return *this;
+    }
 };
 
-template <typename T> [[nodiscard]] constexpr Dual<T> operator+(const T& lhs, const Dual<T>& rhs) noexcept { return {lhs + rhs.v, rhs.d}; }
-template <typename T> [[nodiscard]] constexpr Dual<T> operator-(const T& lhs, const Dual<T>& rhs) noexcept { return {lhs - rhs.v, -rhs.d}; }
-template <typename T> [[nodiscard]] constexpr Dual<T> operator*(const T& lhs, const Dual<T>& rhs) noexcept { return {lhs * rhs.v, lhs * rhs.d}; }
-template <typename T> [[nodiscard]] constexpr Dual<T> operator/(const T& lhs, const Dual<T>& rhs) noexcept {
+template <typename T>
+[[nodiscard]] constexpr Dual<T> operator+(const T& lhs, const Dual<T>& rhs) noexcept {
+    return {lhs + rhs.v, rhs.d};
+}
+template <typename T>
+[[nodiscard]] constexpr Dual<T> operator-(const T& lhs, const Dual<T>& rhs) noexcept {
+    return {lhs - rhs.v, -rhs.d};
+}
+template <typename T>
+[[nodiscard]] constexpr Dual<T> operator*(const T& lhs, const Dual<T>& rhs) noexcept {
+    return {lhs * rhs.v, lhs * rhs.d};
+}
+template <typename T>
+[[nodiscard]] constexpr Dual<T> operator/(const T& lhs, const Dual<T>& rhs) noexcept {
     T den = rhs.v * rhs.v;
     return {lhs / rhs.v, (-lhs * rhs.d) / den};
 }
@@ -63,8 +113,8 @@ template <typename T> [[nodiscard]] constexpr Dual<T> operator/(const T& lhs, co
 // =====================================================================
 template <typename T, size_t N>
 struct DualVec {
-    T v;                 
-    std::array<T, N> g;  
+    T v;
+    std::array<T, N> g;
 
     constexpr DualVec(const T& value = T(0)) noexcept : v(value), g{} {}
 
@@ -112,15 +162,21 @@ struct DualVec {
     }
 
     // 우측 스칼라
-    [[nodiscard]] constexpr DualVec operator+(const T& rhs) const noexcept { return *this + DualVec(rhs); }
-    [[nodiscard]] constexpr DualVec operator-(const T& rhs) const noexcept { return *this - DualVec(rhs); }
+    [[nodiscard]] constexpr DualVec operator+(const T& rhs) const noexcept {
+        return *this + DualVec(rhs);
+    }
+    [[nodiscard]] constexpr DualVec operator-(const T& rhs) const noexcept {
+        return *this - DualVec(rhs);
+    }
     [[nodiscard]] constexpr DualVec operator*(const T& rhs) const noexcept {
-        DualVec res; res.v = v * rhs;
+        DualVec res;
+        res.v = v * rhs;
         for (size_t i = 0; i < N; ++i) res.g[i] = g[i] * rhs;
         return res;
     }
     [[nodiscard]] constexpr DualVec operator/(const T& rhs) const noexcept {
-        DualVec res; res.v = v / rhs;
+        DualVec res;
+        res.v = v / rhs;
         for (size_t i = 0; i < N; ++i) res.g[i] = g[i] / rhs;
         return res;
     }
@@ -148,8 +204,14 @@ struct DualVec {
         return *this;
     }
 
-    constexpr DualVec& operator+=(const T& rhs) noexcept { v += rhs; return *this; }
-    constexpr DualVec& operator-=(const T& rhs) noexcept { v -= rhs; return *this; }
+    constexpr DualVec& operator+=(const T& rhs) noexcept {
+        v += rhs;
+        return *this;
+    }
+    constexpr DualVec& operator-=(const T& rhs) noexcept {
+        v -= rhs;
+        return *this;
+    }
     constexpr DualVec& operator*=(const T& rhs) noexcept {
         v *= rhs;
         for (size_t i = 0; i < N; ++i) g[i] *= rhs;
@@ -162,14 +224,22 @@ struct DualVec {
     }
 };
 
-template <typename T, size_t N> [[nodiscard]] constexpr DualVec<T, N> operator+(const T& lhs, const DualVec<T, N>& rhs) noexcept { return rhs + lhs; }
-template <typename T, size_t N> [[nodiscard]] constexpr DualVec<T, N> operator-(const T& lhs, const DualVec<T, N>& rhs) noexcept {
+template <typename T, size_t N>
+[[nodiscard]] constexpr DualVec<T, N> operator+(const T& lhs, const DualVec<T, N>& rhs) noexcept {
+    return rhs + lhs;
+}
+template <typename T, size_t N>
+[[nodiscard]] constexpr DualVec<T, N> operator-(const T& lhs, const DualVec<T, N>& rhs) noexcept {
     DualVec<T, N> res(lhs - rhs.v);
     for (size_t i = 0; i < N; ++i) res.g[i] = -rhs.g[i];
     return res;
 }
-template <typename T, size_t N> [[nodiscard]] constexpr DualVec<T, N> operator*(const T& lhs, const DualVec<T, N>& rhs) noexcept { return rhs * lhs; }
-template <typename T, size_t N> [[nodiscard]] constexpr DualVec<T, N> operator/(const T& lhs, const DualVec<T, N>& rhs) noexcept {
+template <typename T, size_t N>
+[[nodiscard]] constexpr DualVec<T, N> operator*(const T& lhs, const DualVec<T, N>& rhs) noexcept {
+    return rhs * lhs;
+}
+template <typename T, size_t N>
+[[nodiscard]] constexpr DualVec<T, N> operator/(const T& lhs, const DualVec<T, N>& rhs) noexcept {
     DualVec<T, N> res(lhs / rhs.v);
     T factor = -lhs / (rhs.v * rhs.v);
     for (size_t i = 0; i < N; ++i) res.g[i] = factor * rhs.g[i];
@@ -280,8 +350,14 @@ inline DualVec<T, N> abs(const DualVec<T, N>& u) {
 }
 
 // 스칼라 타입 오버로딩 (Fallback)
-template <typename T> inline T abs(const T& x) { return std::abs(x); }
-template <typename T> inline T sqrt(const T& x) { return std::sqrt(x); }
+template <typename T>
+inline T abs(const T& x) {
+    return std::abs(x);
+}
+template <typename T>
+inline T sqrt(const T& x) {
+    return std::sqrt(x);
+}
 
 }  // namespace ad
 
@@ -324,10 +400,10 @@ inline std::complex<T> atan2(const std::complex<T>& y, const std::complex<T>& x)
     if (den <= T(1e-16)) {
         return std::complex<T>(std::atan2(yr, xr), T(0.0));
     }
-    
+
     // [Architect's Fix] 치명적인 std::atan2() 컴파일/논리 버그 교정
     T real_part = std::atan2(yr, xr);
-    T imag_part = (xr * yi - yr * xi) / den; 
+    T imag_part = (xr * yi - yr * xi) / den;
 
     return std::complex<T>(real_part, imag_part);
 }
@@ -337,9 +413,18 @@ inline std::complex<T> atan2(const std::complex<T>& y, const std::complex<T>& x)
 // =====================================================================
 
 // [Architect's Fix] 전역 값 추출기 복구 (C++ ADL 및 하위 호환성 보장)
-template <typename T> inline T get_value(const T& x) { return x; }
-template <typename T> inline T get_value(const Dual<T>& x) { return x.v; }
-template <typename T, size_t N> inline T get_value(const DualVec<T, N>& x) { return x.v; }
+template <typename T>
+inline T get_value(const T& x) {
+    return x;
+}
+template <typename T>
+inline T get_value(const Dual<T>& x) {
+    return x.v;
+}
+template <typename T, size_t N>
+inline T get_value(const DualVec<T, N>& x) {
+    return x.v;
+}
 
 template <typename T>
 std::ostream& operator<<(std::ostream& os, const Dual<T>& x) {

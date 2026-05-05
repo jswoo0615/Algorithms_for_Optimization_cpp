@@ -9,8 +9,8 @@
 #include <algorithm>
 #include <iostream>
 
-#include "Optimization/Matrix/MathTraits.hpp"
 #include "Optimization/Matrix/LinearAlgebra.hpp"
+#include "Optimization/Matrix/MathTraits.hpp"
 #include "Optimization/Matrix/StaticMatrix.hpp"
 
 namespace Optimization {
@@ -41,19 +41,19 @@ class KKTMonitor {
         // 1. Stationarity (정류성) 검사
         // ∇_u L = P*u + q + A^T*λ = 0
         // =========================================================================
-        
+
         // q로 초기화 (Zero-allocation 복사)
-        StaticVector<double, N_vars> grad_L = q; 
-        
+        StaticVector<double, N_vars> grad_L = q;
+
         // P * u 계산 후 grad_L에 가산 (SIMD In-place 연산)
         StaticVector<double, N_vars> Pu;
         linalg::multiply(P, u_opt, Pu);
-        grad_L += Pu; 
+        grad_L += Pu;
 
         // [Architect's Update] 물리적 Transpose 없이 가상 전치 내적 수행
         StaticVector<double, N_vars> AT_lambda;
-        linalg::multiply_AT_B(A, lambda_opt, AT_lambda); 
-        grad_L += AT_lambda; // SIMD In-place 연산
+        linalg::multiply_AT_B(A, lambda_opt, AT_lambda);
+        grad_L += AT_lambda;  // SIMD In-place 연산
 
         double stat_err = 0.0;
         for (size_t i = 0; i < N_vars; ++i) {
@@ -66,12 +66,12 @@ class KKTMonitor {
         // 2. Primal Feasibility (원문제 실현가능성) 검사
         // A*u - b = 0
         // =========================================================================
-        
+
         StaticVector<double, N_cons> eq_res;
-        linalg::multiply(A, u_opt, eq_res); // eq_res = A * u
-        
+        linalg::multiply(A, u_opt, eq_res);  // eq_res = A * u
+
         // [Architect's Update] 임시 객체 없는 SIMD 뺄셈 연산
-        eq_res.saxpy(-1.0, b); // eq_res = -1.0 * b + eq_res
+        eq_res.saxpy(-1.0, b);  // eq_res = -1.0 * b + eq_res
 
         double prim_err = 0.0;
         for (size_t i = 0; i < N_cons; ++i) {

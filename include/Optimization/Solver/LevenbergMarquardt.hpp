@@ -2,8 +2,8 @@
 #define OPTIMIZATION_LEVENBERG_MARQUARDT_HPP_
 
 #include "Optimization/Dual.hpp"
-#include "Optimization/Matrix/MathTraits.hpp"
 #include "Optimization/Matrix/LinearAlgebra.hpp"
+#include "Optimization/Matrix/MathTraits.hpp"
 #include "Optimization/Solver/SolverStatus.hpp"
 
 namespace Optimization {
@@ -11,11 +11,11 @@ namespace solver {
 
 /**
  * @brief 고속 Levenberg-Marquardt 비선형 최소자승 솔버 (Zero-Allocation & SIMD)
- * @details 
+ * @details
  * min 0.5 * ||F(x)||^2 를 수행합니다.
  * 내부 루프(Inner Retry)를 통해 실패한 스텝에서 자코비안(AD) 연산을 생략하고,
  * SIMD 행렬 엔진을 이용하여 H = J^T J 연산을 극대화했습니다.
- * 
+ *
  * @tparam N 최적화할 변수 갯수 (State/Control dimension)
  * @tparam M 잔차 (Residual) 방정식의 갯수 (M >= N)
  */
@@ -23,7 +23,7 @@ template <size_t N, size_t M, typename Functor>
 inline SolverStatus solve_LM(StaticVector<double, N>& x_opt, const Functor& calc_residuals,
                              int max_iter = 50, double tol = 1e-6, double initial_lambda = 1e-3) {
     static_assert(M >= N, "Residuals M must be greater than or equal to variables N");
-    
+
     using ADVar = DualVec<double, N>;
     double lambda = initial_lambda;
 
@@ -71,19 +71,19 @@ inline SolverStatus solve_LM(StaticVector<double, N>& x_opt, const Functor& calc
             if (abs_g > max_grad) max_grad = abs_g;
         }
         if (max_grad < tol) {
-            return SolverStatus::SUCCESS; // 성공적 수렴
+            return SolverStatus::SUCCESS;  // 성공적 수렴
         }
 
         // 6. [Architect's Update] Inner Retry Loop (자코비안 재계산 방어)
         bool step_accepted = false;
         int inner_retry = 0;
-        
+
         while (!step_accepted && inner_retry < 10) {
             // LM Damping 추가 : H_lm = H + lambda * diag(H)
-            H_lm = H; // 복사
+            H_lm = H;  // 복사
             for (size_t i = 0; i < N; ++i) {
                 H_lm(i, i) += lambda * (H(i, i) + 1e-6);
-                neg_g(i) = -g(i); // 우변 벡터 부호 반전
+                neg_g(i) = -g(i);  // 우변 벡터 부호 반전
             }
 
             // H_lm은 대칭 양의 정부호(SPD) 보장 -> LDLT 분해
@@ -105,7 +105,7 @@ inline SolverStatus solve_LM(StaticVector<double, N>& x_opt, const Functor& calc
                 if (abs_dx > max_dx) max_dx = abs_dx;
             }
             if (max_dx < std::numeric_limits<double>::epsilon() * 10.0) {
-                return SolverStatus::STEP_SIZE_TOO_SMALL; // 탐색 불가
+                return SolverStatus::STEP_SIZE_TOO_SMALL;  // 탐색 불가
             }
 
             // x_new = x_opt + dx (SIMD 가속)
@@ -114,9 +114,9 @@ inline SolverStatus solve_LM(StaticVector<double, N>& x_opt, const Functor& calc
 
             // 7. 새로운 위치의 Cost 평가 (Gradient는 필요 없으므로 상수 듀얼 값 주입)
             for (size_t i = 0; i < N; ++i) {
-                x_new_dual(i) = ADVar(x_new(i)); 
+                x_new_dual(i) = ADVar(x_new(i));
             }
-            
+
             StaticVector<ADVar, M> new_residuals = calc_residuals(x_new_dual);
             double new_cost = 0.0;
             for (size_t k = 0; k < M; ++k) {
@@ -129,11 +129,11 @@ inline SolverStatus solve_LM(StaticVector<double, N>& x_opt, const Functor& calc
                 // 성공적인 스텝 : x 업데이트 및 Damping 감소 (가우스-뉴턴에 근접)
                 x_opt = x_new;
                 lambda = MathTraits<double>::max(1e-7, lambda / 10.0);
-                step_accepted = true; // 내부 루프 탈출
+                step_accepted = true;  // 내부 루프 탈출
             } else {
                 // 실패한 스텝 : 위치는 유지하되 Damping 증가 (경사하강법에 근접)
                 lambda *= 10.0;
-                inner_retry++; // J를 다시 구하지 않고 while문 재진입
+                inner_retry++;  // J를 다시 구하지 않고 while문 재진입
             }
         }
 
@@ -142,7 +142,7 @@ inline SolverStatus solve_LM(StaticVector<double, N>& x_opt, const Functor& calc
             return SolverStatus::STEP_SIZE_TOO_SMALL;
         }
     }
-    
+
     return SolverStatus::MAX_ITERATION_REACHED;
 }
 

@@ -62,7 +62,7 @@ struct RiccatiSolver {
 
             // Quu = R_k + B_k^T * (P_{k+1} * B_k)
             StaticMatrix<double, Nu, Nu> Quu = R[k];
-            linalg::multiply_AT_B(B[k], PB, Bt_PB); // 가상 전치(Virtual Transpose) 타격
+            linalg::multiply_AT_B(B[k], PB, Bt_PB);  // 가상 전치(Virtual Transpose) 타격
             Quu += Bt_PB;
 
             // Qux = B_k^T * (P_{k+1} * A_k)
@@ -90,16 +90,16 @@ struct RiccatiSolver {
             // --- 고속 LDLT 분해 (Quu는 항상 SPD) ---
             StaticMatrix<double, Nu, Nu> Quu_factored = Quu;
             if (linalg::LDLT_decompose(Quu_factored) != MathStatus::SUCCESS) {
-                return SolverStatus::MATH_ERROR; // 제어 불가능 지점
+                return SolverStatus::MATH_ERROR;  // 제어 불가능 지점
             }
 
             // K = -Quu^{-1} * Qux 계산 (Column by Column in-place solve)
             for (size_t j = 0; j < Nx; ++j) {
                 StaticVector<double, Nu> neg_Qux_col;
-                for (size_t i = 0; i < Nu; ++i) neg_Qux_col(i) = -Qux(i, j); // 부호 반전
-                
+                for (size_t i = 0; i < Nu; ++i) neg_Qux_col(i) = -Qux(i, j);  // 부호 반전
+
                 StaticVector<double, Nu> K_col;
-                linalg::LDLT_solve(Quu_factored, neg_Qux_col, K_col); // Zero-Allocation Solve
+                linalg::LDLT_solve(Quu_factored, neg_Qux_col, K_col);  // Zero-Allocation Solve
                 for (size_t i = 0; i < Nu; ++i) K[k](i, j) = K_col(i);
             }
 
@@ -122,7 +122,7 @@ struct RiccatiSolver {
         }
 
         // --- 2. Forward Pass (머리에서 꼬리로) ---
-        dx[0].set_zero(); // 초기 상태 섭동은 0
+        dx[0].set_zero();  // 초기 상태 섭동은 0
 
         for (size_t k = 0; k < H; ++k) {
             // du_k = K_k * dx_k + k_ff_k

@@ -2,8 +2,8 @@
 #define OPTIMIZATION_NEWTON_SOLVER_HPP_
 
 #include "Optimization/Dual.hpp"
-#include "Optimization/Matrix/MathTraits.hpp"
 #include "Optimization/Matrix/LinearAlgebra.hpp"
+#include "Optimization/Matrix/MathTraits.hpp"
 #include "Optimization/Solver/SolverStatus.hpp"
 
 namespace Optimization {
@@ -11,17 +11,17 @@ namespace solver {
 
 /**
  * @brief 고속 다변수 뉴턴-랩슨 솔버 (Zero-Allocation & Robust)
- * @details 
+ * @details
  * f(x) = 0을 만족하는 N차원 벡터 x를 찾습니다.
  * AD(Auto Differentiation) 엔진과 결합되어 해석적 자코비안을 자동 생성하며,
  * 내부적으로 SIMD 가속된 LU 분해를 사용하여 연산 속도를 극대화했습니다.
  */
 template <size_t N, typename Functor>
-inline SolverStatus solve_newton(StaticVector<double, N>& x_opt, const Functor& f, 
+inline SolverStatus solve_newton(StaticVector<double, N>& x_opt, const Functor& f,
                                  int max_iter = 50, double tol = 1e-6) {
     using ADVar = DualVec<double, N>;
-    
-    // [Architect's Update] 
+
+    // [Architect's Update]
     // 루프 내부의 임시 객체 생성을 막기 위해 메모리를 루프 외부로 끌어올림(Hoist)
     StaticVector<ADVar, N> x_dual;
     StaticMatrix<double, N, N> J;
@@ -45,7 +45,7 @@ inline SolverStatus solve_newton(StaticVector<double, N>& x_opt, const Functor& 
         for (size_t i = 0; i < N; ++i) {
             // [Architect's Update] MathTraits를 통한 안전한 값 추출 및 절대값 계산
             double f_val = Optimization::get_value(y_dual(i));
-            neg_F(i) = -f_val; 
+            neg_F(i) = -f_val;
 
             // 수렴 판정용 최대 잔차 (Residual) 업데이트
             double abs_f = MathTraits<double>::abs(f_val);
@@ -82,14 +82,14 @@ inline SolverStatus solve_newton(StaticVector<double, N>& x_opt, const Functor& 
             if (abs_dx > max_dx) max_dx = abs_dx;
         }
         if (max_dx < std::numeric_limits<double>::epsilon() * 10.0) {
-            return SolverStatus::STEP_SIZE_TOO_SMALL; // 더 이상 탐색 불가능
+            return SolverStatus::STEP_SIZE_TOO_SMALL;  // 더 이상 탐색 불가능
         }
 
         // 6. 상태 업데이트 : x_new = x_old + dx
         // [Architect's Update] SIMD 가속 연산자(operator+=) 활용
         x_opt += dx;
     }
-    
+
     // 최대 반복 횟수를 채웠으나 수렴하지 못한 경우
     return SolverStatus::MAX_ITERATION_REACHED;
 }

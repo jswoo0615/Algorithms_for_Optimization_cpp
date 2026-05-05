@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+
 #include <cmath>
 
 #include "Optimization/Solver/SQPSolver.hpp"
@@ -43,15 +44,15 @@ TEST(SQPSolverTest, NonlinearCircleConstraint) {
     x_opt.set_zero();
 
     // 2. SQP 사령탑 타격 (최대 15번의 QP 하청, 허용 오차 1e-5)
-    SolverStatus status = SQPSolver<2, 1, CircleCost, CircleIneq>::solve(
-        cost_func, ineq_func, x_opt, 15, 1e-5);
+    SolverStatus status =
+        SQPSolver<2, 1, CircleCost, CircleIneq>::solve(cost_func, ineq_func, x_opt, 15, 1e-5);
 
     // 3. 상태 검증
     EXPECT_EQ(status, SolverStatus::SUCCESS);
 
     // 4. 수학적 해석해 검증 (1/sqrt(2) = 0.70710678)
     double expected_val = 1.0 / std::sqrt(2.0);
-    
+
     // 허용 오차 1e-4 내에서 정확히 경계면에 안착했는지 확인
     EXPECT_NEAR(x_opt(0), expected_val, 1e-4);
     EXPECT_NEAR(x_opt(1), expected_val, 1e-4);
