@@ -63,10 +63,10 @@ struct NMPCTuningConfig {
 
     double kappa = 0.0;       // 도로 곡률
     double target_vx = 10.0;  // 목표 속도
-    
+
     // [Architect's Update] 위상 지연(Phase Lag) 극복을 위한 미래 궤적 배열
     // 정적 메모리 철학에 따라 최대 100스텝(H <= 99)까지 수용 가능하도록 고정 크기 할당
-    double target_d[100] = {0.0};    
+    double target_d[100] = {0.0};
 };
 
 constexpr size_t NUM_RESIDUALS = 30;
@@ -90,7 +90,7 @@ class SparseNMPC {
     SparseNMPC() {
         // 정적 검증: H가 100을 넘으면 튜닝 컨피그 배열 범위를 초과하므로 방어
         static_assert(H < 100, "Horizon H must be less than 100 to fit target_d array.");
-        
+
         u_last.set_zero();
         dt = 0.1;
         for (size_t k = 0; k < H; ++k) U_guess[k].set_zero();

@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+
 #include <cmath>
 #include <fstream>
 #include <iomanip>
@@ -18,12 +19,18 @@ enum class Scenario { PARALLEL, SUDDEN_STOP, ZIGZAG, TRACK_SINE, TRACK_LANE_CHAN
 
 std::string get_scenario_name(Scenario type) {
     switch (type) {
-        case Scenario::PARALLEL: return "parallel";
-        case Scenario::SUDDEN_STOP: return "sudden_stop";
-        case Scenario::ZIGZAG: return "zigzag";
-        case Scenario::TRACK_SINE: return "track_sine";
-        case Scenario::TRACK_LANE_CHANGE: return "track_lane_change";
-        default: return "unknown";
+        case Scenario::PARALLEL:
+            return "parallel";
+        case Scenario::SUDDEN_STOP:
+            return "sudden_stop";
+        case Scenario::ZIGZAG:
+            return "zigzag";
+        case Scenario::TRACK_SINE:
+            return "track_sine";
+        case Scenario::TRACK_LANE_CHANGE:
+            return "track_lane_change";
+        default:
+            return "unknown";
     }
 }
 
@@ -52,7 +59,7 @@ void setup_scenario(Scenario type, NMPC_Type& nmpc) {
                 nmpc.obstacles[i] = {25.0 + i * 20.0, side, 1.0, 3.0, 0.0};
             }
             break;
-            
+
         // 2. [Architect] 장애물이 없는 순수 추종 시나리오는 장애물 배치 안 함
         case Scenario::TRACK_SINE:
         case Scenario::TRACK_LANE_CHANGE:
@@ -95,23 +102,20 @@ TEST(SparseNMPC_Battlefield, MultiObstacleLoggingTest) {
     double absolute_min_dist = 1000.0;
 
     for (int step = 0; step < 120; ++step) {
-        
         // 5. [Architect's Dynamic Reference] 미래 H 스텝의 목표 궤적 배열 업데이트
         double current_s = x_true(0);
-        
+
         for (size_t k = 0; k <= H; ++k) {
             // 미래 시간 k * dt 동안 target_vx로 이동했을 때의 예상 종방향 위치(S)
             double future_s = current_s + (config.target_vx * k * dt);
-            
+
             if (current_sim == Scenario::TRACK_SINE) {
                 // 진폭 3.0m, 파장 약 60m의 연속 S자 곡선
-                config.target_d[k] = 3.0 * std::sin(0.1 * future_s); 
-            } 
-            else if (current_sim == Scenario::TRACK_LANE_CHANGE) {
+                config.target_d[k] = 3.0 * std::sin(0.1 * future_s);
+            } else if (current_sim == Scenario::TRACK_LANE_CHANGE) {
                 // s=30m 지점에서 3.5m(옆 차선)로 급격한 목표 차선 변경
                 config.target_d[k] = (future_s > 30.0) ? 3.5 : 0.0;
-            } 
-            else {
+            } else {
                 // 기본 시나리오(직진)
                 config.target_d[k] = 0.0;
             }
@@ -122,7 +126,7 @@ TEST(SparseNMPC_Battlefield, MultiObstacleLoggingTest) {
 
         // [이하 기존 로직 동일] 장애물 위치 업데이트
         for (int i = 0; i < 10; ++i) {
-            if (nmpc.obstacles[i].s < 500.0) {  
+            if (nmpc.obstacles[i].s < 500.0) {
                 nmpc.obstacles[i].s += nmpc.obstacles[i].vs * dt;
                 nmpc.obstacles[i].d += nmpc.obstacles[i].vd * dt;
             }
@@ -151,13 +155,15 @@ TEST(SparseNMPC_Battlefield, MultiObstacleLoggingTest) {
             std::cout << std::fixed << std::setprecision(2) << std::setw(4) << step << " | "
                       << std::setw(5) << x_true(0) << " | " << std::setw(5) << x_true(1) << " | "
                       << std::setw(5) << ref_d << " | " << std::setw(10) << steer_deg << " | "
-                      << std::setw(5) << accel << " | " << std::setprecision(3) << res.max_kkt_error << "\n";
+                      << std::setw(5) << accel << " | " << std::setprecision(3) << res.max_kkt_error
+                      << "\n";
         }
 
         if (csv_file.is_open()) {
             csv_file << step << "," << x_true(0) << "," << x_true(1) << "," << ref_d << ","
-                     << x_true(2) << "," << x_true(3) << "," << x_true(4) << "," << x_true(5) << "," 
-                     << steer_deg << "," << accel << "," << res.max_kkt_error << "," << current_min_dist << "\n";
+                     << x_true(2) << "," << x_true(3) << "," << x_true(4) << "," << x_true(5) << ","
+                     << steer_deg << "," << accel << "," << res.max_kkt_error << ","
+                     << current_min_dist << "\n";
         }
 
         // 차량 물리 엔진 진행
@@ -168,7 +174,7 @@ TEST(SparseNMPC_Battlefield, MultiObstacleLoggingTest) {
             EXPECT_GT(current_min_dist, 0.0) << "COLLISION DETECTED at step " << step;
         }
 
-        if (x_true(0) > 130.0) break;  
+        if (x_true(0) > 130.0) break;
     }
 
     if (csv_file.is_open()) csv_file.close();
