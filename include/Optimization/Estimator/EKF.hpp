@@ -5,8 +5,8 @@
 
 #include "Optimization/Dual.hpp"
 #include "Optimization/Integrator/RK4.hpp"
-#include "Optimization/Matrix/StaticMatrix.hpp"
 #include "Optimization/Matrix/LinearAlgebra.hpp"
+#include "Optimization/Matrix/StaticMatrix.hpp"
 
 namespace Optimization {
 namespace estimator {
@@ -30,9 +30,9 @@ class EKF {
 
         R.set_zero();
         R(0, 0) = 0.2;
-        R(1, 1) = 0.2;   
-        R(2, 2) = 0.05;  
-        R(3, 3) = 0.1;   
+        R(1, 1) = 0.2;
+        R(2, 2) = 0.05;
+        R(3, 3) = 0.1;
         R(4, 4) = 0.1;
         R(5, 5) = 0.1;
     }
@@ -73,7 +73,7 @@ class EKF {
         using ADVar = DualVec<double, Nx>;
         StaticVector<ADVar, Nx> x_dual;
         StaticVector<ADVar, Nu> u_dual;
-        
+
         for (size_t i = 0; i < Nx; ++i) x_dual(i) = ADVar::make_variable(x_est(i), i);
         for (size_t i = 0; i < Nu; ++i) u_dual(i) = ADVar(u(i));
 

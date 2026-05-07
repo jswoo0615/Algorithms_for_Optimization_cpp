@@ -1,4 +1,5 @@
 #include <gtest/gtest.h>
+
 #include <cmath>
 #include <fstream>
 #include <iomanip>
@@ -36,7 +37,7 @@ TEST(Integrated_Pipeline, EKF_NMPC_ClosedLoop) {
     x_true.set_zero();
     x_true(3) = 10.0;
 
-    ekf.x_est = x_true; // 초기화
+    ekf.x_est = x_true;  // 초기화
 
     StaticVector<double, Nu> u_cmd;
     u_cmd.set_zero();
@@ -44,11 +45,11 @@ TEST(Integrated_Pipeline, EKF_NMPC_ClosedLoop) {
     // 3. 센서 노이즈 생성기 (Carla의 GPS/IMU 모사)
     std::random_device rd;
     std::mt19937 gen(rd());
-    std::normal_distribution<double> noise_s(0.0, 0.3);  
-    std::normal_distribution<double> noise_d(0.0, 0.3);  
-    std::normal_distribution<double> noise_mu(0.0, 0.05); 
-    std::normal_distribution<double> noise_v(0.0, 0.1);  
-    std::normal_distribution<double> noise_r(0.0, 0.02); 
+    std::normal_distribution<double> noise_s(0.0, 0.3);
+    std::normal_distribution<double> noise_d(0.0, 0.3);
+    std::normal_distribution<double> noise_mu(0.0, 0.05);
+    std::normal_distribution<double> noise_v(0.0, 0.1);
+    std::normal_distribution<double> noise_r(0.0, 0.02);
 
     // 4. 로깅 준비
     std::ofstream csv_file("integrated_pipeline_test.csv");
@@ -62,14 +63,13 @@ TEST(Integrated_Pipeline, EKF_NMPC_ClosedLoop) {
     std::cout << "------------------------------------------------------------\n";
 
     for (int step = 0; step < 150; ++step) {
-        
         // ---------------------------------------------------------
         // [Phase 1: 예언 (Trajectory Generation)]
         // ---------------------------------------------------------
-        double current_s_est = ekf.x_est(0); // NMPC는 오직 EKF의 추정치만 믿어야 함
+        double current_s_est = ekf.x_est(0);  // NMPC는 오직 EKF의 추정치만 믿어야 함
         for (size_t k = 0; k <= H; ++k) {
             double future_s = current_s_est + (config.target_vx * k * dt);
-            config.target_d[k] = 3.0 * std::sin(0.1 * future_s); // S자 궤적
+            config.target_d[k] = 3.0 * std::sin(0.1 * future_s);  // S자 궤적
         }
         double ref_d = config.target_d[0];
 
@@ -97,8 +97,8 @@ TEST(Integrated_Pipeline, EKF_NMPC_ClosedLoop) {
         // 진짜 상태(x_true)는 은닉하고, EKF가 정제한 상태(ekf.x_est)만 NMPC에 투입!
         NMPCResult res = nmpc.solve_rt_qp(ekf.x_est, config);
         EXPECT_TRUE(res.success || res.fallback_triggered);
-        
-        u_cmd = nmpc.U_guess[0]; // 다음 스텝 및 물리 엔진을 위한 제어 입력 확정
+
+        u_cmd = nmpc.U_guess[0];  // 다음 스텝 및 물리 엔진을 위한 제어 입력 확정
 
         double steer_deg = u_cmd(0) * 180.0 / M_PI;
         double accel = u_cmd(1);
@@ -114,14 +114,16 @@ TEST(Integrated_Pipeline, EKF_NMPC_ClosedLoop) {
         // ---------------------------------------------------------
         if (step % 5 == 0) {
             std::cout << std::fixed << std::setprecision(2) << std::setw(4) << step << " | "
-                      << std::setw(5) << ref_d << " | " << std::setw(6) << x_true(1) << " | " 
-                      << std::setw(6) << z_meas(1) << " | " << std::setw(6) << ekf.x_est(1) << " || "
-                      << std::setw(10) << steer_deg << " | " << std::setw(5) << accel << "\n";
+                      << std::setw(5) << ref_d << " | " << std::setw(6) << x_true(1) << " | "
+                      << std::setw(6) << z_meas(1) << " | " << std::setw(6) << ekf.x_est(1)
+                      << " || " << std::setw(10) << steer_deg << " | " << std::setw(5) << accel
+                      << "\n";
         }
 
         if (csv_file.is_open()) {
-            csv_file << step << "," << ref_d << "," << x_true(1) << "," << z_meas(1) << "," 
-                     << ekf.x_est(1) << "," << steer_deg << "," << accel << "," << res.max_kkt_error << "\n";
+            csv_file << step << "," << ref_d << "," << x_true(1) << "," << z_meas(1) << ","
+                     << ekf.x_est(1) << "," << steer_deg << "," << accel << "," << res.max_kkt_error
+                     << "\n";
         }
     }
 
