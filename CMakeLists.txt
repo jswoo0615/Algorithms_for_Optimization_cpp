@@ -49,3 +49,11 @@ gtest_discover_tests(test_QPSolver_IPM)
 add_executable(test_SQPSolver test/test_SQPSolver.cpp)
 target_link_libraries(test_SQPSolver PRIVATE GTest::gtest_main)
 gtest_discover_tests(test_SQPSolver)
+
+add_executable(test_EKF test/test_EKF.cpp)
+target_link_libraries(test_EKF PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_EKF)
+
+add_executable(test_Integrated_Pipeline test/test_Integrated_Pipeline.cpp)
+target_link_libraries(test_Integrated_Pipeline PRIVATE GTest::gtest_main)
+gtest_discover_tests(test_Integrated_Pipeline)
