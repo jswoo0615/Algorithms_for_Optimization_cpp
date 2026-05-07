@@ -1,7 +1,4 @@
 var searchData=
 [
-  ['obstacle_0',['Obstacle',['../structOptimization_1_1Obstacle.html',1,'Optimization']]],
-  ['obstaclefrenet_1',['ObstacleFrenet',['../structOptimization_1_1ObstacleFrenet.html',1,'Optimization']]],
-  ['operator_2b_3d_2',['operator+=',['../classOptimization_1_1StaticMatrix.html#a4bb84ce640b1f162621f4ec1d887dfcb',1,'Optimization::StaticMatrix']]],
-  ['optimizationresult_3',['OptimizationResult',['../structOptimization_1_1OptimizationResult.html',1,'Optimization']]]
+  ['qpsolver_5fipm_0',['QPSolver_IPM',['../classOptimization_1_1solver_1_1QPSolver__IPM.html',1,'Optimization::solver']]]
 ];

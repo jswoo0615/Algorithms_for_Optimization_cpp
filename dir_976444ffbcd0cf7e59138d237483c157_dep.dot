@@ -10,7 +10,6 @@ digraph "include/Optimization"
   subgraph clusterdir_976444ffbcd0cf7e59138d237483c157 {
     graph [ bgcolor="#edf0f7", pencolor="grey25", label="", fontname=Helvetica,fontsize=10 style="filled,bold", URL="dir_976444ffbcd0cf7e59138d237483c157.html",tooltip=""]
     dir_976444ffbcd0cf7e59138d237483c157 [shape=plaintext, label="Optimization"];
-  dir_b0eb23d7880c1ce496ccacf085fb439e [label="Control", fillcolor="#a2b4d6", color="grey25", style="filled", URL="dir_b0eb23d7880c1ce496ccacf085fb439e.html",tooltip=""];
   dir_3f22f93b4ba8fdbcad8dad713ea8d812 [label="Controller", fillcolor="#a2b4d6", color="grey25", style="filled", URL="dir_3f22f93b4ba8fdbcad8dad713ea8d812.html",tooltip=""];
   dir_35803f28ddd8581dd8a383dd83d5b439 [label="Estimator", fillcolor="#a2b4d6", color="grey25", style="filled", URL="dir_35803f28ddd8581dd8a383dd83d5b439.html",tooltip=""];
   dir_5bb25db18c853031f62decd1534aca17 [label="Integrator", fillcolor="#a2b4d6", color="grey25", style="filled", URL="dir_5bb25db18c853031f62decd1534aca17.html",tooltip=""];

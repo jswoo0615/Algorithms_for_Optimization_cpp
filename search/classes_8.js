@@ -1,6 +1,4 @@
 var searchData=
 [
-  ['obstacle_0',['Obstacle',['../structOptimization_1_1Obstacle.html',1,'Optimization']]],
-  ['obstaclefrenet_1',['ObstacleFrenet',['../structOptimization_1_1ObstacleFrenet.html',1,'Optimization']]],
-  ['optimizationresult_2',['OptimizationResult',['../structOptimization_1_1OptimizationResult.html',1,'Optimization']]]
+  ['qpsolver_5fipm_0',['QPSolver_IPM',['../classOptimization_1_1solver_1_1QPSolver__IPM.html',1,'Optimization::solver']]]
 ];
