@@ -6,6 +6,7 @@
 #include "Optimization/Dual.hpp"
 #include "Optimization/Integrator/RK4.hpp"
 #include "Optimization/Matrix/StaticMatrix.hpp"
+#include "Optimization/Matrix/LinearAlgebra.hpp"
 
 namespace Optimization {
 namespace estimator {
@@ -15,13 +16,12 @@ class EKF {
    public:
     StaticVector<double, Nx> x_est;
     StaticMatrix<double, Nx, Nx> P;
-    StaticMatrix<double, Nx, Nx> Q;  // Process noise covariance (모델 신뢰도)
-    StaticMatrix<double, Nx, Nx> R;  // Measurement noise covariance (센서 신뢰도)
+    StaticMatrix<double, Nx, Nx> Q;  // Process noise covariance
+    StaticMatrix<double, Nx, Nx> R;  // Measurement noise covariance
 
     EKF() {
         x_est.set_zero();
 
-        // [Architect's Fix] set_identity() 대신 set_zero() 후 대각 성분 초기화
         P.set_zero();
         for (size_t i = 0; i < Nx; ++i) P(i, i) = 1.0;
 
@@ -30,18 +30,18 @@ class EKF {
 
         R.set_zero();
         R(0, 0) = 0.2;
-        R(1, 1) = 0.2;   // X, Y 노이즈
-        R(2, 2) = 0.05;  // Yaw 노이즈
-        R(3, 3) = 0.1;   // Vx 노이즈
+        R(1, 1) = 0.2;   
+        R(2, 2) = 0.05;  
+        R(3, 3) = 0.1;   
         R(4, 4) = 0.1;
         R(5, 5) = 0.1;
     }
 
-    // AD 엔진의 한계를 보완하는 순수 역행렬기 (의존성 최소화)
+    // 역행렬기 (추후 StaticMatrix 레이어 또는 별도 Math 모듈로 분리 권장)
     StaticMatrix<double, Nx, Nx> invert(StaticMatrix<double, Nx, Nx> mat) {
         StaticMatrix<double, Nx, Nx> inv;
         inv.set_zero();
-        for (size_t i = 0; i < Nx; ++i) inv(i, i) = 1.0;  // set_identity() 대체
+        for (size_t i = 0; i < Nx; ++i) inv(i, i) = 1.0;
 
         for (size_t i = 0; i < Nx; ++i) {
             double pivot = mat(i, i);
@@ -73,6 +73,7 @@ class EKF {
         using ADVar = DualVec<double, Nx>;
         StaticVector<ADVar, Nx> x_dual;
         StaticVector<ADVar, Nu> u_dual;
+        
         for (size_t i = 0; i < Nx; ++i) x_dual(i) = ADVar::make_variable(x_est(i), i);
         for (size_t i = 0; i < Nu; ++i) u_dual(i) = ADVar(u(i));
 
@@ -85,73 +86,31 @@ class EKF {
             }
         }
 
-        // 3. 공분산 예측: P = F * P * F^T + Q
-        StaticMatrix<double, Nx, Nx> FP;
-        FP.set_zero();
-        for (size_t i = 0; i < Nx; ++i)
-            for (size_t j = 0; j < Nx; ++j)
-                for (size_t k = 0; k < Nx; ++k) FP(i, j) += F(i, k) * P(k, j);
-
-        StaticMatrix<double, Nx, Nx> FPFt;
-        FPFt.set_zero();
-        for (size_t i = 0; i < Nx; ++i)
-            for (size_t j = 0; j < Nx; ++j)
-                for (size_t k = 0; k < Nx; ++k) FPFt(i, j) += FP(i, k) * F(j, k);
-
-        for (size_t i = 0; i < Nx; ++i)
-            for (size_t j = 0; j < Nx; ++j) P(i, j) = FPFt(i, j) + Q(i, j);
+        // 3. 공분산 예측 (3중 for문 제거 및 완벽한 수식화)
+        P = (F * P * F.transpose()) + Q;
     }
 
     void update(const StaticVector<double, Nx>& z) {
-        // S = P + R
-        StaticMatrix<double, Nx, Nx> S;
-        S.set_zero();
-        for (size_t i = 0; i < Nx; ++i)
-            for (size_t j = 0; j < Nx; ++j) S(i, j) = P(i, j) + R(i, j);
+        // 1. S = P + R
+        StaticMatrix<double, Nx, Nx> S = P + R;
 
-        // K = P * S^-1
-        StaticMatrix<double, Nx, Nx> S_inv = invert(S);
-        StaticMatrix<double, Nx, Nx> K;
-        K.set_zero();
-        for (size_t i = 0; i < Nx; ++i)
-            for (size_t j = 0; j < Nx; ++j)
-                for (size_t k = 0; k < Nx; ++k) K(i, j) += P(i, k) * S_inv(k, j);
+        // 2. 칼만 게인 K = P * S^-1
+        StaticMatrix<double, Nx, Nx> K = P * invert(S);
 
-        // y = z - x_est
-        StaticVector<double, Nx> y;
-        for (size_t i = 0; i < Nx; ++i) {
-            y(i) = z(i) - x_est(i);
-            if (i == 2) {
-                while (y(i) > M_PI) y(i) -= 2.0 * M_PI;
-                while (y(i) < -M_PI) y(i) += 2.0 * M_PI;
-            }
-        }
+        // 3. 잔차 y = z - x_est (각도 wrap-around 처리 포함)
+        StaticVector<double, Nx> y = z - x_est;
+        while (y(2) > M_PI) y(2) -= 2.0 * M_PI;
+        while (y(2) < -M_PI) y(2) += 2.0 * M_PI;
 
-        // x = x + K * y
-        StaticVector<double, Nx> dx;
-        dx.set_zero();
-        for (size_t i = 0; i < Nx; ++i)
-            for (size_t j = 0; j < Nx; ++j) dx(i) += K(i, j) * y(j);
+        // 4. 상태 업데이트 x_est = x_est + K * y
+        x_est = x_est + (K * y);
 
-        for (size_t i = 0; i < Nx; ++i) x_est(i) += dx(i);
+        // 5. 공분산 업데이트 P = (I - K) * P
+        StaticMatrix<double, Nx, Nx> I;
+        I.set_zero();
+        for (size_t i = 0; i < Nx; ++i) I(i, i) = 1.0;
 
-        // P = (I - K) * P
-        StaticMatrix<double, Nx, Nx> I_minus_K;
-        I_minus_K.set_zero();
-        for (size_t i = 0; i < Nx; ++i) {
-            I_minus_K(i, i) = 1.0;
-            for (size_t j = 0; j < Nx; ++j) {
-                I_minus_K(i, j) -= K(i, j);
-            }
-        }
-
-        StaticMatrix<double, Nx, Nx> P_new;
-        P_new.set_zero();
-        for (size_t i = 0; i < Nx; ++i)
-            for (size_t j = 0; j < Nx; ++j)
-                for (size_t k = 0; k < Nx; ++k) P_new(i, j) += I_minus_K(i, k) * P(k, j);
-
-        P = P_new;
+        P = (I - K) * P;
     }
 };
 
